@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -12,18 +13,19 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
+    ArrayList<String> dataset;
+    ArrayAdapter<String> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ListView lv = (ListView)findViewById(R.id.listView);
-        String[] list = new String[] {
-                "1", "red", "green"
-        };
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
-        lv.setAdapter(adapter);
+        ListView lv = (ListView)findViewById(R.id.listView);
+        dataset = new ArrayList<String>();
+        dataset.add("one");
+        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataset);
+        lv.setAdapter(listAdapter);
     }
 
     @Override
@@ -46,5 +48,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void clickAddToDatabase(View view) {
+        // TODO add random feed to the DB
+        dataset.add(String.valueOf(Math.random()));
+    }
+    public void clickRefreshList(View view) {
+        listAdapter.notifyDataSetChanged();
     }
 }
