@@ -93,4 +93,7 @@ public class MainActivity extends ActionBarActivity {
         cursorAdapter.changeCursor(cursor);
         cursorAdapter.notifyDataSetChanged();
     }
+    public void clickHttpRequest(View view) {
+        TemporaryFeedPopulator.sendFeedsRequest(this.getApplicationContext(),cursor,cursorAdapter);
+    }
 }
