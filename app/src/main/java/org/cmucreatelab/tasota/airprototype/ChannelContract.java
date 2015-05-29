@@ -15,7 +15,7 @@ public final class ChannelContract implements BaseColumns {
     public static final String COLUMN_MAX_VALUE= "max_value";
 
     public static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
-            " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT" +
+            " (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT" +
             ", " + COLUMN_FEED_ID + " INTEGER" +
             ", " + COLUMN_CHANNEL_NAME + " TEXT" +
             ", " + COLUMN_MIN_TIME + " TEXT" +

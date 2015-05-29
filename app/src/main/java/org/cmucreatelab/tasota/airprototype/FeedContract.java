@@ -15,7 +15,7 @@ public final class FeedContract implements BaseColumns {
     public static final String COLUMN_LONG= "longitude";
 
     public static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
-            " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT" +
+            " (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT" +
             ", " + COLUMN_FEED_ID + " INTEGER" +
             ", " + COLUMN_NAME + " TEXT" +
             ", " + COLUMN_EXPOSURE + " TEXT" +
