@@ -41,21 +41,6 @@ public class HttpRequestHandler {
 
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
-//        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        // Display the first 500 characters of the response string.
-//                        mTextView.setText("Response is: "+ response.toString().substring(0,500));
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        mTextView.setText("That didn't work!");
-//                    }
-//                }
-//        );
         this.queue.add(jsonRequest);
     }
 }

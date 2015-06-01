@@ -45,16 +45,16 @@ public class TemporaryFeedPopulator {
     }
 
     static final String[] PROJECTION = new String[]{"_id",FeedContract.COLUMN_NAME,FeedContract.COLUMN_FEED_ID};
-    public static void addFeedsToList(Context ctx, Cursor cursor, SimpleCursorAdapter cursorAdapter) {
+    public static void addFeedsToList(Context ctx, SimpleCursorAdapter cursorAdapter) {
         FeedDbHelper mDbHelper = new FeedDbHelper(ctx);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        cursor = db.query(FeedContract.TABLE_NAME, PROJECTION, null, null, null, null, null);
-        cursorAdapter.changeCursor(cursor);
+        Cursor c = db.query(FeedContract.TABLE_NAME, PROJECTION, null, null, null, null, null);
+        cursorAdapter.changeCursor(c);
         cursorAdapter.notifyDataSetChanged();
     }
 
 
-    public static void sendFeedsRequest(final Context ctx, final Cursor cursor, final SimpleCursorAdapter cursorAdapter) {
+    public static void sendFeedsRequest(final Context ctx, final SimpleCursorAdapter cursorAdapter) {
 
         int requestMethod = Request.Method.GET;
         String requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds";
@@ -64,7 +64,7 @@ public class TemporaryFeedPopulator {
             public void onResponse(JSONObject response) {
                 // TODO handle results
                 addFeedsToDatabase(response, ctx);
-                addFeedsToList(ctx, cursor, cursorAdapter);
+                addFeedsToList(ctx, cursorAdapter);
             }
         };
         Response.ErrorListener error = new Response.ErrorListener() {

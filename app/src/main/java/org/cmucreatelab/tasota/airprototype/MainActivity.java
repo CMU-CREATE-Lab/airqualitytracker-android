@@ -24,12 +24,9 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
     ArrayList<String> dataset;
     SimpleCursorAdapter cursorAdapter;
-    Cursor cursor;
 
     // rows to receive (Cursor must include column _id or SimpleCursorAdapter it will not work)
     static final String[] PROJECTION = new String[]{"_id",FeedContract.COLUMN_NAME,FeedContract.COLUMN_FEED_ID};
-    // selection criteria (empty for now)
-    static final String SELECTION = "(())";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +36,9 @@ public class MainActivity extends ActionBarActivity {
         // simple cursor adapter handles layout stuff for us, instead of writing our own
         String[] from = {FeedContract.COLUMN_NAME,FeedContract.COLUMN_FEED_ID};
         int[] to = {android.R.id.text1, android.R.id.text2};
-        cursor = getFeeds();
+        Cursor c = getFeeds();
         cursorAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.two_line_list_item, cursor,
+                android.R.layout.two_line_list_item, c,
                 from, to);
 
         ListView lv = (ListView)findViewById(R.id.listView);
@@ -89,11 +86,11 @@ public class MainActivity extends ActionBarActivity {
         Log.i("clickAddToDatabase", "INSERTED RECORD INTO DATABASE id=" + newId);
     }
     public void clickRefreshList(View view) {
-        cursor = getFeeds();
-        cursorAdapter.changeCursor(cursor);
+        Cursor c = getFeeds();
+        cursorAdapter.changeCursor(c);
         cursorAdapter.notifyDataSetChanged();
     }
     public void clickHttpRequest(View view) {
-        TemporaryFeedPopulator.sendFeedsRequest(this.getApplicationContext(),cursor,cursorAdapter);
+        TemporaryFeedPopulator.sendFeedsRequest(this.getApplicationContext(),cursorAdapter);
     }
 }
