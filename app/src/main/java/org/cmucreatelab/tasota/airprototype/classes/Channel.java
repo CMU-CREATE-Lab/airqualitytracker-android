@@ -1,5 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import org.json.JSONObject;
+
 /**
  * Created by mike on 6/1/15.
  */
@@ -49,4 +51,9 @@ public class Channel {
         this.maxValue = maxValue;
     }
 
+
+    // Helper function to create an object from a channel's JSON
+    public static void parseChannelFromJson(JSONObject entry) {
+        // TODO construct Channel from JSON
+    }
 }

@@ -1,28 +1,19 @@
 package org.cmucreatelab.tasota.airprototype;
 
-import android.app.LoaderManager;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -30,26 +21,26 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
     ArrayList<String> dataset;
-    SimpleCursorAdapter cursorAdapter;
+    ArrayAdapter<String> listAdapter;
 
-//    // rows to receive (Cursor must include column _id or SimpleCursorAdapter it will not work)
-//    static final String[] PROJECTION = new String[]{"_id",FeedContract.COLUMN_NAME,FeedContract.COLUMN_FEED_ID};
+    Address myAddress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        // simple cursor adapter handles layout stuff for us, instead of writing our own
-//        String[] from = {FeedContract.COLUMN_NAME,FeedContract.COLUMN_FEED_ID};
-//        int[] to = {android.R.id.text1, android.R.id.text2};
-//        Cursor c = getFeeds();
-//        cursorAdapter = new SimpleCursorAdapter(this,
-//                android.R.layout.two_line_list_item, c,
-//                from, to);
-//
-//        ListView lv = (ListView)findViewById(R.id.listView);
-//        lv.setAdapter(cursorAdapter);
+        // this is a temp address (for testing API calls)
+        myAddress = new Address("15235", 40.4586216, -79.8184684);
+//        updateFeeds(myAddress);
+
+        ListView lv = (ListView)findViewById(R.id.listView);
+        dataset = new ArrayList<String>();
+        dataset.add("one");
+        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataset);
+        lv.setAdapter(listAdapter);
+
     }
 
     @Override
@@ -74,53 +65,43 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    public Cursor getFeeds() {
-//        FeedDbHelper mDbHelper = new FeedDbHelper(this.getApplicationContext());
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-//        Cursor c = db.query(FeedContract.TABLE_NAME, PROJECTION, null, null, null, null, null);
-//        return c;
-//    }
-//    public void clickAddToDatabase(View view) {
-//        // add random feed to the DB
-//        FeedDbHelper mDbHelper = new FeedDbHelper(this.getApplicationContext());
-//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//        values.put(FeedContract.COLUMN_FEED_ID, "1");
-//        values.put(FeedContract.COLUMN_NAME, String.valueOf(Math.random()));
-//        long newId;
-//        newId = db.insert(FeedContract.TABLE_NAME, "null", values);
-//        Log.i("clickAddToDatabase", "INSERTED RECORD INTO DATABASE id=" + newId);
-//    }
-//    public void clickRefreshList(View view) {
-//        Cursor c = getFeeds();
-//        cursorAdapter.changeCursor(c);
-//        cursorAdapter.notifyDataSetChanged();
-//    }
-//    public void clickHttpRequest(View view) {
-//        TemporaryFeedPopulator.sendFeedsRequest(this.getApplicationContext(), cursorAdapter);
-//    }
+
+    public void clickHttpRequest(View view) {
+        updateFeeds(myAddress);
+    }
 
 
-//    public static void sendFeedsRequest(final Context ctx, final SimpleCursorAdapter cursorAdapter) {
-//
-//        int requestMethod = Request.Method.GET;
-//        String requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds";
-//        JSONObject requestParams = null;
-//        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                // TODO handle results
-//            }
-//        };
-//        Response.ErrorListener error = new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                // TODO handle errors
-//            }
-//        };
-//
-//        HttpRequestHandler curl = HttpRequestHandler.getInstance(ctx);
-//        curl.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
-//    }
+    private void updateFeeds(Address addr) {
+
+        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                dataset.clear();
+
+                try {
+                    JSONArray feeds = response.getJSONObject("data").getJSONArray("rows");
+                    int size = feeds.length();
+                    for (int i=0;i<size;i++) {
+                        JSONObject feed = (JSONObject)feeds.get(i);
+                        // TODO construct Feed and Channels from JSON
+                        String label = "(" + feed.get("id").toString() + ")" + feed.get("name").toString();
+                        dataset.add(label);
+                    }
+                } catch (Exception e) {
+                    // TODO catch exception "failed to find JSON attr"
+                    e.printStackTrace();
+                }
+
+
+                listAdapter.notifyDataSetChanged();
+            }
+        };
+        Response.ErrorListener error = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO handle errors
+            }
+        };
+        HttpRequestHandler.getInstance(this.getApplicationContext()).requestFeeds(addr.getLatitude(),addr.getLongitude(),response,error);
+    }
 }

@@ -34,4 +34,11 @@ public class Address {
         this.longitude = longitude;
     }
 
+    public Address(String name, double latitude, double longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+
+        // TODO create entry in database and set _id
+    }
 }

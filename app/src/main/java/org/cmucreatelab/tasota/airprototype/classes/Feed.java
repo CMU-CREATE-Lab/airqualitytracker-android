@@ -1,5 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -62,5 +64,11 @@ public class Feed {
 
     public Feed() {
         this.channels = new ArrayList<Channel>();
+    }
+
+
+    // Helper function to parse a feed's JSON and create objects (also does Channels)
+    public static void parseFeedFromJson(JSONObject row) {
+        // TODO construct Feed and Channels from JSON
     }
 }
