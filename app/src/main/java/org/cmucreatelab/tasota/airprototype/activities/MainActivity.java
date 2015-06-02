@@ -1,8 +1,7 @@
-package org.cmucreatelab.tasota.airprototype;
+package org.cmucreatelab.tasota.airprototype.activities;
 
 
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +15,11 @@ import android.widget.ListView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Address;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.HttpRequestHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

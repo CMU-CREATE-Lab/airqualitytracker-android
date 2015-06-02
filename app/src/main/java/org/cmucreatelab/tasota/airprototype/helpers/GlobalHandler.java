@@ -1,8 +1,6 @@
-package org.cmucreatelab.tasota.airprototype;
+package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
-
-import com.android.volley.toolbox.Volley;
 
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 

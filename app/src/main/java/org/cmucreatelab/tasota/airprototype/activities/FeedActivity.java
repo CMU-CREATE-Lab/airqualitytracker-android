@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype;
+package org.cmucreatelab.tasota.airprototype.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -9,8 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 import java.util.ArrayList;
 
