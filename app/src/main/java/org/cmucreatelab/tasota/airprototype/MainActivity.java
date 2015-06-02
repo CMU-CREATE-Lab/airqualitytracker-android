@@ -55,7 +55,6 @@ public class MainActivity extends ActionBarActivity {
         );
         dataset = new ArrayList<Feed>();
         Feed f = new Feed();
-        f.label = "one";
         dataset.add(f);
         listAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, dataset);
         lv.setAdapter(listAdapter);
@@ -111,10 +110,8 @@ public class MainActivity extends ActionBarActivity {
                     int size = feeds.length();
                     for (int i=0;i<size;i++) {
                         JSONObject feed = (JSONObject)feeds.get(i);
-                        String label = "(" + feed.get("id").toString() + ")" + feed.get("name").toString();
                         Feed f = Feed.parseFeedFromJson(feed);
                         dataset.add(f);
-                        Log.i("onResponse","Added a new feed name="+f.getName()+", id="+f.getFeed_id()+", lat="+f.getLatitude());
                     }
                 } catch (Exception e) {
                     // TODO catch exception "failed to find JSON attr"

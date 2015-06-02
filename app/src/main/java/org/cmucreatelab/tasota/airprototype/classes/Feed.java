@@ -22,9 +22,6 @@ public class Feed {
     private double longitude;
     private ArrayList<Channel> channels;
 
-    // This is temporary, for testing only
-    public String label;
-
 
     public long getFeed_id() {
         return feed_id;
@@ -72,6 +69,8 @@ public class Feed {
 
     public Feed() {
         this.channels = new ArrayList<Channel>();
+        this.name = new String();
+        this.exposure = new String();
     }
 
 
@@ -79,10 +78,6 @@ public class Feed {
     public static Feed parseFeedFromJson(JSONObject row) {
         Feed f = new Feed();
         try {
-            // TODO remove label (after testing)
-            String label = "(" + row.get("id").toString() + ")" + row.get("name").toString();
-            f.label = label;
-
             long feed_id = Long.parseLong(row.get("id").toString());
             String name = row.get("name").toString();
             // (FROM DOCS): an enum and must be one of indoor, outdoor, or virtual
@@ -114,7 +109,7 @@ public class Feed {
 
     // TODO generate a proper label from the class attributes
     public String toString() {
-        return this.label;
+        return "(" + this.feed_id + ")" + this.name;
     }
 
 //    // these are required if you decide to make Feed implement "Parcelable"
