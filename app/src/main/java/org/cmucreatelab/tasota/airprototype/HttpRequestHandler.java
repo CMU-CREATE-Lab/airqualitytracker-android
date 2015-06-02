@@ -63,16 +63,16 @@ public class HttpRequestHandler {
         // only request AirNow (11) or ACHD (1)
         requestUrl += "?whereOr=ProductId=11,ProductId=1";
 
-        if (latd != 0.0 && longd != 0.0) {
-            // TODO given lat, long, create a bounding box and search from that
-            double la1,lo1,la2,lo2;
-            long maxTime = new Date().getTime() / 1000 - 86400;
-            la1 = latd-BOUNDBOX_LAT;
-            la2 = latd+BOUNDBOX_LONG;
-            lo1 = longd-BOUNDBOX_LAT;
-            lo2 = longd+BOUNDBOX_LONG;
-            requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime;
-        }
+//        if (latd != 0.0 && longd != 0.0) {
+        // given lat, long, create a bounding box and search from that
+        double la1,lo1,la2,lo2;
+        long maxTime = new Date().getTime() / 1000 - 86400;
+        la1 = latd-BOUNDBOX_LAT;
+        la2 = latd+BOUNDBOX_LONG;
+        lo1 = longd-BOUNDBOX_LAT;
+        lo2 = longd+BOUNDBOX_LONG;
+        requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime;
+//        }
 
         // only request from ESDR the fields that we care about
         requestUrl += "&fields=id,name,latitude,longitude,channelBounds";

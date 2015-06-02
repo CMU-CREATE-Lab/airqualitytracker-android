@@ -1,11 +1,14 @@
 package org.cmucreatelab.tasota.airprototype;
 
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
     ArrayAdapter<String> listAdapter;
 
     Address myAddress;
+    public final static String FEED_MESSAGE = "org.cmucreatelab.tasota.airprototype.feedmessage";
 
 
     @Override
@@ -36,11 +40,30 @@ public class MainActivity extends ActionBarActivity {
 //        updateFeeds(myAddress);
 
         ListView lv = (ListView)findViewById(R.id.listView);
+        lv.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Log.i("onItemClick", "Clicked with i=" + i + ",l=" + l + ".");
+                        String item = adapterView.getAdapter().getItem(i).toString();
+                        Log.i("onItemClick", "GRABBED ITEM: " + item);
+
+                        switchToFeedActivity(item);
+                    }
+                }
+        );
         dataset = new ArrayList<String>();
         dataset.add("one");
         listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataset);
         lv.setAdapter(listAdapter);
 
+    }
+
+    // TODO is there a way to create an intent without issues scoping "this" ?
+    public void switchToFeedActivity(String message) {
+        Intent intent = new Intent(this, FeedActivity.class);
+        intent.putExtra(FEED_MESSAGE, message);
+        startActivity(intent);
     }
 
     @Override
