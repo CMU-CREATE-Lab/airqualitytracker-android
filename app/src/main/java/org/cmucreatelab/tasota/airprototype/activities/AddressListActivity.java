@@ -1,9 +1,13 @@
 package org.cmucreatelab.tasota.airprototype.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.cmucreatelab.tasota.airprototype.AddressListArrayAdapter;
@@ -18,6 +22,8 @@ public class AddressListActivity extends ActionBarActivity {
     ArrayList<Address> addresses;
     AddressListArrayAdapter listAdapter;
 
+    public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +32,25 @@ public class AddressListActivity extends ActionBarActivity {
         addresses = GlobalHandler.getInstance(this.getApplicationContext()).addresses;
 
         ListView lv = (ListView)findViewById(R.id.listViewAddresses);
+        lv.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        switchToMainActivity(i);
+                    }
+                }
+        );
         listAdapter = new AddressListArrayAdapter(this, addresses);
         lv.setAdapter(listAdapter);
     }
+
+
+    public void switchToMainActivity(int index) {
+        Intent intent = new Intent(this, AddressShowActivity.class);
+        intent.putExtra(ADDRESS_INDEX,index);
+        startActivity(intent);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

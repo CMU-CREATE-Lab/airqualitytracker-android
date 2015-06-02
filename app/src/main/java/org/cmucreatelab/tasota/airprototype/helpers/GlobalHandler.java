@@ -14,6 +14,7 @@ public class GlobalHandler {
 
     private static GlobalHandler classInstance;
     private Context appContext;
+    // TODO feeds will need to be associated with addresses
     public ArrayList<Feed> feeds;
     public ArrayList<Address> addresses;
 
