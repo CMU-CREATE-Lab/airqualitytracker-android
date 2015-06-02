@@ -66,6 +66,7 @@ public class HttpRequestHandler {
 //        if (latd != 0.0 && longd != 0.0) {
         // given lat, long, create a bounding box and search from that
         double la1,lo1,la2,lo2;
+        // the past 24 hours
         long maxTime = new Date().getTime() / 1000 - 86400;
         la1 = latd-BOUNDBOX_LAT;
         la2 = latd+BOUNDBOX_LONG;
@@ -75,7 +76,7 @@ public class HttpRequestHandler {
 //        }
 
         // only request from ESDR the fields that we care about
-        requestUrl += "&fields=id,name,latitude,longitude,channelBounds";
+        requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,channelBounds";
 
         Log.i("requestFeeds", "requestUrl=" + requestUrl);
         HttpRequestHandler curl = HttpRequestHandler.getInstance(this.appContext);

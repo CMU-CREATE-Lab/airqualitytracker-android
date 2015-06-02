@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,8 +24,8 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
-    ArrayList<String> dataset;
-    ArrayAdapter<String> listAdapter;
+    ArrayList<Feed> dataset;
+    ArrayAdapter<Feed> listAdapter;
 
     Address myAddress;
     public final static String FEED_MESSAGE = "org.cmucreatelab.tasota.airprototype.feedmessage";
@@ -52,9 +53,11 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
         );
-        dataset = new ArrayList<String>();
-        dataset.add("one");
-        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataset);
+        dataset = new ArrayList<Feed>();
+        Feed f = new Feed();
+        f.label = "one";
+        dataset.add(f);
+        listAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, dataset);
         lv.setAdapter(listAdapter);
 
     }
@@ -63,6 +66,8 @@ public class MainActivity extends ActionBarActivity {
     public void switchToFeedActivity(String message) {
         Intent intent = new Intent(this, FeedActivity.class);
         intent.putExtra(FEED_MESSAGE, message);
+        //using parcels for objects
+        //intent.putParcelableArrayListExtra("",new ArrayList<Feed>());
         startActivity(intent);
     }
 
@@ -106,9 +111,10 @@ public class MainActivity extends ActionBarActivity {
                     int size = feeds.length();
                     for (int i=0;i<size;i++) {
                         JSONObject feed = (JSONObject)feeds.get(i);
-                        // TODO construct Feed and Channels from JSON
                         String label = "(" + feed.get("id").toString() + ")" + feed.get("name").toString();
-                        dataset.add(label);
+                        Feed f = Feed.parseFeedFromJson(feed);
+                        dataset.add(f);
+                        Log.i("onResponse","Added a new feed name="+f.getName()+", id="+f.getFeed_id()+", lat="+f.getLatitude());
                     }
                 } catch (Exception e) {
                     // TODO catch exception "failed to find JSON attr"
