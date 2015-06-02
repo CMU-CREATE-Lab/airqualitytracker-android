@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // this is a temp address (for testing API calls)
-        myAddress = new Address("15235", 40.4586216, -79.8184684);
+        myAddress = GlobalHandler.getInstance(this.getApplicationContext()).addresses.get(0);
 
         ListView lv = (ListView)findViewById(R.id.listView);
         lv.setOnItemClickListener(

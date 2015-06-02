@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
 
+import org.cmucreatelab.tasota.airprototype.classes.Address;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 
 import java.util.ArrayList;
@@ -14,11 +15,23 @@ public class GlobalHandler {
     private static GlobalHandler classInstance;
     private Context appContext;
     public ArrayList<Feed> feeds;
+    public ArrayList<Address> addresses;
+
 
     // Nobody accesses the constructor
     private GlobalHandler(Context ctx) {
         this.appContext = ctx;
-        this.feeds = new ArrayList<>();
+        this.feeds = new ArrayList();
+        this.addresses = new ArrayList();
+        this.populateTemp();
+    }
+
+
+    // TODO these are temporary test values populated; do not keep this forever!
+    private void populateTemp() {
+        Address a = new Address("15235", 40.4586216, -79.8184684);
+        a.set_id(1);
+        this.addresses.add(a);
     }
 
 

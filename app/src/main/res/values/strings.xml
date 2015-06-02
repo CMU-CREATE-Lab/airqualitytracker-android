@@ -4,4 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_feed">FeedActivity</string>
+    <string name="title_activity_address">AddressActivity</string>
+    <string name="title_activity_address_list">AddressListActivity</string>
+    <string name="title_activity_address_show">AddressShowActivity</string>
 </resources>
