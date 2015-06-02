@@ -29,9 +29,11 @@ public class GlobalHandler {
 
     // TODO these are temporary test values populated; do not keep this forever!
     private void populateTemp() {
-        Address a = new Address("15235", 40.4586216, -79.8184684);
-        a.set_id(1);
-        this.addresses.add(a);
+        for (int i=0;i<10;i++) {
+            Address a = new Address("15235", 40.4586216, -79.8184684);
+            a.set_id(i);
+            this.addresses.add(a);
+        }
     }
 
 
