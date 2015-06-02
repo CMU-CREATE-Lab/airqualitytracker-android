@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype;
 
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +25,12 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
-    ArrayList<Feed> dataset;
+    ArrayList<Feed> feeds;
     ArrayAdapter<Feed> listAdapter;
 
     Address myAddress;
     public final static String FEED_MESSAGE = "org.cmucreatelab.tasota.airprototype.feedmessage";
+    public final static String FEED_ID= "org.cmucreatelab.tasota.airprototype.feedid";
 
 
     @Override
@@ -38,7 +40,6 @@ public class MainActivity extends ActionBarActivity {
 
         // this is a temp address (for testing API calls)
         myAddress = new Address("15235", 40.4586216, -79.8184684);
-//        updateFeeds(myAddress);
 
         ListView lv = (ListView)findViewById(R.id.listView);
         lv.setOnItemClickListener(
@@ -49,22 +50,21 @@ public class MainActivity extends ActionBarActivity {
                         String item = adapterView.getAdapter().getItem(i).toString();
                         Log.i("onItemClick", "GRABBED ITEM: " + item);
 
-                        switchToFeedActivity(item);
+                        switchToFeedActivity(item,i);
                     }
                 }
         );
-        dataset = new ArrayList<Feed>();
-        Feed f = new Feed();
-        dataset.add(f);
-        listAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, dataset);
+        feeds = GlobalHandler.getInstance(this.getApplicationContext()).feeds;
+        listAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
         lv.setAdapter(listAdapter);
-
+        updateFeeds(myAddress);
     }
 
     // TODO is there a way to create an intent without issues scoping "this" ?
-    public void switchToFeedActivity(String message) {
+    public void switchToFeedActivity(String message, int index) {
         Intent intent = new Intent(this, FeedActivity.class);
         intent.putExtra(FEED_MESSAGE, message);
+        intent.putExtra(FEED_ID,index);
         //using parcels for objects
         //intent.putParcelableArrayListExtra("",new ArrayList<Feed>());
         startActivity(intent);
@@ -93,9 +93,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void clickHttpRequest(View view) {
-        updateFeeds(myAddress);
-    }
+//    public void clickHttpRequest(View view) {
+//        updateFeeds(myAddress);
+//    }
 
 
     private void updateFeeds(Address addr) {
@@ -103,15 +103,15 @@ public class MainActivity extends ActionBarActivity {
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                dataset.clear();
+                feeds.clear();
 
                 try {
-                    JSONArray feeds = response.getJSONObject("data").getJSONArray("rows");
-                    int size = feeds.length();
+                    JSONArray jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
+                    int size = jsonFeeds .length();
                     for (int i=0;i<size;i++) {
-                        JSONObject feed = (JSONObject)feeds.get(i);
+                        JSONObject feed = (JSONObject)jsonFeeds.get(i);
                         Feed f = Feed.parseFeedFromJson(feed);
-                        dataset.add(f);
+                        feeds.add(f);
                     }
                 } catch (Exception e) {
                     // TODO catch exception "failed to find JSON attr"

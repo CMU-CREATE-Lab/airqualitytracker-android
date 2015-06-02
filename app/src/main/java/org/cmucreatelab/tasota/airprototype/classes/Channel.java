@@ -75,4 +75,9 @@ public class Channel {
         }
         return c;
     }
+
+    // TODO generate a proper label from the class attributes
+    public String toString() {
+        return this.name + ":  " + this.minTimeSecs + "," + this.maxTimeSecs + "," + this.minValue + "," + this.maxValue;
+    }
 }

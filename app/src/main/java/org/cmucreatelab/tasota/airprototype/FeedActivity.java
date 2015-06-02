@@ -5,22 +5,40 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.cmucreatelab.tasota.airprototype.classes.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
+
+import java.util.ArrayList;
 
 
 public class FeedActivity extends ActionBarActivity {
+    ArrayList<Feed> feeds;
+    ArrayList<Channel> channels;
+    ArrayAdapter<Channel> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
+        feeds = GlobalHandler.getInstance(this.getApplicationContext()).feeds;
+
         // Get the message from the intent
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.FEED_MESSAGE);
+        channels = feeds.get( intent.getIntExtra(MainActivity.FEED_ID, -1) ).getChannels();
 
-        TextView tv = (TextView) findViewById(R.id.textView);
+        TextView tv = (TextView) findViewById(R.id.textViewFeed);
         tv.setText(message);
+
+        ListView lv = (ListView)findViewById(R.id.listViewFeed);
+        listAdapter = new ArrayAdapter<Channel>(this, android.R.layout.simple_list_item_1, channels);
+        lv.setAdapter(listAdapter);
+
     }
 
     @Override
