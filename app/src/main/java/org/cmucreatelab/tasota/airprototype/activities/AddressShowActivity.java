@@ -63,7 +63,7 @@ public class AddressShowActivity extends ActionBarActivity {
                 }
         );
 
-        feeds = GlobalHandler.getInstance(this.getApplicationContext()).feeds;
+        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.get(showAddress);
         feedsListAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
         lv.setAdapter(feedsListAdapter);
         updateFeeds(showAddress);

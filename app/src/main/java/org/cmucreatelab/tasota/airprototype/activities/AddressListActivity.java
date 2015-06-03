@@ -33,6 +33,8 @@ public class AddressListActivity extends ActionBarActivity {
 //        ActionBar actionBar = getSupportActionBar();
 
         addresses = GlobalHandler.getInstance(this.getApplicationContext()).addresses;
+//        addresses = new ArrayList();
+//        addresses.addAll( GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.keySet() );
 
         ListView lv = (ListView)findViewById(R.id.listViewAddresses);
         lv.setOnItemClickListener(

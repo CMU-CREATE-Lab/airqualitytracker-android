@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
+// TODO unused function (should be deleted)
 public class MainActivity extends ActionBarActivity {
     ArrayList<Feed> feeds;
     ArrayAdapter<Feed> listAdapter;
@@ -56,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
         );
-        feeds = GlobalHandler.getInstance(this.getApplicationContext()).feeds;
+//        feeds = GlobalHandler.getInstance(this.getApplicationContext()).feeds;
         listAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
         lv.setAdapter(listAdapter);
         updateFeeds(myAddress);

@@ -17,6 +17,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;
 
 
+// TODO unused function (should be deleted)
 public class FeedActivity extends ActionBarActivity {
     ArrayList<Feed> feeds;
     ArrayList<Channel> channels;
@@ -27,7 +28,7 @@ public class FeedActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        feeds = GlobalHandler.getInstance(this.getApplicationContext()).feeds;
+//        feeds = GlobalHandler.getInstance(this.getApplicationContext()).feeds;
 
         // Get the message from the intent
         Intent intent = getIntent();
