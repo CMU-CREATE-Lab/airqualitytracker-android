@@ -7,4 +7,5 @@
     <string name="title_activity_address">AddressActivity</string>
     <string name="title_activity_address_list">AddressListActivity</string>
     <string name="title_activity_address_show">AddressShowActivity</string>
+    <string name="action_new">Add New</string>
 </resources>

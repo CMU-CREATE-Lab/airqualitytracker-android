@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.activities;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,8 @@ public class AddressListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
+
+//        ActionBar actionBar = getSupportActionBar();
 
         addresses = GlobalHandler.getInstance(this.getApplicationContext()).addresses;
 
@@ -66,11 +69,36 @@ public class AddressListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        } else if (id == R.id.action_new) {
+//
+//        }
+//
+//        return super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
+        switch (id) {
+            case R.id.action_settings:
+                openSettings();
+                return true;
+            case R.id.action_new:
+                openNew();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void openSettings() {
+        // TODO open settings
+        Log.i("openSettings", "action bar selected.");
+    }
+
+
+    public void openNew() {
+        // TODO open new (address input)
+        Log.i("openNew", "action bar selected.");
     }
 }

@@ -23,9 +23,9 @@ public class HttpRequestHandler {
     private RequestQueue queue;
 
     // Distance from central point, in kilometers (box dimension will be 2x larger)
-    private final double BOUNDBOX_HEIGHT = 10.0;
+    private final double BOUNDBOX_HEIGHT = 20.0;
     // Distance from central point, in kilometers (box dimension will be 2x larger)
-    private final double BOUNDBOX_LENGTH = 10.0;
+    private final double BOUNDBOX_LENGTH = 20.0;
     // radius of Earth
     private final double RADIUS_EARTH = 6371.0;
     // ASSERT these values will be less than 90.0
