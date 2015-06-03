@@ -20,9 +20,17 @@ public class Feed {
     private boolean isMobile;
     private double latitude;
     private double longitude;
+    private long productId;
+
     private ArrayList<Channel> channels;
 
 
+    public long getProductId() {
+        return productId;
+    }
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
     public long getFeed_id() {
         return feed_id;
     }
@@ -85,6 +93,7 @@ public class Feed {
             boolean isMobile = row.get("isMobile").toString().equals("1");
             double latitude = Double.parseDouble(row.get("latitude").toString());
             double longitude = Double.parseDouble(row.get("longitude").toString());
+            long productId = Long.parseLong(row.get("productId").toString());
 
             f.setFeed_id(feed_id);
             f.setName(name);
@@ -92,6 +101,7 @@ public class Feed {
             f.setIsMobile(isMobile);
             f.setLatitude(latitude);
             f.setLongitude(longitude);
+            f.setProductId(productId);
 
             ArrayList<Channel> listChannels = f.getChannels();
             JSONObject channels = ((JSONObject)((JSONObject) row.get("channelBounds")).get("channels"));

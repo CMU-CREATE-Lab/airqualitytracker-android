@@ -76,7 +76,7 @@ public class HttpRequestHandler {
 //        }
 
         // only request from ESDR the fields that we care about
-        requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,channelBounds";
+        requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";
 
         Log.i("requestFeeds", "requestUrl=" + requestUrl);
         HttpRequestHandler curl = HttpRequestHandler.getInstance(this.appContext);
