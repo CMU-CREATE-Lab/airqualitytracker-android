@@ -4,17 +4,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.cmucreatelab.tasota.airprototype.classes.Address;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,38 +22,21 @@ public class GlobalHandler {
 
     private static GlobalHandler classInstance;
     private Context appContext;
-    // TODO feeds will need to be associated with addresses
-//    public ArrayList<Feed> feeds;
     public ArrayList<Address> addresses;
     public HashMap<Address,ArrayList<Feed>> addressFeedHash;
 
 
-    // Nobody accesses the constructor
-    private GlobalHandler(Context ctx) {
-        this.appContext = ctx;
-//        this.feeds = new ArrayList();
-        this.addresses = new ArrayList();
-        this.addressFeedHash = new HashMap();
-        this.populateTemp();
-    }
-
-
-    // TODO these are temporary test values populated; do not keep this forever!
-    private void populateTemp() {
-//        for (int i=0;i<10;i++) {
-//            Address a = new Address("15235", 40.4586216, -79.8184684);
-//            a.set_id(i);
-//            this.addresses.add(a);
-//        }
+    private void addCurrentLocationToAddresses() {
         // TODO this will be your GPS location, eventually
         Address gps = new Address("15235", 40.4586216, -79.8184684);
-        // TODO ensure that, when you perform delete, your _id is nonnegative
         gps.set_id(-1);
         ArrayList<Feed> gFeed = getFeedsForAddress(gps);
         this.addresses.add(gps);
         this.addressFeedHash.put(gps, gFeed);
+    }
 
-        // TODO get database entries and add to hash
+
+    private void addDatabaseEntriesToAddresses() {
         String[] projection = {
                 "_id",
                 AddressContract.COLUMN_NAME,
@@ -93,6 +73,16 @@ public class GlobalHandler {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    // Nobody accesses the constructor
+    private GlobalHandler(Context ctx) {
+        this.appContext = ctx;
+        this.addresses = new ArrayList();
+        this.addressFeedHash = new HashMap();
+        this.addCurrentLocationToAddresses();
+        this.addDatabaseEntriesToAddresses();
     }
 
 
@@ -141,9 +131,6 @@ public class GlobalHandler {
                     // TODO catch exception "failed to find JSON attr"
                     e.printStackTrace();
                 }
-
-
-//                feedsListAdapter.notifyDataSetChanged();
                 notifyGlobalDataSetChanged();
             }
         };

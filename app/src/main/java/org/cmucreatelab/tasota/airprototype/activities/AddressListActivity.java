@@ -3,34 +3,24 @@ package org.cmucreatelab.tasota.airprototype.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.provider.Settings;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.cmucreatelab.tasota.airprototype.AddressListArrayAdapter;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Address;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.HttpRequestHandler;
-import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 
@@ -45,11 +35,7 @@ public class AddressListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
 
-//        ActionBar actionBar = getSupportActionBar();
-
         addresses = GlobalHandler.getInstance(this.getApplicationContext()).addresses;
-//        addresses = new ArrayList();
-//        addresses.addAll( GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.keySet() );
 
         ListView lv = (ListView)findViewById(R.id.listViewAddresses);
         lv.setLongClickable(true);
@@ -123,15 +109,6 @@ public class AddressListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        } else if (id == R.id.action_new) {
-//
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-
         switch (id) {
             case R.id.action_settings:
                 openSettings();
@@ -152,7 +129,6 @@ public class AddressListActivity extends ActionBarActivity {
 
 
     public void openNew() {
-        // TODO open new (address input)
         Log.i("openNew", "action bar selected.");
 
         final Context ctx = this.getApplicationContext();
@@ -167,7 +143,6 @@ public class AddressListActivity extends ActionBarActivity {
 
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // TODO take arg to google API
                 // OUTLINE FOR SEAMLESS INTERFACE FOR WAITING FOR JSON RESPONSE
                 // have a list "newAddressQueue" that holds the status of the json requests made.
                 // Each element in list will have a unique identifier (timestamp?)
@@ -179,11 +154,11 @@ public class AddressListActivity extends ActionBarActivity {
                 Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO handle response for GoogleGeocodeAPI
                         try {
                             String status = response.getString("status");
                             if (status.equals("OK")) {
                                 // TODO get formatted_address field?
+                                // TODO this grabs only the first result but maybe we want to provide options? Doubt it though
                                 JSONObject locations = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
                                 double latd = Double.parseDouble(locations.getString("lat"));
                                 double longd = Double.parseDouble(locations.getString("lng"));

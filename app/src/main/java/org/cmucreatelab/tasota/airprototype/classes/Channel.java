@@ -6,6 +6,7 @@ import org.json.JSONObject;
  * Created by mike on 6/1/15.
  */
 public class Channel {
+
     private String name;
     private long feed_id;
     // TODO ensure that minTimeSecs/MaxTimeSecs are integers (not floats)
@@ -76,8 +77,4 @@ public class Channel {
         return c;
     }
 
-    // TODO generate a proper label from the class attributes
-    public String toString() {
-        return this.name + ":  " + this.minTimeSecs + "," + this.maxTimeSecs + "," + this.minValue + "," + this.maxValue;
-    }
 }

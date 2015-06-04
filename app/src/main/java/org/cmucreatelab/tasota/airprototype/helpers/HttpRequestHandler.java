@@ -2,16 +2,12 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.Request;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONObject;
-
-import java.net.URI;
 import java.util.Date;
 
 /**
@@ -65,7 +61,6 @@ public class HttpRequestHandler {
         // only request AirNow (11) or ACHD (1)
         requestUrl += "?whereOr=ProductId=11,ProductId=1";
 
-//        if (latd != 0.0 && longd != 0.0) {
         // given lat, long, create a bounding box and search from that
         double la1,lo1,la2,lo2;
         // the past 24 hours
@@ -75,7 +70,6 @@ public class HttpRequestHandler {
         lo1 = longd-BOUNDBOX_LAT;
         lo2 = longd+BOUNDBOX_LONG;
         requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime;
-//        }
 
         // only request from ESDR the fields that we care about
         requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";
@@ -95,11 +89,6 @@ public class HttpRequestHandler {
             // TODO handle unexpected encoding exception
             e.printStackTrace();
         }
-//        try {
-//            requestUrl = new URI(requestUrl, addressName, null).toURL().toString();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
         this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
     }

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 
@@ -12,6 +11,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
  * Created by mike on 6/1/15.
  */
 public class Address {
+
     private long _id;
     private String name;
     private double latitude;
@@ -42,6 +42,7 @@ public class Address {
         this.longitude = longitude;
     }
 
+
     public Address(String name, double latitude, double longitude) {
         this.name = name;
         this.latitude = latitude;
@@ -64,6 +65,7 @@ public class Address {
         return true;
     }
 
+
     public static Address createAddressInDatabase(Context ctx, String name, double latitude, double longitude) {
         AddressDbHelper mDbHelper = new AddressDbHelper(ctx);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -71,12 +73,12 @@ public class Address {
         values.put(AddressContract.COLUMN_NAME, name);
         values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(latitude));
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(longitude));
-        long newId;
-        newId = db.insert(AddressContract.TABLE_NAME, "null", values);
+        long newId = db.insert(AddressContract.TABLE_NAME, "null", values);
         Log.i("Address", "INSERTED RECORD INTO DATABASE id=" + newId);
 
         Address address = new Address(name,latitude,longitude);
         address.set_id(newId);
         return address;
     }
+
 }
