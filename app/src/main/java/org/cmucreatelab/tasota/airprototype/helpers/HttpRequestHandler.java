@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.net.URI;
 import java.util.Date;
 
 /**
@@ -50,6 +51,7 @@ public class HttpRequestHandler {
 
 
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
+        Log.i("sendJsonRequest", "requestUrl=" + requestUrl);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
         this.queue.add(jsonRequest);
     }
@@ -78,8 +80,27 @@ public class HttpRequestHandler {
         // only request from ESDR the fields that we care about
         requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";
 
-        Log.i("requestFeeds", "requestUrl=" + requestUrl);
-        HttpRequestHandler curl = HttpRequestHandler.getInstance(this.appContext);
-        curl.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
+        this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
+    }
+
+
+    public void requestGoogleGeocode(String addressName, Response.Listener<JSONObject> response, Response.ErrorListener error) {
+        int requestMethod = Request.Method.GET;
+        String requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+        JSONObject requestParams = null;
+
+        try {
+            requestUrl += java.net.URLEncoder.encode(addressName, "ISO-8859-1");
+        } catch (Exception e) {
+            // TODO handle unexpected encoding exception
+            e.printStackTrace();
+        }
+//        try {
+//            requestUrl = new URI(requestUrl, addressName, null).toURL().toString();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
     }
 }

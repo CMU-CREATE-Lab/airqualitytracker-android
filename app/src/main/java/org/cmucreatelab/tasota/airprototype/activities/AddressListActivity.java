@@ -19,10 +19,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import org.cmucreatelab.tasota.airprototype.AddressListArrayAdapter;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.HttpRequestHandler;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -60,7 +67,12 @@ public class AddressListActivity extends ActionBarActivity {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Log.i("onItemLongClick","DID LONG CLICK");
-                        showDeleteDialog(addresses.get(i));
+                        Address address = addresses.get(i);
+                        if (address.get_id() < 0) {
+                            Log.i("onItemLongClick","WARNING - the long-clicked address has negative id="+address.get_id());
+                        } else {
+                            showDeleteDialog(address);
+                        }
                         return true;
                     }
                 }
@@ -77,6 +89,7 @@ public class AddressListActivity extends ActionBarActivity {
         builder.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 GlobalHandler.getInstance(ctx).removeAddress(address);
+                address.destroy(ctx);
                 AddressListActivity.this.listAdapter.notifyDataSetChanged();
             }
         });
@@ -149,6 +162,7 @@ public class AddressListActivity extends ActionBarActivity {
         final EditText input = new EditText(ctx);
         // TODO test color schemes... ideally dialog boxes should know what colors they are supposed to use.
         input.setTextColor( getResources().getColor(R.color.primary_text_default_material_light) );
+        input.setSingleLine(true);
         builder.setView(input);
 
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
@@ -159,7 +173,42 @@ public class AddressListActivity extends ActionBarActivity {
                 // Each element in list will have a unique identifier (timestamp?)
                 // On completion from JSON response/google API, remove timestamp from list.
                 // While list is nonempty, display a spinner beneath your list of addresses.
-                Log.i("onClick", "Adding address="+input.getText());
+                final String addressName = input.getText().toString();
+                Log.i("onClick", "Adding address=" + addressName);
+
+                Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // TODO handle response for GoogleGeocodeAPI
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("OK")) {
+                                // TODO get formatted_address field?
+                                JSONObject locations = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+                                double latd = Double.parseDouble(locations.getString("lat"));
+                                double longd = Double.parseDouble(locations.getString("lng"));
+
+                                Address result = Address.createAddressInDatabase(ctx,addressName,latd,longd);
+                                GlobalHandler.getInstance(ctx).addAddress(result);
+
+                                listAdapter.notifyDataSetChanged();
+                            } else {
+                                Log.i("onResponse", "WARNING - Received status code '"+status+"' from GoogleGeocodeAPI; not processing response.");
+                            }
+                        } catch (Exception e) {
+                            // TODO catch exception "failed to find JSON attr"
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                Response.ErrorListener error = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO handle errors
+                    }
+                };
+
+                HttpRequestHandler.getInstance(ctx).requestGoogleGeocode(addressName,response,error);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -50,7 +50,8 @@ public class GlobalHandler {
 //        }
         // TODO this will be your GPS location, eventually
         Address gps = new Address("15235", 40.4586216, -79.8184684);
-        //a.set_id(1);
+        // TODO ensure that, when you perform delete, your _id is nonnegative
+        gps.set_id(-1);
         ArrayList<Feed> gFeed = getFeedsForAddress(gps);
         this.addresses.add(gps);
         this.addressFeedHash.put(gps, gFeed);
@@ -75,8 +76,8 @@ public class GlobalHandler {
                 // read record
                 int id = c.getInt(c.getColumnIndexOrThrow("_id"));
                 String name = c.getString(c.getColumnIndexOrThrow("name"));
-                double latd = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("_id")));
-                double longd = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("_id")));
+                double latd = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("latitude")));
+                double longd = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("longitude")));
                 Log.i("addToDatabase", "READ RECORD _id=" + id);
 
                 // add to data structure
