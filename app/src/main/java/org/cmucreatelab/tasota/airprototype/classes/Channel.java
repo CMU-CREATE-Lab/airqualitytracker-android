@@ -56,13 +56,18 @@ public class Channel {
     // Helper function to create an object from a channel's JSON
     public static Channel parseChannelFromJson(String channelName, long feedId, JSONObject entry) {
         Channel c = new Channel();
+
         try {
-            String name = channelName;
-            long feed_id = feedId;
-            long minTimeSecs = Long.parseLong(entry.get("minTimeSecs").toString());
-            long maxTimeSecs = Long.parseLong(entry.get("maxTimeSecs").toString());;
-            float minValue = Float.parseFloat(entry.get("minValue").toString());
-            float maxValue = Float.parseFloat(entry.get("maxValue").toString());
+            String name;
+            long feed_id,minTimeSecs,maxTimeSecs;
+            float minValue,maxValue;
+
+            name = channelName;
+            feed_id = feedId;
+            minTimeSecs = Long.parseLong(entry.get("minTimeSecs").toString());
+            maxTimeSecs = Long.parseLong(entry.get("maxTimeSecs").toString());;
+            minValue = Float.parseFloat(entry.get("minValue").toString());
+            maxValue = Float.parseFloat(entry.get("maxValue").toString());
 
             c.setName(name);
             c.setFeed_id(feed_id);
@@ -74,6 +79,7 @@ public class Channel {
             // TODO catch exception "failed to find JSON attr"
             e.printStackTrace();
         }
+
         return c;
     }
 

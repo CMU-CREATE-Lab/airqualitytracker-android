@@ -24,18 +24,23 @@ public class AddressListArrayAdapter extends ArrayAdapter<Address> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.address_item, parent, false);
+        LayoutInflater inflater;
+        View rowView;
+        TextView textView;
+
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        rowView = inflater.inflate(R.layout.address_item, parent, false);
 
         // set address name
-        TextView tvAddressName = (TextView)rowView.findViewById(R.id.textAddressName);
-        tvAddressName.setText(values.get(position).getName());
+        textView = (TextView)rowView.findViewById(R.id.textAddressName);
+        textView.setText(values.get(position).getName());
+
         // address's value
         // TODO address._id for now, but should be air quality.
-        TextView tvAddressValue = (TextView)rowView.findViewById(R.id.textAddressValue);
-        tvAddressValue.setText(String.valueOf(values.get(position).get_id()));
+        textView = (TextView)rowView.findViewById(R.id.textAddressValue);
+        textView.setText(String.valueOf(values.get(position).get_id()));
 
         return rowView;
     }
+
 }

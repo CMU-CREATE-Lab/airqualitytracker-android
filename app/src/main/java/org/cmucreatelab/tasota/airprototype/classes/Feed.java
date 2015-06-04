@@ -18,9 +18,7 @@ public class Feed {
     private double latitude;
     private double longitude;
     private long productId;
-
     private ArrayList<Channel> channels;
-
 
     public long getProductId() {
         return productId;
@@ -79,14 +77,24 @@ public class Feed {
     // Helper function to parse a feed's JSON and create objects (also does Channels)
     public static Feed parseFeedFromJson(JSONObject row) {
         Feed f = new Feed();
+
         try {
-            long feed_id = Long.parseLong(row.get("id").toString());
-            String name = row.get("name").toString();
-            String exposure = row.get("exposure").toString();
-            boolean isMobile = row.get("isMobile").toString().equals("1");
-            double latitude = Double.parseDouble(row.get("latitude").toString());
-            double longitude = Double.parseDouble(row.get("longitude").toString());
-            long productId = Long.parseLong(row.get("productId").toString());
+            long feed_id;
+            String name,exposure;
+            boolean isMobile;
+            double latitude,longitude;
+            long productId;
+            ArrayList<Channel> listChannels;
+            JSONObject channels;
+            Iterator<String> keys;
+
+            feed_id = Long.parseLong(row.get("id").toString());
+            name = row.get("name").toString();
+            exposure = row.get("exposure").toString();
+            isMobile = row.get("isMobile").toString().equals("1");
+            latitude = Double.parseDouble(row.get("latitude").toString());
+            longitude = Double.parseDouble(row.get("longitude").toString());
+            productId = Long.parseLong(row.get("productId").toString());
 
             f.setFeed_id(feed_id);
             f.setName(name);
@@ -96,9 +104,9 @@ public class Feed {
             f.setLongitude(longitude);
             f.setProductId(productId);
 
-            ArrayList<Channel> listChannels = f.getChannels();
-            JSONObject channels = row.getJSONObject("channelBounds").getJSONObject("channels");
-            Iterator<String> keys = channels.keys();
+            listChannels = f.getChannels();
+            channels = row.getJSONObject("channelBounds").getJSONObject("channels");
+            keys = channels.keys();
             while (keys.hasNext()) {
                 String channelName = keys.next();
                 listChannels.add( Channel.parseChannelFromJson( channelName, feed_id, channels.getJSONObject(channelName)) );
@@ -107,6 +115,7 @@ public class Feed {
             // TODO catch exception "failed to find JSON attr"
             e.printStackTrace();
         }
+
         return f;
     }
 

@@ -14,8 +14,7 @@ public class Address {
 
     private long _id;
     private String name;
-    private double latitude;
-    private double longitude;
+    private double latitude,longitude;
 
     public long get_id() {
         return _id;
@@ -47,7 +46,6 @@ public class Address {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
-
     }
 
 
@@ -55,29 +53,41 @@ public class Address {
     public boolean destroy(Context ctx) {
         if (this._id < 0) {
             return false;
+        } else {
+            AddressDbHelper mDbHelper;
+            SQLiteDatabase db;
+            String selection;
+            String[] selectionArgs = { String.valueOf(this._id) };
+
+            mDbHelper = new AddressDbHelper(ctx);
+            db = mDbHelper.getWritableDatabase();
+            selection = "_id LIKE ?";
+            db.delete(AddressContract.TABLE_NAME, selection, selectionArgs);
+            Log.i("Address", "DELETED ADDRESS RECORD id=" + this._id);
+
+            return true;
         }
-        AddressDbHelper mDbHelper = new AddressDbHelper(ctx);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        String selection = "_id LIKE ?";
-        String[] selectionArgs = { String.valueOf(this._id) };
-        db.delete(AddressContract.TABLE_NAME, selection, selectionArgs);
-        Log.i("Address", "DELETED ADDRESS RECORD id=" + this._id);
-        return true;
     }
 
 
     public static Address createAddressInDatabase(Context ctx, String name, double latitude, double longitude) {
-        AddressDbHelper mDbHelper = new AddressDbHelper(ctx);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
+        AddressDbHelper mDbHelper;
+        SQLiteDatabase db;
+        ContentValues values;
+        long newId;
+        Address address;
+
+        mDbHelper = new AddressDbHelper(ctx);
+        db = mDbHelper.getWritableDatabase();
+        values = new ContentValues();
         values.put(AddressContract.COLUMN_NAME, name);
         values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(latitude));
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(longitude));
-        long newId = db.insert(AddressContract.TABLE_NAME, "null", values);
+        newId = db.insert(AddressContract.TABLE_NAME, "null", values);
         Log.i("Address", "INSERTED RECORD INTO DATABASE id=" + newId);
-
-        Address address = new Address(name,latitude,longitude);
+        address = new Address(name,latitude,longitude);
         address.set_id(newId);
+
         return address;
     }
 

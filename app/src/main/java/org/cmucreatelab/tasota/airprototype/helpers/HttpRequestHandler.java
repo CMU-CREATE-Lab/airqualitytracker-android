@@ -47,24 +47,29 @@ public class HttpRequestHandler {
 
 
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
+        JsonObjectRequest jsonRequest;
+
         Log.i("sendJsonRequest", "requestUrl=" + requestUrl);
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
+        jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
         this.queue.add(jsonRequest);
     }
 
 
     public void requestFeeds(double latd, double longd, Response.Listener<JSONObject> response, Response.ErrorListener error) {
-        int requestMethod = Request.Method.GET;
-        String requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds";
-        JSONObject requestParams = null;
+        int requestMethod;
+        String requestUrl;
+        JSONObject requestParams;
+        double la1,lo1,la2,lo2;  // given lat, long, create a bounding box and search from that
+        long maxTime;
+
+        requestMethod = Request.Method.GET;
+        requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds";
+        requestParams = null;
 
         // only request AirNow (11) or ACHD (1)
         requestUrl += "?whereOr=ProductId=11,ProductId=1";
-
-        // given lat, long, create a bounding box and search from that
-        double la1,lo1,la2,lo2;
         // the past 24 hours
-        long maxTime = new Date().getTime() / 1000 - 86400;
+        maxTime = new Date().getTime() / 1000 - 86400;
         la1 = latd-BOUNDBOX_LAT;
         la2 = latd+BOUNDBOX_LONG;
         lo1 = longd-BOUNDBOX_LAT;
@@ -79,17 +84,20 @@ public class HttpRequestHandler {
 
 
     public void requestGoogleGeocode(String addressName, Response.Listener<JSONObject> response, Response.ErrorListener error) {
-        int requestMethod = Request.Method.GET;
-        String requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-        JSONObject requestParams = null;
+        int requestMethod;
+        String requestUrl;
+        JSONObject requestParams;
 
+        requestMethod = Request.Method.GET;
+        requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+        requestParams = null;
         try {
             requestUrl += java.net.URLEncoder.encode(addressName, "ISO-8859-1");
         } catch (Exception e) {
             // TODO handle unexpected encoding exception
             e.printStackTrace();
         }
-
         this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
     }
+
 }

@@ -17,31 +17,38 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
-    Address showAddress;
 
+    Address showAddress;
     ArrayList<Feed> feeds;
     ArrayAdapter<Feed> feedsListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent;
+        int index;
+        TextView textView;
+        ListView listView;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_show);
-
-        Intent intent = getIntent();
-        int index = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX,-1);
+        intent = getIntent();
+        index = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX, -1);
         showAddress = GlobalHandler.getInstance(this.getApplicationContext()).addresses.get(index);
+        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.get(showAddress);
+        feedsListAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
 
-        TextView tv = (TextView)findViewById(R.id.textShowAddressName);
-        tv.setText(showAddress.getName());
+        // generate content for TextViews
+        textView = (TextView)findViewById(R.id.textShowAddressName);
+        textView.setText(showAddress.getName());
+        textView = (TextView)findViewById(R.id.textShowAddressLat);
+        textView.setText(String.valueOf(showAddress.getLatitude()));
+        textView = (TextView)findViewById(R.id.textShowAddressLong);
+        textView.setText(String.valueOf(showAddress.getLongitude()));
 
-        tv = (TextView)findViewById(R.id.textShowAddressLat);
-        tv.setText(String.valueOf(showAddress.getLatitude()));
-
-        tv = (TextView)findViewById(R.id.textShowAddressLong);
-        tv.setText(String.valueOf(showAddress.getLongitude()));
-
-        ListView lv = (ListView)findViewById(R.id.listShowAddressFeeds);
-        lv.setOnItemClickListener(
+        // setup ListView
+        listView = (ListView)findViewById(R.id.listShowAddressFeeds);
+        listView.setAdapter(feedsListAdapter);
+        listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -49,15 +56,13 @@ public class AddressShowActivity extends ActionBarActivity {
                     }
                 }
         );
-
-        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.get(showAddress);
-        feedsListAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
-        lv.setAdapter(feedsListAdapter);
     }
+
 
     public void switchToFeedActivity(int index) {
         // TODO switch to FeedActivity
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,6 +70,7 @@ public class AddressShowActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_address_show, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

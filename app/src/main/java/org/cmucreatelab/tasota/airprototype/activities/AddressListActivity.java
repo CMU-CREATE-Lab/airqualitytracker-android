@@ -23,23 +23,25 @@ import org.cmucreatelab.tasota.airprototype.helpers.HttpRequestHandler;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-
 public class AddressListActivity extends ActionBarActivity {
     ArrayList<Address> addresses;
     AddressListArrayAdapter listAdapter;
-
     public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ListView listView;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
-
         addresses = GlobalHandler.getInstance(this.getApplicationContext()).addresses;
+        listAdapter = new AddressListArrayAdapter(this, addresses);
 
-        ListView lv = (ListView)findViewById(R.id.listViewAddresses);
-        lv.setLongClickable(true);
-        lv.setOnItemClickListener(
+        listView = (ListView)findViewById(R.id.listViewAddresses);
+        listView.setAdapter(listAdapter);
+        listView.setLongClickable(true);
+        listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -47,15 +49,14 @@ public class AddressListActivity extends ActionBarActivity {
                     }
                 }
         );
-        lv.setOnItemLongClickListener(
+        listView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
-
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Log.i("onItemLongClick","DID LONG CLICK");
+                        Log.i("onItemLongClick", "DID LONG CLICK");
                         Address address = addresses.get(i);
                         if (address.get_id() < 0) {
-                            Log.i("onItemLongClick","WARNING - the long-clicked address has negative id="+address.get_id());
+                            Log.i("onItemLongClick", "WARNING - the long-clicked address has negative id=" + address.get_id());
                         } else {
                             showDeleteDialog(address);
                         }
@@ -63,14 +64,15 @@ public class AddressListActivity extends ActionBarActivity {
                     }
                 }
         );
-        listAdapter = new AddressListArrayAdapter(this, addresses);
-        lv.setAdapter(listAdapter);
     }
 
 
     private void showDeleteDialog(final Address address) {
-        final Context ctx = this.getApplicationContext();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final Context ctx;
+        AlertDialog.Builder builder;
+
+        ctx = this.getApplicationContext();
+        builder = new AlertDialog.Builder(this);
         builder.setMessage("Remove this Address from your list?");
         builder.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -102,6 +104,7 @@ public class AddressListActivity extends ActionBarActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -129,18 +132,20 @@ public class AddressListActivity extends ActionBarActivity {
 
 
     public void openNew() {
+        final Context ctx;
+        AlertDialog.Builder builder;
+        final EditText input;
         Log.i("openNew", "action bar selected.");
 
-        final Context ctx = this.getApplicationContext();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        ctx = this.getApplicationContext();
+        builder = new AlertDialog.Builder(this);
         builder.setMessage("Enter a zipcode, city, or address below.");
-
-        final EditText input = new EditText(ctx);
+        input = new EditText(ctx);
         // TODO test color schemes... ideally dialog boxes should know what colors they are supposed to use.
         input.setTextColor( getResources().getColor(R.color.primary_text_default_material_light) );
         input.setSingleLine(true);
-        builder.setView(input);
 
+        builder.setView(input);
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // OUTLINE FOR SEAMLESS INTERFACE FOR WAITING FOR JSON RESPONSE
@@ -150,20 +155,22 @@ public class AddressListActivity extends ActionBarActivity {
                 // While list is nonempty, display a spinner beneath your list of addresses.
                 final String addressName = input.getText().toString();
                 Log.i("onClick", "Adding address=" + addressName);
-
                 Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             String status = response.getString("status");
                             if (status.equals("OK")) {
+                                JSONObject locations;
+                                double latd,longd;
+                                Address result;
+
                                 // TODO get formatted_address field?
                                 // TODO this grabs only the first result but maybe we want to provide options? Doubt it though
-                                JSONObject locations = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
-                                double latd = Double.parseDouble(locations.getString("lat"));
-                                double longd = Double.parseDouble(locations.getString("lng"));
-
-                                Address result = Address.createAddressInDatabase(ctx,addressName,latd,longd);
+                                locations = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+                                latd = Double.parseDouble(locations.getString("lat"));
+                                longd = Double.parseDouble(locations.getString("lng"));
+                                result = Address.createAddressInDatabase(ctx, addressName, latd, longd);
                                 GlobalHandler.getInstance(ctx).addAddress(result);
 
                                 listAdapter.notifyDataSetChanged();
@@ -182,7 +189,6 @@ public class AddressListActivity extends ActionBarActivity {
                         // TODO handle errors
                     }
                 };
-
                 HttpRequestHandler.getInstance(ctx).requestGoogleGeocode(addressName,response,error);
             }
         });
@@ -193,4 +199,5 @@ public class AddressListActivity extends ActionBarActivity {
         });
         builder.create().show();
     }
+
 }

@@ -27,10 +27,13 @@ public class GlobalHandler {
 
 
     private void addCurrentLocationToAddresses() {
+        Address gps;
+        ArrayList<Feed> gFeed;
+
         // TODO this will be your GPS location, eventually
-        Address gps = new Address("15235", 40.4586216, -79.8184684);
+        gps = new Address("15235", 40.4586216, -79.8184684);
         gps.set_id(-1);
-        ArrayList<Feed> gFeed = getFeedsForAddress(gps);
+        gFeed = getFeedsForAddress(gps);
         this.addresses.add(gps);
         this.addressFeedHash.put(gps, gFeed);
     }
@@ -43,35 +46,45 @@ public class GlobalHandler {
                 AddressContract.COLUMN_LATITUDE,
                 AddressContract.COLUMN_LONGITUDE
         };
-        AddressDbHelper mDbHelper = new AddressDbHelper(appContext);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        Cursor c = db.query(AddressContract.TABLE_NAME, projection,
+        AddressDbHelper mDbHelper;
+        SQLiteDatabase db;
+        Cursor cursor;
+
+        mDbHelper = new AddressDbHelper(appContext);
+        db = mDbHelper.getWritableDatabase();
+        cursor = db.query(AddressContract.TABLE_NAME, projection,
                 null, null, // columns and values for WHERE clause
                 null, null, // group rows, filter row groups
                 null // sort order
         );
-        try {
-            c.moveToFirst();
-            while (!c.isAfterLast()) {
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Address address;
+            ArrayList<Feed> feed;
+            int id;
+            String name;
+            double latd,longd;
+
+            try {
                 // read record
-                int id = c.getInt(c.getColumnIndexOrThrow("_id"));
-                String name = c.getString(c.getColumnIndexOrThrow("name"));
-                double latd = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("latitude")));
-                double longd = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("longitude")));
+                id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+                name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
+                longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
                 Log.i("addToDatabase", "READ RECORD _id=" + id);
 
                 // add to data structure
-                Address a = new Address(name, latd, longd);
-                a.set_id(id);
-                ArrayList<Feed> f = getFeedsForAddress(a);
-                this.addresses.add(a);
-                this.addressFeedHash.put(a, f);
-
-                // iterate
-                c.moveToNext();
+                address = new Address(name, latd, longd);
+                address.set_id(id);
+                feed = getFeedsForAddress(address);
+                this.addresses.add(address);
+                this.addressFeedHash.put(address, feed);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e){
-            e.printStackTrace();
+
+            // iterate
+            cursor.moveToNext();
         }
     }
 
@@ -120,12 +133,14 @@ public class GlobalHandler {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONArray jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
-                    int size = jsonFeeds .length();
-                    for (int i=0;i<size;i++) {
-                        JSONObject feed = (JSONObject)jsonFeeds.get(i);
-                        Feed f = Feed.parseFeedFromJson(feed);
-                        result.add(f);
+                    JSONArray jsonFeeds;
+                    int i,size;
+
+                    jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
+                    size = jsonFeeds .length();
+                    for (i=0;i<size;i++) {
+                        JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
+                        result.add( Feed.parseFeedFromJson(jsonFeed) );
                     }
                 } catch (Exception e) {
                     // TODO catch exception "failed to find JSON attr"
