@@ -109,6 +109,19 @@ public class GlobalHandler {
     }
 
 
+    public void removeAddress(Address address) {
+        addressFeedHash.remove(address);
+        addresses.remove(address);
+    }
+
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        ArrayList<Feed> feed = getFeedsForAddress(address);
+        addressFeedHash.put(address,feed);
+    }
+
+
     public ArrayList<Feed> getFeedsForAddress(Address addr) {
         final ArrayList<Feed> result = new ArrayList();
 

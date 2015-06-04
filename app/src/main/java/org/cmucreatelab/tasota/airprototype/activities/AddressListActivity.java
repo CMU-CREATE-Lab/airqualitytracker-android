@@ -1,15 +1,23 @@
 package org.cmucreatelab.tasota.airprototype.activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.cmucreatelab.tasota.airprototype.AddressListArrayAdapter;
 import org.cmucreatelab.tasota.airprototype.R;
@@ -37,6 +45,7 @@ public class AddressListActivity extends ActionBarActivity {
 //        addresses.addAll( GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.keySet() );
 
         ListView lv = (ListView)findViewById(R.id.listViewAddresses);
+        lv.setLongClickable(true);
         lv.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -45,8 +54,38 @@ public class AddressListActivity extends ActionBarActivity {
                     }
                 }
         );
+        lv.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Log.i("onItemLongClick","DID LONG CLICK");
+                        showDeleteDialog(addresses.get(i));
+                        return true;
+                    }
+                }
+        );
         listAdapter = new AddressListArrayAdapter(this, addresses);
         lv.setAdapter(listAdapter);
+    }
+
+
+    private void showDeleteDialog(final Address address) {
+        final Context ctx = this.getApplicationContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Remove this Address from your list?");
+        builder.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                GlobalHandler.getInstance(ctx).removeAddress(address);
+                AddressListActivity.this.listAdapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        builder.create().show();
     }
 
 
@@ -102,5 +141,32 @@ public class AddressListActivity extends ActionBarActivity {
     public void openNew() {
         // TODO open new (address input)
         Log.i("openNew", "action bar selected.");
+
+        final Context ctx = this.getApplicationContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Enter a zipcode, city, or address below.");
+
+        final EditText input = new EditText(ctx);
+        // TODO test color schemes... ideally dialog boxes should know what colors they are supposed to use.
+        input.setTextColor( getResources().getColor(R.color.primary_text_default_material_light) );
+        builder.setView(input);
+
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // TODO take arg to google API
+                // OUTLINE FOR SEAMLESS INTERFACE FOR WAITING FOR JSON RESPONSE
+                // have a list "newAddressQueue" that holds the status of the json requests made.
+                // Each element in list will have a unique identifier (timestamp?)
+                // On completion from JSON response/google API, remove timestamp from list.
+                // While list is nonempty, display a spinner beneath your list of addresses.
+                Log.i("onClick", "Adding address="+input.getText());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        builder.create().show();
     }
 }
