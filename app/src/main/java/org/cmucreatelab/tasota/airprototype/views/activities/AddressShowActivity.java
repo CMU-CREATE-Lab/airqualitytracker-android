@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities;
+package org.cmucreatelab.tasota.airprototype.views.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;

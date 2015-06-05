@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype;
+package org.cmucreatelab.tasota.airprototype.views.uielements;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,21 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Address;
 import java.util.ArrayList;
 
 /**
  * Created by mike on 6/2/15.
  */
-public class AddressListArrayAdapter extends ArrayAdapter<Address> {
+public class ArrayAdapterAddressList extends ArrayAdapter<Address> {
     private final Context context;
     private final ArrayList<Address> values;
 
-    public AddressListArrayAdapter(Context context, ArrayList<Address> values) {
+
+    public ArrayAdapterAddressList(Context context, ArrayList<Address> values) {
         super(context, R.layout.address_item, values);
         this.context = context;
         this.values = values;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
