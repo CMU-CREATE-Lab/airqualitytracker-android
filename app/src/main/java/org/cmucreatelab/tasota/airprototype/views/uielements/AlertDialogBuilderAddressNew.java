@@ -79,11 +79,14 @@ public class AlertDialogBuilderAddressNew extends AlertDialog.Builder {
                     }
                 };
                 HttpRequestHandler.getInstance(appContext).requestGoogleGeocode(addressName, response, error);
+                // ASSERT: this will essentially release the current AlertDialog
+                activityContext.createNew = null;
             }
         });
         this.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
+                // ASSERT: this will essentially release the current AlertDialog
+                activityContext.createNew = null;
             }
         });
     }

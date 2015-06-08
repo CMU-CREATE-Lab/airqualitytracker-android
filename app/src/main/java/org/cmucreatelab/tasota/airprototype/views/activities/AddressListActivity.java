@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.views.activities;
 
+import android.support.v7.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -22,10 +23,12 @@ public class AddressListActivity extends ActionBarActivity {
     public ArrayList<Address> addresses;
     public ArrayAdapterAddressList listAdapter;
     public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
+    public AlertDialog createNew, delete;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("DEBUG", "executing onCreate.");
         ListView listView;
 
         super.onCreate(savedInstanceState);
@@ -63,14 +66,17 @@ public class AddressListActivity extends ActionBarActivity {
 
 
     private void showDeleteDialog(final Address address) {
-        AlertDialogBuilderAddressListDelete builder = new AlertDialogBuilderAddressListDelete(this, address);
-        builder.create().show();
+        if (delete == null) {
+            AlertDialogBuilderAddressListDelete builder = new AlertDialogBuilderAddressListDelete(this, address);
+            delete = builder.create();
+        }
+        delete.show();
     }
 
 
     public void switchToMainActivity(int index) {
         Intent intent = new Intent(this, AddressShowActivity.class);
-        intent.putExtra(ADDRESS_INDEX,index);
+        intent.putExtra(ADDRESS_INDEX, index);
         startActivity(intent);
     }
 
@@ -110,8 +116,42 @@ public class AddressListActivity extends ActionBarActivity {
 
 
     public void openNew() {
-        AlertDialogBuilderAddressNew builder = new AlertDialogBuilderAddressNew(this);
-        builder.create().show();
+        if (createNew == null) {
+            AlertDialogBuilderAddressNew builder = new AlertDialogBuilderAddressNew(this);
+            createNew = builder.create();
+        }
+        createNew.show();
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i("DEBUG","onRestoreInstanceState");
+        if (savedInstanceState.getBoolean("dialogDelete")) {
+//            delete.show();
+        }
+        if (savedInstanceState.getBoolean("dialogCreateNew")) {
+//            createNew.show();
+            openNew();
+        }
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i("DEBUG", "onSaveInstanceState");
+        if (delete != null && delete.isShowing()) {
+            Log.i("DEBUG", "delete.isShowing");
+            outState.putBoolean("dialogDelete",true);
+            delete.dismiss();
+        }
+        if (createNew != null && createNew.isShowing()) {
+            Log.i("DEBUG", "createNew.isShowing");
+            outState.putBoolean("dialogCreateNew",true);
+            createNew.dismiss();
+        }
     }
 
 }
