@@ -21,20 +21,23 @@ import org.json.JSONObject;
 public class AlertDialogBuilderAddressNew extends AlertDialog.Builder {
 
 
-    public AlertDialogBuilderAddressNew(final AddressListActivity activityContext) {
+    public AlertDialogBuilderAddressNew(final AddressListActivity activityContext, final EditText inputField) {
+        this(activityContext,inputField,"");
+    }
+
+    public AlertDialogBuilderAddressNew(final AddressListActivity activityContext, final EditText inputField, String inputString) {
         super(activityContext);
         final Context appContext;
-        final EditText input;
         Log.i("openNew", "action bar selected.");
 
         appContext = activityContext.getApplicationContext();
         this.setMessage("Enter a zipcode, city, or address below.");
-        input = new EditText(appContext);
         // TODO test color schemes... ideally dialog boxes should know what colors they are supposed to use.
-        input.setTextColor( activityContext.getResources().getColor(R.color.primary_text_default_material_light) );
-        input.setSingleLine(true);
+        inputField.setTextColor( activityContext.getResources().getColor(R.color.primary_text_default_material_light) );
+        inputField.setSingleLine(true);
+        inputField.setText(inputString);
 
-        this.setView(input);
+        this.setView(inputField);
         this.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // OUTLINE FOR SEAMLESS INTERFACE FOR WAITING FOR JSON RESPONSE
@@ -42,7 +45,7 @@ public class AlertDialogBuilderAddressNew extends AlertDialog.Builder {
                 // Each element in list will have a unique identifier (timestamp?)
                 // On completion from JSON response/google API, remove timestamp from list.
                 // While list is nonempty, display a spinner beneath your list of addresses.
-                final String addressName = input.getText().toString();
+                final String addressName = inputField.getText().toString();
                 Log.i("onClick", "Adding address=" + addressName);
                 Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
                     @Override
@@ -79,16 +82,12 @@ public class AlertDialogBuilderAddressNew extends AlertDialog.Builder {
                     }
                 };
                 HttpRequestHandler.getInstance(appContext).requestGoogleGeocode(addressName, response, error);
-                // ASSERT: this will essentially release the current AlertDialog
-                activityContext.createNew = null;
             }
         });
         this.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // ASSERT: this will essentially release the current AlertDialog
-                activityContext.createNew = null;
+                // does nothing
             }
         });
     }
-
 }

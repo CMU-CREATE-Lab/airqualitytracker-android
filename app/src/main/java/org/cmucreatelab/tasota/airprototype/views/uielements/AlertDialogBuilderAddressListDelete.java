@@ -24,14 +24,11 @@ public class AlertDialogBuilderAddressListDelete extends AlertDialog.Builder {
                 GlobalHandler.getInstance(ctx).removeAddress(address);
                 address.destroy(ctx);
                 activityContext.listAdapter.notifyDataSetChanged();
-                // ASSERT: this will essentially release the current AlertDialog
-                activityContext.delete = null;
             }
         });
         this.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // ASSERT: this will essentially release the current AlertDialog
-                activityContext.delete = null;
+                // does nothing
             }
         });
     }
