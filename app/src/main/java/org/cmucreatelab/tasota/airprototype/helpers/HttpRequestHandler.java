@@ -19,16 +19,6 @@ public class HttpRequestHandler {
     private Context appContext;
     private RequestQueue queue;
 
-    // Distance from central point, in kilometers (box dimension will be 2x larger)
-    private final double BOUNDBOX_HEIGHT = 20.0;
-    // Distance from central point, in kilometers (box dimension will be 2x larger)
-    private final double BOUNDBOX_LENGTH = 20.0;
-    // radius of Earth
-    private final double RADIUS_EARTH = 6371.0;
-    // ASSERT these values will be less than 90.0
-    private final double BOUNDBOX_LAT = BOUNDBOX_HEIGHT / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
-    private final double BOUNDBOX_LONG = BOUNDBOX_LENGTH / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
-
 
     // Nobody accesses the constructor
     private HttpRequestHandler(Context ctx) {
@@ -70,10 +60,11 @@ public class HttpRequestHandler {
         requestUrl += "?whereOr=ProductId=11,ProductId=1";
         // the past 24 hours
         maxTime = new Date().getTime() / 1000 - 86400;
-        la1 = latd-BOUNDBOX_LAT;
-        la2 = latd+BOUNDBOX_LONG;
-        lo1 = longd-BOUNDBOX_LAT;
-        lo2 = longd+BOUNDBOX_LONG;
+        // get bounding box
+        la1 = latd-MapGeometry.BOUNDBOX_LAT;
+        la2 = latd+MapGeometry.BOUNDBOX_LONG;
+        lo1 = longd-MapGeometry.BOUNDBOX_LAT;
+        lo2 = longd+MapGeometry.BOUNDBOX_LONG;
         requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime;
 
         // only request from ESDR the fields that we care about
