@@ -1,10 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.views.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,12 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListDelete;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListNew;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
@@ -26,6 +21,7 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Address;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AddressListActivity extends ActionBarActivity {
 
@@ -81,6 +77,7 @@ public class AddressListActivity extends ActionBarActivity {
                     @Override
                     public void onConnected(Bundle bundle) {
                         lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                        updateCurrentLocation();
                         Log.i("DEBUG", "last known location is " + lastLocation.toString());
                         LocationRequest locationRequest = new LocationRequest();
                         locationRequest.setInterval(10000);
@@ -109,12 +106,22 @@ public class AddressListActivity extends ActionBarActivity {
                 @Override
                 public void onLocationChanged(Location location) {
                     lastLocation = location;
+                    updateCurrentLocation();
                     Log.i("DEBUG", "LOCATION WAS UPDATED TO " + lastLocation.toString());
                 }
             };
         }
         // make sure you actually CONNECT the api client for it to do anything (so much hatred)
         googleApiClient.connect();
+    }
+
+
+    private void updateCurrentLocation() {
+        Address a = addresses.get(0);
+        a.setName( String.valueOf(Calendar.getInstance().getTimeInMillis()) );
+        a.setLatitude( lastLocation.getLatitude() );
+        a.setLongitude( lastLocation.getLongitude() );
+        listAdapter.notifyDataSetChanged();
     }
 
 
