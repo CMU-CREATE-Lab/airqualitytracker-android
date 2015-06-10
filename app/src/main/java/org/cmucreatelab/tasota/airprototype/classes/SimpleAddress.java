@@ -10,7 +10,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 /**
  * Created by mike on 6/1/15.
  */
-public class Address {
+public class SimpleAddress {
 
     private long _id;
     private String name;
@@ -42,7 +42,7 @@ public class Address {
     }
 
 
-    public Address(String name, double latitude, double longitude) {
+    public SimpleAddress(String name, double latitude, double longitude) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -63,19 +63,19 @@ public class Address {
             db = mDbHelper.getWritableDatabase();
             selection = "_id LIKE ?";
             db.delete(AddressContract.TABLE_NAME, selection, selectionArgs);
-            Log.i("Address", "DELETED ADDRESS RECORD id=" + this._id);
+            Log.i("SimpleAddress", "DELETED ADDRESS RECORD id=" + this._id);
 
             return true;
         }
     }
 
 
-    public static Address createAddressInDatabase(Context ctx, String name, double latitude, double longitude) {
+    public static SimpleAddress createAddressInDatabase(Context ctx, String name, double latitude, double longitude) {
         AddressDbHelper mDbHelper;
         SQLiteDatabase db;
         ContentValues values;
         long newId;
-        Address address;
+        SimpleAddress simpleAddress;
 
         mDbHelper = new AddressDbHelper(ctx);
         db = mDbHelper.getWritableDatabase();
@@ -84,11 +84,11 @@ public class Address {
         values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(latitude));
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(longitude));
         newId = db.insert(AddressContract.TABLE_NAME, "null", values);
-        Log.i("Address", "INSERTED RECORD INTO DATABASE id=" + newId);
-        address = new Address(name,latitude,longitude);
-        address.set_id(newId);
+        Log.i("SimpleAddress", "INSERTED RECORD INTO DATABASE id=" + newId);
+        simpleAddress = new SimpleAddress(name,latitude,longitude);
+        simpleAddress.set_id(newId);
 
-        return address;
+        return simpleAddress;
     }
 
 }

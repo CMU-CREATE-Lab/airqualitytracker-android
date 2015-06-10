@@ -4,16 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
-import android.os.Bundle;
 import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
-import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
@@ -31,8 +26,8 @@ public class GlobalHandler {
 
     private static GlobalHandler classInstance;
     private Context appContext;
-    public ArrayList<Address> addresses;
-    public HashMap<Address,ArrayList<Feed>> addressFeedHash;
+    public ArrayList<SimpleAddress> addresses;
+    public HashMap<SimpleAddress,ArrayList<Feed>> addressFeedHash;
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
     public LocationUpdateHandler locationUpdateHandler;
@@ -42,11 +37,11 @@ public class GlobalHandler {
 
 
     private void addCurrentLocationToAddresses() {
-        Address gps;
+        SimpleAddress gps;
         ArrayList<Feed> gFeed;
 
         // TODO this will be your GPS location, eventually
-        gps = new Address("Loading Current Location...", 0.0, 0.0);
+        gps = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
         gps.set_id(-1);
         gFeed = getFeedsForAddress(gps);
         this.addresses.add(gps);
@@ -74,7 +69,7 @@ public class GlobalHandler {
         );
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Address address;
+            SimpleAddress simpleAddress;
             ArrayList<Feed> feed;
             int id;
             String name;
@@ -89,11 +84,11 @@ public class GlobalHandler {
                 Log.i("addToDatabase", "READ RECORD _id=" + id);
 
                 // add to data structure
-                address = new Address(name, latd, longd);
-                address.set_id(id);
-                feed = getFeedsForAddress(address);
-                this.addresses.add(address);
-                this.addressFeedHash.put(address, feed);
+                simpleAddress = new SimpleAddress(name, latd, longd);
+                simpleAddress.set_id(id);
+                feed = getFeedsForAddress(simpleAddress);
+                this.addresses.add(simpleAddress);
+                this.addressFeedHash.put(simpleAddress, feed);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -105,7 +100,7 @@ public class GlobalHandler {
 
 
     protected void updateCurrentLocation(Location lastLocation) {
-        Address a = addresses.get(0);
+        SimpleAddress a = addresses.get(0);
         a.setName(String.valueOf(Calendar.getInstance().getTimeInMillis()));
         a.setLatitude(lastLocation.getLatitude());
         a.setLongitude(lastLocation.getLongitude());
@@ -141,20 +136,20 @@ public class GlobalHandler {
     }
 
 
-    public void removeAddress(Address address) {
-        addressFeedHash.remove(address);
-        addresses.remove(address);
+    public void removeAddress(SimpleAddress simpleAddress) {
+        addressFeedHash.remove(simpleAddress);
+        addresses.remove(simpleAddress);
     }
 
 
-    public void addAddress(Address address) {
-        addresses.add(address);
-        ArrayList<Feed> feed = getFeedsForAddress(address);
-        addressFeedHash.put(address,feed);
+    public void addAddress(SimpleAddress simpleAddress) {
+        addresses.add(simpleAddress);
+        ArrayList<Feed> feed = getFeedsForAddress(simpleAddress);
+        addressFeedHash.put(simpleAddress,feed);
     }
 
 
-    public ArrayList<Feed> getFeedsForAddress(Address addr) {
+    public ArrayList<Feed> getFeedsForAddress(SimpleAddress addr) {
         final ArrayList<Feed> result = new ArrayList();
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {

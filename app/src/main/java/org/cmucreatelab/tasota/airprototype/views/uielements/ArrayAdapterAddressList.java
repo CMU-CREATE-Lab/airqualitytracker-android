@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressShowActivity;
 
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 /**
  * Created by mike on 6/2/15.
  */
-public class ArrayAdapterAddressList extends ArrayAdapter<Address> {
+public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress> {
     private final Context context;
-    private final ArrayList<Address> values;
+    private final ArrayList<SimpleAddress> values;
     private ListView listView;
 
 
-    public ArrayAdapterAddressList(AddressListActivity context, ArrayList<Address> values) {
+    public ArrayAdapterAddressList(AddressListActivity context, ArrayList<SimpleAddress> values) {
         super(context, R.layout.address_item, values);
         this.context = context;
         this.values = values;
@@ -75,11 +75,11 @@ public class ArrayAdapterAddressList extends ArrayAdapter<Address> {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Log.i("onItemLongClick", "DID LONG CLICK");
-                        Address address = context.addresses.get(i);
-                        if (address.get_id() < 0) {
-                            Log.i("onItemLongClick", "WARNING - the long-clicked address has negative id=" + address.get_id());
+                        SimpleAddress simpleAddress = context.addresses.get(i);
+                        if (simpleAddress.get_id() < 0) {
+                            Log.i("onItemLongClick", "WARNING - the long-clicked address has negative id=" + simpleAddress.get_id());
                         } else {
-                            context.showDeleteDialog(address);
+                            context.showDeleteDialog(simpleAddress);
                         }
                         return true;
                     }

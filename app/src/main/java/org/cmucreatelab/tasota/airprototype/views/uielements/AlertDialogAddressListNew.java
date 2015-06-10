@@ -2,16 +2,14 @@ package org.cmucreatelab.tasota.airprototype.views.uielements;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.HttpRequestHandler;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 import org.json.JSONObject;
 
@@ -71,14 +69,14 @@ public class AlertDialogAddressListNew {
                                 if (status.equals("OK")) {
                                     JSONObject locations;
                                     double latd, longd;
-                                    Address result;
+                                    SimpleAddress result;
 
                                     // TODO get formatted_address field?
                                     // TODO this grabs only the first result but maybe we want to provide options? Doubt it though
                                     locations = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
                                     latd = Double.parseDouble(locations.getString("lat"));
                                     longd = Double.parseDouble(locations.getString("lng"));
-                                    result = Address.createAddressInDatabase(appContext, addressName, latd, longd);
+                                    result = SimpleAddress.createAddressInDatabase(appContext, addressName, latd, longd);
                                     GlobalHandler.getInstance(appContext).addAddress(result);
 
                                     activityContext.listAdapter.notifyDataSetChanged();

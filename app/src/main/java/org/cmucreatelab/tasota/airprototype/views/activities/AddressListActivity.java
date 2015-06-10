@@ -5,17 +5,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListDelete;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListNew;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.Address;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;
 
 public class AddressListActivity extends ActionBarActivity {
 
-    public ArrayList<Address> addresses;
+    public ArrayList<SimpleAddress> addresses;
     public ArrayAdapterAddressList listAdapter;
     public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
     public AlertDialogAddressListNew dialogNew;
@@ -34,8 +35,8 @@ public class AddressListActivity extends ActionBarActivity {
     }
 
 
-    public void showDeleteDialog(final Address address) {
-        dialogDelete = new AlertDialogAddressListDelete(this, address);
+    public void showDeleteDialog(final SimpleAddress simpleAddress) {
+        dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
         dialogDelete.getAlertDialog().show();
     }
 

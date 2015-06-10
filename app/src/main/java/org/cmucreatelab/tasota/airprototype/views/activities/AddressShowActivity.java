@@ -11,14 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
 
-    Address showAddress;
+    SimpleAddress showSimpleAddress;
     ArrayList<Feed> feeds;
     ArrayAdapter<Feed> feedsListAdapter;
 
@@ -33,17 +33,17 @@ public class AddressShowActivity extends ActionBarActivity {
         setContentView(R.layout.activity_address_show);
         intent = getIntent();
         index = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX, -1);
-        showAddress = GlobalHandler.getInstance(this.getApplicationContext()).addresses.get(index);
-        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.get(showAddress);
+        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).addresses.get(index);
+        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedHash.get(showSimpleAddress);
         feedsListAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
 
         // generate content for TextViews
         textView = (TextView)findViewById(R.id.textShowAddressName);
-        textView.setText(showAddress.getName());
+        textView.setText(showSimpleAddress.getName());
         textView = (TextView)findViewById(R.id.textShowAddressLat);
-        textView.setText(String.valueOf(showAddress.getLatitude()));
+        textView.setText(String.valueOf(showSimpleAddress.getLatitude()));
         textView = (TextView)findViewById(R.id.textShowAddressLong);
-        textView.setText(String.valueOf(showAddress.getLongitude()));
+        textView.setText(String.valueOf(showSimpleAddress.getLongitude()));
 
         // setup ListView
         listView = (ListView)findViewById(R.id.listShowAddressFeeds);
