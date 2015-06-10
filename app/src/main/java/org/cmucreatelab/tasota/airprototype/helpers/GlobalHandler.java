@@ -1,9 +1,13 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -11,12 +15,15 @@ import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
+import org.cmucreatelab.tasota.airprototype.views.activities.FetchAddressService;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import javax.xml.transform.Result;
 
 /**
  * Created by mike on 6/2/15.
@@ -123,7 +130,29 @@ public class GlobalHandler {
         a.setLatitude(lastLocation.getLatitude());
         a.setLongitude(lastLocation.getLongitude());
         notifyGlobalDataSetChanged();
+//
+//
+        startIntentService(lastLocation);
     }
+
+    private AddressResultReceiver resultReceiver;
+
+
+    protected void startIntentService(Location lastLocation) {
+        if (Geocoder.isPresent()) {
+            Intent intent = new Intent(this.appContext, FetchAddressService.class);
+            resultReceiver = new AddressResultReceiver(new Handler());
+            intent.putExtra(FetchAddressService.Constants.RECEIVER, this.resultReceiver);
+//            intent.putExtra(FetchAddressService.Constants.LOCATION_DATA_EXTRA, lastLocation);
+            intent.putExtra("latitude",lastLocation.getLatitude());
+            intent.putExtra("longitude",lastLocation.getLongitude());
+            this.appContext.startService(intent);
+        } else {
+            Log.i("ERROR","Geocoder is not present");
+        }
+    }
+//
+//
 
 
     public void removeAddress(SimpleAddress simpleAddress) {
