@@ -1,11 +1,11 @@
-package org.cmucreatelab.tasota.airprototype.helpers;
+package org.cmucreatelab.tasota.airprototype.views.services;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 /**
  * Created by mike on 6/10/15.
