@@ -14,7 +14,7 @@ import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
-import org.cmucreatelab.tasota.airprototype.views.activities.FetchAddressService;
+import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -128,16 +128,16 @@ public class GlobalHandler {
         a.setLongitude(lastLocation.getLongitude());
         notifyGlobalDataSetChanged();
         // TODO consider this when more than one update can occur.
-        startIntentService(lastLocation);
+        startFetchAddressIntentService(lastLocation);
     }
 
 
-    protected void startIntentService(Location lastLocation) {
+    protected void startFetchAddressIntentService(Location lastLocation) {
         if (Geocoder.isPresent()) {
-            Intent intent = new Intent(this.appContext, FetchAddressService.class);
+            Intent intent = new Intent(this.appContext, FetchAddressIntentService.class);
             AddressResultReceiver resultReceiver = new AddressResultReceiver(new Handler(),this);
 
-            intent.putExtra(FetchAddressService.Constants.RECEIVER, resultReceiver);
+            intent.putExtra(FetchAddressIntentService.Constants.RECEIVER, resultReceiver);
             intent.putExtra("latitude",lastLocation.getLatitude());
             intent.putExtra("longitude",lastLocation.getLongitude());
             this.appContext.startService(intent);

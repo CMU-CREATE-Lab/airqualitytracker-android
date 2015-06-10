@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.activities;
+package org.cmucreatelab.tasota.airprototype.views.services;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * Created by mike on 6/10/15.
  */
-public class FetchAddressService extends IntentService {
+public class FetchAddressIntentService extends IntentService {
 
     protected ResultReceiver resultReceiver;
 
@@ -33,7 +33,7 @@ public class FetchAddressService extends IntentService {
     }
 
 
-    public FetchAddressService() {
+    public FetchAddressIntentService() {
         super("");
     }
 
