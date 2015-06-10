@@ -27,8 +27,9 @@ public class HttpRequestHandler {
     }
 
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized HttpRequestHandler getInstance(Context ctx) {
+    // Only way to get instance of class (synchronized means thread-safe)
+    // NOT PUBLIC: for public access, use GlobalHandler
+    protected static synchronized HttpRequestHandler getInstance(Context ctx) {
         if (classInstance == null) {
             classInstance = new HttpRequestHandler(ctx);
         }

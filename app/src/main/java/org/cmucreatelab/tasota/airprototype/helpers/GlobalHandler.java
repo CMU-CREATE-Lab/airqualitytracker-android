@@ -17,6 +17,7 @@ import org.cmucreatelab.tasota.airprototype.classes.Address;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
+import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -32,10 +33,12 @@ public class GlobalHandler {
     private Context appContext;
     public ArrayList<Address> addresses;
     public HashMap<Address,ArrayList<Feed>> addressFeedHash;
+    public HttpRequestHandler httpRequestHandler;
+    public GoogleApiClientHandler googleApiClientHandler;
+    public LocationUpdateHandler locationUpdateHandler;
 
-    private GoogleApiClient googleApiClient;
-    private com.google.android.gms.location.LocationListener locationListener;
-    private Location lastLocation;
+    // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
+    public ArrayAdapterAddressList listAdapter;
 
 
     private void addCurrentLocationToAddresses() {
@@ -43,7 +46,7 @@ public class GlobalHandler {
         ArrayList<Feed> gFeed;
 
         // TODO this will be your GPS location, eventually
-        gps = new Address("15235", 40.4586216, -79.8184684);
+        gps = new Address("Loading Current Location...", 0.0, 0.0);
         gps.set_id(-1);
         gFeed = getFeedsForAddress(gps);
         this.addresses.add(gps);
@@ -101,66 +104,12 @@ public class GlobalHandler {
     }
 
 
-    private void initGoogleApiClient() {
-        googleApiClient = new GoogleApiClient.Builder(appContext)
-                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(Bundle bundle) {
-                        lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                        updateCurrentLocation();
-                        Log.i("DEBUG", "last known location is " + lastLocation.toString());
-//                        startLocationUpdates();
-                    }
-                    @Override
-                    public void onConnectionSuspended(int i) {
-                        // TODO handle suspended connection
-                        Log.i("DEBUG","onConnectionSuspended");
-                    }
-                })
-                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(ConnectionResult connectionResult) {
-                        // TODO handle failed connection
-                        Log.i("DEBUG","onConnectionFailed");
-                    }
-                })
-                .addApi(LocationServices.API)
-                .build();
-        locationListener = new com.google.android.gms.location.LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                lastLocation = location;
-                updateCurrentLocation();
-                Log.i("DEBUG", "LOCATION WAS UPDATED TO " + lastLocation.toString());
-//                stopLocationUpdates();
-            }
-        };
-        // make sure you actually CONNECT the api client for it to do anything (so much hatred)
-        googleApiClient.connect();
-    }
-
-
-    private void updateCurrentLocation() {
+    protected void updateCurrentLocation(Location lastLocation) {
         Address a = addresses.get(0);
         a.setName(String.valueOf(Calendar.getInstance().getTimeInMillis()));
         a.setLatitude(lastLocation.getLatitude());
         a.setLongitude(lastLocation.getLongitude());
-//        listAdapter.notifyDataSetChanged();
-    }
-
-
-    private void startLocationUpdates() {
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                googleApiClient, locationRequest, locationListener);
-    }
-
-
-    private void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, locationListener);
+        notifyGlobalDataSetChanged();
     }
 
 
@@ -169,14 +118,17 @@ public class GlobalHandler {
         this.appContext = ctx;
         this.addresses = new ArrayList();
         this.addressFeedHash = new HashMap();
+        this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
+        this.googleApiClientHandler = GoogleApiClientHandler.getInstance(ctx,this);
+        this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx,this.googleApiClientHandler);
         this.addCurrentLocationToAddresses();
         this.addDatabaseEntriesToAddresses();
-        this.initGoogleApiClient();
     }
 
 
     private void notifyGlobalDataSetChanged() {
         // TODO this function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
+        this.listAdapter.notifyDataSetChanged();
     }
 
 
@@ -231,7 +183,7 @@ public class GlobalHandler {
                 // TODO handle errors
             }
         };
-        HttpRequestHandler.getInstance(appContext).requestFeeds(addr.getLatitude(), addr.getLongitude(), response, error);
+        this.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), response, error);
 
         return result;
     }

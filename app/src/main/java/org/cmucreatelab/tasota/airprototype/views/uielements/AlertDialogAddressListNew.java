@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype.views.uielements;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
@@ -96,7 +97,8 @@ public class AlertDialogAddressListNew {
                             // TODO handle errors
                         }
                     };
-                    HttpRequestHandler.getInstance(appContext).requestGoogleGeocode(addressName, response, error);
+                    GlobalHandler.getInstance(appContext).httpRequestHandler.requestGoogleGeocode(addressName, response, error);
+
                 }
             });
             this.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
