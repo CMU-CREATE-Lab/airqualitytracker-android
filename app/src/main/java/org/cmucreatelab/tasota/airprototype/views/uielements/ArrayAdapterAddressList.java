@@ -20,17 +20,27 @@ import java.util.ArrayList;
 /**
  * Created by mike on 6/2/15.
  */
-public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress> {
-    private final Context context;
+public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
+        implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
+
+    private final AddressListActivity context;
     private final ArrayList<SimpleAddress> values;
-    private ListView listView;
+
+
+    private void setupListView() {
+        ListView listView = (ListView)context.findViewById(R.id.listViewAddresses);
+        listView.setAdapter(this);
+        listView.setLongClickable(true);
+        listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
+    }
 
 
     public ArrayAdapterAddressList(AddressListActivity context, ArrayList<SimpleAddress> values) {
         super(context, R.layout.address_item, values);
         this.context = context;
         this.values = values;
-        setupListView(context);
+        setupListView();
     }
 
 
@@ -40,8 +50,12 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress> {
         View rowView;
         TextView textView;
 
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        rowView = inflater.inflate(R.layout.address_item, parent, false);
+        if (convertView == null) {
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = inflater.inflate(R.layout.address_item, parent, false);
+        } else {
+            rowView = convertView;
+        }
 
         // set address name
         textView = (TextView)rowView.findViewById(R.id.textAddressName);
@@ -56,35 +70,24 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress> {
     }
 
 
-    private void setupListView(final AddressListActivity context) {
-        listView = (ListView)context.findViewById(R.id.listViewAddresses);
-        listView.setAdapter(this);
-        listView.setLongClickable(true);
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent(context, AddressShowActivity.class);
-                        intent.putExtra(context.ADDRESS_INDEX, i);
-                        context.startActivity(intent);
-                    }
-                }
-        );
-        listView.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Log.i("onItemLongClick", "DID LONG CLICK");
-                        SimpleAddress simpleAddress = context.addresses.get(i);
-                        if (simpleAddress.get_id() < 0) {
-                            Log.i("onItemLongClick", "WARNING - the long-clicked address has negative id=" + simpleAddress.get_id());
-                        } else {
-                            context.showDeleteDialog(simpleAddress);
-                        }
-                        return true;
-                    }
-                }
-        );
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent(context, AddressShowActivity.class);
+        intent.putExtra(AddressListActivity.ADDRESS_INDEX, i);
+        context.startActivity(intent);
+    }
+
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.i("onItemLongClick", "DID LONG CLICK");
+        SimpleAddress simpleAddress = context.addresses.get(i);
+        if (simpleAddress.get_id() < 0) {
+            Log.i("onItemLongClick", "WARNING - the long-clicked address has negative id=" + simpleAddress.get_id());
+        } else {
+            context.showDialogDelete(simpleAddress);
+        }
+        return true;
     }
 
 }

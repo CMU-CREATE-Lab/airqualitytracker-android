@@ -11,9 +11,15 @@ import com.google.android.gms.location.LocationServices;
  */
 public class LocationUpdateHandler implements com.google.android.gms.location.LocationListener {
 
-    private static LocationUpdateHandler classInstance;
     private GoogleApiClientHandler googleApiClientHandler;
     private Context appContext;
+    private static LocationUpdateHandler classInstance;
+
+
+    private LocationUpdateHandler(Context ctx, GoogleApiClientHandler googleApiClientHandler) {
+        this.appContext = ctx;
+        this.googleApiClientHandler = googleApiClientHandler;
+    }
 
 
     // perform location updates periodically
@@ -34,12 +40,6 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
     // stop periodic location updates
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClientHandler.googleApiClient, this);
-    }
-
-
-    private LocationUpdateHandler(Context ctx, GoogleApiClientHandler googleApiClientHandler) {
-        this.appContext = ctx;
-        this.googleApiClientHandler = googleApiClientHandler;
     }
 
 

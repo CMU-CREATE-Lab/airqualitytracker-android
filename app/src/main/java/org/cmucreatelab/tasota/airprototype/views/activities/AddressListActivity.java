@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListDelete;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListNew;
@@ -23,6 +22,24 @@ public class AddressListActivity extends ActionBarActivity {
     public AlertDialogAddressListDelete dialogDelete;
 
 
+    public void showDialogDelete(final SimpleAddress simpleAddress) {
+        dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
+        dialogDelete.getAlertDialog().show();
+    }
+
+
+    public void openSettings() {
+        // TODO open settings
+        Log.i("openSettings", "SETTINGS selected.");
+    }
+
+
+    public void openDialogNew(String inputString) {
+        dialogNew = new AlertDialogAddressListNew(this,inputString);
+        dialogNew.getAlertDialog().show();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +52,34 @@ public class AddressListActivity extends ActionBarActivity {
     }
 
 
-    public void showDeleteDialog(final SimpleAddress simpleAddress) {
-        dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
-        dialogDelete.getAlertDialog().show();
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.getBoolean("dialogDelete")) {
+            int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
+            showDialogDelete(addresses.get(index));
+        }
+        if (savedInstanceState.getBoolean("dialogNew")) {
+            String inputString = savedInstanceState.getString("dialogNewInputString");
+            dialogNew = new AlertDialogAddressListNew(this,inputString);
+            dialogNew.getAlertDialog().show();
+        }
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (dialogDelete != null && dialogDelete.getAlertDialog().isShowing()) {
+            outState.putBoolean("dialogDelete", true);
+            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getAddressToBeDeleted()));
+            dialogDelete.getAlertDialog().dismiss();
+        }
+        if (dialogNew != null && dialogNew.getAlertDialog().isShowing()) {
+            outState.putBoolean("dialogNew",true);
+            outState.putString("dialogNewInputString", dialogNew.getEditText().getText().toString());
+            dialogNew.getAlertDialog().dismiss();
+        }
     }
 
 
@@ -61,53 +103,10 @@ public class AddressListActivity extends ActionBarActivity {
                 openSettings();
                 return true;
             case R.id.action_new:
-                openNew("");
+                openDialogNew("");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    public void openSettings() {
-        // TODO open settings
-        Log.i("openSettings", "SETTINGS selected.");
-    }
-
-
-    public void openNew(String inputString) {
-        dialogNew = new AlertDialogAddressListNew(this,inputString);
-        dialogNew.getAlertDialog().show();
-    }
-
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState.getBoolean("dialogDelete")) {
-            int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
-            showDeleteDialog( addresses.get(index) );
-        }
-        if (savedInstanceState.getBoolean("dialogNew")) {
-            String inputString = savedInstanceState.getString("dialogNewInputString");
-            dialogNew = new AlertDialogAddressListNew(this,inputString);
-            dialogNew.getAlertDialog().show();
-        }
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (dialogDelete != null && dialogDelete.getAlertDialog().isShowing()) {
-            outState.putBoolean("dialogDelete", true);
-            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getAddressToBeDeleted()));
-            dialogDelete.getAlertDialog().dismiss();
-        }
-        if (dialogNew != null && dialogNew.getAlertDialog().isShowing()) {
-            outState.putBoolean("dialogNew",true);
-            outState.putString("dialogNewInputString", dialogNew.getEditText().getText().toString());
-            dialogNew.getAlertDialog().dismiss();
         }
     }
 

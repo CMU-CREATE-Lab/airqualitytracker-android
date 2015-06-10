@@ -13,11 +13,11 @@ import com.google.android.gms.location.LocationServices;
  */
 public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
-    private static GoogleApiClientHandler classInstance;
-    protected GlobalHandler globalHandler;
     private Context appContext;
-    protected GoogleApiClient googleApiClient;
     private boolean clientConnected;
+    private static GoogleApiClientHandler classInstance;
+    protected GoogleApiClient googleApiClient;
+    protected GlobalHandler globalHandler;
     protected boolean isClientConnected() {
         return this.clientConnected;
     }

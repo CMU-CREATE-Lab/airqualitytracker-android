@@ -7,7 +7,6 @@ import android.location.Location;
 import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
@@ -24,8 +23,8 @@ import java.util.HashMap;
  */
 public class GlobalHandler {
 
-    private static GlobalHandler classInstance;
     private Context appContext;
+    private static GlobalHandler classInstance;
     public ArrayList<SimpleAddress> addresses;
     public HashMap<SimpleAddress,ArrayList<Feed>> addressFeedHash;
     public HttpRequestHandler httpRequestHandler;
@@ -99,15 +98,6 @@ public class GlobalHandler {
     }
 
 
-    protected void updateCurrentLocation(Location lastLocation) {
-        SimpleAddress a = addresses.get(0);
-        a.setName(String.valueOf(Calendar.getInstance().getTimeInMillis()));
-        a.setLatitude(lastLocation.getLatitude());
-        a.setLongitude(lastLocation.getLongitude());
-        notifyGlobalDataSetChanged();
-    }
-
-
     // Nobody accesses the constructor
     private GlobalHandler(Context ctx) {
         this.appContext = ctx;
@@ -115,7 +105,7 @@ public class GlobalHandler {
         this.addressFeedHash = new HashMap();
         this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(ctx,this);
-        this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx,this.googleApiClientHandler);
+        this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
         this.addCurrentLocationToAddresses();
         this.addDatabaseEntriesToAddresses();
     }
@@ -127,12 +117,12 @@ public class GlobalHandler {
     }
 
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized GlobalHandler getInstance(Context ctx) {
-        if (classInstance == null) {
-            classInstance = new GlobalHandler(ctx);
-        }
-        return classInstance;
+    protected void updateCurrentLocation(Location lastLocation) {
+        SimpleAddress a = addresses.get(0);
+        a.setName(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+        a.setLatitude(lastLocation.getLatitude());
+        a.setLongitude(lastLocation.getLongitude());
+        notifyGlobalDataSetChanged();
     }
 
 
@@ -145,7 +135,7 @@ public class GlobalHandler {
     public void addAddress(SimpleAddress simpleAddress) {
         addresses.add(simpleAddress);
         ArrayList<Feed> feed = getFeedsForAddress(simpleAddress);
-        addressFeedHash.put(simpleAddress,feed);
+        addressFeedHash.put(simpleAddress, feed);
     }
 
 
@@ -181,6 +171,15 @@ public class GlobalHandler {
         this.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), response, error);
 
         return result;
+    }
+
+
+    // Only public way to get instance of class (synchronized means thread-safe)
+    public static synchronized GlobalHandler getInstance(Context ctx) {
+        if (classInstance == null) {
+            classInstance = new GlobalHandler(ctx);
+        }
+        return classInstance;
     }
 
 }

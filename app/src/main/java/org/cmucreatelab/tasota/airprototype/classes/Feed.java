@@ -74,6 +74,13 @@ public class Feed {
     }
 
 
+    @Override
+    public String toString() {
+        // TODO generate a proper label from the class attributes
+        return "(" + this.feed_id + ")" + this.name;
+    }
+
+
     // Helper function to parse a feed's JSON and create objects (also does Channels)
     public static Feed parseFeedFromJson(JSONObject row) {
         Feed f = new Feed();
@@ -117,11 +124,6 @@ public class Feed {
         }
 
         return f;
-    }
-
-    // TODO generate a proper label from the class attributes
-    public String toString() {
-        return "(" + this.feed_id + ")" + this.name;
     }
 
 }

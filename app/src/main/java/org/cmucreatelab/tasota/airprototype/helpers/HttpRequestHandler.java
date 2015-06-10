@@ -15,9 +15,9 @@ import java.util.Date;
  */
 public class HttpRequestHandler {
 
-    private static HttpRequestHandler classInstance;
     private Context appContext;
     private RequestQueue queue;
+    private static HttpRequestHandler classInstance;
 
 
     // Nobody accesses the constructor

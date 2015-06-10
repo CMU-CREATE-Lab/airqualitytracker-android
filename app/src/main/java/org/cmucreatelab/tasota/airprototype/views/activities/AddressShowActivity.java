@@ -18,9 +18,11 @@ import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
 
-    SimpleAddress showSimpleAddress;
-    ArrayList<Feed> feeds;
-    ArrayAdapter<Feed> feedsListAdapter;
+
+    public void switchToFeedActivity(int index) {
+        // TODO switch to FeedActivity
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,9 @@ public class AddressShowActivity extends ActionBarActivity {
         int index;
         TextView textView;
         ListView listView;
+        SimpleAddress showSimpleAddress;
+        ArrayList<Feed> feeds;
+        ArrayAdapter<Feed> feedsListAdapter;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_show);
@@ -56,11 +61,6 @@ public class AddressShowActivity extends ActionBarActivity {
                     }
                 }
         );
-    }
-
-
-    public void switchToFeedActivity(int index) {
-        // TODO switch to FeedActivity
     }
 
 

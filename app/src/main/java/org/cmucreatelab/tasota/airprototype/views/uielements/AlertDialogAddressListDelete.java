@@ -21,13 +21,6 @@ public class AlertDialogAddressListDelete {
         return alertDialog;
     }
 
-
-    public AlertDialogAddressListDelete(final AddressListActivity activityContext, final SimpleAddress simpleAddress) {
-        this.addressToBeDeleted = simpleAddress;
-        this.alertDialog = (new AlertDialogBuilderAddressListDelete(activityContext,this.addressToBeDeleted)).create();
-    }
-
-
     private class AlertDialogBuilderAddressListDelete extends AlertDialog.Builder {
         public AlertDialogBuilderAddressListDelete(final AddressListActivity activityContext, final SimpleAddress simpleAddress) {
             super(activityContext);
@@ -47,6 +40,12 @@ public class AlertDialogAddressListDelete {
                 }
             });
         }
+    }
+
+
+    public AlertDialogAddressListDelete(final AddressListActivity activityContext, final SimpleAddress simpleAddress) {
+        this.addressToBeDeleted = simpleAddress;
+        this.alertDialog = (new AlertDialogBuilderAddressListDelete(activityContext,this.addressToBeDeleted)).create();
     }
 
 }

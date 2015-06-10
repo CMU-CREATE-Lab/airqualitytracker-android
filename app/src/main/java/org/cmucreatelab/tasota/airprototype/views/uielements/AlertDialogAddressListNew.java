@@ -27,24 +27,11 @@ public class AlertDialogAddressListNew {
         return alertDialog;
     }
 
-
-    public AlertDialogAddressListNew(final AddressListActivity activityContext) {
-        this(activityContext,"");
-    }
-
-
-    public AlertDialogAddressListNew(final AddressListActivity activityContext, String inputString) {
-        this.editText = new EditText(activityContext);
-        this.editText.setText(inputString);
-        this.alertDialog = (new AlertDialogBuilderAddressListNew(activityContext,this.editText,inputString)).create();
-    }
-
-
     private class AlertDialogBuilderAddressListNew extends AlertDialog.Builder {
         public AlertDialogBuilderAddressListNew(final AddressListActivity activityContext, final EditText inputField, String inputString) {
             super(activityContext);
             final Context appContext;
-            Log.i("openNew", "action bar selected.");
+            Log.i("openDialogNew", "action bar selected.");
             appContext = activityContext.getApplicationContext();
             this.setMessage("Enter a zipcode, city, or address below.");
             // TODO test color schemes... ideally dialog boxes should know what colors they are supposed to use.
@@ -105,6 +92,18 @@ public class AlertDialogAddressListNew {
                 }
             });
         }
+    }
+
+
+    public AlertDialogAddressListNew(final AddressListActivity activityContext) {
+        this(activityContext,"");
+    }
+
+
+    public AlertDialogAddressListNew(final AddressListActivity activityContext, String inputString) {
+        this.editText = new EditText(activityContext);
+        this.editText.setText(inputString);
+        this.alertDialog = (new AlertDialogBuilderAddressListNew(activityContext,this.editText,inputString)).create();
     }
 
 }
