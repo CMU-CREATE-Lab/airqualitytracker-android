@@ -2,10 +2,13 @@ package org.cmucreatelab.tasota.airprototype.classes;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by mike on 6/1/15.
@@ -89,6 +92,62 @@ public class SimpleAddress {
         simpleAddress.set_id(newId);
 
         return simpleAddress;
+    }
+
+
+    public static SimpleAddress generateAddressFromRecord(Cursor cursor) throws IllegalArgumentException {
+        SimpleAddress simpleAddress;
+        ArrayList<Feed> feed;
+        int id;
+        String name;
+        double latd,longd;
+
+        // read record
+        id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+        name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+        latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
+        longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
+        Log.i("addToDatabase", "READ RECORD _id=" + id);
+
+        // add to data structure
+        simpleAddress = new SimpleAddress(name, latd, longd);
+        simpleAddress.set_id(id);
+        return simpleAddress;
+    }
+
+
+    public static ArrayList<SimpleAddress> fetchAddressesFromDatabase(Context ctx) {
+        String[] projection = {
+                "_id",
+                AddressContract.COLUMN_NAME,
+                AddressContract.COLUMN_LATITUDE,
+                AddressContract.COLUMN_LONGITUDE
+        };
+        AddressDbHelper mDbHelper;
+        SQLiteDatabase db;
+        Cursor cursor;
+        ArrayList<SimpleAddress> result = new ArrayList<>();
+
+        mDbHelper = new AddressDbHelper(ctx);
+        db = mDbHelper.getWritableDatabase();
+        cursor = db.query(AddressContract.TABLE_NAME, projection,
+                null, null, // columns and values for WHERE clause
+                null, null, // group rows, filter row groups
+                null // sort order
+        );
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            try {
+                result.add(generateAddressFromRecord(cursor));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // iterate
+            cursor.moveToNext();
+        }
+
+        return result;
     }
 
 }

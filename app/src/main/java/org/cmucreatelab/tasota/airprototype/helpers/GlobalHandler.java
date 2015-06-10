@@ -2,8 +2,6 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Handler;
@@ -12,8 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
-import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
-import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import org.json.JSONArray;
@@ -53,51 +49,14 @@ public class GlobalHandler {
 
 
     private void addDatabaseEntriesToAddresses() {
-        String[] projection = {
-                "_id",
-                AddressContract.COLUMN_NAME,
-                AddressContract.COLUMN_LATITUDE,
-                AddressContract.COLUMN_LONGITUDE
-        };
-        AddressDbHelper mDbHelper;
-        SQLiteDatabase db;
-        Cursor cursor;
+        ArrayList<SimpleAddress> dbAddresses;
+        ArrayList<Feed> feed;
 
-        mDbHelper = new AddressDbHelper(appContext);
-        db = mDbHelper.getWritableDatabase();
-        cursor = db.query(AddressContract.TABLE_NAME, projection,
-                null, null, // columns and values for WHERE clause
-                null, null, // group rows, filter row groups
-                null // sort order
-        );
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            SimpleAddress simpleAddress;
-            ArrayList<Feed> feed;
-            int id;
-            String name;
-            double latd,longd;
-
-            try {
-                // read record
-                id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-                name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
-                longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
-                Log.i("addToDatabase", "READ RECORD _id=" + id);
-
-                // add to data structure
-                simpleAddress = new SimpleAddress(name, latd, longd);
-                simpleAddress.set_id(id);
+        dbAddresses = SimpleAddress.fetchAddressesFromDatabase(this.appContext);
+        for (SimpleAddress simpleAddress : dbAddresses) {
                 feed = getFeedsForAddress(simpleAddress);
                 this.addresses.add(simpleAddress);
                 this.addressFeedHash.put(simpleAddress, feed);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            // iterate
-            cursor.moveToNext();
         }
     }
 
