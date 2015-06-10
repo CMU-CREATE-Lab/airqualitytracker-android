@@ -1,14 +1,20 @@
 package org.cmucreatelab.tasota.airprototype.views.uielements;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Address;
+import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
+import org.cmucreatelab.tasota.airprototype.views.activities.AddressShowActivity;
+
 import java.util.ArrayList;
 
 /**
@@ -17,12 +23,14 @@ import java.util.ArrayList;
 public class ArrayAdapterAddressList extends ArrayAdapter<Address> {
     private final Context context;
     private final ArrayList<Address> values;
+    private ListView listView;
 
 
-    public ArrayAdapterAddressList(Context context, ArrayList<Address> values) {
+    public ArrayAdapterAddressList(AddressListActivity context, ArrayList<Address> values) {
         super(context, R.layout.address_item, values);
         this.context = context;
         this.values = values;
+        setupListView(context);
     }
 
 
@@ -45,6 +53,38 @@ public class ArrayAdapterAddressList extends ArrayAdapter<Address> {
         textView.setText(String.valueOf(values.get(position).get_id()));
 
         return rowView;
+    }
+
+
+    private void setupListView(final AddressListActivity context) {
+        listView = (ListView)context.findViewById(R.id.listViewAddresses);
+        listView.setAdapter(this);
+        listView.setLongClickable(true);
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(context, AddressShowActivity.class);
+                        intent.putExtra(context.ADDRESS_INDEX, i);
+                        context.startActivity(intent);
+                    }
+                }
+        );
+        listView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Log.i("onItemLongClick", "DID LONG CLICK");
+                        Address address = context.addresses.get(i);
+                        if (address.get_id() < 0) {
+                            Log.i("onItemLongClick", "WARNING - the long-clicked address has negative id=" + address.get_id());
+                        } else {
+                            context.showDeleteDialog(address);
+                        }
+                        return true;
+                    }
+                }
+        );
     }
 
 }
