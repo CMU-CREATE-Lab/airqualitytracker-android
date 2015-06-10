@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Handler;
-import android.os.ResultReceiver;
 import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,8 +21,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-
-import javax.xml.transform.Result;
 
 /**
  * Created by mike on 6/2/15.
@@ -130,20 +127,17 @@ public class GlobalHandler {
         a.setLatitude(lastLocation.getLatitude());
         a.setLongitude(lastLocation.getLongitude());
         notifyGlobalDataSetChanged();
-//
-//
+        // TODO consider this when more than one update can occur.
         startIntentService(lastLocation);
     }
-
-    private AddressResultReceiver resultReceiver;
 
 
     protected void startIntentService(Location lastLocation) {
         if (Geocoder.isPresent()) {
             Intent intent = new Intent(this.appContext, FetchAddressService.class);
-            resultReceiver = new AddressResultReceiver(new Handler());
-            intent.putExtra(FetchAddressService.Constants.RECEIVER, this.resultReceiver);
-//            intent.putExtra(FetchAddressService.Constants.LOCATION_DATA_EXTRA, lastLocation);
+            AddressResultReceiver resultReceiver = new AddressResultReceiver(new Handler(),this);
+
+            intent.putExtra(FetchAddressService.Constants.RECEIVER, resultReceiver);
             intent.putExtra("latitude",lastLocation.getLatitude());
             intent.putExtra("longitude",lastLocation.getLongitude());
             this.appContext.startService(intent);
@@ -151,8 +145,6 @@ public class GlobalHandler {
             Log.i("ERROR","Geocoder is not present");
         }
     }
-//
-//
 
 
     public void removeAddress(SimpleAddress simpleAddress) {
