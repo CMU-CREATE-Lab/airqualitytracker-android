@@ -27,6 +27,7 @@ public class GlobalHandler {
     private Context appContext;
     private static GlobalHandler classInstance;
     public ArrayList<SimpleAddress> addresses;
+    public SimpleAddress gpsAddress; // listed in addresses
     public HashMap<SimpleAddress,ArrayList<Feed>> addressFeedHash;
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
@@ -34,20 +35,6 @@ public class GlobalHandler {
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public ArrayAdapterAddressList listAdapter;
-
-
-    private void addCurrentLocationToAddresses() {
-        SimpleAddress gps;
-        ArrayList<Feed> gFeed;
-
-        // TODO this will be your GPS location, eventually
-        // TODO wait for updated address to grab this info
-        gps = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
-        gps.set_id(-1);
-        gFeed = getFeedsForAddress(gps);
-        this.addresses.add(gps);
-        this.addressFeedHash.put(gps, gFeed);
-    }
 
 
     private void addDatabaseEntriesToAddresses() {
@@ -65,13 +52,19 @@ public class GlobalHandler {
 
     // Nobody accesses the constructor
     private GlobalHandler(Context ctx) {
+        // context and handlers
         this.appContext = ctx;
-        this.addresses = new ArrayList();
-        this.addressFeedHash = new HashMap();
         this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(ctx,this);
         this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
-        this.addCurrentLocationToAddresses();
+
+        // data structures
+        this.addresses = new ArrayList<>();
+        this.addressFeedHash = new HashMap<>();
+        gpsAddress = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
+        this.addresses.add(gpsAddress);
+
+        // populate stuff
         this.addDatabaseEntriesToAddresses();
     }
 
@@ -83,10 +76,13 @@ public class GlobalHandler {
 
 
     protected void updateCurrentLocation(Location lastLocation) {
-        SimpleAddress a = addresses.get(0);
-        a.setName(String.valueOf(Calendar.getInstance().getTimeInMillis()));
-        a.setLatitude(lastLocation.getLatitude());
-        a.setLongitude(lastLocation.getLongitude());
+        gpsAddress.setLatitude(lastLocation.getLatitude());
+        gpsAddress.setLongitude(lastLocation.getLongitude());
+
+        // update the gps address with the new closest feeds
+        ArrayList<Feed> feeds = getFeedsForAddress(gpsAddress);
+        this.addressFeedHash.put(gpsAddress, feeds);
+
         notifyGlobalDataSetChanged();
         // TODO consider this when more than one update can occur.
         startFetchAddressIntentService(lastLocation);
