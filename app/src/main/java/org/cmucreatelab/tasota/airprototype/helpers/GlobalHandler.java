@@ -41,6 +41,7 @@ public class GlobalHandler {
         ArrayList<Feed> gFeed;
 
         // TODO this will be your GPS location, eventually
+        // TODO wait for updated address to grab this info
         gps = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
         gps.set_id(-1);
         gFeed = getFeedsForAddress(gps);
@@ -120,8 +121,8 @@ public class GlobalHandler {
     }
 
 
-    public ArrayList<Feed> getFeedsForAddress(SimpleAddress addr) {
-        final ArrayList<Feed> result = new ArrayList();
+    public ArrayList<Feed> getFeedsForAddress(final SimpleAddress addr) {
+        final ArrayList<Feed> result = new ArrayList<>();
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
@@ -136,6 +137,8 @@ public class GlobalHandler {
                         JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
                         result.add( Feed.parseFeedFromJson(jsonFeed) );
                     }
+                    addr.setClosestFeed( MapGeometry.getClosestFeedToAddress(addr,result) );
+                    GlobalHandler.this.notifyGlobalDataSetChanged();
                 } catch (Exception e) {
                     // TODO catch exception "failed to find JSON attr"
                     e.printStackTrace();

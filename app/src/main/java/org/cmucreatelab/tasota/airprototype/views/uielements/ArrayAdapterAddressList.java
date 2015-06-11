@@ -64,7 +64,11 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
         // address's value
         // TODO address._id for now, but should be air quality.
         textView = (TextView)rowView.findViewById(R.id.textAddressValue);
-        textView.setText(String.valueOf(values.get(position).get_id()));
+        if (values.get(position).getClosestFeed() == null) {
+            textView.setText("id="+String.valueOf(values.get(position).get_id()));
+        } else {
+            textView.setText("feed="+String.valueOf(values.get(position).getClosestFeed().getFeed_id()));
+        }
 
         return rowView;
     }

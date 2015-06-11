@@ -18,6 +18,7 @@ public class SimpleAddress {
     private long _id;
     private String name;
     private double latitude,longitude;
+    private Feed closestFeed = null;
 
     public long get_id() {
         return _id;
@@ -42,6 +43,12 @@ public class SimpleAddress {
     }
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+    public Feed getClosestFeed() {
+        return closestFeed;
+    }
+    public void setClosestFeed(Feed closestFeed) {
+        this.closestFeed = closestFeed;
     }
 
 
