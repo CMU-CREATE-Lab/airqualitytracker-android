@@ -16,7 +16,6 @@ import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddress
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -94,7 +93,7 @@ public class GlobalHandler {
             Intent intent = new Intent(this.appContext, FetchAddressIntentService.class);
             AddressResultReceiver resultReceiver = new AddressResultReceiver(new Handler(),this);
 
-            intent.putExtra(FetchAddressIntentService.Constants.RECEIVER, resultReceiver);
+            intent.putExtra(Constants.AddressIntent.RECEIVER, resultReceiver);
             intent.putExtra("latitude",lastLocation.getLatitude());
             intent.putExtra("longitude",lastLocation.getLongitude());
             this.appContext.startService(intent);

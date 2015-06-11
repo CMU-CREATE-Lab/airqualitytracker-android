@@ -6,6 +6,9 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.ResultReceiver;
+
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -16,19 +19,10 @@ public class FetchAddressIntentService extends IntentService {
 
     protected ResultReceiver resultReceiver;
 
-    public final class Constants {
-        private static final int MAX_RESULTS = 1;
-        public static final int SUCCESS_RESULT = 0;
-        public static final int FAILURE_RESULT = 1;
-        public static final String PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
-        public static final String RESULT_DATA_KEY = PACKAGE_NAME + ".addressName";
-        public static final String RECEIVER = PACKAGE_NAME + ".receiver";
-    }
-
 
     private void deliverResultToReceiver(int resultCode, String message) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.RESULT_DATA_KEY, message);
+        bundle.putString(Constants.AddressIntent.RESULT_DATA_KEY, message);
         resultReceiver.send(resultCode, bundle);
     }
 
@@ -47,16 +41,16 @@ public class FetchAddressIntentService extends IntentService {
         geocoder = new Geocoder(this, Locale.getDefault());
         latd = intent.getDoubleExtra("latitude",0.0);
         longd = intent.getDoubleExtra("longitude", 0.0);
-        this.resultReceiver = intent.getParcelableExtra(Constants.RECEIVER);
+        this.resultReceiver = intent.getParcelableExtra(Constants.AddressIntent.RECEIVER);
         try {
-            results = geocoder.getFromLocation(latd,longd,Constants.MAX_RESULTS);
+            results = geocoder.getFromLocation(latd,longd,Constants.AddressIntent.MAX_RESULTS);
         } catch (Exception e) {
             // TODO handle exception
             e.printStackTrace();
         }
 
         if (results == null || results.size() == 0) {
-            deliverResultToReceiver(Constants.FAILURE_RESULT, "FAILED");
+            deliverResultToReceiver(Constants.AddressIntent.FAILURE_RESULT, "FAILED");
         } else {
             Address address = results.get(0);
 //            ArrayList<String> addressFragments = new ArrayList<String>();
@@ -67,7 +61,7 @@ public class FetchAddressIntentService extends IntentService {
 //            }
 //            deliverResultToReceiver(Constants.SUCCESS_RESULT, TextUtils.join(System.getProperty("line.separator"), addressFragments));
 
-            deliverResultToReceiver(Constants.SUCCESS_RESULT, address.getAddressLine(address.getMaxAddressLineIndex()-1) );
+            deliverResultToReceiver(Constants.AddressIntent.SUCCESS_RESULT, address.getAddressLine(address.getMaxAddressLineIndex()-1) );
         }
     }
 

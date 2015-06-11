@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 /**
@@ -23,9 +24,9 @@ public class AddressResultReceiver extends ResultReceiver {
 
     @Override
     protected void onReceiveResult(int resultCode, Bundle resultData) {
-        Log.i("RESULTS", resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY));
+        Log.i("RESULTS", resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY));
         SimpleAddress simpleAddress = globalHandler.addresses.get(0);
-        simpleAddress.setName( resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY) );
+        simpleAddress.setName( resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY) );
     }
 
 }

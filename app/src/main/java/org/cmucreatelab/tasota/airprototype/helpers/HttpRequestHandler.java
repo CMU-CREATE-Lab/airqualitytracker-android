@@ -62,10 +62,10 @@ public class HttpRequestHandler {
         // the past 24 hours
         maxTime = new Date().getTime() / 1000 - 86400;
         // get bounding box
-        la1 = latd-MapGeometry.BOUNDBOX_LAT;
-        la2 = latd+MapGeometry.BOUNDBOX_LONG;
-        lo1 = longd-MapGeometry.BOUNDBOX_LAT;
-        lo2 = longd+MapGeometry.BOUNDBOX_LONG;
+        la1 = latd-Constants.MapGeometry.BOUNDBOX_LAT;
+        la2 = latd+Constants.MapGeometry.BOUNDBOX_LONG;
+        lo1 = longd-Constants.MapGeometry.BOUNDBOX_LAT;
+        lo2 = longd+Constants.MapGeometry.BOUNDBOX_LONG;
         requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime;
 
         // only request from ESDR the fields that we care about

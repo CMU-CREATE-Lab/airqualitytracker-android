@@ -34,11 +34,7 @@ public class AlertDialogAddressListDelete {
                     activityContext.listAdapter.notifyDataSetChanged();
                 }
             });
-            this.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // does nothing
-                }
-            });
+            this.setNegativeButton("Cancel",null);
         }
     }
 

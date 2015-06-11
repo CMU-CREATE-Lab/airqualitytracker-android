@@ -31,26 +31,14 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 //     formulas in the geographical distance article."
 
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-
 import java.util.ArrayList;
 
 /**
  * Created by mike on 6/1/15.
  */
 public class MapGeometry {
-
-    // Distance from central point, in kilometers (box dimension will be 2x larger)
-    public static final double BOUNDBOX_HEIGHT = 20.0;
-    // Distance from central point, in kilometers (box dimension will be 2x larger)
-    public static final double BOUNDBOX_LENGTH = 20.0;
-    // radius of Earth
-    public static final double RADIUS_EARTH = 6371.0;
-    // ASSERT these values will be less than 90.0
-    public static final double BOUNDBOX_LAT = BOUNDBOX_HEIGHT / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
-    public static final double BOUNDBOX_LONG = BOUNDBOX_LENGTH / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
 
 
     // implementation of the haversine function using sine
@@ -80,7 +68,7 @@ public class MapGeometry {
         // Taken from the haversine formula: hsin(d/r) = hsine(p2-p1) + cos(p1)*cos(p2)*hsin(l2-l1)
         // where hsin(t) = sin^2(t/2)
         result = haversine(p2-p1) + Math.cos(p2)*Math.cos(p1)*haversine(l2-l1);
-        result = RADIUS_EARTH * archaversine(result);
+        result = Constants.MapGeometry.RADIUS_EARTH * archaversine(result);
         return result;
     }
 

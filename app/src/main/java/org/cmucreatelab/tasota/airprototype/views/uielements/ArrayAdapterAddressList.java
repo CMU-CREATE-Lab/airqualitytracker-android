@@ -14,7 +14,6 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressShowActivity;
-
 import java.util.ArrayList;
 
 /**
