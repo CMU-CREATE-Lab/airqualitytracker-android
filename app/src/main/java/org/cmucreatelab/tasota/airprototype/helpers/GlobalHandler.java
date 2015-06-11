@@ -6,15 +6,11 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.views.services.AddressResultReceiver;
 import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
@@ -22,27 +18,15 @@ import java.util.ArrayList;
  */
 public class GlobalHandler {
 
-    private Context appContext;
     private static GlobalHandler classInstance;
     private AddressFeedsHashMap addressFeedsHashMap;
+    protected Context appContext;
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
     public LocationUpdateHandler locationUpdateHandler;
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public ArrayAdapterAddressList listAdapter;
-
-
-    private void addDatabaseEntriesToAddresses() {
-        ArrayList<SimpleAddress> dbAddresses;
-        ArrayList<Feed> feed;
-
-        dbAddresses = SimpleAddress.fetchAddressesFromDatabase(this.appContext);
-        for (SimpleAddress simpleAddress : dbAddresses) {
-                feed = getFeedsForAddress(simpleAddress);
-                this.addressFeedsHashMap.put(simpleAddress, feed);
-        }
-    }
 
 
     // Nobody accesses the constructor
@@ -52,27 +36,19 @@ public class GlobalHandler {
         this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(ctx,this);
         this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
-
         // data structures
-        this.addressFeedsHashMap = new AddressFeedsHashMap();
-        this.addDatabaseEntriesToAddresses();
+        this.addressFeedsHashMap = new AddressFeedsHashMap(this);
     }
 
 
-    private void notifyGlobalDataSetChanged() {
+    protected void notifyGlobalDataSetChanged() {
         // TODO this function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
         this.listAdapter.notifyDataSetChanged();
     }
 
 
     protected void updateCurrentLocation(Location lastLocation) {
-        addressFeedsHashMap.gpsAddress.setLatitude(lastLocation.getLatitude());
-        addressFeedsHashMap.gpsAddress.setLongitude(lastLocation.getLongitude());
-
-        // update the gps address with the new closest feeds
-        ArrayList<Feed> feeds = getFeedsForAddress(addressFeedsHashMap.gpsAddress);
-        addressFeedsHashMap.put(addressFeedsHashMap.gpsAddress, feeds);
-
+        addressFeedsHashMap.setGpsAddressLocation(lastLocation);
         notifyGlobalDataSetChanged();
         // TODO consider this when more than one update can occur.
         startFetchAddressIntentService(lastLocation);
@@ -100,8 +76,7 @@ public class GlobalHandler {
 
 
     public void addAddress(SimpleAddress simpleAddress) {
-        ArrayList<Feed> feeds = getFeedsForAddress(simpleAddress);
-        addressFeedsHashMap.put(simpleAddress, feeds);
+        addressFeedsHashMap.addAddress(simpleAddress);
     }
 
 
@@ -115,44 +90,8 @@ public class GlobalHandler {
     }
 
 
-    public ArrayList<Feed> getFeedsFromHashMap(SimpleAddress simpleAddress) {
+    public ArrayList<Feed> getFeedsFromAddressInHashMap(SimpleAddress simpleAddress) {
         return addressFeedsHashMap.hashMap.get(simpleAddress);
-    }
-
-
-    public ArrayList<Feed> getFeedsForAddress(final SimpleAddress addr) {
-        final ArrayList<Feed> result = new ArrayList<>();
-
-        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonFeeds;
-                    int i,size;
-
-                    jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
-                    size = jsonFeeds .length();
-                    for (i=0;i<size;i++) {
-                        JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
-                        result.add( Feed.parseFeedFromJson(jsonFeed) );
-                    }
-                } catch (Exception e) {
-                    // TODO catch exception "failed to find JSON attr"
-                    e.printStackTrace();
-                }
-                addr.setClosestFeed( MapGeometry.getClosestFeedToAddress(addr,result) );
-                notifyGlobalDataSetChanged();
-            }
-        };
-        Response.ErrorListener error = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO handle errors
-            }
-        };
-        this.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), response, error);
-
-        return result;
     }
 
 

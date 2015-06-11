@@ -85,11 +85,7 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         Log.i("onItemLongClick", "DID LONG CLICK");
         SimpleAddress simpleAddress = context.addresses.get(i);
-        if (simpleAddress.get_id() < 0) {
-            Log.i("onItemLongClick", "WARNING - the long-clicked address has negative id=" + simpleAddress.get_id());
-        } else {
-            context.showDialogDelete(simpleAddress);
-        }
+        context.openDialogDelete(simpleAddress);
         return true;
     }
 

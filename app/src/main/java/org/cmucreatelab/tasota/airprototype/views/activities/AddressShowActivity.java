@@ -39,7 +39,7 @@ public class AddressShowActivity extends ActionBarActivity {
         intent = getIntent();
         index = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX, -1);
         showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).getAddresses().get(index);
-        feeds = GlobalHandler.getInstance(this.getApplicationContext()).getFeedsFromHashMap(showSimpleAddress);
+        feeds = GlobalHandler.getInstance(this.getApplicationContext()).getFeedsFromAddressInHashMap(showSimpleAddress);
         feedsListAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
 
         // generate content for TextViews

@@ -100,8 +100,12 @@ public class MapGeometry {
                 }
             }
         }
-
-        Log.i("MapGeometry","FEED="+closestFeed.getFeed_id()+" has closest distance="+distance);
+        if (closestFeed == null) {
+            Log.i("WARNING", "getClosestFeedToAddress is null.");
+        }
+        else {
+            Log.i("MapGeometry", "FEED=" + closestFeed.getFeed_id() + " has closest distance=" + distance);
+        }
         return closestFeed;
     }
 

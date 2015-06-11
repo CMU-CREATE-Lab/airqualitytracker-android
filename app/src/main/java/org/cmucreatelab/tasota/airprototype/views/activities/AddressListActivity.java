@@ -22,9 +22,13 @@ public class AddressListActivity extends ActionBarActivity {
     public AlertDialogAddressListDelete dialogDelete;
 
 
-    public void showDialogDelete(final SimpleAddress simpleAddress) {
-        dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
-        dialogDelete.getAlertDialog().show();
+    public void openDialogDelete(final SimpleAddress simpleAddress) {
+        if (simpleAddress == GlobalHandler.getInstance(this.getApplicationContext()).getGpsAddress()) {
+            Log.i("WARNING", "Tried deleting hardcoded Address (gpsAddress).");
+        } else {
+            dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
+            dialogDelete.getAlertDialog().show();
+        }
     }
 
 
@@ -57,7 +61,7 @@ public class AddressListActivity extends ActionBarActivity {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState.getBoolean("dialogDelete")) {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
-            showDialogDelete(addresses.get(index));
+            openDialogDelete(addresses.get(index));
         }
         if (savedInstanceState.getBoolean("dialogNew")) {
             String inputString = savedInstanceState.getString("dialogNewInputString");
