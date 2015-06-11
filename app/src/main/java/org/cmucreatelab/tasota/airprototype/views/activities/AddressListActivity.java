@@ -45,7 +45,7 @@ public class AddressListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
-        addresses = globalHandler.addresses;
+        addresses = globalHandler.getAddresses();
         listAdapter = new ArrayAdapterAddressList(this, addresses);
         // for notifying when the dataset changes
         globalHandler.listAdapter = this.listAdapter;

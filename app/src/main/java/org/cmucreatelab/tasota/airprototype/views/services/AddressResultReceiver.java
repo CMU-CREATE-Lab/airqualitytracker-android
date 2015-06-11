@@ -25,8 +25,9 @@ public class AddressResultReceiver extends ResultReceiver {
     @Override
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         Log.i("RESULTS", resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY));
-        SimpleAddress simpleAddress = globalHandler.addresses.get(0);
-        simpleAddress.setName( resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY) );
+//        SimpleAddress simpleAddress = globalHandler.addresses.get(0);
+//        simpleAddress.setName( resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY) );
+        globalHandler.getGpsAddress().setName( resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY) );
     }
 
 }
