@@ -74,6 +74,12 @@ public class Feed {
     }
 
 
+    public void updateChannelReadings() {
+        // TODO grab most recent readings from the Feed's channels
+        // TODO this is where Chris' API call will come in handy
+    }
+
+
     @Override
     public String toString() {
         // TODO generate a proper label from the class attributes
@@ -83,7 +89,7 @@ public class Feed {
 
     // Helper function to parse a feed's JSON and create objects (also does Channels)
     public static Feed parseFeedFromJson(JSONObject row) {
-        Feed f = new Feed();
+        Feed result = new Feed();
 
         try {
             long feed_id;
@@ -103,27 +109,29 @@ public class Feed {
             longitude = Double.parseDouble(row.get("longitude").toString());
             productId = Long.parseLong(row.get("productId").toString());
 
-            f.setFeed_id(feed_id);
-            f.setName(name);
-            f.setExposure(exposure);
-            f.setIsMobile(isMobile);
-            f.setLatitude(latitude);
-            f.setLongitude(longitude);
-            f.setProductId(productId);
+            result.setFeed_id(feed_id);
+            result.setName(name);
+            result.setExposure(exposure);
+            result.setIsMobile(isMobile);
+            result.setLatitude(latitude);
+            result.setLongitude(longitude);
+            result.setProductId(productId);
 
-            listChannels = f.getChannels();
+            listChannels = result.getChannels();
             channels = row.getJSONObject("channelBounds").getJSONObject("channels");
             keys = channels.keys();
             while (keys.hasNext()) {
                 String channelName = keys.next();
                 listChannels.add( Channel.parseChannelFromJson( channelName, feed_id, channels.getJSONObject(channelName)) );
             }
+
+            result.updateChannelReadings();
         } catch (Exception e) {
             // TODO catch exception "failed to find JSON attr"
             e.printStackTrace();
         }
 
-        return f;
+        return result;
     }
 
 }

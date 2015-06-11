@@ -133,12 +133,11 @@ public class GlobalHandler {
                         JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
                         result.add( Feed.parseFeedFromJson(jsonFeed) );
                     }
-                    addr.setClosestFeed( MapGeometry.getClosestFeedToAddress(addr,result) );
-                    GlobalHandler.this.notifyGlobalDataSetChanged();
                 } catch (Exception e) {
                     // TODO catch exception "failed to find JSON attr"
                     e.printStackTrace();
                 }
+                addr.setClosestFeed( MapGeometry.getClosestFeedToAddress(addr,result) );
                 notifyGlobalDataSetChanged();
             }
         };

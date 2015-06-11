@@ -114,7 +114,6 @@ public class MapGeometry {
         }
 
         Log.i("MapGeometry","FEED="+closestFeed.getFeed_id()+" has closest distance="+distance);
-
         return closestFeed;
     }
 
