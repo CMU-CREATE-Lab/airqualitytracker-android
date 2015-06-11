@@ -15,10 +15,7 @@ import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentSer
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by mike on 6/2/15.
@@ -27,9 +24,6 @@ public class GlobalHandler {
 
     private Context appContext;
     private static GlobalHandler classInstance;
-//    public ArrayList<SimpleAddress> addresses;
-//    public SimpleAddress gpsAddress; // listed in addresses
-//    public HashMap<SimpleAddress,ArrayList<Feed>> addressFeedHash;
     private AddressFeedsHashMap addressFeedsHashMap;
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
@@ -46,8 +40,6 @@ public class GlobalHandler {
         dbAddresses = SimpleAddress.fetchAddressesFromDatabase(this.appContext);
         for (SimpleAddress simpleAddress : dbAddresses) {
                 feed = getFeedsForAddress(simpleAddress);
-//                this.addresses.add(simpleAddress);
-//                this.addressFeedHash.put(simpleAddress, feed);
                 this.addressFeedsHashMap.put(simpleAddress, feed);
         }
     }
@@ -62,13 +54,7 @@ public class GlobalHandler {
         this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
 
         // data structures
-//        this.addresses = new ArrayList<>();
-//        this.addressFeedHash = new HashMap<>();
         this.addressFeedsHashMap = new AddressFeedsHashMap();
-//        gpsAddress = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
-//        this.addresses.add(gpsAddress);
-
-        // populate stuff
         this.addDatabaseEntriesToAddresses();
     }
 
@@ -110,16 +96,12 @@ public class GlobalHandler {
 
     public void removeAddress(SimpleAddress simpleAddress) {
         addressFeedsHashMap.removeAddress(simpleAddress);
-//        addressFeedHash.remove(simpleAddress);
-//        addresses.remove(simpleAddress);
     }
 
 
     public void addAddress(SimpleAddress simpleAddress) {
-//        addresses.add(simpleAddress);
         ArrayList<Feed> feeds = getFeedsForAddress(simpleAddress);
         addressFeedsHashMap.put(simpleAddress, feeds);
-//        addressFeedHash.put(simpleAddress, feed);
     }
 
 
