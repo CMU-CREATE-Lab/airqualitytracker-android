@@ -94,17 +94,17 @@ public class MapGeometry {
                     closestFeed = feed;
                 }
                 if (temp < 0) {
-                    Log.i("WARNING", "Distance from address=" + simpleAddress.get_id() +
+                    Log.w(Constants.LOG_TAG, "Distance from address=" + simpleAddress.get_id() +
                             " to feed=" + feed.getFeed_id() +
                             " has negative distance=" + temp);
                 }
             }
         }
         if (closestFeed == null) {
-            Log.i("WARNING", "getClosestFeedToAddress is null.");
+            Log.w(Constants.LOG_TAG, "getClosestFeedToAddress returning null.");
         }
         else {
-            Log.i("MapGeometry", "FEED=" + closestFeed.getFeed_id() + " has closest distance=" + distance);
+            Log.d(Constants.LOG_TAG, "FEED=" + closestFeed.getFeed_id() + " has closest distance=" + distance);
         }
         return closestFeed;
     }

@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.views.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;
 
@@ -35,6 +37,7 @@ public class AddressShowActivity extends ActionBarActivity {
         ArrayAdapter<Feed> feedsListAdapter;
 
         super.onCreate(savedInstanceState);
+        Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
         setContentView(R.layout.activity_address_show);
         intent = getIntent();
         index = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX, -1);

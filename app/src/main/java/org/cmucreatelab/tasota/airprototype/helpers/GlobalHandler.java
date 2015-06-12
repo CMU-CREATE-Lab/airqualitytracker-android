@@ -65,7 +65,7 @@ public class GlobalHandler {
             intent.putExtra("longitude",lastLocation.getLongitude());
             this.appContext.startService(intent);
         } else {
-            Log.i("ERROR","Geocoder is not present");
+            Log.e(Constants.LOG_TAG, "Tried starting FetchAddressIntentService but Geocoder is not present.");
         }
     }
 

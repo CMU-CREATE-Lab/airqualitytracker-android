@@ -40,8 +40,8 @@ public class HttpRequestHandler {
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         JsonObjectRequest jsonRequest;
 
-        Log.i("sendJsonRequest", "requestUrl=" + requestUrl);
         jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
+        Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
         this.queue.add(jsonRequest);
     }
 

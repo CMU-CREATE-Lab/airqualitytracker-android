@@ -32,7 +32,7 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
             LocationServices.FusedLocationApi.requestLocationUpdates(
                     googleApiClientHandler.googleApiClient, locationRequest, this);
         } else {
-            Log.i("ERROR","in startLocationUpdates(): client is not connected");
+            Log.e(Constants.LOG_TAG, "googleApiClientHandler client is not connected.");
         }
     }
 
@@ -56,9 +56,9 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
     @Override
     public void onLocationChanged(Location location) {
         if (location == null) {
-            Log.i("ERROR", "in onLocationChanged(): location was null" );
+            Log.e(Constants.LOG_TAG, "onLocationChanged received null location.");
         } else {
-            Log.i("DEBUG", "LOCATION WAS UPDATED TO " + location.toString());
+            Log.d(Constants.LOG_TAG, "onLocationChanged received: " + location.toString());
             googleApiClientHandler.globalHandler.updateCurrentLocation(location);
         }
     }

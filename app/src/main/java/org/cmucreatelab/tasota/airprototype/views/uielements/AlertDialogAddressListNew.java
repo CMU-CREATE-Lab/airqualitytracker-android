@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 import org.json.JSONObject;
@@ -31,7 +32,6 @@ public class AlertDialogAddressListNew {
         public AlertDialogBuilderAddressListNew(final AddressListActivity activityContext, final EditText inputField, String inputString) {
             super(activityContext);
             final Context appContext;
-            Log.i("openDialogNew", "action bar selected.");
             appContext = activityContext.getApplicationContext();
             this.setMessage("Enter a zipcode, city, or address below.");
             // TODO test color schemes... ideally dialog boxes should know what colors they are supposed to use.
@@ -47,7 +47,7 @@ public class AlertDialogAddressListNew {
                     // On completion from JSON response/google API, remove timestamp from list.
                     // While list is nonempty, display a spinner beneath your list of addresses.
                     final String addressName = inputField.getText().toString();
-                    Log.i("onClick", "Adding address=" + addressName);
+                    Log.d(Constants.LOG_TAG, "AlertDialogAddressListNew onClick: Adding address=" + addressName);
                     Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -68,7 +68,7 @@ public class AlertDialogAddressListNew {
 
                                     activityContext.listAdapter.notifyDataSetChanged();
                                 } else {
-                                    Log.i("onResponse", "WARNING - Received status code '" + status + "' from GoogleGeocodeAPI; not processing response.");
+                                    Log.w(Constants.LOG_TAG, "Received status code '" + status + "' from GoogleGeocodeAPI; not processing response.");
                                 }
                             } catch (Exception e) {
                                 // TODO catch exception "failed to find JSON attr"
@@ -86,11 +86,7 @@ public class AlertDialogAddressListNew {
 
                 }
             });
-            this.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // does nothing
-                }
-            });
+            this.setNegativeButton("Cancel", null);
         }
     }
 

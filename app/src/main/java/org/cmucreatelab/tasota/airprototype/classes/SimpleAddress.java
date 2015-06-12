@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressContract;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import java.util.ArrayList;
@@ -65,15 +66,22 @@ public class SimpleAddress {
         } else {
             AddressDbHelper mDbHelper;
             SQLiteDatabase db;
-            String selection;
+            String selection = "_id LIKE ?";
             String[] selectionArgs = { String.valueOf(this._id) };
+            int result;
 
             mDbHelper = new AddressDbHelper(ctx);
             db = mDbHelper.getWritableDatabase();
-            selection = "_id LIKE ?";
-            db.delete(AddressContract.TABLE_NAME, selection, selectionArgs);
-            Log.i("SimpleAddress", "DELETED ADDRESS RECORD id=" + this._id);
-
+            result = db.delete(AddressContract.TABLE_NAME, selection, selectionArgs);
+            if (result == 1) {
+                Log.i(Constants.LOG_TAG, "deleted address _id=" + this._id);
+            } else {
+                Log.w(Constants.LOG_TAG, "Attempted to delete address _id=" +
+                        this._id + " but deleted " + result + " items.");
+            }
+            if (result == 0) {
+                return false;
+            }
             return true;
         }
     }
@@ -93,9 +101,9 @@ public class SimpleAddress {
         values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(latitude));
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(longitude));
         newId = db.insert(AddressContract.TABLE_NAME, "null", values);
-        Log.i("SimpleAddress", "INSERTED RECORD INTO DATABASE id=" + newId);
         simpleAddress = new SimpleAddress(name,latitude,longitude);
         simpleAddress.set_id(newId);
+        Log.i(Constants.LOG_TAG, "inserted new address _id=" + newId);
 
         return simpleAddress;
     }
@@ -108,27 +116,27 @@ public class SimpleAddress {
         String name;
         double latd,longd;
 
-        // read record
-        id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-        name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-        latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
-        longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
-        Log.i("addToDatabase", "READ RECORD _id=" + id);
+        try {
+            // read record
+            id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+            name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
+            longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
+            Log.d(Constants.LOG_TAG, "Read address record _id=" + id);
 
-        // add to data structure
-        simpleAddress = new SimpleAddress(name, latd, longd);
-        simpleAddress.set_id(id);
-        return simpleAddress;
+            // add to data structure
+            simpleAddress = new SimpleAddress(name, latd, longd);
+            simpleAddress.set_id(id);
+            return simpleAddress;
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "Failed to read from cursor! cursor.toString()=" + cursor.toString());
+            throw e;
+        }
     }
 
 
     public static ArrayList<SimpleAddress> fetchAddressesFromDatabase(Context ctx) {
-        String[] projection = {
-                "_id",
-                AddressContract.COLUMN_NAME,
-                AddressContract.COLUMN_LATITUDE,
-                AddressContract.COLUMN_LONGITUDE
-        };
+        String[] projection = { "_id", AddressContract.COLUMN_NAME, AddressContract.COLUMN_LATITUDE, AddressContract.COLUMN_LONGITUDE };
         AddressDbHelper mDbHelper;
         SQLiteDatabase db;
         Cursor cursor;
@@ -153,6 +161,9 @@ public class SimpleAddress {
             cursor.moveToNext();
         }
 
+        if (result.size() == 0) {
+            Log.w(Constants.LOG_TAG, "fetchAddressesFromDatabase is returning an empty list.");
+        }
         return result;
     }
 

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressShowActivity;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.i("onItemLongClick", "DID LONG CLICK");
+        Log.d(Constants.LOG_TAG, "ArrayAdapterAddressList performed onItemLongClick");
         SimpleAddress simpleAddress = context.addresses.get(i);
         context.openDialogDelete(simpleAddress);
         return true;

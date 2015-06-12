@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListDelete;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListNew;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
@@ -24,7 +25,7 @@ public class AddressListActivity extends ActionBarActivity {
 
     public void openDialogDelete(final SimpleAddress simpleAddress) {
         if (simpleAddress == GlobalHandler.getInstance(this.getApplicationContext()).getGpsAddress()) {
-            Log.i("WARNING", "Tried deleting hardcoded Address (gpsAddress).");
+            Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
             dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
             dialogDelete.getAlertDialog().show();
@@ -34,7 +35,6 @@ public class AddressListActivity extends ActionBarActivity {
 
     public void openSettings() {
         // TODO open settings
-        Log.i("openSettings", "SETTINGS selected.");
     }
 
 
@@ -47,6 +47,7 @@ public class AddressListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(Constants.LOG_TAG, "AddressListActivity onCreate");
         setContentView(R.layout.activity_address_list);
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
         addresses = globalHandler.getAddresses();
@@ -59,6 +60,7 @@ public class AddressListActivity extends ActionBarActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        Log.d(Constants.LOG_TAG, "AddressListActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("dialogDelete")) {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
             openDialogDelete(addresses.get(index));
@@ -104,9 +106,11 @@ public class AddressListActivity extends ActionBarActivity {
 
         switch (id) {
             case R.id.action_settings:
+                Log.d(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
                 openSettings();
                 return true;
             case R.id.action_new:
+                Log.d(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");
                 openDialogNew("");
                 return true;
             default:

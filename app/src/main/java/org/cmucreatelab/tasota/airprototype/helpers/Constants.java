@@ -5,6 +5,8 @@ package org.cmucreatelab.tasota.airprototype.helpers;
  */
 public final class Constants {
 
+    public static final String LOG_TAG = "AirPrototype";
+
     public final class AddressIntent {
         public static final int MAX_RESULTS = 1;
         public static final int SUCCESS_RESULT = 0;

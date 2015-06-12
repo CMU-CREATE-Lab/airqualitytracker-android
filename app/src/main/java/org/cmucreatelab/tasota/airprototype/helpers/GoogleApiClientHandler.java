@@ -33,6 +33,7 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
                 .addApi(LocationServices.API)
                 .build();
         // make sure you actually CONNECT the api client for it to do anything (so much hatred)
+        Log.i(Constants.LOG_TAG, "connecting googleApiClient...");
         googleApiClient.connect();
     }
 
@@ -49,12 +50,13 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
 
     @Override
     public void onConnected(Bundle bundle) {
+        Log.i(Constants.LOG_TAG, "...googleApiClient connected.");
         GoogleApiClientHandler.this.clientConnected = true;
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (lastLocation == null) {
-            Log.i("ERROR", "in onConnected(): getLastLocation returned null" );
+            Log.w(Constants.LOG_TAG, "getLastLocation returned null.");
         } else {
-            Log.i("DEBUG", "last known location is " + lastLocation.toString());
+            Log.d(Constants.LOG_TAG, "getLastLocation returned: " + lastLocation.toString());
             GoogleApiClientHandler.this.globalHandler.updateCurrentLocation(lastLocation);
         }
     }
@@ -62,17 +64,17 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
 
     @Override
     public void onConnectionSuspended(int i) {
+        Log.w(Constants.LOG_TAG, "googleApiClient onConnectionSuspended");
         // TODO handle suspended connection
         GoogleApiClientHandler.this.clientConnected = false;
-        Log.i("DEBUG","onConnectionSuspended");
     }
 
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.w(Constants.LOG_TAG, "googleApiClient onConnectionFailed");
         // TODO handle failed connection
         GoogleApiClientHandler.this.clientConnected = false;
-        Log.i("DEBUG","onConnectionFailed");
     }
 
 }
