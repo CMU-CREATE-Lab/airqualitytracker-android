@@ -5,6 +5,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class AddressFeedsHashMap {
         this.put(gpsAddress, new ArrayList<Feed>());
         this.globalHandler = globalHandler;
         // populate addresses from database
-        ArrayList<SimpleAddress> dbAddresses = SimpleAddress.fetchAddressesFromDatabase(this.globalHandler.appContext);
+        ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         for (SimpleAddress simpleAddress : dbAddresses) {
             this.addAddress(simpleAddress);
         }

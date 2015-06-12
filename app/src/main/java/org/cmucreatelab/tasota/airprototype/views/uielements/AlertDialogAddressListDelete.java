@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 
 /**
@@ -30,7 +31,7 @@ public class AlertDialogAddressListDelete {
             this.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     GlobalHandler.getInstance(ctx).removeAddress(simpleAddress);
-                    simpleAddress.destroy(ctx);
+                    AddressDbHelper.destroy(simpleAddress, ctx);
                     activityContext.listAdapter.notifyDataSetChanged();
                 }
             });

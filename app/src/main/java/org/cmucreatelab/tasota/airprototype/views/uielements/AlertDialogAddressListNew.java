@@ -11,6 +11,7 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 import org.json.JSONObject;
 
@@ -63,7 +64,7 @@ public class AlertDialogAddressListNew {
                                     locations = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
                                     latd = Double.parseDouble(locations.getString("lat"));
                                     longd = Double.parseDouble(locations.getString("lng"));
-                                    result = SimpleAddress.createAddressInDatabase(appContext, addressName, latd, longd);
+                                    result = AddressDbHelper.createAddressInDatabase(appContext, addressName, latd, longd);
                                     GlobalHandler.getInstance(appContext).addAddress(result);
 
                                     activityContext.listAdapter.notifyDataSetChanged();
