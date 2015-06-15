@@ -37,7 +37,6 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
 
     public ArrayAdapterAddressList(AddressListActivity context, ArrayList<SimpleAddress> values) {
-//        super(context, R.layout.address_item, values);
         super(context, R.layout.address_item_v2, values);
         this.context = context;
         this.values = values;
@@ -50,26 +49,15 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
         LayoutInflater inflater;
         View rowView;
         TextView textView;
+        int reading;
 
         if (convertView == null) {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            rowView = inflater.inflate(R.layout.address_item, parent, false);
             rowView = inflater.inflate(R.layout.address_item_v2, parent, false);
         } else {
             rowView = convertView;
         }
 
-//        // set address name
-//        textView = (TextView)rowView.findViewById(R.id.textAddressName);
-//        textView.setText(values.get(position).getName());
-//
-//        // address's value
-//        textView = (TextView)rowView.findViewById(R.id.textAddressValue);
-//        if (values.get(position).getClosestFeed() == null) {
-//            textView.setText("N/A");
-//        } else {
-//            textView.setText(values.get(position).getClosestFeed().getFeedDisplay());
-//        }
         textView = (TextView)rowView.findViewById(R.id.textAddressItemName);
         textView.setText(values.get(position).getName());
 
@@ -81,7 +69,12 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
         }
 
         textView = (TextView)rowView.findViewById(R.id.textAddressItemDescription);
-        textView.setText(Constants.SpeckReading.getDescriptionFromReading(1));
+        if (values.get(position).getClosestFeed() == null) {
+            textView.setText( "" );
+        } else {
+            reading = values.get(position).getClosestFeed().getFeedValue();
+            textView.setText( Constants.SpeckReading.descriptions[Constants.SpeckReading.getIndexFromReading(reading)] );
+        }
 
         return rowView;
     }

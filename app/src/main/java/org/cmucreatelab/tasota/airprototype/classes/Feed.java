@@ -17,7 +17,8 @@ public class Feed {
     private double longitude;
     private long productId;
     private ArrayList<Channel> channels;
-
+    // The relevant value (PM2.5) pulled for the given Feed
+    private int feedValue;
     // what we want to display to the user (ug/m^3)
     private String feedDisplay;
 
@@ -72,6 +73,9 @@ public class Feed {
         }
         return feedDisplay;
     }
+    public int getFeedValue() {
+        return feedValue;
+    }
 
 
     public Feed() {
@@ -84,7 +88,8 @@ public class Feed {
     public void updateChannelReadings() {
         // TODO grab most recent readings from the Feed's channels
         // TODO this is where Chris' API call will come in handy
-        feedDisplay = "feed="+String.valueOf(this.feed_id)+" (µg/m³)";
+        feedValue = (int)feed_id;
+        feedDisplay = "feed="+String.valueOf(feedValue)+" (µg/m³)";
     }
 
 

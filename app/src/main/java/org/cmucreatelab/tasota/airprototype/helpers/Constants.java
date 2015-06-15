@@ -8,12 +8,35 @@ public final class Constants {
     public static final String LOG_TAG = "AirPrototype";
 
     public static final class SpeckReading {
-        // TODO enum
-        public static String getDescriptionFromReading(int reading) {
-            if (reading <10) {
-                return "String1";
+        public static final String[] normalColors = {
+                "0x1a9850", "0x91cf60", "0xd9ef8b",
+                "0xFEE08B", "0xFC8D59", "0xD73027"
+        };
+        public static final String[] colorblindColors = {
+                "0x4575b4", "0x91bfdb", "0xe0f3f8",
+                "0xfee090", "0xfc8d59", "0xd73027"
+        };
+        public static final String[] descriptions = {
+                "Good", "Moderate", "Slightly Elevated",
+                "Elevated", "High", "Very High"
+        };
+        // ranges measured in ug/m^3
+        private static final int[] ranges = {
+            21, 41, 81,
+            161, 321
+        };
+
+        public static int getIndexFromReading(int reading) {
+            if (reading < 0) {
+                return -1;
             }
-            return "String2";
+            int i;
+            for (i=0;i<ranges.length;i++) {
+                if (reading < ranges[i]) {
+                    break;
+                }
+            }
+            return i;
         }
     }
 
