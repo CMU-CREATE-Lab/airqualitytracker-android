@@ -72,15 +72,14 @@ public class AlertDialogAddressListNew {
                                     Log.w(Constants.LOG_TAG, "Received status code '" + status + "' from GoogleGeocodeAPI; not processing response.");
                                 }
                             } catch (Exception e) {
-                                // TODO catch exception "failed to find JSON attr"
-                                e.printStackTrace();
+                                Log.e(Constants.LOG_TAG,"Failed to parse JSON: " + e.getLocalizedMessage());
                             }
                         }
                     };
                     Response.ErrorListener error = new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            // TODO handle errors
+                            Log.e(Constants.LOG_TAG, "Received error from Volley: " + error.getLocalizedMessage());
                         }
                     };
                     GlobalHandler.getInstance(appContext).httpRequestHandler.requestGoogleGeocode(addressName, response, error);

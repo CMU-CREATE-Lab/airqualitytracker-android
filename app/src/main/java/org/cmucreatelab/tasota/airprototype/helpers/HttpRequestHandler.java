@@ -86,8 +86,7 @@ public class HttpRequestHandler {
         try {
             requestUrl += java.net.URLEncoder.encode(addressName, "ISO-8859-1");
         } catch (Exception e) {
-            // TODO handle unexpected encoding exception
-            e.printStackTrace();
+            Log.wtf(Constants.LOG_TAG,"Failed to encode string \"" + addressName + "\" using ISO-8859-1");
         }
         this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
     }

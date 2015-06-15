@@ -1,6 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.location.Location;
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
@@ -85,8 +87,7 @@ public class AddressFeedsHashMap {
                         result.add( Feed.parseFeedFromJson(jsonFeed) );
                     }
                 } catch (Exception e) {
-                    // TODO catch exception "failed to find JSON attr"
-                    e.printStackTrace();
+                    Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
                 }
                 addr.setClosestFeed( MapGeometry.getClosestFeedToAddress(addr,result) );
                 globalHandler.notifyGlobalDataSetChanged();
@@ -95,7 +96,7 @@ public class AddressFeedsHashMap {
         Response.ErrorListener error = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO handle errors
+                Log.e(Constants.LOG_TAG, "Received error from Volley: " + error.getLocalizedMessage());
             }
         };
         globalHandler.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), response, error);

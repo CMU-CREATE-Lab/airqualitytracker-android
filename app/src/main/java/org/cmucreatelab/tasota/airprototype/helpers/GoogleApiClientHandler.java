@@ -65,7 +65,6 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
     @Override
     public void onConnectionSuspended(int i) {
         Log.w(Constants.LOG_TAG, "googleApiClient onConnectionSuspended");
-        // TODO handle suspended connection
         GoogleApiClientHandler.this.clientConnected = false;
     }
 
@@ -73,7 +72,6 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.w(Constants.LOG_TAG, "googleApiClient onConnectionFailed");
-        // TODO handle failed connection
         GoogleApiClientHandler.this.clientConnected = false;
     }
 

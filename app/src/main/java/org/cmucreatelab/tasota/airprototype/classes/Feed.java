@@ -1,5 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import android.util.Log;
+
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -137,8 +140,7 @@ public class Feed {
 
             result.updateChannelReadings();
         } catch (Exception e) {
-            // TODO catch exception "failed to find JSON attr"
-            e.printStackTrace();
+            Log.e(Constants.LOG_TAG, "Failed to parse Feed from JSON.");
         }
 
         return result;

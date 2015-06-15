@@ -1,5 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import android.util.Log;
+
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.json.JSONObject;
 
 /**
@@ -76,8 +79,7 @@ public class Channel {
             c.setMinValue(minValue);
             c.setMaxValue(maxValue);
         } catch (Exception e) {
-            // TODO catch exception "failed to find JSON attr"
-            e.printStackTrace();
+            Log.e(Constants.LOG_TAG,"Failed to parse Channel from JSON.");
         }
 
         return c;

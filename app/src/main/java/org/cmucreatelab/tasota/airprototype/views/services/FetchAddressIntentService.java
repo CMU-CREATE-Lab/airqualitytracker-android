@@ -6,6 +6,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.ResultReceiver;
+import android.util.Log;
+
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import java.util.List;
 import java.util.Locale;
@@ -43,22 +45,14 @@ public class FetchAddressIntentService extends IntentService {
         try {
             results = geocoder.getFromLocation(latd,longd,Constants.AddressIntent.MAX_RESULTS);
         } catch (Exception e) {
-            // TODO handle exception
-            e.printStackTrace();
+            Log.e(Constants.LOG_TAG,"Geocoder could not get from location (" + latd + ", " + longd + ")");
         }
 
         if (results == null || results.size() == 0) {
+            Log.w(Constants.LOG_TAG,"Failed to handle Fetch Address.");
             deliverResultToReceiver(Constants.AddressIntent.FAILURE_RESULT, "FAILED");
         } else {
             Address address = results.get(0);
-//            ArrayList<String> addressFragments = new ArrayList<String>();
-//            // Fetch the address lines using getAddressLine,
-//            // join them, and send them to the thread.
-//            for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-//                addressFragments.add(address.getAddressLine(i));
-//            }
-//            deliverResultToReceiver(Constants.SUCCESS_RESULT, TextUtils.join(System.getProperty("line.separator"), addressFragments));
-
             deliverResultToReceiver(Constants.AddressIntent.SUCCESS_RESULT, address.getAddressLine(address.getMaxAddressLineIndex()-1) );
         }
     }
