@@ -84,7 +84,7 @@ public class Feed {
     public void updateChannelReadings() {
         // TODO grab most recent readings from the Feed's channels
         // TODO this is where Chris' API call will come in handy
-        feedDisplay = "feed="+String.valueOf(this.feed_id);
+        feedDisplay = "feed="+String.valueOf(this.feed_id)+" (µg/m³)";
     }
 
 

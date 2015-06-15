@@ -7,6 +7,16 @@ public final class Constants {
 
     public static final String LOG_TAG = "AirPrototype";
 
+    public static final class SpeckReading {
+        // TODO enum
+        public static String getDescriptionFromReading(int reading) {
+            if (reading <10) {
+                return "String1";
+            }
+            return "String2";
+        }
+    }
+
     public final class AddressIntent {
         public static final int MAX_RESULTS = 1;
         public static final int SUCCESS_RESULT = 0;
