@@ -20,6 +20,9 @@ public class Feed {
     private long productId;
     private ArrayList<Channel> channels;
 
+    // what we want to display to the user (ug/m^3)
+    private String feedDisplay;
+
     public long getProductId() {
         return productId;
     }
@@ -65,6 +68,12 @@ public class Feed {
     public ArrayList<Channel> getChannels() {
         return channels;
     }
+    public String getFeedDisplay() {
+        if (feedDisplay == null) {
+            updateChannelReadings();
+        }
+        return feedDisplay;
+    }
 
 
     public Feed() {
@@ -77,6 +86,7 @@ public class Feed {
     public void updateChannelReadings() {
         // TODO grab most recent readings from the Feed's channels
         // TODO this is where Chris' API call will come in handy
+        feedDisplay = "feed="+String.valueOf(this.feed_id);
     }
 
 

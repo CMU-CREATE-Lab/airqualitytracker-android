@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,11 +17,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
-
-
-    public void switchToFeedActivity(int index) {
-        // TODO switch to FeedActivity
-    }
 
 
     @Override
@@ -56,14 +49,14 @@ public class AddressShowActivity extends ActionBarActivity {
         // setup ListView
         listView = (ListView)findViewById(R.id.listShowAddressFeeds);
         listView.setAdapter(feedsListAdapter);
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        switchToFeedActivity(i);
-                    }
-                }
-        );
+//        listView.setOnItemClickListener(
+//                new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                        // switch to FeedActivity
+//                    }
+//                }
+//        );
     }
 
 

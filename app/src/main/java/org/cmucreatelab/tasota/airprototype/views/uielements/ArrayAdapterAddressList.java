@@ -62,12 +62,11 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
         textView.setText(values.get(position).getName());
 
         // address's value
-        // TODO address._id for now, but should be air quality.
         textView = (TextView)rowView.findViewById(R.id.textAddressValue);
         if (values.get(position).getClosestFeed() == null) {
-            textView.setText("id="+String.valueOf(values.get(position).get_id()));
+            textView.setText("N/A");
         } else {
-            textView.setText("feed="+String.valueOf(values.get(position).getClosestFeed().getFeed_id()));
+            textView.setText(values.get(position).getClosestFeed().getFeedDisplay());
         }
 
         return rowView;
