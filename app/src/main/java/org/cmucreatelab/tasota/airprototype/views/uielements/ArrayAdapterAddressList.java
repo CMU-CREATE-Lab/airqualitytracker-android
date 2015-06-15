@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
@@ -48,34 +47,14 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater;
         View rowView;
-        TextView textView;
-        int reading;
 
         if (convertView == null) {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.address_item_v2, parent, false);
+            rowView = (inflater.inflate(R.layout.address_item_v2, parent, false));
         } else {
             rowView = convertView;
         }
-
-        textView = (TextView)rowView.findViewById(R.id.textAddressItemName);
-        textView.setText(values.get(position).getName());
-
-        textView = (TextView)rowView.findViewById(R.id.textAddressItemValue);
-        if (values.get(position).getClosestFeed() == null) {
-            textView.setText("N/A");
-        } else {
-            textView.setText(values.get(position).getClosestFeed().getFeedDisplay());
-        }
-
-        textView = (TextView)rowView.findViewById(R.id.textAddressItemDescription);
-        if (values.get(position).getClosestFeed() == null) {
-            textView.setText( "" );
-        } else {
-            reading = values.get(position).getClosestFeed().getFeedValue();
-            textView.setText( Constants.SpeckReading.descriptions[Constants.SpeckReading.getIndexFromReading(reading)] );
-        }
-
+        new RowViewAddressList(values.get(position),rowView).populateRowView();
         return rowView;
     }
 
