@@ -84,7 +84,7 @@ public class AddressFeedsHashMap {
                     size = jsonFeeds .length();
                     for (i=0;i<size;i++) {
                         JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
-                        result.add( Feed.parseFeedFromJson(jsonFeed) );
+                        result.add( JsonParser.parseFeedFromJson(jsonFeed) );
                     }
                 } catch (Exception e) {
                     Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");

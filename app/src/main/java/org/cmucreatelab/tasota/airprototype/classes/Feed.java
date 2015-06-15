@@ -1,11 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
-import android.util.Log;
-
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
-import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by mike on 6/1/15.
@@ -97,53 +92,6 @@ public class Feed {
     public String toString() {
         // TODO generate a proper label from the class attributes
         return "(" + this.feed_id + ")" + this.name;
-    }
-
-
-    // Helper function to parse a feed's JSON and create objects (also does Channels)
-    public static Feed parseFeedFromJson(JSONObject row) {
-        Feed result = new Feed();
-
-        try {
-            long feed_id;
-            String name,exposure;
-            boolean isMobile;
-            double latitude,longitude;
-            long productId;
-            ArrayList<Channel> listChannels;
-            JSONObject channels;
-            Iterator<String> keys;
-
-            feed_id = Long.parseLong(row.get("id").toString());
-            name = row.get("name").toString();
-            exposure = row.get("exposure").toString();
-            isMobile = row.get("isMobile").toString().equals("1");
-            latitude = Double.parseDouble(row.get("latitude").toString());
-            longitude = Double.parseDouble(row.get("longitude").toString());
-            productId = Long.parseLong(row.get("productId").toString());
-
-            result.setFeed_id(feed_id);
-            result.setName(name);
-            result.setExposure(exposure);
-            result.setIsMobile(isMobile);
-            result.setLatitude(latitude);
-            result.setLongitude(longitude);
-            result.setProductId(productId);
-
-            listChannels = result.getChannels();
-            channels = row.getJSONObject("channelBounds").getJSONObject("channels");
-            keys = channels.keys();
-            while (keys.hasNext()) {
-                String channelName = keys.next();
-                listChannels.add( Channel.parseChannelFromJson( channelName, feed_id, channels.getJSONObject(channelName)) );
-            }
-
-            result.updateChannelReadings();
-        } catch (Exception e) {
-            Log.e(Constants.LOG_TAG, "Failed to parse Feed from JSON.");
-        }
-
-        return result;
     }
 
 }
