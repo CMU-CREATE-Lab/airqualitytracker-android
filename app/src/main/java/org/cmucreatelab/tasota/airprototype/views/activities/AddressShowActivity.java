@@ -23,7 +23,6 @@ public class AddressShowActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent;
         int index;
-        TextView textView;
         ListView listView;
         SimpleAddress showSimpleAddress;
         ArrayList<Feed> feeds;
@@ -39,24 +38,18 @@ public class AddressShowActivity extends ActionBarActivity {
         feedsListAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
 
         // generate content for TextViews
-        textView = (TextView)findViewById(R.id.textShowAddressName);
-        textView.setText(showSimpleAddress.getName());
-        textView = (TextView)findViewById(R.id.textShowAddressLat);
-        textView.setText(String.valueOf(showSimpleAddress.getLatitude()));
-        textView = (TextView)findViewById(R.id.textShowAddressLong);
-        textView.setText(String.valueOf(showSimpleAddress.getLongitude()));
+        ((TextView)findViewById(R.id.textShowAddressName)).setText(showSimpleAddress.getName());
+        ((TextView)findViewById(R.id.textShowAddressLat)).setText(String.valueOf(showSimpleAddress.getLatitude()));
+        ((TextView)findViewById(R.id.textShowAddressLong)).setText(String.valueOf(showSimpleAddress.getLongitude()));
+        if (showSimpleAddress.getClosestFeed() == null) {
+            ((TextView)findViewById(R.id.textShowAddressClosestFeed)).setText("null");
+        } else {
+            ((TextView)findViewById(R.id.textShowAddressClosestFeed)).setText(String.valueOf(showSimpleAddress.getClosestFeed().getName()));
+        }
 
         // setup ListView
         listView = (ListView)findViewById(R.id.listShowAddressFeeds);
         listView.setAdapter(feedsListAdapter);
-//        listView.setOnItemClickListener(
-//                new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                        // switch to FeedActivity
-//                    }
-//                }
-//        );
     }
 
 
