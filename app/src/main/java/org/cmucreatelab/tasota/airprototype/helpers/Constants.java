@@ -9,12 +9,12 @@ public final class Constants {
 
     public static final class SpeckReading {
         public static final String[] normalColors = {
-                "0x1a9850", "0x91cf60", "0xd9ef8b",
-                "0xFEE08B", "0xFC8D59", "0xD73027"
+                "#1a9850", "#91cf60", "#d9ef8b",
+                "#FEE08B", "#FC8D59", "#D73027"
         };
         public static final String[] colorblindColors = {
-                "0x4575b4", "0x91bfdb", "0xe0f3f8",
-                "0xfee090", "0xfc8d59", "0xd73027"
+                "#4575b4", "#91bfdb", "#e0f3f8",
+                "#fee090", "#fc8d59", "#d73027"
         };
         public static final String[] descriptions = {
                 "Good", "Moderate", "Slightly Elevated",

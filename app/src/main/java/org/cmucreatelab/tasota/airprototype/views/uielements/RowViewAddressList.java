@@ -1,5 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.views.uielements;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
@@ -41,9 +43,17 @@ public class RowViewAddressList {
         if (row.getClosestFeed() == null) {
             textView.setText( "" );
         } else {
-            int reading = row.getClosestFeed().getFeedValue();
-            textView.setText( Constants.SpeckReading.descriptions[Constants.SpeckReading.getIndexFromReading(reading)] );
-            // TODO set display color
+            int index = Constants.SpeckReading.getIndexFromReading(row.getClosestFeed().getFeedValue());
+            if (index >= 0) {
+                textView.setText(Constants.SpeckReading.descriptions[index]);
+                try {
+                    // TODO colorblind check?
+                    textView.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+                } catch (Exception e) {
+                    // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
+                    Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index].toString());
+                }
+            }
         }
     }
 
