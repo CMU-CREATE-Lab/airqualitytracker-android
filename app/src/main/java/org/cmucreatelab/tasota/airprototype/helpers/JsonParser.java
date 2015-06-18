@@ -72,15 +72,15 @@ public class JsonParser {
 
         try {
             String name;
-            long feed_id,minTimeSecs,maxTimeSecs;
-            float minValue,maxValue;
+            long feed_id;
+            double minTimeSecs,maxTimeSecs,minValue,maxValue;
 
             name = channelName;
             feed_id = feedId;
-            minTimeSecs = Long.parseLong(entry.get("minTimeSecs").toString());
-            maxTimeSecs = Long.parseLong(entry.get("maxTimeSecs").toString());;
-            minValue = Float.parseFloat(entry.get("minValue").toString());
-            maxValue = Float.parseFloat(entry.get("maxValue").toString());
+            minTimeSecs = Double.parseDouble(entry.get("minTimeSecs").toString());
+            maxTimeSecs = Double.parseDouble(entry.get("maxTimeSecs").toString());;
+            minValue = Double.parseDouble(entry.get("minValue").toString());
+            maxValue = Double.parseDouble(entry.get("maxValue").toString());
 
             c.setName(name);
             c.setFeed_id(feed_id);

@@ -8,11 +8,10 @@ public class Channel {
 
     private String name;
     private long feed_id;
-    // TODO ensure that minTimeSecs/MaxTimeSecs are integers (not floats)
-    private long minTimeSecs;
-    private long maxTimeSecs;
-    private float minValue;
-    private float maxValue;
+    private double minTimeSecs;
+    private double maxTimeSecs;
+    private double minValue;
+    private double maxValue;
 
     public String getName() {
         return name;
@@ -26,28 +25,28 @@ public class Channel {
     public void setFeed_id(long feed_id) {
         this.feed_id = feed_id;
     }
-    public long getMinTimeSecs() {
+    public double getMinTimeSecs() {
         return minTimeSecs;
     }
-    public void setMinTimeSecs(long minTimeSecs) {
+    public void setMinTimeSecs(double minTimeSecs) {
         this.minTimeSecs = minTimeSecs;
     }
-    public long getMaxTimeSecs() {
+    public double getMaxTimeSecs() {
         return maxTimeSecs;
     }
-    public void setMaxTimeSecs(long maxTimeSecs) {
+    public void setMaxTimeSecs(double maxTimeSecs) {
         this.maxTimeSecs = maxTimeSecs;
     }
-    public float getMinValue() {
+    public double getMinValue() {
         return minValue;
     }
-    public void setMinValue(float minValue) {
+    public void setMinValue(double minValue) {
         this.minValue = minValue;
     }
-    public float getMaxValue() {
+    public double getMaxValue() {
         return maxValue;
     }
-    public void setMaxValue(float maxValue) {
+    public void setMaxValue(double maxValue) {
         this.maxValue = maxValue;
     }
 
