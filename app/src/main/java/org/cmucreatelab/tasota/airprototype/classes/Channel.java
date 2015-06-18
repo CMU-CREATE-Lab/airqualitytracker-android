@@ -7,7 +7,7 @@ package org.cmucreatelab.tasota.airprototype.classes;
 public class Channel {
 
     private String name;
-    private long feed_id;
+    private Feed feed;
     private double minTimeSecs;
     private double maxTimeSecs;
     private double minValue;
@@ -18,12 +18,6 @@ public class Channel {
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public long getFeed_id() {
-        return feed_id;
-    }
-    public void setFeed_id(long feed_id) {
-        this.feed_id = feed_id;
     }
     public double getMinTimeSecs() {
         return minTimeSecs;
@@ -48,6 +42,17 @@ public class Channel {
     }
     public void setMaxValue(double maxValue) {
         this.maxValue = maxValue;
+    }
+    public Feed getFeed() {
+        return feed;
+    }
+    public void setFeed(Feed feed) {
+        this.feed = feed;
+    }
+
+
+    public long getFeed_id() {
+        return feed.getFeed_id();
     }
 
 }

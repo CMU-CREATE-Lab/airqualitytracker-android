@@ -35,7 +35,7 @@ public class RowViewAddressList {
         if (row.getClosestFeed() == null) {
             textView.setText("N/A");
         } else {
-            textView.setText(row.getClosestFeed().getFeedDisplay());
+            textView.setText(row.getClosestFeed().getFeedValue() + " µg/m³");
         }
 
         // Description info based on closest feed reading

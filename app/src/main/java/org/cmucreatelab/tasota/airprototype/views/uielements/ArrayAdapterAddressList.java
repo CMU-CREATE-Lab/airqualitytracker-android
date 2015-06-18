@@ -45,11 +45,10 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater;
         View rowView;
 
         if (convertView == null) {
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = (inflater.inflate(R.layout.address_item_v2, parent, false));
         } else {
             rowView = convertView;

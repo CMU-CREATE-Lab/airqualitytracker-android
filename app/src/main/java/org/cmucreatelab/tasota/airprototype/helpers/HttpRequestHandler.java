@@ -106,7 +106,7 @@ public class HttpRequestHandler {
                 }
                 if (result != null) {
                     Log.i(Constants.LOG_TAG,"got value \""+result+"\" for Channel "+channelName);
-                    feed.updateChannelReadings(Double.parseDouble(result));
+                    feed.setFeedValue(Double.parseDouble(result));
                     GlobalHandler.getInstance(HttpRequestHandler.this.appContext).notifyGlobalDataSetChanged();
                 }
             }

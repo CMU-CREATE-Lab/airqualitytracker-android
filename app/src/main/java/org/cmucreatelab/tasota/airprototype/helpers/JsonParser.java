@@ -50,7 +50,7 @@ public class JsonParser {
                 String channelName = keys.next();
                 for (String cn : Constants.channelNames) {
                     if (channelName.equals(cn)) {
-                        listChannels.add( JsonParser.parseChannelFromJson( channelName, feed_id, channels.getJSONObject(channelName)) );
+                        listChannels.add( JsonParser.parseChannelFromJson( channelName, result, channels.getJSONObject(channelName)) );
                         break;
                     }
                 }
@@ -67,23 +67,21 @@ public class JsonParser {
 
 
     // Helper function to create an object from a channel's JSON
-    public static Channel parseChannelFromJson(String channelName, long feedId, JSONObject entry) {
+    public static Channel parseChannelFromJson(String channelName, Feed feed, JSONObject entry) {
         Channel c = new Channel();
 
         try {
             String name;
-            long feed_id;
             double minTimeSecs,maxTimeSecs,minValue,maxValue;
 
             name = channelName;
-            feed_id = feedId;
             minTimeSecs = Double.parseDouble(entry.get("minTimeSecs").toString());
             maxTimeSecs = Double.parseDouble(entry.get("maxTimeSecs").toString());;
             minValue = Double.parseDouble(entry.get("minValue").toString());
             maxValue = Double.parseDouble(entry.get("maxValue").toString());
 
             c.setName(name);
-            c.setFeed_id(feed_id);
+            c.setFeed(feed);
             c.setMinTimeSecs(minTimeSecs);
             c.setMaxTimeSecs(maxTimeSecs);
             c.setMinValue(minValue);

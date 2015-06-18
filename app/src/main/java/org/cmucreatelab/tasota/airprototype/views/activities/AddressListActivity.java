@@ -52,7 +52,6 @@ public class AddressListActivity extends ActionBarActivity {
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
         addresses = globalHandler.getAddresses();
         listAdapter = new ArrayAdapterAddressList(this, addresses);
-        // for notifying when the dataset changes
         globalHandler.listAdapter = this.listAdapter;
     }
 
