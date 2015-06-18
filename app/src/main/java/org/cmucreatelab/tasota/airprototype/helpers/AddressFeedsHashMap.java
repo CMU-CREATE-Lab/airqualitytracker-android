@@ -69,6 +69,14 @@ public class AddressFeedsHashMap {
     }
 
 
+    // Updates the feeds for all current addresses
+    public void updateAddresses() {
+        for (SimpleAddress address : this.addresses) {
+            this.put(address, pullFeedsForAddress(address));
+        }
+    }
+
+
     public ArrayList<Feed> pullFeedsForAddress(final SimpleAddress addr) {
         final ArrayList<Feed> result = new ArrayList<>();
 

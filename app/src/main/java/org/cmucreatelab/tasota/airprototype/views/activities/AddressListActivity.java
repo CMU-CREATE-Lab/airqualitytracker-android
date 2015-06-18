@@ -109,6 +109,10 @@ public class AddressListActivity extends ActionBarActivity {
                 Log.d(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
                 openSettings();
                 return true;
+            case R.id.action_refresh:
+                Log.d(Constants.LOG_TAG, "onOptionsItemSelected: REFRESH selected.");
+                GlobalHandler.getInstance(this.getApplicationContext()).updateAddresses();
+                return true;
             case R.id.action_new:
                 Log.d(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");
                 openDialogNew("");

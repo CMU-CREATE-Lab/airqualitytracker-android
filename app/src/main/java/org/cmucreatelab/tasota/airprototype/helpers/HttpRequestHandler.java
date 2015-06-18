@@ -91,7 +91,14 @@ public class HttpRequestHandler {
             public void onResponse(JSONObject response) {
                 String result = null;
                 try {
-                    result = response.getJSONObject("data").getJSONObject("channels").getJSONObject(channelName).getJSONObject("mostRecentDataSample").getString("value");
+                    // NOTE (from Chris)
+                    // "don't expect mostRecentDataSample to always exist in the response for every channel,
+                    // and don't expect channelBounds.maxTimeSecs to always equal mostRecentDataSample.timeSecs"
+                    result = response.getJSONObject("data")
+                            .getJSONObject("channels")
+                            .getJSONObject(channelName)
+                            .getJSONObject("mostRecentDataSample")
+                            .getString("value");
                 } catch (Exception e) {
                     // TODO handle exception
                     Log.w(Constants.LOG_TAG,"Failed to request Channel Reading for "+channelName);

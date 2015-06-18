@@ -80,6 +80,11 @@ public class GlobalHandler {
     }
 
 
+    public void updateAddresses() {
+        addressFeedsHashMap.updateAddresses();
+    }
+
+
     public SimpleAddress getGpsAddress() {
         return addressFeedsHashMap.gpsAddress;
     }
