@@ -7,6 +7,8 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.Request;
 import com.android.volley.toolbox.Volley;
+import org.cmucreatelab.tasota.airprototype.classes.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.json.JSONObject;
 import java.util.Date;
 
@@ -72,6 +74,39 @@ public class HttpRequestHandler {
         requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";
 
         this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
+    }
+
+
+    public void requestChannelReading(final Feed feed, final Channel channel) {
+        int requestMethod;
+        String requestUrl;
+        Response.Listener<JSONObject> response;
+        final String channelName = channel.getName();
+
+        requestMethod = Request.Method.GET;
+        requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds/"+channel.getFeed_id()+"/channels/"+channelName+"/most-recent";
+
+        response = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String result = null;
+                try {
+                    result = response.getJSONObject("data").getJSONObject("channels").getJSONObject(channelName).getJSONObject("mostRecentDataSample").getString("value");
+                } catch (Exception e) {
+                    // TODO handle exception
+                    Log.w(Constants.LOG_TAG,"Failed to request Channel Reading for "+channelName);
+                    e.printStackTrace();
+                }
+                if (result != null) {
+                    Log.i(Constants.LOG_TAG,"got value \""+result+"\" for Channel "+channelName);
+                    feed.updateChannelReadings(Double.parseDouble(result));
+                    GlobalHandler.getInstance(HttpRequestHandler.this.appContext).notifyGlobalDataSetChanged();
+                }
+            }
+        };
+
+
+        this.sendJsonRequest(requestMethod, requestUrl, null, response, null);
     }
 
 

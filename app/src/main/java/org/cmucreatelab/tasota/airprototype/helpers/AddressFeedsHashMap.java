@@ -2,7 +2,6 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.location.Location;
 import android.util.Log;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
@@ -76,6 +75,8 @@ public class AddressFeedsHashMap {
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Feed closestFeed;
+
                 try {
                     JSONArray jsonFeeds;
                     int i,size;
@@ -94,8 +95,18 @@ public class AddressFeedsHashMap {
                 } catch (Exception e) {
                     Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
                 }
-                addr.setClosestFeed( MapGeometry.getClosestFeedToAddress(addr,result) );
-                globalHandler.notifyGlobalDataSetChanged();
+                if (result.size() > 0) {
+                    closestFeed = MapGeometry.getClosestFeedToAddress(addr, result);
+                    if (closestFeed != null) {
+                        addr.setClosestFeed(closestFeed);
+                        // ASSERT all channels in the list of channels are usable readings
+                        // TODO we use the first channel listed; handle when we do not have all channels as PM25
+                        globalHandler.httpRequestHandler.requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
+                        globalHandler.notifyGlobalDataSetChanged();
+                    }
+                } else {
+                    Log.e(Constants.LOG_TAG,"result size is 0 in pullFeedsForAddress.");
+                }
             }
         };
         Response.ErrorListener error = new Response.ErrorListener() {

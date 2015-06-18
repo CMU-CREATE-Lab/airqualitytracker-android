@@ -18,8 +18,8 @@ public class Feed {
     private long productId;
     private ArrayList<Channel> channels;
     // The relevant value (PM2.5) pulled for the given Feed
-    private int feedValue;
-    // what we want to display to the user (ug/m^3)
+    private double feedValue;
+    // what we want to display to the user (µg/m³)
     private String feedDisplay;
 
     public long getProductId() {
@@ -69,27 +69,27 @@ public class Feed {
     }
     public String getFeedDisplay() {
         if (feedDisplay == null) {
-            updateChannelReadings();
+            updateChannelReadings(feedValue);
         }
         return feedDisplay;
     }
-    public int getFeedValue() {
+    public double getFeedValue() {
         return feedValue;
     }
 
 
     public Feed() {
         this.channels = new ArrayList<Channel>();
-        this.name = new String();
-        this.exposure = new String();
+        this.name = "";
+        this.exposure = "";
     }
 
 
-    public void updateChannelReadings() {
+    public void updateChannelReadings(double feedValue) {
         // TODO grab most recent readings from the Feed's channels
         // TODO this is where Chris' API call will come in handy
-        feedValue = (int)feed_id;
-        feedDisplay = "feed="+String.valueOf(feedValue)+" (µg/m³)";
+        this.feedValue = feedValue;
+        this.feedDisplay = String.valueOf(this.feedValue)+" µg/m³";
     }
 
 

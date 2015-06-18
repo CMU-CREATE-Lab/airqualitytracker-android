@@ -58,7 +58,6 @@ public class JsonParser {
             if (listChannels.size() == 0) {
                 return null;
             }
-            result.updateChannelReadings();
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to parse Feed from JSON.");
         }

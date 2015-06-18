@@ -31,7 +31,7 @@ public final class Constants {
             161, 321
         };
 
-        public static int getIndexFromReading(int reading) {
+        public static int getIndexFromReading(double reading) {
             if (reading < 0) {
                 return -1;
             }
