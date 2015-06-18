@@ -79,4 +79,11 @@ public class Feed {
         this.exposure = "";
     }
 
+
+    @Override
+    public String toString() {
+        // TODO this is used by android.R.layout.simple_list_item_1 as a simple ArrayAdapter in AddressShowActivity and should be deleted when no longer used
+        return "(" + this.feed_id + ")" + this.name;
+    }
+
 }

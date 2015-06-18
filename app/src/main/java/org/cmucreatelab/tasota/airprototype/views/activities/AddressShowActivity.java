@@ -8,12 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.views.uielements.LinearViewAddressShow;
 import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
@@ -22,7 +22,7 @@ public class AddressShowActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent;
-        int index;
+        int addressIndex;
         ListView listView;
         SimpleAddress showSimpleAddress;
         ArrayList<Feed> feeds;
@@ -32,20 +32,13 @@ public class AddressShowActivity extends ActionBarActivity {
         Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
         setContentView(R.layout.activity_address_show);
         intent = getIntent();
-        index = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX, -1);
-        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).getAddresses().get(index);
+        addressIndex = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX, -1);
+        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).getAddresses().get(addressIndex);
         feeds = GlobalHandler.getInstance(this.getApplicationContext()).getFeedsFromAddressInHashMap(showSimpleAddress);
-        feedsListAdapter = new ArrayAdapter<Feed>(this, android.R.layout.simple_list_item_1, feeds);
+        feedsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, feeds);
 
-        // generate content for TextViews
-        ((TextView)findViewById(R.id.textShowAddressName)).setText(showSimpleAddress.getName());
-        ((TextView)findViewById(R.id.textShowAddressLat)).setText(String.valueOf(showSimpleAddress.getLatitude()));
-        ((TextView)findViewById(R.id.textShowAddressLong)).setText(String.valueOf(showSimpleAddress.getLongitude()));
-        if (showSimpleAddress.getClosestFeed() == null) {
-            ((TextView)findViewById(R.id.textShowAddressClosestFeed)).setText("null");
-        } else {
-            ((TextView)findViewById(R.id.textShowAddressClosestFeed)).setText(String.valueOf(showSimpleAddress.getClosestFeed().getName()));
-        }
+        // generate content
+        new LinearViewAddressShow(this,showSimpleAddress).populateLinearView();
 
         // setup ListView
         listView = (ListView)findViewById(R.id.listShowAddressFeeds);

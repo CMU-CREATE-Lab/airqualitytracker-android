@@ -13,45 +13,46 @@ import org.cmucreatelab.tasota.airprototype.helpers.Constants;
  */
 public class RowViewAddressList {
 
-    private SimpleAddress row;
+    private SimpleAddress address;
     private View rowView;
+    private TextView textAddressItemName;
+    private TextView textAddressItemValue;
+    private TextView textAddressItemDescription;
 
 
-    public RowViewAddressList(SimpleAddress row, View rowView) {
-        this.row = row;
+    public RowViewAddressList(SimpleAddress address, View rowView) {
+        this.address = address;
         this.rowView = rowView;
+        this.textAddressItemName = (TextView)rowView.findViewById(R.id.textAddressItemName);
+        this.textAddressItemValue = (TextView)rowView.findViewById(R.id.textAddressItemValue);
+        this.textAddressItemDescription = (TextView)rowView.findViewById(R.id.textAddressItemDescription);
     }
 
 
     public void populateRowView() {
-        TextView textView;
-
         // Address or Zipcode info
-        textView = (TextView)rowView.findViewById(R.id.textAddressItemName);
-        textView.setText(row.getName());
+        textAddressItemName.setText(address.getName());
 
         // Reported value for closest Feed
-        textView = (TextView)rowView.findViewById(R.id.textAddressItemValue);
-        if (row.getClosestFeed() == null) {
-            textView.setText("N/A");
+        if (address.getClosestFeed() == null) {
+            textAddressItemValue.setText("N/A");
         } else {
-            textView.setText(row.getClosestFeed().getFeedValue() + " µg/m³");
+            textAddressItemValue.setText(address.getClosestFeed().getFeedValue() + " µg/m³");
         }
 
         // Description info based on closest feed reading
-        textView = (TextView)rowView.findViewById(R.id.textAddressItemDescription);
-        if (row.getClosestFeed() == null) {
-            textView.setText( "" );
+        if (address.getClosestFeed() == null) {
+            textAddressItemDescription.setText( "" );
         } else {
-            int index = Constants.SpeckReading.getIndexFromReading(row.getClosestFeed().getFeedValue());
+            int index = Constants.SpeckReading.getIndexFromReading(address.getClosestFeed().getFeedValue());
             if (index >= 0) {
-                textView.setText(Constants.SpeckReading.descriptions[index]);
+                textAddressItemDescription.setText(Constants.SpeckReading.descriptions[index]);
                 try {
                     // TODO colorblind check?
-                    textView.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+                    textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
                 } catch (Exception e) {
                     // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
-                    Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index].toString());
+                    Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);
                 }
             }
         }
