@@ -84,7 +84,12 @@ public class AddressFeedsHashMap {
                     size = jsonFeeds .length();
                     for (i=0;i<size;i++) {
                         JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
-                        result.add( JsonParser.parseFeedFromJson(jsonFeed) );
+                        // TODO should we only consider feeds with outdoor exposure?
+                        // do not add null feeds
+                        Feed feed = JsonParser.parseFeedFromJson(jsonFeed);
+                        if (feed != null) {
+                            result.add(feed);
+                        }
                     }
                 } catch (Exception e) {
                     Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");

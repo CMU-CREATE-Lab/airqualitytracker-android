@@ -46,10 +46,18 @@ public class JsonParser {
             channels = row.getJSONObject("channelBounds").getJSONObject("channels");
             keys = channels.keys();
             while (keys.hasNext()) {
+                // Only grab channels that we care about
                 String channelName = keys.next();
-                listChannels.add( JsonParser.parseChannelFromJson( channelName, feed_id, channels.getJSONObject(channelName)) );
+                for (String cn : Constants.channelNames) {
+                    if (channelName.equals(cn)) {
+                        listChannels.add( JsonParser.parseChannelFromJson( channelName, feed_id, channels.getJSONObject(channelName)) );
+                        break;
+                    }
+                }
             }
-
+            if (listChannels.size() == 0) {
+                return null;
+            }
             result.updateChannelReadings();
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to parse Feed from JSON.");

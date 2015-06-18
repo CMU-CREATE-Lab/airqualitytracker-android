@@ -6,6 +6,11 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 public final class Constants {
 
     public static final String LOG_TAG = "AirPrototype";
+    // these are the channel names that we want our feeds to report
+    public static final String[] channelNames = {
+            "pm2_5", "PM2_5", "pm2_5_1hr",
+            "pm2_5_24hr", "PM25B_UG_M3", "PM25_UG_M3"
+    };
 
     public static final class SpeckReading {
         public static final String[] normalColors = {
