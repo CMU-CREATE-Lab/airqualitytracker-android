@@ -40,8 +40,10 @@ public class GlobalHandler {
         this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
-        // get settings
+        // TODO get settings
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+//        prefs.getBoolean("checkbox_location",true);
+//        prefs.getBoolean("checkbox_colorblind",false);
         Log.i(Constants.LOG_TAG,"...");
         Log.i(Constants.LOG_TAG, "\t\t"+prefs.getAll().toString());
         Log.i(Constants.LOG_TAG,"...");
