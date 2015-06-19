@@ -68,7 +68,8 @@ public class HttpRequestHandler {
         la2 = latd+Constants.MapGeometry.BOUNDBOX_LONG;
         lo1 = longd-Constants.MapGeometry.BOUNDBOX_LAT;
         lo2 = longd+Constants.MapGeometry.BOUNDBOX_LONG;
-        requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime;
+        // within bounds, within time, and exposure=outdoor
+        requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime+",exposure=outdoor";
 
         // only request from ESDR the fields that we care about
         requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";

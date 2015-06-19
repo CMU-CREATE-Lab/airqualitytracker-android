@@ -15,17 +15,16 @@ public class JsonParser {
     // Helper function to parse a feed's JSON and create objects (also does Channels)
     public static Feed parseFeedFromJson(JSONObject row) {
         Feed result = new Feed();
+        long feed_id;
+        String name,exposure;
+        boolean isMobile;
+        double latitude,longitude;
+        long productId;
+        ArrayList<Channel> listChannels;
+        JSONObject channels;
+        Iterator<String> keys;
 
         try {
-            long feed_id;
-            String name,exposure;
-            boolean isMobile;
-            double latitude,longitude;
-            long productId;
-            ArrayList<Channel> listChannels;
-            JSONObject channels;
-            Iterator<String> keys;
-
             feed_id = Long.parseLong(row.get("id").toString());
             name = row.get("name").toString();
             exposure = row.get("exposure").toString();
@@ -69,14 +68,13 @@ public class JsonParser {
     // Helper function to create an object from a channel's JSON
     public static Channel parseChannelFromJson(String channelName, Feed feed, JSONObject entry) {
         Channel c = new Channel();
+        String name;
+        double minTimeSecs,maxTimeSecs,minValue,maxValue;
 
         try {
-            String name;
-            double minTimeSecs,maxTimeSecs,minValue,maxValue;
-
             name = channelName;
             minTimeSecs = Double.parseDouble(entry.get("minTimeSecs").toString());
-            maxTimeSecs = Double.parseDouble(entry.get("maxTimeSecs").toString());;
+            maxTimeSecs = Double.parseDouble(entry.get("maxTimeSecs").toString());
             minValue = Double.parseDouble(entry.get("minValue").toString());
             maxValue = Double.parseDouble(entry.get("maxValue").toString());
 

@@ -69,7 +69,7 @@ public class AddressFeedsHashMap {
     }
 
 
-    // Updates the feeds for all current addresses
+    // Updates the feeds for all current addresses ("refresh")
     public void updateAddresses() {
         for (SimpleAddress address : this.addresses) {
             this.put(address, pullFeedsForAddress(address));
@@ -93,9 +93,8 @@ public class AddressFeedsHashMap {
                     size = jsonFeeds .length();
                     for (i=0;i<size;i++) {
                         JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
-                        // TODO should we only consider feeds with outdoor exposure?
-                        // do not add null feeds
                         Feed feed = JsonParser.parseFeedFromJson(jsonFeed);
+                        // only consider non-null feeds
                         if (feed != null) {
                             result.add(feed);
                         }

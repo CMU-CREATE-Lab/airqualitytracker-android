@@ -7,7 +7,6 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import java.util.List;
 import java.util.Locale;
