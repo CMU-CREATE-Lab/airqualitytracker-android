@@ -58,4 +58,9 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="description_location">When enabled, the application will pull Feeds closest to your phone\'s current location and display it as the first address in the list.
+    Default: Enabled.</string>
+    <string name="description_colorblind">Toggles between the 2 color schemes that are used to represent the different ranges of air quality.
+    Default: Disabled.</string>
 </resources>

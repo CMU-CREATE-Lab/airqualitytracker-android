@@ -2,9 +2,11 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
@@ -38,6 +40,11 @@ public class GlobalHandler {
         this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
+        // get settings
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        Log.i(Constants.LOG_TAG,"...");
+        Log.i(Constants.LOG_TAG, "\t\t"+prefs.getAll().toString());
+        Log.i(Constants.LOG_TAG,"...");
     }
 
 

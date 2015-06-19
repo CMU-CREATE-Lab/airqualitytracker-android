@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="checkbox_location"
+        android:title="Use Current Location"
+        android:summary="@string/description_location"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="checkbox_colorblind"
+        android:title="Colorblind Mode"
+        android:summary="@string/description_colorblind"
+        android:defaultValue="false" />
+
+</PreferenceScreen>
