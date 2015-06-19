@@ -20,19 +20,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Address"
-                android:id="@+id/textView2"
-                android:layout_weight=".7"
-                android:layout_gravity="bottom" />
+                android:text="Address or Zipcode"
+                android:id="@+id/textAddressItemName"
+                android:textSize="16dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="AQI"
-                android:id="@+id/textView3"
-                android:layout_weight=".3"
-                android:layout_gravity="bottom" />
         </LinearLayout>
 
         <LinearLayout
@@ -42,25 +35,40 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="4">
+            android:layout_weight="5">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textAddressItemIcon"
+                    android:layout_gravity="left|top"
+                    android:src="@drawable/block1" />
+            </FrameLayout>
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="123456"
-                android:id="@+id/textAddressName"
-                android:layout_weight=".7"
+                android:text="100 µg/m³"
+                android:id="@+id/textAddressItemValue"
+                android:layout_weight="3"
                 android:textStyle="bold"
-                android:textSize="40dp" />
+                android:textSize="24dp" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="###"
-                android:id="@+id/textAddressValue"
-                android:layout_weight=".3" />
+                android:text="Description of the number will fit inside of here."
+                android:id="@+id/textAddressItemDescription"
+                android:textSize="12dp"
+                android:layout_weight="1" />
+
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
