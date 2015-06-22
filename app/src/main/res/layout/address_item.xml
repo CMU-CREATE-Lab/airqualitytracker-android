@@ -43,8 +43,8 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
                     android:id="@+id/textAddressItemIcon"
                     android:layout_gravity="left|top"
                     android:src="@drawable/block1" />

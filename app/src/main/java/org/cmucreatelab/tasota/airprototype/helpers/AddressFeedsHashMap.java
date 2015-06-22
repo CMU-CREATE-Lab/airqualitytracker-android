@@ -29,6 +29,7 @@ public class AddressFeedsHashMap {
         this.addresses = new ArrayList<>();
         this.hashMap = new HashMap<>();
         this.gpsAddress = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
+        gpsAddress.setIconType(SimpleAddress.IconType.GPS);
         // we don't want gpsAddress to be in addresses
 //        this.put(gpsAddress, new ArrayList<Feed>());
         hashMap.put(gpsAddress, new ArrayList<Feed>());

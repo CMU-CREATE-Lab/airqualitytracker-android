@@ -5,10 +5,14 @@ package org.cmucreatelab.tasota.airprototype.classes;
  */
 public class SimpleAddress {
 
+    public enum IconType {
+        GPS, SPECK, DEFAULT
+    }
     private long _id;
     private String name;
     private double latitude,longitude;
     private Feed closestFeed = null;
+    private IconType iconType;
 
     public long get_id() {
         return _id;
@@ -40,12 +44,19 @@ public class SimpleAddress {
     public void setClosestFeed(Feed closestFeed) {
         this.closestFeed = closestFeed;
     }
+    public IconType getIconType() {
+        return iconType;
+    }
+    public void setIconType(IconType iconType) {
+        this.iconType = iconType;
+    }
 
 
     public SimpleAddress(String name, double latitude, double longitude) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.iconType = IconType.DEFAULT;
     }
 
 }

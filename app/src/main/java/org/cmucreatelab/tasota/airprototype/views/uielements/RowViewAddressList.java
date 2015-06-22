@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.views.uielements;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
@@ -21,6 +22,7 @@ public class RowViewAddressList {
     private TextView textAddressItemName;
     private TextView textAddressItemValue;
     private TextView textAddressItemDescription;
+    private ImageView textAddressItemIcon;
 
 
     public RowViewAddressList(AddressListActivity context, SimpleAddress address, View rowView) {
@@ -30,6 +32,7 @@ public class RowViewAddressList {
         this.textAddressItemName = (TextView)rowView.findViewById(R.id.textAddressItemName);
         this.textAddressItemValue = (TextView)rowView.findViewById(R.id.textAddressItemValue);
         this.textAddressItemDescription = (TextView)rowView.findViewById(R.id.textAddressItemDescription);
+        this.textAddressItemIcon = (ImageView)rowView.findViewById(R.id.textAddressItemIcon);
     }
 
 
@@ -44,6 +47,17 @@ public class RowViewAddressList {
             textAddressItemValue.setText(address.getClosestFeed().getFeedValue() + " µg/m³");
         }
 
+        // set icon
+        if (address.getIconType() == SimpleAddress.IconType.GPS) {
+            textAddressItemIcon.setImageResource(R.drawable.ic_track_changes);
+        } else if (address.getIconType() == SimpleAddress.IconType.SPECK) {
+            textAddressItemIcon.setImageResource(R.drawable.block1);
+        } else if (address.getIconType() == SimpleAddress.IconType.DEFAULT) {
+            textAddressItemIcon.setImageResource(R.drawable.block1);
+        } else {
+            Log.e(Constants.LOG_TAG,"Unknown IconType!");
+        }
+
         // Description info based on closest feed reading
         if (address.getClosestFeed() == null) {
             textAddressItemDescription.setText( "" );
@@ -53,8 +67,13 @@ public class RowViewAddressList {
                 textAddressItemDescription.setText(Constants.SpeckReading.descriptions[index]);
                 try {
                     if (GlobalHandler.getInstance(context.getApplicationContext()).colorblindMode) {
+                        // TODO fix row layout
+//                        textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
+//                        textAddressItemDescription.setTextColor(Color.WHITE);
                         textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
                     } else {
+//                        textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+//                        textAddressItemDescription.setTextColor(Color.WHITE);
                         textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
                     }
                 } catch (Exception e) {
