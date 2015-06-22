@@ -61,13 +61,13 @@ public class RowViewAddressList {
         // Description info based on closest feed reading
         if (address.getClosestFeed() == null) {
             textAddressItemDescription.setText( "" );
+            textAddressItemDescription.setBackgroundColor(Color.TRANSPARENT);
         } else {
             int index = Constants.SpeckReading.getIndexFromReading(address.getClosestFeed().getFeedValue());
             if (index >= 0) {
                 textAddressItemDescription.setText(Constants.SpeckReading.descriptions[index]);
                 try {
                     if (GlobalHandler.getInstance(context.getApplicationContext()).colorblindMode) {
-                        // TODO fix row layout
                         textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
                         textAddressItemDescription.setTextColor(Color.WHITE);
 //                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));

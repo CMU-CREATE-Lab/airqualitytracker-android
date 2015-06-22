@@ -30,7 +30,7 @@ public class AlertDialogAddressListNew {
     }
 
     private class AlertDialogBuilderAddressListNew extends AlertDialog.Builder {
-        public AlertDialogBuilderAddressListNew(final AddressListActivity activityContext, final EditText inputField, String inputString) {
+        public AlertDialogBuilderAddressListNew(final AddressListActivity activityContext, final EditText inputField, final String inputString) {
             super(activityContext);
             final Context appContext;
             appContext = activityContext.getApplicationContext();
@@ -70,6 +70,11 @@ public class AlertDialogAddressListNew {
                                     activityContext.listAdapter.notifyDataSetChanged();
                                 } else {
                                     Log.w(Constants.LOG_TAG, "Received status code '" + status + "' from GoogleGeocodeAPI; not processing response.");
+                                    // TODO present user with message saying that there was an error
+                                    AlertDialog.Builder popupError = new AlertDialog.Builder(activityContext);
+                                    popupError.setMessage("Could not parse address '"+addressName+"'.");
+                                    popupError.setPositiveButton("OK", null);
+                                    popupError.create().show();
                                 }
                             } catch (Exception e) {
                                 Log.e(Constants.LOG_TAG,"Failed to parse JSON: " + e.getLocalizedMessage());
