@@ -90,24 +90,31 @@ public class HttpRequestHandler {
         response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                String result = null;
+                String resultValue = null;
+                String resultTime = null;
                 try {
                     // NOTE (from Chris)
                     // "don't expect mostRecentDataSample to always exist in the response for every channel,
                     // and don't expect channelBounds.maxTimeSecs to always equal mostRecentDataSample.timeSecs"
-                    result = response.getJSONObject("data")
+                    resultValue = response.getJSONObject("data")
                             .getJSONObject("channels")
                             .getJSONObject(channelName)
                             .getJSONObject("mostRecentDataSample")
                             .getString("value");
+                    resultTime = response.getJSONObject("data")
+                            .getJSONObject("channels")
+                            .getJSONObject(channelName)
+                            .getJSONObject("mostRecentDataSample")
+                            .getString("timeSecs");
                 } catch (Exception e) {
                     // TODO handle exception
                     Log.w(Constants.LOG_TAG,"Failed to request Channel Reading for "+channelName);
                     e.printStackTrace();
                 }
-                if (result != null) {
-                    Log.i(Constants.LOG_TAG,"got value \""+result+"\" for Channel "+channelName);
-                    feed.setFeedValue(Double.parseDouble(result));
+                if (resultValue != null && resultTime != null) {
+                    Log.i(Constants.LOG_TAG,"got value \""+resultValue+"\" at time "+resultTime+" for Channel "+channelName);
+                    feed.setFeedValue(Double.parseDouble(resultValue));
+                    feed.setLastTime(Double.parseDouble(resultTime));
                     GlobalHandler.getInstance(HttpRequestHandler.this.appContext).notifyGlobalDataSetChanged();
                 }
             }

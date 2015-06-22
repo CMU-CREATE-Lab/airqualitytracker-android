@@ -19,6 +19,7 @@ public class Feed {
     private ArrayList<Channel> channels;
     // The relevant value (PM2.5) pulled for the given Feed
     private double feedValue;
+    private double lastTime;
 
     public long getProductId() {
         return productId;
@@ -70,6 +71,12 @@ public class Feed {
     }
     public void setFeedValue(double feedValue) {
         this.feedValue = feedValue;
+    }
+    public double getLastTime() {
+        return lastTime;
+    }
+    public void setLastTime(double lastTime) {
+        this.lastTime = lastTime;
     }
 
 

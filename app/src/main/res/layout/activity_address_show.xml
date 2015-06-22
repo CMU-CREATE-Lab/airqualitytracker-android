@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Latitude"
                 android:id="@+id/label1"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_weight="1" />
 
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="40.000"
                 android:id="@+id/textShowAddressLat"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:gravity="right"
                 android:layout_weight="1" />
 
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="Longitude"
                 android:id="@+id/label2"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_weight="1" />
 
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="-80.000"
                 android:id="@+id/textShowAddressLong"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:gravity="right"
                 android:layout_weight="1" />
 
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:text="Closest Feed"
                 android:id="@+id/label3"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_weight="1" />
 
 
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:text="feed name here"
                 android:id="@+id/textShowAddressClosestFeed"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:gravity="right"
                 android:layout_weight="1" />
 
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="Distance from Feed"
                 android:id="@+id/label4"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_weight="1" />
 
 
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:text="1.23"
                 android:id="@+id/textShowAddressDistance"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:gravity="right"
                 android:layout_weight="1" />
 
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:text="Measurement (µg/m³)"
                 android:id="@+id/label5"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_weight="1" />
 
 
@@ -150,15 +150,36 @@
                 android:layout_height="wrap_content"
                 android:text="10.00"
                 android:id="@+id/textShowAddressMeasurement"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:gravity="right"
                 android:layout_weight="1" />
 
         </LinearLayout>
 
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" >
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="last updated at"
+                android:id="@+id/label6"
+                android:textSize="18dp"
+                android:layout_weight="1" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:id="@+id/textShowAddressLastUpdatedAt"
+                android:textSize="18dp"
+                android:gravity="right"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

@@ -18,6 +18,7 @@ public class LinearViewAddressShow {
     private TextView textShowAddressClosestFeed;
     private TextView textShowAddressDistance;
     private TextView textShowAddressMeasurement;
+    private TextView textShowAddressLastUpdatedAt;
 
 
     public LinearViewAddressShow(AddressShowActivity activity, SimpleAddress address) {
@@ -28,6 +29,7 @@ public class LinearViewAddressShow {
         this.textShowAddressClosestFeed = (TextView)activity.findViewById(R.id.textShowAddressClosestFeed);
         this.textShowAddressDistance = (TextView)activity.findViewById(R.id.textShowAddressDistance);
         this.textShowAddressMeasurement = (TextView)activity.findViewById(R.id.textShowAddressMeasurement);
+        this.textShowAddressLastUpdatedAt = (TextView)activity.findViewById(R.id.textShowAddressLastUpdatedAt);
     }
 
 
@@ -45,9 +47,11 @@ public class LinearViewAddressShow {
             distance = (int)(100*distance)/100.0;
             this.textShowAddressDistance.setText(String.valueOf(distance)+" km");
             this.textShowAddressMeasurement.setText( String.valueOf(address.getClosestFeed().getFeedValue()) );
+            this.textShowAddressLastUpdatedAt.setText( String.valueOf(address.getClosestFeed().getLastTime()) );
         } else {
             this.textShowAddressDistance.setText("N/A");
             this.textShowAddressMeasurement.setText("N/A");
+            this.textShowAddressLastUpdatedAt.setText("N/A");
         }
     }
 
