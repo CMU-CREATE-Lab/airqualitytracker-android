@@ -68,13 +68,13 @@ public class RowViewAddressList {
                 try {
                     if (GlobalHandler.getInstance(context.getApplicationContext()).colorblindMode) {
                         // TODO fix row layout
-//                        textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
-//                        textAddressItemDescription.setTextColor(Color.WHITE);
-                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
+                        textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
+                        textAddressItemDescription.setTextColor(Color.WHITE);
+//                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
                     } else {
-//                        textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
-//                        textAddressItemDescription.setTextColor(Color.WHITE);
-                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+                        textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+                        textAddressItemDescription.setTextColor(Color.WHITE);
+//                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
                     }
                 } catch (Exception e) {
                     // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
