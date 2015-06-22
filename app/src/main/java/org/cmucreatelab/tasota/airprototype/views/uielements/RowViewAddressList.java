@@ -51,9 +51,9 @@ public class RowViewAddressList {
         if (address.getIconType() == SimpleAddress.IconType.GPS) {
             textAddressItemIcon.setImageResource(R.drawable.ic_track_changes);
         } else if (address.getIconType() == SimpleAddress.IconType.SPECK) {
-            textAddressItemIcon.setImageResource(R.drawable.block1);
+            textAddressItemIcon.setImageResource(R.drawable.speck_icon_black);
         } else if (address.getIconType() == SimpleAddress.IconType.DEFAULT) {
-            textAddressItemIcon.setImageResource(R.drawable.block1);
+            textAddressItemIcon.setImageResource(R.drawable.speck_icon_black);
         } else {
             Log.e(Constants.LOG_TAG,"Unknown IconType!");
         }
