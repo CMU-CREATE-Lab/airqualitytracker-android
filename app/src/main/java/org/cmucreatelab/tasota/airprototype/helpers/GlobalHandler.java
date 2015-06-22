@@ -92,6 +92,12 @@ public class GlobalHandler {
 
     public void updateAddresses() {
         addressFeedsHashMap.updateAddresses();
+        if (appUsesLocation) {
+            addressFeedsHashMap.hashMap.put(
+                    addressFeedsHashMap.gpsAddress,
+                    addressFeedsHashMap.pullFeedsForAddress(addressFeedsHashMap.gpsAddress)
+            );
+        }
     }
 
 
