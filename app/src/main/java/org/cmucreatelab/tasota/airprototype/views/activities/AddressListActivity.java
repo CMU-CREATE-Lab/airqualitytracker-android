@@ -46,7 +46,7 @@ public class AddressListActivity extends ActionBarActivity {
         Log.d(Constants.LOG_TAG, "AddressListActivity onCreate");
         setContentView(R.layout.activity_address_list);
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
-        addresses = globalHandler.getAddresses();
+        addresses = globalHandler.requestAddressesForDisplay();
         listAdapter = new ArrayAdapterAddressList(this, addresses);
         globalHandler.listAdapter = this.listAdapter;
     }

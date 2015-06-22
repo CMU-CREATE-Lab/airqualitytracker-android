@@ -29,7 +29,9 @@ public class AddressFeedsHashMap {
         this.addresses = new ArrayList<>();
         this.hashMap = new HashMap<>();
         this.gpsAddress = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
-        this.put(gpsAddress, new ArrayList<Feed>());
+        // we don't want gpsAddress to be in addresses
+//        this.put(gpsAddress, new ArrayList<Feed>());
+        hashMap.put(gpsAddress, new ArrayList<Feed>());
         this.globalHandler = globalHandler;
         // populate addresses from database
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
@@ -45,7 +47,9 @@ public class AddressFeedsHashMap {
 
         // update the gps address with the new closest feeds
         ArrayList<Feed> feeds = pullFeedsForAddress(gpsAddress);
-        this.put(gpsAddress, feeds);
+        // we don't want gpsAddress to be in addresses
+//        this.put(gpsAddress, feeds);
+        hashMap.put(gpsAddress, feeds);
     }
 
 

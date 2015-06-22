@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.views.activities;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -24,6 +25,14 @@ public class SettingsActivity extends PreferenceActivity {
 
         setupSimplePreferencesScreen();
     }
+
+    @Override
+    protected void onDestroy() {
+        // update the settings before destroying the activity
+        GlobalHandler.getInstance(this.getApplicationContext()).updateSettings();
+        super.onDestroy();
+    }
+
 
     /**
      * Shows the simplified settings UI if the device configuration if the

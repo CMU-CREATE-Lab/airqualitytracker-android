@@ -26,6 +26,9 @@ public class GlobalHandler {
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
     public LocationUpdateHandler locationUpdateHandler;
+    public boolean appUsesLocation=true,colorblindMode=false;
+    // this is the instance used by AddressListActivity and should only be instantiated once.
+    public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public ArrayAdapterAddressList listAdapter;
@@ -40,19 +43,15 @@ public class GlobalHandler {
         this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
-        // TODO get settings
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-//        prefs.getBoolean("checkbox_location",true);
-//        prefs.getBoolean("checkbox_colorblind",false);
-        Log.i(Constants.LOG_TAG,"...");
-        Log.i(Constants.LOG_TAG, "\t\t"+prefs.getAll().toString());
-        Log.i(Constants.LOG_TAG,"...");
+        updateSettings();
     }
 
 
     protected void notifyGlobalDataSetChanged() {
         // TODO this function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
-        this.listAdapter.notifyDataSetChanged();
+        if (this.listAdapter != null) {
+            this.listAdapter.notifyDataSetChanged();
+        }
     }
 
 
@@ -81,11 +80,13 @@ public class GlobalHandler {
 
     public void removeAddress(SimpleAddress simpleAddress) {
         addressFeedsHashMap.removeAddress(simpleAddress);
+        requestAddressesForDisplay();
     }
 
 
     public void addAddress(SimpleAddress simpleAddress) {
         addressFeedsHashMap.addAddress(simpleAddress);
+        requestAddressesForDisplay();
     }
 
 
@@ -106,6 +107,27 @@ public class GlobalHandler {
 
     public ArrayList<Feed> getFeedsFromAddressInHashMap(SimpleAddress simpleAddress) {
         return addressFeedsHashMap.hashMap.get(simpleAddress);
+    }
+
+
+    public ArrayList<SimpleAddress> requestAddressesForDisplay() {
+        addressList.clear();
+
+        if (appUsesLocation) {
+            addressList.add(addressFeedsHashMap.gpsAddress);
+        }
+        addressList.addAll(addressFeedsHashMap.addresses);
+
+        return addressList;
+    }
+
+
+    public void updateSettings() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        appUsesLocation = prefs.getBoolean("checkbox_location",true);
+        colorblindMode = prefs.getBoolean("checkbox_colorblind", false);
+        requestAddressesForDisplay();
+        this.notifyGlobalDataSetChanged();
     }
 
 

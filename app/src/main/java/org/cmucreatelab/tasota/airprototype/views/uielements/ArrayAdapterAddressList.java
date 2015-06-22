@@ -53,7 +53,7 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
         } else {
             rowView = convertView;
         }
-        new RowViewAddressList(values.get(position),rowView).populateRowView();
+        new RowViewAddressList(this.context,values.get(position),rowView).populateRowView();
         return rowView;
     }
 

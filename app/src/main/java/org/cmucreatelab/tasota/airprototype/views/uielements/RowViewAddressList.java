@@ -7,12 +7,15 @@ import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 
 /**
  * Created by mike on 6/15/15.
  */
 public class RowViewAddressList {
 
+    private final AddressListActivity context;
     private SimpleAddress address;
     private View rowView;
     private TextView textAddressItemName;
@@ -20,7 +23,8 @@ public class RowViewAddressList {
     private TextView textAddressItemDescription;
 
 
-    public RowViewAddressList(SimpleAddress address, View rowView) {
+    public RowViewAddressList(AddressListActivity context, SimpleAddress address, View rowView) {
+        this.context = context;
         this.address = address;
         this.rowView = rowView;
         this.textAddressItemName = (TextView)rowView.findViewById(R.id.textAddressItemName);
@@ -48,8 +52,11 @@ public class RowViewAddressList {
             if (index >= 0) {
                 textAddressItemDescription.setText(Constants.SpeckReading.descriptions[index]);
                 try {
-                    // TODO colorblind check?
-                    textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+                    if (GlobalHandler.getInstance(context.getApplicationContext()).colorblindMode) {
+                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
+                    } else {
+                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+                    }
                 } catch (Exception e) {
                     // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
                     Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);
