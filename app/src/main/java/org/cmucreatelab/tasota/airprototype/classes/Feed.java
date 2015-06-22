@@ -1,5 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import android.util.Log;
+import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import java.util.ArrayList;
 
 /**
@@ -70,7 +72,12 @@ public class Feed {
         return feedValue;
     }
     public void setFeedValue(double feedValue) {
-        this.feedValue = feedValue;
+        if (feedValue < 0.0) {
+            this.feedValue = 0.0;
+            Log.w(Constants.LOG_TAG, "received negative feedValue " + feedValue + " to set.");
+        } else {
+            this.feedValue = feedValue;
+        }
     }
     public double getLastTime() {
         return lastTime;
