@@ -10,6 +10,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -84,6 +85,8 @@ public class AddressFeedsHashMap {
 
     public ArrayList<Feed> pullFeedsForAddress(final SimpleAddress addr) {
         final ArrayList<Feed> result = new ArrayList<>();
+        // the past 24 hours
+        final double maxTime = new Date().getTime() / 1000.0 - 86400;
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
@@ -98,7 +101,7 @@ public class AddressFeedsHashMap {
                     size = jsonFeeds .length();
                     for (i=0;i<size;i++) {
                         JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
-                        Feed feed = JsonParser.parseFeedFromJson(jsonFeed);
+                        Feed feed = JsonParser.parseFeedFromJson(jsonFeed,maxTime);
                         // only consider non-null feeds
                         if (feed != null) {
                             result.add(feed);
@@ -127,7 +130,7 @@ public class AddressFeedsHashMap {
                 Log.e(Constants.LOG_TAG, "Received error from Volley: " + error.getLocalizedMessage());
             }
         };
-        globalHandler.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), response, error);
+        globalHandler.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), maxTime, response, error);
 
         return result;
     }

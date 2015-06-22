@@ -13,7 +13,7 @@ import java.util.Iterator;
 public class JsonParser {
 
     // Helper function to parse a feed's JSON and create objects (also does Channels)
-    public static Feed parseFeedFromJson(JSONObject row) {
+    public static Feed parseFeedFromJson(JSONObject row, double maxTime) {
         Feed result = new Feed();
         long feed_id;
         String name,exposure;
@@ -49,8 +49,13 @@ public class JsonParser {
                 String channelName = keys.next();
                 for (String cn : Constants.channelNames) {
                     if (channelName.equals(cn)) {
-                        listChannels.add( JsonParser.parseChannelFromJson( channelName, result, channels.getJSONObject(channelName)) );
-                        break;
+                        // NOTICE: we must also make sure that this specific channel
+                        // was updated in the past 24 hours ("maxTime").
+                        JSONObject channel = channels.getJSONObject(channelName);
+                        if (channel.getDouble("maxTimeSecs") >= maxTime) {
+                            listChannels.add(JsonParser.parseChannelFromJson(channelName, result, channel));
+                            break;
+                        }
                     }
                 }
             }

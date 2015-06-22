@@ -5,6 +5,7 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.MapGeometry;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressShowActivity;
+import java.util.Date;
 
 /**
  * Created by mike on 6/18/15.
@@ -45,9 +46,12 @@ public class LinearViewAddressShow {
         if (address.getClosestFeed() != null) {
             double distance = MapGeometry.getDistanceFromFeedToAddress(address, address.getClosestFeed());
             distance = (int)(100*distance)/100.0;
+            Date date = new Date();
+            date.setTime((long)(1000*address.getClosestFeed().getLastTime()));
+
             this.textShowAddressDistance.setText(String.valueOf(distance)+" km");
-            this.textShowAddressMeasurement.setText( String.valueOf(address.getClosestFeed().getFeedValue()) );
-            this.textShowAddressLastUpdatedAt.setText( String.valueOf(address.getClosestFeed().getLastTime()) );
+            this.textShowAddressMeasurement.setText(String.valueOf(address.getClosestFeed().getFeedValue()));
+            this.textShowAddressLastUpdatedAt.setText(date.toString());
         } else {
             this.textShowAddressDistance.setText("N/A");
             this.textShowAddressMeasurement.setText("N/A");

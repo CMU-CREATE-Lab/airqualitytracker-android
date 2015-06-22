@@ -10,7 +10,6 @@ import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.json.JSONObject;
-import java.util.Date;
 
 /**
  * Created by mike on 5/29/15.
@@ -48,12 +47,11 @@ public class HttpRequestHandler {
     }
 
 
-    public void requestFeeds(double latd, double longd, Response.Listener<JSONObject> response, Response.ErrorListener error) {
+    public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         int requestMethod;
         String requestUrl;
         JSONObject requestParams;
         double la1,lo1,la2,lo2;  // given lat, long, create a bounding box and search from that
-        long maxTime;
 
         requestMethod = Request.Method.GET;
         requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds";
@@ -61,8 +59,6 @@ public class HttpRequestHandler {
 
         // only request AirNow (11) or ACHD (1)
         requestUrl += "?whereOr=ProductId=11,ProductId=1";
-        // the past 24 hours
-        maxTime = new Date().getTime() / 1000 - 86400;
         // get bounding box
         la1 = latd-Constants.MapGeometry.BOUNDBOX_LAT;
         la2 = latd+Constants.MapGeometry.BOUNDBOX_LONG;
