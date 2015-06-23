@@ -50,13 +50,10 @@ public class HttpRequestHandler {
     public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         int requestMethod;
         String requestUrl;
-        JSONObject requestParams;
         double la1,lo1,la2,lo2;  // given lat, long, create a bounding box and search from that
 
         requestMethod = Request.Method.GET;
         requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds";
-        requestParams = null;
-
         // only request AirNow (11) or ACHD (1)
         requestUrl += "?whereOr=ProductId=11,ProductId=1";
         // get bounding box
@@ -66,11 +63,10 @@ public class HttpRequestHandler {
         lo2 = longd+Constants.MapGeometry.BOUNDBOX_LONG;
         // within bounds, within time, and exposure=outdoor
         requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime+",exposure=outdoor";
-
         // only request from ESDR the fields that we care about
         requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";
 
-        this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
+        this.sendJsonRequest(requestMethod, requestUrl, null, response, error);
     }
 
 
@@ -82,7 +78,6 @@ public class HttpRequestHandler {
 
         requestMethod = Request.Method.GET;
         requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds/"+channel.getFeed_id()+"/channels/"+channelName+"/most-recent";
-
         response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -116,7 +111,6 @@ public class HttpRequestHandler {
             }
         };
 
-
         this.sendJsonRequest(requestMethod, requestUrl, null, response, null);
     }
 
@@ -124,17 +118,16 @@ public class HttpRequestHandler {
     public void requestGoogleGeocode(String addressName, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         int requestMethod;
         String requestUrl;
-        JSONObject requestParams;
 
         requestMethod = Request.Method.GET;
         requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-        requestParams = null;
         try {
             requestUrl += java.net.URLEncoder.encode(addressName, "ISO-8859-1");
         } catch (Exception e) {
             Log.wtf(Constants.LOG_TAG,"Failed to encode string \"" + addressName + "\" using ISO-8859-1");
         }
-        this.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
+
+        this.sendJsonRequest(requestMethod, requestUrl, null, response, error);
     }
 
 }

@@ -65,7 +65,7 @@ public class AlertDialogAddressListNew {
                                     latd = Double.parseDouble(locations.getString("lat"));
                                     longd = Double.parseDouble(locations.getString("lng"));
                                     result = AddressDbHelper.createAddressInDatabase(appContext, addressName, latd, longd);
-                                    GlobalHandler.getInstance(appContext).addAddress(result);
+                                    GlobalHandler.getInstance(appContext).addressFeedsHashMap.addAddress(result);
 
                                     activityContext.listAdapter.notifyDataSetChanged();
                                 } else {

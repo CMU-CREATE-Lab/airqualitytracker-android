@@ -54,11 +54,12 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
 
     @Override
     public void onLocationChanged(Location location) {
+        // We don't want to update the current location here. This method simply confirms
+        // that the location was recently changed (because a new one was requested).
         if (location == null) {
             Log.e(Constants.LOG_TAG, "onLocationChanged received null location.");
         } else {
             Log.d(Constants.LOG_TAG, "onLocationChanged received: " + location.toString());
-            googleApiClientHandler.globalHandler.updateCurrentLocation(location);
         }
     }
 

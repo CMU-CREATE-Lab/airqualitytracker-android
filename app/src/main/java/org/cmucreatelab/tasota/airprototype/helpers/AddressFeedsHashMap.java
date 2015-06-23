@@ -19,11 +19,17 @@ import java.util.HashMap;
 public class AddressFeedsHashMap {
 
     private GlobalHandler globalHandler;
-    public SimpleAddress gpsAddress; // listed in addresses
+    protected SimpleAddress gpsAddress; // listed in addresses
     // this ArrayList ensures an ordered list of addresses
     // (required to react to AddressListActivity events and displaying on AddressShowActivity)
-    public ArrayList<SimpleAddress> addresses;
-    public HashMap<SimpleAddress,ArrayList<Feed>> hashMap;
+    protected ArrayList<SimpleAddress> addresses;
+    protected HashMap<SimpleAddress,ArrayList<Feed>> hashMap;
+    public SimpleAddress getGpsAddress() {
+        return gpsAddress;
+    }
+    public ArrayList<SimpleAddress> getAddresses() {
+        return addresses;
+    }
 
 
     public AddressFeedsHashMap(GlobalHandler globalHandler) {
@@ -31,14 +37,13 @@ public class AddressFeedsHashMap {
         this.hashMap = new HashMap<>();
         this.gpsAddress = new SimpleAddress("Loading Current Location...", 0.0, 0.0);
         gpsAddress.setIconType(SimpleAddress.IconType.GPS);
-        // we don't want gpsAddress to be in addresses
-//        this.put(gpsAddress, new ArrayList<Feed>());
         hashMap.put(gpsAddress, new ArrayList<Feed>());
         this.globalHandler = globalHandler;
         // populate addresses from database
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         for (SimpleAddress simpleAddress : dbAddresses) {
-            this.addAddress(simpleAddress);
+            ArrayList<Feed> feed = pullFeedsForAddress(simpleAddress);
+            this.put(simpleAddress, feed);
         }
     }
 
@@ -49,8 +54,6 @@ public class AddressFeedsHashMap {
 
         // update the gps address with the new closest feeds
         ArrayList<Feed> feeds = pullFeedsForAddress(gpsAddress);
-        // we don't want gpsAddress to be in addresses
-//        this.put(gpsAddress, feeds);
         hashMap.put(gpsAddress, feeds);
     }
 
@@ -58,12 +61,14 @@ public class AddressFeedsHashMap {
     public void removeAddress(SimpleAddress simpleAddress) {
         this.hashMap.remove(simpleAddress);
         addresses.remove(simpleAddress);
+        globalHandler.requestAddressesForDisplay();
     }
 
 
     public void addAddress(SimpleAddress simpleAddress) {
         ArrayList<Feed> feed = pullFeedsForAddress(simpleAddress);
         this.put(simpleAddress, feed);
+        globalHandler.requestAddressesForDisplay();
     }
 
 
@@ -72,6 +77,11 @@ public class AddressFeedsHashMap {
             addresses.add(simpleAddress);
         }
         this.hashMap.put(simpleAddress, feeds);
+    }
+
+
+    public ArrayList<Feed> getFeedsFromAddressInHashMap(SimpleAddress simpleAddress) {
+        return this.hashMap.get(simpleAddress);
     }
 
 

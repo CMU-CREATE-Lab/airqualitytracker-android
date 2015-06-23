@@ -25,7 +25,7 @@ public class AddressListActivity extends ActionBarActivity {
 
 
     public void openDialogDelete(final SimpleAddress simpleAddress) {
-        if (simpleAddress == GlobalHandler.getInstance(this.getApplicationContext()).getGpsAddress()) {
+        if (simpleAddress == GlobalHandler.getInstance(this.getApplicationContext()).addressFeedsHashMap.getGpsAddress()) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
             dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
