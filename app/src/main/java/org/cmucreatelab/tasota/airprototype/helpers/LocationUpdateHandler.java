@@ -1,6 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
-import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import com.google.android.gms.location.LocationRequest;
@@ -12,12 +11,10 @@ import com.google.android.gms.location.LocationServices;
 public class LocationUpdateHandler implements com.google.android.gms.location.LocationListener {
 
     private GoogleApiClientHandler googleApiClientHandler;
-    private Context appContext;
     private static LocationUpdateHandler classInstance;
 
 
-    private LocationUpdateHandler(Context ctx, GoogleApiClientHandler googleApiClientHandler) {
-        this.appContext = ctx;
+    private LocationUpdateHandler(GoogleApiClientHandler googleApiClientHandler) {
         this.googleApiClientHandler = googleApiClientHandler;
         this.startLocationUpdates();
     }
@@ -48,9 +45,9 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
 
     // Only public way to get instance of class (synchronized means thread-safe)
     // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized LocationUpdateHandler getInstance(Context ctx, GoogleApiClientHandler googleApiClientHandler) {
+    protected static synchronized LocationUpdateHandler getInstance(GoogleApiClientHandler googleApiClientHandler) {
         if (classInstance == null) {
-            classInstance = new LocationUpdateHandler(ctx,googleApiClientHandler);
+            classInstance = new LocationUpdateHandler(googleApiClientHandler);
         }
         return classInstance;
     }

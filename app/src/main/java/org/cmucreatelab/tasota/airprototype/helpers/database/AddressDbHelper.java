@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import java.util.ArrayList;
@@ -65,7 +64,6 @@ public class AddressDbHelper {
 
     public static SimpleAddress generateAddressFromRecord(Cursor cursor) throws IllegalArgumentException {
         SimpleAddress simpleAddress;
-        ArrayList<Feed> feed;
         int id;
         String name;
         double latd,longd;

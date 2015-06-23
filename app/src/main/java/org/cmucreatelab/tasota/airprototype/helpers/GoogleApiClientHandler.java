@@ -1,6 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
-import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import com.google.android.gms.location.LocationServices;
  */
 public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
-    private Context appContext;
     private boolean clientConnected;
     private static GoogleApiClientHandler classInstance;
     protected GoogleApiClient googleApiClient;
@@ -24,10 +22,9 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
 
 
     // Nobody accesses the constructor
-    private GoogleApiClientHandler(Context ctx, GlobalHandler globalHandler) {
-        this.appContext = ctx;
+    private GoogleApiClientHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
-        this.googleApiClient = new GoogleApiClient.Builder(ctx)
+        this.googleApiClient = new GoogleApiClient.Builder(globalHandler.appContext)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -40,9 +37,9 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
 
     // Only public way to get instance of class (synchronized means thread-safe)
     // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized GoogleApiClientHandler getInstance(Context ctx, GlobalHandler globalHandler) {
+    protected static synchronized GoogleApiClientHandler getInstance(GlobalHandler globalHandler) {
         if (classInstance == null) {
-            classInstance = new GoogleApiClientHandler(ctx,globalHandler);
+            classInstance = new GoogleApiClientHandler(globalHandler);
         }
         return classInstance;
     }

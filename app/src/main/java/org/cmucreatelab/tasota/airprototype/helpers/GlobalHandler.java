@@ -39,8 +39,8 @@ public class GlobalHandler {
         // context and handlers
         this.appContext = ctx;
         this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
-        this.googleApiClientHandler = GoogleApiClientHandler.getInstance(ctx,this);
-        this.locationUpdateHandler = LocationUpdateHandler.getInstance(ctx, this.googleApiClientHandler);
+        this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
+        this.locationUpdateHandler = LocationUpdateHandler.getInstance(this.googleApiClientHandler);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
         updateSettings();
@@ -104,11 +104,6 @@ public class GlobalHandler {
 
     public SimpleAddress getGpsAddress() {
         return addressFeedsHashMap.gpsAddress;
-    }
-
-
-    public ArrayList<SimpleAddress> getAddresses() {
-        return addressFeedsHashMap.addresses;
     }
 
 
