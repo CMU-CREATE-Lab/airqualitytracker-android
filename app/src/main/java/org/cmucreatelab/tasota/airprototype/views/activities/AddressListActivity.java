@@ -19,7 +19,6 @@ public class AddressListActivity extends ActionBarActivity {
 
     public ArrayList<SimpleAddress> addresses;
     public ArrayAdapterAddressList listAdapter;
-    public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
     public AlertDialogAddressListNew dialogNew;
     public AlertDialogAddressListDelete dialogDelete;
 

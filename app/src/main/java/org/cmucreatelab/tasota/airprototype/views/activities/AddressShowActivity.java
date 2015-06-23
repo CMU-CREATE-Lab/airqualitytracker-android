@@ -32,7 +32,7 @@ public class AddressShowActivity extends ActionBarActivity {
         Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
         setContentView(R.layout.activity_address_show);
         intent = getIntent();
-        addressIndex = intent.getIntExtra(AddressListActivity.ADDRESS_INDEX, -1);
+        addressIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
         showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);
         feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedsHashMap.getFeedsFromAddressInHashMap(showSimpleAddress);
         feedsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, feeds);

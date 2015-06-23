@@ -54,6 +54,10 @@ public final class Constants {
         public static final String RECEIVER = PACKAGE_NAME + ".receiver";
     }
 
+    public class AddressList {
+        public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
+    }
+
     public final class MapGeometry {
         // Distance from central point, in kilometers (box dimension will be 2x larger)
         public static final double BOUNDBOX_HEIGHT = 20.0;
