@@ -61,6 +61,7 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
         Log.i(Constants.LOG_TAG, "...googleApiClient connected.");
         GoogleApiClientHandler.this.clientConnected = true;
         updateLastLocation();
+        globalHandler.locationUpdateHandler.startLocationUpdates();
     }
 
 

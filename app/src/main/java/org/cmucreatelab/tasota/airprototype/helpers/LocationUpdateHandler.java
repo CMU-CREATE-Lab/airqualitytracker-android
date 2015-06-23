@@ -16,7 +16,6 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
 
     private LocationUpdateHandler(GoogleApiClientHandler googleApiClientHandler) {
         this.googleApiClientHandler = googleApiClientHandler;
-        this.startLocationUpdates();
     }
 
 
