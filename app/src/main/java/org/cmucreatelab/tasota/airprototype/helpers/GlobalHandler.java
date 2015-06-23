@@ -93,6 +93,7 @@ public class GlobalHandler {
     public void updateAddresses() {
         addressFeedsHashMap.updateAddresses();
         if (appUsesLocation) {
+            googleApiClientHandler.updateLastLocation();
             addressFeedsHashMap.hashMap.put(
                     addressFeedsHashMap.gpsAddress,
                     addressFeedsHashMap.pullFeedsForAddress(addressFeedsHashMap.gpsAddress)

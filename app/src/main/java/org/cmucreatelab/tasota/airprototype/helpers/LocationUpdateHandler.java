@@ -19,6 +19,7 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
     private LocationUpdateHandler(Context ctx, GoogleApiClientHandler googleApiClientHandler) {
         this.appContext = ctx;
         this.googleApiClientHandler = googleApiClientHandler;
+        this.startLocationUpdates();
     }
 
 
@@ -26,9 +27,11 @@ public class LocationUpdateHandler implements com.google.android.gms.location.Lo
     protected void startLocationUpdates() {
         if (googleApiClientHandler.isClientConnected()) {
             LocationRequest locationRequest = new LocationRequest();
-            locationRequest.setInterval(10000);
-            locationRequest.setFastestInterval(5000);
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            // 10 minutes
+            locationRequest.setInterval(600000);
+            // 1 minute
+            locationRequest.setFastestInterval(60000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
             LocationServices.FusedLocationApi.requestLocationUpdates(
                     googleApiClientHandler.googleApiClient, locationRequest, this);
         } else {

@@ -48,10 +48,7 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
     }
 
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i(Constants.LOG_TAG, "...googleApiClient connected.");
-        GoogleApiClientHandler.this.clientConnected = true;
+    public void updateLastLocation() {
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (lastLocation == null) {
             Log.w(Constants.LOG_TAG, "getLastLocation returned null.");
@@ -59,6 +56,14 @@ public class GoogleApiClientHandler implements GoogleApiClient.ConnectionCallbac
             Log.d(Constants.LOG_TAG, "getLastLocation returned: " + lastLocation.toString());
             GoogleApiClientHandler.this.globalHandler.updateCurrentLocation(lastLocation);
         }
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i(Constants.LOG_TAG, "...googleApiClient connected.");
+        GoogleApiClientHandler.this.clientConnected = true;
+        updateLastLocation();
     }
 
 
