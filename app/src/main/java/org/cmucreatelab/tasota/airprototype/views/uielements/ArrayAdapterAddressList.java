@@ -61,7 +61,7 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(context, AddressShowActivity.class);
-        intent.putExtra(AddressListActivity.ADDRESS_INDEX, i);
+        intent.putExtra(Constants.AddressList.ADDRESS_INDEX, i);
         context.startActivity(intent);
     }
 
