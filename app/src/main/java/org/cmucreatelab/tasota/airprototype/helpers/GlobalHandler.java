@@ -1,9 +1,17 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.views.services.AddressResultReceiver;
+import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import java.util.ArrayList;
 
@@ -50,11 +58,36 @@ public class GlobalHandler {
     public void updateAddresses() {
         addressFeedsHashMap.updateAddresses();
         if (appUsesLocation) {
-            googleApiClientHandler.updateLastLocation();
+            updateLastLocation();
             addressFeedsHashMap.hashMap.put(
                     addressFeedsHashMap.gpsAddress,
                     addressFeedsHashMap.pullFeedsForAddress(addressFeedsHashMap.gpsAddress)
             );
+        }
+    }
+
+
+    public void updateLastLocation() {
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClientHandler.googleApiClient);
+        if (lastLocation == null) {
+            Log.w(Constants.LOG_TAG, "getLastLocation returned null.");
+        } else {
+            Log.d(Constants.LOG_TAG, "getLastLocation returned: " + lastLocation.toString());
+
+            this.addressFeedsHashMap.setGpsAddressLocation(lastLocation);
+            this.notifyGlobalDataSetChanged();
+            // TODO consider this when more than one update can occur.
+            if (Geocoder.isPresent()) {
+                Intent intent = new Intent(this.appContext, FetchAddressIntentService.class);
+                AddressResultReceiver resultReceiver = new AddressResultReceiver(new Handler(),this);
+
+                intent.putExtra(Constants.AddressIntent.RECEIVER, resultReceiver);
+                intent.putExtra("latitude",lastLocation.getLatitude());
+                intent.putExtra("longitude",lastLocation.getLongitude());
+                this.appContext.startService(intent);
+            } else {
+                Log.e(Constants.LOG_TAG, "Tried starting FetchAddressIntentService but Geocoder is not present.");
+            }
         }
     }
 
