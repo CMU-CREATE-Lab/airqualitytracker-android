@@ -2,6 +2,8 @@ package org.cmucreatelab.tasota.airprototype.views.uielements;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
@@ -14,6 +16,9 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
 import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by mike on 6/8/15.
@@ -36,7 +41,7 @@ public class AlertDialogAddressListNew {
             appContext = activityContext.getApplicationContext();
             this.setMessage("Enter a zipcode, city, or address below.");
             // TODO test color schemes... ideally dialog boxes should know what colors they are supposed to use.
-            inputField.setTextColor( activityContext.getResources().getColor(R.color.primary_text_default_material_light) );
+            inputField.setTextColor(activityContext.getResources().getColor(R.color.primary_text_default_material_light));
             inputField.setSingleLine(true);
             inputField.setText(inputString);
             this.setView(inputField);
@@ -72,12 +77,12 @@ public class AlertDialogAddressListNew {
                                     Log.w(Constants.LOG_TAG, "Received status code '" + status + "' from GoogleGeocodeAPI; not processing response.");
                                     // TODO present user with message saying that there was an error
                                     AlertDialog.Builder popupError = new AlertDialog.Builder(activityContext);
-                                    popupError.setMessage("Could not parse address '"+addressName+"'.");
+                                    popupError.setMessage("Could not parse address '" + addressName + "'.");
                                     popupError.setPositiveButton("OK", null);
                                     popupError.create().show();
                                 }
                             } catch (Exception e) {
-                                Log.e(Constants.LOG_TAG,"Failed to parse JSON: " + e.getLocalizedMessage());
+                                Log.e(Constants.LOG_TAG, "Failed to parse JSON: " + e.getLocalizedMessage());
                             }
                         }
                     };
@@ -91,7 +96,25 @@ public class AlertDialogAddressListNew {
 
                 }
             });
-            this.setNegativeButton("Cancel", null);
+//            this.setNegativeButton("Cancel", null);
+            // TODO just a testa
+            this.setNegativeButton("Number2", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Geocoder geocoder = new Geocoder(activityContext, Locale.getDefault());
+
+                    try {
+                        List<Address> results = geocoder.getFromLocationName(inputField.getText().toString(), 5);
+                        for (Address address : results) {
+                            Log.d(Constants.LOG_TAG,address.toString());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
         }
     }
 
