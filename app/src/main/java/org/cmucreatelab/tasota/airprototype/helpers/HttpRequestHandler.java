@@ -98,7 +98,6 @@ public class HttpRequestHandler {
                             .getJSONObject("mostRecentDataSample")
                             .getString("timeSecs");
                 } catch (Exception e) {
-                    // TODO handle exception
                     Log.w(Constants.LOG_TAG,"Failed to request Channel Reading for "+channelName);
                     e.printStackTrace();
                 }
@@ -112,22 +111,6 @@ public class HttpRequestHandler {
         };
 
         this.sendJsonRequest(requestMethod, requestUrl, null, response, null);
-    }
-
-
-    public void requestGoogleGeocode(String addressName, Response.Listener<JSONObject> response, Response.ErrorListener error) {
-        int requestMethod;
-        String requestUrl;
-
-        requestMethod = Request.Method.GET;
-        requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-        try {
-            requestUrl += java.net.URLEncoder.encode(addressName, "ISO-8859-1");
-        } catch (Exception e) {
-            Log.wtf(Constants.LOG_TAG,"Failed to encode string \"" + addressName + "\" using ISO-8859-1");
-        }
-
-        this.sendJsonRequest(requestMethod, requestUrl, null, response, error);
     }
 
 }
