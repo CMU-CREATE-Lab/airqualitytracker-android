@@ -13,4 +13,10 @@
         android:summary="@string/description_colorblind"
         android:defaultValue="false" />
 
+    <PreferenceScreen
+        android:title="ESDR User Account"
+        android:summary="Manage your ESDR user account" >
+        <intent android:action="org.cmucreatelab.tasota.airprototype" />
+    </PreferenceScreen>
+
 </PreferenceScreen>

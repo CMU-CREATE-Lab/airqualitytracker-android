@@ -8,4 +8,5 @@
     <string name="title_activity_address_search">AddressSearchActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
