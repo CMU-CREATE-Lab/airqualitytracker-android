@@ -105,7 +105,8 @@ public class AddressListActivity extends ActionBarActivity {
                 return true;
             case R.id.action_new:
                 Log.d(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");
-                openDialogNew("");
+//                openDialogNew("");
+                startActivity(new Intent(this, AddressSearchActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

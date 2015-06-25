@@ -32,6 +32,10 @@
             android:label="@string/title_activity_settings"
             android:theme="@android:style/Theme.Black" >
         </activity>
+        <activity
+            android:name=".views.activities.AddressSearchActivity"
+            android:label="@string/title_activity_address_search" >
+        </activity>
     </application>
 
 </manifest>
