@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListDelete;
-import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListNew;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
@@ -19,7 +18,6 @@ public class AddressListActivity extends ActionBarActivity {
 
     public ArrayList<SimpleAddress> addresses;
     public ArrayAdapterAddressList listAdapter;
-    public AlertDialogAddressListNew dialogNew;
     public AlertDialogAddressListDelete dialogDelete;
 
 
@@ -30,12 +28,6 @@ public class AddressListActivity extends ActionBarActivity {
             dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
             dialogDelete.getAlertDialog().show();
         }
-    }
-
-
-    public void openDialogNew(String inputString) {
-        dialogNew = new AlertDialogAddressListNew(this,inputString);
-        dialogNew.getAlertDialog().show();
     }
 
 
@@ -59,11 +51,6 @@ public class AddressListActivity extends ActionBarActivity {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
             openDialogDelete(addresses.get(index));
         }
-        if (savedInstanceState.getBoolean("dialogNew")) {
-            String inputString = savedInstanceState.getString("dialogNewInputString");
-            dialogNew = new AlertDialogAddressListNew(this,inputString);
-            dialogNew.getAlertDialog().show();
-        }
     }
 
 
@@ -74,11 +61,6 @@ public class AddressListActivity extends ActionBarActivity {
             outState.putBoolean("dialogDelete", true);
             outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getAddressToBeDeleted()));
             dialogDelete.getAlertDialog().dismiss();
-        }
-        if (dialogNew != null && dialogNew.getAlertDialog().isShowing()) {
-            outState.putBoolean("dialogNew",true);
-            outState.putString("dialogNewInputString", dialogNew.getEditText().getText().toString());
-            dialogNew.getAlertDialog().dismiss();
         }
     }
 
@@ -105,7 +87,6 @@ public class AddressListActivity extends ActionBarActivity {
                 return true;
             case R.id.action_new:
                 Log.d(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");
-//                openDialogNew("");
                 startActivity(new Intent(this, AddressSearchActivity.class));
                 return true;
         }

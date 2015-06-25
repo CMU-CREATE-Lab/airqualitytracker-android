@@ -9,9 +9,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressSearch;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,6 +28,7 @@ public class AddressSearchActivity extends ActionBarActivity
     public void returnAddress(Address address) {
         double latd,longd;
         String name;
+        SimpleAddress result;
 
         latd = address.getLatitude();
         longd = address.getLongitude();
@@ -35,8 +38,10 @@ public class AddressSearchActivity extends ActionBarActivity
             name = ((EditText)findViewById(R.id.editTextAddressSearch)).getText().toString();
         }
 
-        Log.d(Constants.LOG_TAG,"returning with latd="+latd+", longd="+longd+" using name="+name);
-        // TODO add address to list
+        Log.d(Constants.LOG_TAG,"AddressSearchActivity returning with latd="+latd+", longd="+longd+" using name="+name);
+        result = AddressDbHelper.createAddressInDatabase(this, name, latd, longd);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(this);
+        globalHandler.addressFeedsHashMap.addAddress(result);
         finish();
     }
 
