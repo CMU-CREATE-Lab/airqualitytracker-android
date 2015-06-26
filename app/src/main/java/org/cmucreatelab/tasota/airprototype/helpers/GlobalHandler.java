@@ -2,11 +2,9 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
@@ -26,6 +24,7 @@ public class GlobalHandler {
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
     public LocationUpdateHandler locationUpdateHandler;
+    public SettingsHandler settingsHandler;
     public boolean appUsesLocation=true,colorblindMode=false;
     // this is the instance used by AddressListActivity and should only be instantiated once.
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
@@ -41,6 +40,7 @@ public class GlobalHandler {
         this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         this.locationUpdateHandler = LocationUpdateHandler.getInstance(this.googleApiClientHandler);
+        this.settingsHandler = SettingsHandler.getInstance(this);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
         updateSettings();
@@ -105,9 +105,7 @@ public class GlobalHandler {
 
 
     public void updateSettings() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        appUsesLocation = prefs.getBoolean("checkbox_location",true);
-        colorblindMode = prefs.getBoolean("checkbox_colorblind", false);
+        this.settingsHandler.updateSettings();
         requestAddressesForDisplay();
         this.notifyGlobalDataSetChanged();
     }

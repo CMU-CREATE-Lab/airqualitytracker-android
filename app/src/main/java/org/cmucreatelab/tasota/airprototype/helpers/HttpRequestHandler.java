@@ -113,4 +113,46 @@ public class HttpRequestHandler {
         this.sendJsonRequest(requestMethod, requestUrl, null, response, null);
     }
 
+
+    public void requestEsdrToken(String username, String password) {
+        // TODO calls to esdr from obtain_tokens.sh
+        // curl -X POST -H "Content-Type:application/json" https://esdr.cmucreatelab.org/oauth/token -d @my_client.json
+        //        my_client.json
+        //        {
+        //            "grant_type" : "password",
+        //                "client_id" : "client_id",
+        //                "client_secret" : "This will never work",
+        //                "username" : "name@example.com",
+        //                "password" : "password"
+        //        }
+        //
+        try {
+            JSONObject requestParams = new JSONObject();
+            requestParams.put("username", username);
+            // ...
+        } catch (Exception e) {
+            // TODO handle errors
+        }
+    }
+
+
+    public void requestEsdrRefresh(String refreshToken) {
+        // TODO calls to esdr from refresh_tokens.sh
+        // curl -X POST -H "Content-Type:application/json" https://esdr.cmucreatelab.org/oauth/token -d @refresh_client.json
+        //        {
+        //            "grant_type" : "refresh_token",
+        //                "client_id" : "client_id",
+        //                "client_secret" : "This will never work",
+        //                "refresh_token" : "d1053fc68ae8b1e35bbaba56d45f34b2fef0cc8788f56130e9cc08e500589e19"
+        //        }
+        //
+        try {
+            JSONObject requestParams = new JSONObject();
+            requestParams.put("refresh_token", refreshToken);
+            // ...
+        } catch (Exception e) {
+            // TODO handle errors
+        }
+    }
+
 }
