@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.Request;
 import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
@@ -14,10 +14,12 @@ import org.json.JSONObject;
 /**
  * Created by mike on 5/29/15.
  */
-public class HttpRequestHandler {
+public class HttpRequestHandler implements Response.ErrorListener {
 
     private Context appContext;
     private RequestQueue queue;
+    private EsdrFeedsHandler esdrFeedsHandler;
+    private EsdrAuthHandler esdrAuthHandler;
     private static HttpRequestHandler classInstance;
 
 
@@ -25,6 +27,8 @@ public class HttpRequestHandler {
     private HttpRequestHandler(Context ctx) {
         this.appContext = ctx;
         this.queue = Volley.newRequestQueue(this.appContext);
+        this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(ctx, this);
+        this.esdrAuthHandler = EsdrAuthHandler.getInstance(ctx, this);
     }
 
 
@@ -38,121 +42,38 @@ public class HttpRequestHandler {
     }
 
 
-    public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
+    public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response) {
         JsonObjectRequest jsonRequest;
 
-        jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
+        jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, this);
         Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
         this.queue.add(jsonRequest);
     }
 
 
-    public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response, Response.ErrorListener error) {
-        int requestMethod;
-        String requestUrl;
-        double la1,lo1,la2,lo2;  // given lat, long, create a bounding box and search from that
-
-        requestMethod = Request.Method.GET;
-        requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds";
-        // only request AirNow (11) or ACHD (1)
-        requestUrl += "?whereOr=ProductId=11,ProductId=1";
-        // get bounding box
-        la1 = latd-Constants.MapGeometry.BOUNDBOX_LAT;
-        la2 = latd+Constants.MapGeometry.BOUNDBOX_LONG;
-        lo1 = longd-Constants.MapGeometry.BOUNDBOX_LAT;
-        lo2 = longd+Constants.MapGeometry.BOUNDBOX_LONG;
-        // within bounds, within time, and exposure=outdoor
-        requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime+",exposure=outdoor";
-        // only request from ESDR the fields that we care about
-        requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";
-
-        this.sendJsonRequest(requestMethod, requestUrl, null, response, error);
+    public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response) {
+        esdrFeedsHandler.requestFeeds(latd,longd,maxTime,response);
     }
 
 
     public void requestChannelReading(final Feed feed, final Channel channel) {
-        int requestMethod;
-        String requestUrl;
-        Response.Listener<JSONObject> response;
-        final String channelName = channel.getName();
-
-        requestMethod = Request.Method.GET;
-        requestUrl = "https://esdr.cmucreatelab.org/api/v1/feeds/"+channel.getFeed_id()+"/channels/"+channelName+"/most-recent";
-        response = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                String resultValue = null;
-                String resultTime = null;
-                try {
-                    // NOTE (from Chris)
-                    // "don't expect mostRecentDataSample to always exist in the response for every channel,
-                    // and don't expect channelBounds.maxTimeSecs to always equal mostRecentDataSample.timeSecs"
-                    resultValue = response.getJSONObject("data")
-                            .getJSONObject("channels")
-                            .getJSONObject(channelName)
-                            .getJSONObject("mostRecentDataSample")
-                            .getString("value");
-                    resultTime = response.getJSONObject("data")
-                            .getJSONObject("channels")
-                            .getJSONObject(channelName)
-                            .getJSONObject("mostRecentDataSample")
-                            .getString("timeSecs");
-                } catch (Exception e) {
-                    Log.w(Constants.LOG_TAG,"Failed to request Channel Reading for "+channelName);
-                    e.printStackTrace();
-                }
-                if (resultValue != null && resultTime != null) {
-                    Log.i(Constants.LOG_TAG,"got value \""+resultValue+"\" at time "+resultTime+" for Channel "+channelName);
-                    feed.setFeedValue(Double.parseDouble(resultValue));
-                    feed.setLastTime(Double.parseDouble(resultTime));
-                    GlobalHandler.getInstance(HttpRequestHandler.this.appContext).notifyGlobalDataSetChanged();
-                }
-            }
-        };
-
-        this.sendJsonRequest(requestMethod, requestUrl, null, response, null);
+        esdrFeedsHandler.requestChannelReading(feed,channel);
     }
 
 
     public void requestEsdrToken(String username, String password) {
-        // TODO calls to esdr from obtain_tokens.sh
-        // curl -X POST -H "Content-Type:application/json" https://esdr.cmucreatelab.org/oauth/token -d @my_client.json
-        //        my_client.json
-        //        {
-        //            "grant_type" : "password",
-        //                "client_id" : "client_id",
-        //                "client_secret" : "This will never work",
-        //                "username" : "name@example.com",
-        //                "password" : "password"
-        //        }
-        //
-        try {
-            JSONObject requestParams = new JSONObject();
-            requestParams.put("username", username);
-            // ...
-        } catch (Exception e) {
-            // TODO handle errors
-        }
+        esdrAuthHandler.requestEsdrToken(username,password);
     }
 
 
     public void requestEsdrRefresh(String refreshToken) {
-        // TODO calls to esdr from refresh_tokens.sh
-        // curl -X POST -H "Content-Type:application/json" https://esdr.cmucreatelab.org/oauth/token -d @refresh_client.json
-        //        {
-        //            "grant_type" : "refresh_token",
-        //                "client_id" : "client_id",
-        //                "client_secret" : "This will never work",
-        //                "refresh_token" : "d1053fc68ae8b1e35bbaba56d45f34b2fef0cc8788f56130e9cc08e500589e19"
-        //        }
-        //
-        try {
-            JSONObject requestParams = new JSONObject();
-            requestParams.put("refresh_token", refreshToken);
-            // ...
-        } catch (Exception e) {
-            // TODO handle errors
-        }
+        esdrAuthHandler.requestEsdrRefresh(refreshToken);
+    }
+
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e(Constants.LOG_TAG, "Received error from Volley: " + error.getLocalizedMessage());
     }
 
 }

@@ -134,13 +134,7 @@ public class AddressFeedsHashMap {
                 }
             }
         };
-        Response.ErrorListener error = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(Constants.LOG_TAG, "Received error from Volley: " + error.getLocalizedMessage());
-            }
-        };
-        globalHandler.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), maxTime, response, error);
+        globalHandler.httpRequestHandler.requestFeeds(addr.getLatitude(), addr.getLongitude(), maxTime, response);
 
         return result;
     }

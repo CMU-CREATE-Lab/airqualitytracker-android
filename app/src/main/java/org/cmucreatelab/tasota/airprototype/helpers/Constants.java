@@ -54,8 +54,17 @@ public final class Constants {
         public static final String RECEIVER = PACKAGE_NAME + ".receiver";
     }
 
-    public class AddressList {
+    public final class AddressList {
         public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
+    }
+
+    public final class Esdr {
+        public static final String API_URL = "https://esdr.cmucreatelab.org";
+        public static final String GRANT_TYPE_TOKEN = "password";
+        public static final String GRANT_TYPE_REFRESH = "refresh_token";
+        // TODO placeholder for actual Client information (don't push to git)
+        public static final String CLIENT_ID = "client_id";
+        public static final String CLIENT_SECRET = "this should never work";
     }
 
     public final class MapGeometry {
