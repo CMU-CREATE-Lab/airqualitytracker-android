@@ -42,11 +42,21 @@ public class HttpRequestHandler implements Response.ErrorListener {
     }
 
 
+    // helper method which assumes that you want to use this instance as the default ErrorListener
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response) {
+        sendJsonRequest(requestMethod,requestUrl,requestParams,response,this);
+    }
+
+
+    public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         JsonObjectRequest jsonRequest;
 
-        jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, this);
-        Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
+        jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
+        if (requestParams != null) {
+            Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
+        } else {
+            Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
+        }
         this.queue.add(jsonRequest);
     }
 

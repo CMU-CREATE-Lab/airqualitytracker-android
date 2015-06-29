@@ -55,4 +55,14 @@ public class SettingsHandler {
         this.refreshToken = refreshToken;
     }
 
+
+    public void setEsdrTokens(String accessToken, String refreshToken) {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putString("access_token",accessToken);
+        editor.putString("refresh_token",refreshToken);
+        editor.apply();
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
+
 }

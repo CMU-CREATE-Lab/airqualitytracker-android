@@ -1,6 +1,9 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
+import android.util.Log;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import org.json.JSONObject;
 
 /**
@@ -30,46 +33,81 @@ public class EsdrAuthHandler {
     }
 
 
-    public void requestEsdrToken(String username, String password) {
-        // TODO calls to esdr from obtain_tokens.sh
-        // curl -X POST -H "Content-Type:application/json" https://esdr.cmucreatelab.org/oauth/token -d @my_client.json
-        //        my_client.json
-        //        {
-        //            "grant_type" : "password",
-        //                "client_id" : "client_id",
-        //                "client_secret" : "This will never work",
-        //                "username" : "name@example.com",
-        //                "password" : "password"
-        //        }
-        //
+    public void requestEsdrToken(final String username, String password) {
+        Response.Listener<JSONObject> response;
+        int requestMethod;
+        JSONObject requestParams;
+        String requestUrl;
+
+        // TODO handler errors when username/password are invalid
         try {
-            JSONObject requestParams = new JSONObject();
+            // header adds "Content-Type:application/json" by default when using JsonObjectRequest (Volley)
+            requestMethod = Request.Method.POST;
+            requestUrl = Constants.Esdr.API_URL + "/oauth/token";
+            requestParams = new JSONObject();
+            requestParams.put("grant_type", Constants.Esdr.GRANT_TYPE_TOKEN);
+            requestParams.put("client_id", Constants.Esdr.CLIENT_ID);
+            requestParams.put("client_secret", Constants.Esdr.CLIENT_SECRET);
             requestParams.put("username", username);
-            // ...
-            //httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response);
+            requestParams.put("password", password);
+            response = new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    String accessToken,refreshToken;
+                    Log.d(Constants.LOG_TAG,"requestEsdrToken: got response="+response.toString());
+                    try {
+                        accessToken = response.getString("access_token");
+                        refreshToken = response.getString("refresh_token");
+                        GlobalHandler.getInstance(appContext).settingsHandler.setEsdrAccount(username,accessToken,refreshToken);
+                    } catch (Exception e) {
+                        Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
+                        e.printStackTrace();
+                    }
+                }
+            };
+            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response);
         } catch (Exception e) {
-            // TODO handle errors
+            Log.w(Constants.LOG_TAG, "Failed to request ESDR Token for username=" + username);
+            e.printStackTrace();
         }
     }
 
 
     public void requestEsdrRefresh(String refreshToken) {
-        // TODO calls to esdr from refresh_tokens.sh
-        // curl -X POST -H "Content-Type:application/json" https://esdr.cmucreatelab.org/oauth/token -d @refresh_client.json
-        //        {
-        //            "grant_type" : "refresh_token",
-        //                "client_id" : "client_id",
-        //                "client_secret" : "This will never work",
-        //                "refresh_token" : "d1053fc68ae8b1e35bbaba56d45f34b2fef0cc8788f56130e9cc08e500589e19"
-        //        }
-        //
+        Response.Listener<JSONObject> response;
+        int requestMethod;
+        JSONObject requestParams;
+        String requestUrl;
+
         try {
-            JSONObject requestParams = new JSONObject();
+            // header adds "Content-Type:application/json" by default when using JsonObjectRequest (Volley)
+            requestMethod = Request.Method.POST;
+            requestUrl = Constants.Esdr.API_URL + "/oauth/token";
+            requestParams = new JSONObject();
+            requestParams.put("grant_type", Constants.Esdr.GRANT_TYPE_REFRESH);
+            requestParams.put("client_id", Constants.Esdr.CLIENT_ID);
+            requestParams.put("client_secret", Constants.Esdr.CLIENT_SECRET);
             requestParams.put("refresh_token", refreshToken);
-            // ...
-            //httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response);
+            response = new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // TODO response actions
+                    String accessToken,refreshToken;
+                    Log.d(Constants.LOG_TAG,"requestEsdrRefresh: got response="+response.toString());
+                    try {
+                        accessToken = response.getString("access_token");
+                        refreshToken = response.getString("refresh_token");
+                        GlobalHandler.getInstance(appContext).settingsHandler.setEsdrTokens(accessToken, refreshToken);
+                    } catch (Exception e) {
+                        Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
+                        e.printStackTrace();
+                    }
+                }
+            };
+            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response);
         } catch (Exception e) {
-            // TODO handle errors
+            Log.w(Constants.LOG_TAG, "Failed to refresh ESDR Token for refresh_token=" + refreshToken);
+            e.printStackTrace();
         }
     }
 
