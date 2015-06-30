@@ -13,6 +13,9 @@
         <service
             android:name=".views.services.FetchAddressIntentService"
             android:exported="false" />
+        <service
+            android:name=".views.services.EsdrRefreshService"
+            android:exported="false" />
 
         <activity
             android:name=".views.activities.AddressListActivity"

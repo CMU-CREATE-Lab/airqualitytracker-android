@@ -52,7 +52,12 @@ public final class Constants {
         public static final int SUCCESS_RESULT = 0;
         public static final int FAILURE_RESULT = 1;
         public static final String RESULT_DATA_KEY = APP_PACKAGE_NAME + ".addressName";
-        public static final String RECEIVER = APP_PACKAGE_NAME + ".receiver";
+        public static final String RECEIVER = APP_PACKAGE_NAME + ".addressintent.receiver";
+    }
+
+    public final class EsdrRefreshIntent {
+        public static final String RECEIVER = APP_PACKAGE_NAME + ".esdrrefreshintent.receiver";
+        public static final String ALARM_RECEIVER = RECEIVER + ".alarmmanager";
     }
 
     public final class AddressList {
