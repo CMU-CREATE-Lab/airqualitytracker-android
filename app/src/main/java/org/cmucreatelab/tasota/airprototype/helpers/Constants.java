@@ -11,6 +11,8 @@ public final class Constants {
             "pm2_5", "PM2_5", "pm2_5_1hr",
             "pm2_5_24hr", "PM25B_UG_M3", "PM25_UG_M3"
     };
+    public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
+    public static final String BROADCAST_INTENT_FILTER = APP_PACKAGE_NAME + ".broadcastintentfilter";
 
     public static final class SpeckReading {
         public static final String[] normalColors = {
@@ -49,13 +51,12 @@ public final class Constants {
         public static final int MAX_RESULTS = 1;
         public static final int SUCCESS_RESULT = 0;
         public static final int FAILURE_RESULT = 1;
-        public static final String PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
-        public static final String RESULT_DATA_KEY = PACKAGE_NAME + ".addressName";
-        public static final String RECEIVER = PACKAGE_NAME + ".receiver";
+        public static final String RESULT_DATA_KEY = APP_PACKAGE_NAME + ".addressName";
+        public static final String RECEIVER = APP_PACKAGE_NAME + ".receiver";
     }
 
     public final class AddressList {
-        public final static String ADDRESS_INDEX = "org.cmucreatelab.tasota.airprototype.addressindex";
+        public final static String ADDRESS_INDEX = APP_PACKAGE_NAME + ".addressindex";
     }
 
     public final class Esdr {
