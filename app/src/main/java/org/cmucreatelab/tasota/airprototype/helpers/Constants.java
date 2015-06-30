@@ -12,7 +12,7 @@ public final class Constants {
             "pm2_5_24hr", "PM25B_UG_M3", "PM25_UG_M3"
     };
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
-    public static final String BROADCAST_INTENT_FILTER = APP_PACKAGE_NAME + ".broadcastintentfilter";
+    public static final boolean USES_BACKGROUND_SERVICES = true;
 
     public static final class SpeckReading {
         public static final String[] normalColors = {
@@ -58,6 +58,7 @@ public final class Constants {
     public final class EsdrRefreshIntent {
         public static final String RECEIVER = APP_PACKAGE_NAME + ".esdrrefreshintent.receiver";
         public static final String ALARM_RECEIVER = RECEIVER + ".alarmmanager";
+        public static final long ALARM_INTERVAL_MILLISECONDS = 120000;
     }
 
     public final class AddressList {

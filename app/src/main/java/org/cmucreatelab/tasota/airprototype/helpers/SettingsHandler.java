@@ -44,7 +44,7 @@ public class SettingsHandler {
 
 
     // TODO may also want to use timestamp somewhere?
-    public void setEsdrAccount(String username, String accessToken, String refreshToken) {
+    public void updateEsdrAccount(String username, String accessToken, String refreshToken) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString("username",username);
         editor.putString("access_token",accessToken);
@@ -56,7 +56,7 @@ public class SettingsHandler {
     }
 
 
-    public void setEsdrTokens(String accessToken, String refreshToken) {
+    public void updateEsdrTokens(String accessToken, String refreshToken) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString("access_token",accessToken);
         editor.putString("refresh_token",refreshToken);

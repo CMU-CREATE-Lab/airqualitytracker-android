@@ -1,27 +1,18 @@
 package org.cmucreatelab.tasota.airprototype.views.activities;
 
-import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshResultReceiver;
-import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshService;
-import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
 
 public class LoginActivity extends ActionBarActivity
         implements View.OnClickListener {
 
     private boolean loggedIn=false; // controls the views that you see
     private EditText editTextLoginUsername,editTextLoginPassword;
-    private TextView textViewLogoutUsername;
-//    private Button buttonLogin,buttonLogout;
 
 
     protected void display() {
@@ -68,19 +59,8 @@ public class LoginActivity extends ActionBarActivity
             String  username=editTextLoginUsername.getText().toString(),
                     password=editTextLoginPassword.getText().toString();
             Log.d(Constants.LOG_TAG, "sent auth with username=" + username + ", passwd=" + password);
-
             // TODO send auth with username,passwd
-            GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
-//            globalHandler.settingsHandler.setEsdrAccount(username,password,"foo");
-
-            Intent intent = new Intent(this, EsdrRefreshService.class);
-            EsdrRefreshResultReceiver resultReceiver = new EsdrRefreshResultReceiver(new Handler(),globalHandler);
-            intent.putExtra(Constants.EsdrRefreshIntent.RECEIVER, resultReceiver);
-            intent.putExtra("username", username);
-            intent.putExtra("startService",true);
-            startService(intent);
             //GlobalHandler.getInstance(getApplicationContext()).httpRequestHandler.requestEsdrToken(username,password);
-
             loggedIn = true;
             display();
         } else {

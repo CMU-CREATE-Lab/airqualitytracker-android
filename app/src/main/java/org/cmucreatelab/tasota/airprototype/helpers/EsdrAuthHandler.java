@@ -58,7 +58,7 @@ public class EsdrAuthHandler {
                     try {
                         accessToken = response.getString("access_token");
                         refreshToken = response.getString("refresh_token");
-                        GlobalHandler.getInstance(appContext).settingsHandler.setEsdrAccount(username,accessToken,refreshToken);
+                        GlobalHandler.getInstance(appContext).settingsHandler.updateEsdrAccount(username, accessToken, refreshToken);
                     } catch (Exception e) {
                         Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
                         e.printStackTrace();
@@ -97,7 +97,7 @@ public class EsdrAuthHandler {
                     try {
                         accessToken = response.getString("access_token");
                         refreshToken = response.getString("refresh_token");
-                        GlobalHandler.getInstance(appContext).settingsHandler.setEsdrTokens(accessToken, refreshToken);
+                        GlobalHandler.getInstance(appContext).settingsHandler.updateEsdrTokens(accessToken, refreshToken);
                     } catch (Exception e) {
                         Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
                         e.printStackTrace();

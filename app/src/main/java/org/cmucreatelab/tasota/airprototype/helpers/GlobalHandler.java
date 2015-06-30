@@ -9,6 +9,8 @@ import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.views.services.AddressResultReceiver;
+import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshResultReceiver;
+import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshService;
 import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
 import java.util.ArrayList;
@@ -44,6 +46,17 @@ public class GlobalHandler {
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
         updateSettings();
+        if (Constants.USES_BACKGROUND_SERVICES)
+            initializeBackgroundServices();
+    }
+
+
+    private void initializeBackgroundServices() {
+        Intent intent = new Intent(appContext, EsdrRefreshService.class);
+        EsdrRefreshResultReceiver resultReceiver = new EsdrRefreshResultReceiver(new Handler(),this);
+        intent.putExtra(Constants.EsdrRefreshIntent.RECEIVER, resultReceiver);
+        intent.putExtra("startService",true);
+        appContext.startService(intent);
     }
 
 
