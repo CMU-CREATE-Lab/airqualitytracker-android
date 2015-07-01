@@ -12,6 +12,7 @@ public class SettingsHandler {
     private static SettingsHandler classInstance;
     protected GlobalHandler globalHandler;
     private SharedPreferences sharedPreferences;
+    // TODO consider timestamps for last updated user info
     public boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
     public String username="",accessToken="",refreshToken="";
 
@@ -52,7 +53,6 @@ public class SettingsHandler {
     }
 
 
-    // TODO may also want to use timestamp somewhere?
     public void updateEsdrAccount(String username, String accessToken, String refreshToken) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString("username",username);

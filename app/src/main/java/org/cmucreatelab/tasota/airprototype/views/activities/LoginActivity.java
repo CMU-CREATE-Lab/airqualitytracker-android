@@ -60,17 +60,13 @@ public class LoginActivity extends ActionBarActivity
     @Override
     public void onClick(View view) {
         if (!loggedIn()) {
-            Log.d(Constants.LOG_TAG, "buttonLogin");
-            String  username=editTextLoginUsername.getText().toString(),
-                    password=editTextLoginPassword.getText().toString();
-            Log.d(Constants.LOG_TAG, "sent auth with username=" + username + ", passwd=" + password);
-            // TODO send auth with username,passwd
+            Log.v(Constants.LOG_TAG, "Login button clicked.");
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
             globalHandler.httpRequestHandler.requestEsdrToken(this);
             globalHandler.settingsHandler.setUserLoggedIn(true);
             display();
         } else {
-            Log.d(Constants.LOG_TAG, "buttonLogout");
+            Log.v(Constants.LOG_TAG, "Logout button clicked.");
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
             globalHandler.stopEsdrRefreshService();
             globalHandler.settingsHandler.setUserLoggedIn(false);
@@ -81,7 +77,7 @@ public class LoginActivity extends ActionBarActivity
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        // ASSERT failed to log in.
+        // ASSERT onErrorResponse implies that we failed to log in.
         Toast.makeText(LoginActivity.this, "Authorization Failed to log in", Toast.LENGTH_SHORT).show();
         GlobalHandler.getInstance(getApplicationContext()).settingsHandler.setUserLoggedIn(false);
         display();

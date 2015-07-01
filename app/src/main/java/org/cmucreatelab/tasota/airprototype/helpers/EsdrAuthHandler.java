@@ -5,7 +5,6 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.cmucreatelab.tasota.airprototype.views.activities.LoginActivity;
 import org.json.JSONObject;
 
@@ -45,7 +44,7 @@ public class EsdrAuthHandler {
         String password=loginActivity.editTextLoginPassword.getText().toString();
 
         try {
-            // header adds "Content-Type:application/json" by default when using JsonObjectRequest (Volley)
+            // (Volley) adds "Content-Type:application/json" to header by default when using JsonObjectRequest
             requestMethod = Request.Method.POST;
             requestUrl = Constants.Esdr.API_URL + "/oauth/token";
             requestParams = new JSONObject();
@@ -88,7 +87,7 @@ public class EsdrAuthHandler {
         String requestUrl;
 
         try {
-            // header adds "Content-Type:application/json" by default when using JsonObjectRequest (Volley)
+            // (Volley) adds "Content-Type:application/json" to header by default when using JsonObjectRequest
             requestMethod = Request.Method.POST;
             requestUrl = Constants.Esdr.API_URL + "/oauth/token";
             requestParams = new JSONObject();
@@ -99,7 +98,6 @@ public class EsdrAuthHandler {
             response = new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    // TODO response actions
                     String accessToken,refreshToken;
                     Log.d(Constants.LOG_TAG,"requestEsdrRefresh: got response="+response.toString());
                     try {

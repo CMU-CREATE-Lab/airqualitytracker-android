@@ -7,9 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.os.ResultReceiver;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
@@ -19,7 +17,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 public class EsdrRefreshService extends Service {
 
     private boolean timerStarted=false;
-    private ResultReceiver resultReceiver;
     private BroadcastReceiver broadcastReceiver;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
@@ -45,8 +42,7 @@ public class EsdrRefreshService extends Service {
                 destroyAlarm();
             }
 
-            // handle intent
-            resultReceiver = intent.getParcelableExtra(Constants.EsdrRefreshIntent.RECEIVER);
+            // TODO handle intent (if we ever decide to send something)
 
             // create alarm manager/handler
             broadcastReceiver = new BroadcastReceiver() {

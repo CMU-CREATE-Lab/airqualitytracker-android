@@ -9,7 +9,6 @@ import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.views.services.AddressResultReceiver;
-import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshResultReceiver;
 import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshService;
 import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
@@ -27,7 +26,6 @@ public class GlobalHandler {
     public GoogleApiClientHandler googleApiClientHandler;
     public LocationUpdateHandler locationUpdateHandler;
     public SettingsHandler settingsHandler;
-//    public boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
     // this is the instance used by AddressListActivity and should only be instantiated once.
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
 
@@ -61,8 +59,6 @@ public class GlobalHandler {
 
     public void startEsdrRefreshService() {
         Intent intent = new Intent(appContext, EsdrRefreshService.class);
-        EsdrRefreshResultReceiver resultReceiver = new EsdrRefreshResultReceiver(new Handler(), this);
-        intent.putExtra(Constants.EsdrRefreshIntent.RECEIVER, resultReceiver);
         intent.putExtra("startService", true);
         appContext.startService(intent);
     }

@@ -72,11 +72,10 @@ public class HttpRequestHandler implements Response.ErrorListener {
     }
 
 
+    // TODO refactor these functions so they make more sense (we really shouldnt pass the entire Activity across twice)
     public void requestEsdrToken(LoginActivity loginActivity) {
         esdrAuthHandler.requestEsdrToken(loginActivity);
     }
-
-
 //    public void requestEsdrToken(String username, String password, Response.ErrorListener error) {
 //        esdrAuthHandler.requestEsdrToken(username,password,error);
 //    }
