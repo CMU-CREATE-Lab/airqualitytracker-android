@@ -27,6 +27,7 @@ public class EsdrRefreshService extends Service {
 
     private void destroyAlarm() {
         if (alarmManager != null && pendingIntent != null && broadcastReceiver != null) {
+            Log.i(Constants.LOG_TAG,"destroying AlarmManager in EsdrRefreshService...");
             alarmManager.cancel(pendingIntent);
             this.unregisterReceiver(broadcastReceiver);
         }
@@ -35,7 +36,8 @@ public class EsdrRefreshService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.hasExtra("startService")) {
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        if (intent.hasExtra("startService") && globalHandler != null && globalHandler.settingsHandler != null && globalHandler.settingsHandler.userLoggedIn) {
             Log.d(Constants.LOG_TAG, "onStartCommand (handling intent)");
 
             // clear old alarms
@@ -50,14 +52,12 @@ public class EsdrRefreshService extends Service {
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    // TODO just testing
-                    String refreshToken = String.valueOf(Math.random());
-                    GlobalHandler.getInstance(getApplicationContext()).settingsHandler.refreshToken = refreshToken;
+                    String refreshToken = globalHandler.settingsHandler.refreshToken;
+                    // TODO toast for debugging only
                     Log.d(Constants.LOG_TAG, "EsdrRefreshService onHandleIntent: refreshToken=" + refreshToken);
                     Toast.makeText(EsdrRefreshService.this, "refreshToken is "+refreshToken, Toast.LENGTH_SHORT).show();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("foo", "bars");
-//                    resultReceiver.send(0,bundle);
+
+                    globalHandler.httpRequestHandler.requestEsdrRefresh(refreshToken);
                 }
             };
             this.registerReceiver(broadcastReceiver, new IntentFilter(Constants.EsdrRefreshIntent.ALARM_RECEIVER));
@@ -72,6 +72,7 @@ public class EsdrRefreshService extends Service {
             // Restart Behavior: the original Intent is re-delivered to the onStartCommand method.
             return Service.START_REDELIVER_INTENT;
         } else {
+            destroyAlarm();
             return super.onStartCommand(intent, flags, startId);
         }
     }
@@ -80,6 +81,7 @@ public class EsdrRefreshService extends Service {
     @Override
     public void onDestroy() {
         destroyAlarm();
+        Log.i(Constants.LOG_TAG,"destroying instance of EsdrRefreshService");
         super.onDestroy();
     }
 

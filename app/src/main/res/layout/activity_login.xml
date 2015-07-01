@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:id="@+id/editTextLoginUsername"
+        android:inputType="textNoSuggestions"
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

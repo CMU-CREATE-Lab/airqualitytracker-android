@@ -27,7 +27,7 @@ public class GlobalHandler {
     public GoogleApiClientHandler googleApiClientHandler;
     public LocationUpdateHandler locationUpdateHandler;
     public SettingsHandler settingsHandler;
-    public boolean appUsesLocation=true,colorblindMode=false;
+//    public boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
     // this is the instance used by AddressListActivity and should only be instantiated once.
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
 
@@ -60,6 +60,12 @@ public class GlobalHandler {
     }
 
 
+    public void stopEsdrRefreshService() {
+        Intent intent = new Intent(appContext, EsdrRefreshService.class);
+        appContext.stopService(intent);
+    }
+
+
     protected void notifyGlobalDataSetChanged() {
         // TODO this function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
         if (this.listAdapter != null) {
@@ -70,7 +76,7 @@ public class GlobalHandler {
 
     public void updateAddresses() {
         addressFeedsHashMap.updateAddresses();
-        if (appUsesLocation) {
+        if (settingsHandler.appUsesLocation) {
             updateLastLocation();
             addressFeedsHashMap.hashMap.put(
                     addressFeedsHashMap.gpsAddress,
@@ -108,7 +114,7 @@ public class GlobalHandler {
     public ArrayList<SimpleAddress> requestAddressesForDisplay() {
         addressList.clear();
 
-        if (appUsesLocation) {
+        if (settingsHandler.appUsesLocation) {
             addressList.add(addressFeedsHashMap.gpsAddress);
         }
         addressList.addAll(addressFeedsHashMap.addresses);

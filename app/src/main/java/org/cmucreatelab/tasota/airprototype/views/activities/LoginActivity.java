@@ -7,16 +7,22 @@ import android.view.View;
 import android.widget.EditText;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 public class LoginActivity extends ActionBarActivity
         implements View.OnClickListener {
 
-    private boolean loggedIn=false; // controls the views that you see
+//    private boolean loggedIn=false; // controls the views that you see
     private EditText editTextLoginUsername,editTextLoginPassword;
 
 
+    private boolean loggedIn() {
+        return GlobalHandler.getInstance(getApplicationContext()).settingsHandler.userLoggedIn;
+    }
+
+
     protected void display() {
-        if (!loggedIn) {
+        if (!loggedIn()) {
             setContentView(R.layout.activity_login);
 
             editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
@@ -40,7 +46,7 @@ public class LoginActivity extends ActionBarActivity
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        loggedIn = savedInstanceState.getBoolean("loggedIn");
+//        loggedIn = savedInstanceState.getBoolean("loggedIn");
         display();
     }
 
@@ -48,24 +54,29 @@ public class LoginActivity extends ActionBarActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("loggedIn",loggedIn);
+//        outState.putBoolean("loggedIn",loggedIn);
     }
 
 
     @Override
     public void onClick(View view) {
-        if (!loggedIn) {
+        if (!loggedIn()) {
             Log.d(Constants.LOG_TAG, "buttonLogin");
             String  username=editTextLoginUsername.getText().toString(),
                     password=editTextLoginPassword.getText().toString();
             Log.d(Constants.LOG_TAG, "sent auth with username=" + username + ", passwd=" + password);
             // TODO send auth with username,passwd
-            //GlobalHandler.getInstance(getApplicationContext()).httpRequestHandler.requestEsdrToken(username,password);
-            loggedIn = true;
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+            globalHandler.httpRequestHandler.requestEsdrToken(username,password);
+            globalHandler.settingsHandler.setUserLoggedIn(true);
+//            loggedIn = true;
             display();
         } else {
             Log.d(Constants.LOG_TAG, "buttonLogout");
-            loggedIn = false;
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+            globalHandler.stopEsdrRefreshService();
+            globalHandler.settingsHandler.setUserLoggedIn(false);
+//            loggedIn = false;
             display();
         }
     }

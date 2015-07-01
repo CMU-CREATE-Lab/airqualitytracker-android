@@ -58,7 +58,7 @@ public final class Constants {
     public final class EsdrRefreshIntent {
         public static final String RECEIVER = APP_PACKAGE_NAME + ".esdrrefreshintent.receiver";
         public static final String ALARM_RECEIVER = RECEIVER + ".alarmmanager";
-        public static final long ALARM_INTERVAL_MILLISECONDS = 120000;
+        public static final long ALARM_INTERVAL_MILLISECONDS = 60000;
     }
 
     public final class AddressList {

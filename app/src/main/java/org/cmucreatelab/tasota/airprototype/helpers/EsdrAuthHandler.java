@@ -40,6 +40,7 @@ public class EsdrAuthHandler {
         String requestUrl;
 
         // TODO handler errors when username/password are invalid
+        // TODO on errors, globalHandler.settingsHandler.setUserLoggedIn(false);
         try {
             // header adds "Content-Type:application/json" by default when using JsonObjectRequest (Volley)
             requestMethod = Request.Method.POST;

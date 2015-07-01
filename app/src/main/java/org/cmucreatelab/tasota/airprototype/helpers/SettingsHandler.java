@@ -12,7 +12,7 @@ public class SettingsHandler {
     private static SettingsHandler classInstance;
     protected GlobalHandler globalHandler;
     private SharedPreferences sharedPreferences;
-    public boolean appUsesLocation=true,colorblindMode=false;
+    public boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
     public String username="",accessToken="",refreshToken="";
 
 
@@ -37,9 +37,18 @@ public class SettingsHandler {
     protected void updateSettings() {
         appUsesLocation = this.sharedPreferences.getBoolean("checkbox_location",true);
         colorblindMode = this.sharedPreferences.getBoolean("checkbox_colorblind", false);
+        userLoggedIn = this.sharedPreferences.getBoolean("user_logged_in", false);
         username = this.sharedPreferences.getString("username", "");
         accessToken = this.sharedPreferences.getString("access_token", "");
         refreshToken = this.sharedPreferences.getString("refresh_token", "");
+    }
+
+
+    public void setUserLoggedIn(boolean userLoggedIn) {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putBoolean("user_logged_in",userLoggedIn);
+        editor.apply();
+        this.userLoggedIn = userLoggedIn;
     }
 
 
