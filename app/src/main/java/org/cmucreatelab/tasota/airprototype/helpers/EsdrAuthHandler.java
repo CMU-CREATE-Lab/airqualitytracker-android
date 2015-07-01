@@ -65,7 +65,7 @@ public class EsdrAuthHandler {
                         GlobalHandler globalHandler = GlobalHandler.getInstance(appContext);
                         globalHandler.settingsHandler.updateEsdrAccount(username, accessToken, refreshToken);
                         globalHandler.settingsHandler.setUserLoggedIn(true);
-                        globalHandler.startEsdrRefreshService();
+                        globalHandler.servicesHandler.startEsdrRefreshService();
                         loginActivity.display();
                     } catch (Exception e) {
                         Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
@@ -117,7 +117,7 @@ public class EsdrAuthHandler {
                     Log.e(Constants.LOG_TAG, "Volley received error from refreshToken=" + refreshToken);
                     GlobalHandler globalHandler = GlobalHandler.getInstance(appContext);
                     globalHandler.settingsHandler.removeEsdrAccount();
-                    globalHandler.stopEsdrRefreshService();
+                    globalHandler.servicesHandler.stopEsdrRefreshService();
                 }
             };
             httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);

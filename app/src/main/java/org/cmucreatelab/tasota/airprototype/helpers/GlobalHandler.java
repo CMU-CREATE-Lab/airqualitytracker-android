@@ -10,7 +10,6 @@ import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.services.AddressResultReceiver;
-import org.cmucreatelab.tasota.airprototype.services.EsdrRefreshService;
 import org.cmucreatelab.tasota.airprototype.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.activities.address_list.ArrayAdapterAddressList;
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ public class GlobalHandler {
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
     public SettingsHandler settingsHandler;
+    public ServicesHandler servicesHandler;
     // this is the instance used by AddressListActivity and should only be instantiated once.
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
 
@@ -40,32 +40,12 @@ public class GlobalHandler {
         this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         this.settingsHandler = SettingsHandler.getInstance(this);
+        this.servicesHandler = ServicesHandler.getInstance(ctx,this);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
         updateSettings();
         if (Constants.USES_BACKGROUND_SERVICES)
-            initializeBackgroundServices();
-    }
-
-
-    private void initializeBackgroundServices() {
-        // only start EsdrRefreshService if the user was logged in
-        if (settingsHandler.userLoggedIn) {
-            startEsdrRefreshService();
-        }
-    }
-
-
-    public void startEsdrRefreshService() {
-        Intent intent = new Intent(appContext, EsdrRefreshService.class);
-        intent.putExtra("startService", true);
-        appContext.startService(intent);
-    }
-
-
-    public void stopEsdrRefreshService() {
-        Intent intent = new Intent(appContext, EsdrRefreshService.class);
-        appContext.stopService(intent);
+            servicesHandler.initializeBackgroundServices();
     }
 
 

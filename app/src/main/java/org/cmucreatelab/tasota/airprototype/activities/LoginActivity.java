@@ -68,7 +68,7 @@ public class LoginActivity extends ActionBarActivity
         } else {
             Log.v(Constants.LOG_TAG, "Logout button clicked.");
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-            globalHandler.stopEsdrRefreshService();
+            globalHandler.servicesHandler.stopEsdrRefreshService();
             globalHandler.settingsHandler.setUserLoggedIn(false);
             display();
         }

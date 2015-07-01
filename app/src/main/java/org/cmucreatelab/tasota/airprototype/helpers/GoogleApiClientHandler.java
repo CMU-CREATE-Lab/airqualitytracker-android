@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
@@ -49,33 +48,12 @@ public class GoogleApiClientHandler
     }
 
 
-    // perform location updates periodically
-    protected void startLocationUpdates() {
-        if (this.isClientConnected()) {
-            LocationRequest locationRequest = new LocationRequest();
-            locationRequest.setInterval(Constants.Location.LOCATION_REQUEST_INTERVAL);
-            locationRequest.setFastestInterval(Constants.Location.LOCATION_REQUEST_FASTEST_INTERVAL);
-            locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                    this.googleApiClient, locationRequest, this);
-        } else {
-            Log.e(Constants.LOG_TAG, "googleApiClientHandler client is not connected.");
-        }
-    }
-
-
-    // stop periodic location updates
-    protected void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(this.googleApiClient, this);
-    }
-
-
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(Constants.LOG_TAG, "...googleApiClient connected.");
         GoogleApiClientHandler.this.clientConnected = true;
         globalHandler.updateLastLocation();
-        this.startLocationUpdates();
+        globalHandler.servicesHandler.startLocationService();
     }
 
 
