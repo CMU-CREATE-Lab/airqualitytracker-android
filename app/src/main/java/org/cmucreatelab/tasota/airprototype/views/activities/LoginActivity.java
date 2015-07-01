@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshService;
 
 public class LoginActivity extends ActionBarActivity
-        implements View.OnClickListener {
+        implements View.OnClickListener, Response.ErrorListener {
 
 //    private boolean loggedIn=false; // controls the views that you see
     private EditText editTextLoginUsername,editTextLoginPassword;
@@ -67,7 +73,7 @@ public class LoginActivity extends ActionBarActivity
             Log.d(Constants.LOG_TAG, "sent auth with username=" + username + ", passwd=" + password);
             // TODO send auth with username,passwd
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-            globalHandler.httpRequestHandler.requestEsdrToken(username,password);
+            globalHandler.httpRequestHandler.requestEsdrToken(username,password,this);
             globalHandler.settingsHandler.setUserLoggedIn(true);
 //            loggedIn = true;
             display();
@@ -79,6 +85,15 @@ public class LoginActivity extends ActionBarActivity
 //            loggedIn = false;
             display();
         }
+    }
+
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        // ASSERT failed to log in.
+        Toast.makeText(LoginActivity.this, "Authorization Failed to log in", Toast.LENGTH_SHORT).show();
+        GlobalHandler.getInstance(getApplicationContext()).settingsHandler.setUserLoggedIn(false);
+        display();
     }
 
 }

@@ -52,10 +52,18 @@ public class GlobalHandler {
 
 
     private void initializeBackgroundServices() {
+        // only start EsdrRefreshService if the user was logged in
+        if (settingsHandler.userLoggedIn) {
+            startEsdrRefreshService();
+        }
+    }
+
+
+    public void startEsdrRefreshService() {
         Intent intent = new Intent(appContext, EsdrRefreshService.class);
-        EsdrRefreshResultReceiver resultReceiver = new EsdrRefreshResultReceiver(new Handler(),this);
+        EsdrRefreshResultReceiver resultReceiver = new EsdrRefreshResultReceiver(new Handler(), this);
         intent.putExtra(Constants.EsdrRefreshIntent.RECEIVER, resultReceiver);
-        intent.putExtra("startService",true);
+        intent.putExtra("startService", true);
         appContext.startService(intent);
     }
 

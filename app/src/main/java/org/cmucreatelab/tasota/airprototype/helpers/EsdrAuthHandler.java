@@ -33,14 +33,12 @@ public class EsdrAuthHandler {
     }
 
 
-    public void requestEsdrToken(final String username, String password) {
+    public void requestEsdrToken(final String username, String password, Response.ErrorListener error) {
         Response.Listener<JSONObject> response;
         int requestMethod;
         JSONObject requestParams;
         String requestUrl;
 
-        // TODO handler errors when username/password are invalid
-        // TODO on errors, globalHandler.settingsHandler.setUserLoggedIn(false);
         try {
             // header adds "Content-Type:application/json" by default when using JsonObjectRequest (Volley)
             requestMethod = Request.Method.POST;
@@ -59,14 +57,16 @@ public class EsdrAuthHandler {
                     try {
                         accessToken = response.getString("access_token");
                         refreshToken = response.getString("refresh_token");
-                        GlobalHandler.getInstance(appContext).settingsHandler.updateEsdrAccount(username, accessToken, refreshToken);
+                        GlobalHandler globalHandler = GlobalHandler.getInstance(appContext);
+                        globalHandler.settingsHandler.updateEsdrAccount(username, accessToken, refreshToken);
+                        globalHandler.startEsdrRefreshService();
                     } catch (Exception e) {
                         Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
                         e.printStackTrace();
                     }
                 }
             };
-            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response);
+            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
         } catch (Exception e) {
             Log.w(Constants.LOG_TAG, "Failed to request ESDR Token for username=" + username);
             e.printStackTrace();

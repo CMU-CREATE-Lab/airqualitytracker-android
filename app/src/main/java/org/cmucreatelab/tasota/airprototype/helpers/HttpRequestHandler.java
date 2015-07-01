@@ -62,17 +62,22 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response) {
-        esdrFeedsHandler.requestFeeds(latd,longd,maxTime,response);
+        esdrFeedsHandler.requestFeeds(latd, longd, maxTime, response);
     }
 
 
     public void requestChannelReading(final Feed feed, final Channel channel) {
-        esdrFeedsHandler.requestChannelReading(feed,channel);
+        esdrFeedsHandler.requestChannelReading(feed, channel);
     }
 
 
     public void requestEsdrToken(String username, String password) {
-        esdrAuthHandler.requestEsdrToken(username,password);
+        esdrAuthHandler.requestEsdrToken(username,password,this);
+    }
+
+
+    public void requestEsdrToken(String username, String password, Response.ErrorListener error) {
+        esdrAuthHandler.requestEsdrToken(username,password,error);
     }
 
 
