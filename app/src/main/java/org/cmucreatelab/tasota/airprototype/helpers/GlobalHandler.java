@@ -24,7 +24,6 @@ public class GlobalHandler {
     public AddressFeedsHashMap addressFeedsHashMap;
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
-    public LocationUpdateHandler locationUpdateHandler;
     public SettingsHandler settingsHandler;
     // this is the instance used by AddressListActivity and should only be instantiated once.
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
@@ -39,7 +38,6 @@ public class GlobalHandler {
         this.appContext = ctx;
         this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
-        this.locationUpdateHandler = LocationUpdateHandler.getInstance(this.googleApiClientHandler);
         this.settingsHandler = SettingsHandler.getInstance(this);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);

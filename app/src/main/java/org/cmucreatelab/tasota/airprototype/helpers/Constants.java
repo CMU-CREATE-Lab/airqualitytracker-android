@@ -14,6 +14,11 @@ public final class Constants {
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
+    public static final class Location {
+        public static final long LOCATION_REQUEST_INTERVAL = 600000;
+        public static final long LOCATION_REQUEST_FASTEST_INTERVAL = 60000;
+    }
+
     public static final class SpeckReading {
         public static final String[] normalColors = {
                 "#1a9850", "#91cf60", "#d9ef8b",
