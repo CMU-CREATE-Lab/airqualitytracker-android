@@ -9,6 +9,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.views.activities.LoginActivity;
 import org.json.JSONObject;
 
 /**
@@ -71,14 +72,14 @@ public class HttpRequestHandler implements Response.ErrorListener {
     }
 
 
-    public void requestEsdrToken(String username, String password) {
-        esdrAuthHandler.requestEsdrToken(username,password,this);
+    public void requestEsdrToken(LoginActivity loginActivity) {
+        esdrAuthHandler.requestEsdrToken(loginActivity);
     }
 
 
-    public void requestEsdrToken(String username, String password, Response.ErrorListener error) {
-        esdrAuthHandler.requestEsdrToken(username,password,error);
-    }
+//    public void requestEsdrToken(String username, String password, Response.ErrorListener error) {
+//        esdrAuthHandler.requestEsdrToken(username,password,error);
+//    }
 
 
     public void requestEsdrRefresh(String refreshToken) {

@@ -68,10 +68,20 @@ public class SettingsHandler {
     public void updateEsdrTokens(String accessToken, String refreshToken) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString("access_token",accessToken);
-        editor.putString("refresh_token",refreshToken);
+        editor.putString("refresh_token", refreshToken);
         editor.apply();
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+    }
+
+
+    public void removeEsdrAccount() {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putString("username","");
+        editor.putString("access_token","");
+        editor.putString("refresh_token","");
+        editor.putBoolean("user_logged_in",false);
+        editor.apply();
     }
 
 }

@@ -5,21 +5,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshService;
 
 public class LoginActivity extends ActionBarActivity
         implements View.OnClickListener, Response.ErrorListener {
 
-//    private boolean loggedIn=false; // controls the views that you see
-    private EditText editTextLoginUsername,editTextLoginPassword;
+    public EditText editTextLoginUsername,editTextLoginPassword;
+    public TextView textViewLogoutUsername;
 
 
     private boolean loggedIn() {
@@ -27,24 +25,9 @@ public class LoginActivity extends ActionBarActivity
     }
 
 
-    protected void display() {
-        if (!loggedIn()) {
-            setContentView(R.layout.activity_login);
-
-            editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
-            editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-            findViewById(R.id.buttonLogin).setOnClickListener(this);
-        } else {
-            setContentView(R.layout.activity_logout);
-            findViewById(R.id.buttonLogout).setOnClickListener(this);
-        }
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO check if logged in (check SharedPreferences)
         display();
     }
 
@@ -52,15 +35,25 @@ public class LoginActivity extends ActionBarActivity
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-//        loggedIn = savedInstanceState.getBoolean("loggedIn");
         display();
     }
 
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-//        outState.putBoolean("loggedIn",loggedIn);
+    public void display() {
+        if (!loggedIn()) {
+            setContentView(R.layout.activity_login);
+            editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
+            editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
+            findViewById(R.id.buttonLogin).setOnClickListener(this);
+        } else {
+            setContentView(R.layout.activity_logout);
+            textViewLogoutUsername = (TextView) findViewById(R.id.textViewLogoutUsername);
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+            if (globalHandler.settingsHandler.userLoggedIn) {
+                textViewLogoutUsername.setText(globalHandler.settingsHandler.username);
+            }
+            findViewById(R.id.buttonLogout).setOnClickListener(this);
+        }
     }
 
 
@@ -73,16 +66,14 @@ public class LoginActivity extends ActionBarActivity
             Log.d(Constants.LOG_TAG, "sent auth with username=" + username + ", passwd=" + password);
             // TODO send auth with username,passwd
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-            globalHandler.httpRequestHandler.requestEsdrToken(username,password,this);
+            globalHandler.httpRequestHandler.requestEsdrToken(this);
             globalHandler.settingsHandler.setUserLoggedIn(true);
-//            loggedIn = true;
             display();
         } else {
             Log.d(Constants.LOG_TAG, "buttonLogout");
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
             globalHandler.stopEsdrRefreshService();
             globalHandler.settingsHandler.setUserLoggedIn(false);
-//            loggedIn = false;
             display();
         }
     }
