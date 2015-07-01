@@ -8,10 +8,11 @@ import android.os.Handler;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.views.services.AddressResultReceiver;
-import org.cmucreatelab.tasota.airprototype.views.services.EsdrRefreshService;
-import org.cmucreatelab.tasota.airprototype.views.services.FetchAddressIntentService;
-import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.services.AddressResultReceiver;
+import org.cmucreatelab.tasota.airprototype.services.EsdrRefreshService;
+import org.cmucreatelab.tasota.airprototype.services.FetchAddressIntentService;
+import org.cmucreatelab.tasota.airprototype.activities.address_list.ArrayAdapterAddressList;
 import java.util.ArrayList;
 
 /**

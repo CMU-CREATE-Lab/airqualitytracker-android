@@ -1,4 +1,5 @@
-package org.cmucreatelab.tasota.airprototype.helpers;
+package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
+
 
 /**
  * Created by mike on 6/11/15.

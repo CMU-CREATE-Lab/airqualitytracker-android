@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.activities;
+package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
-import org.cmucreatelab.tasota.airprototype.views.uielements.AlertDialogAddressListDelete;
-import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressList;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
+import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import java.util.ArrayList;

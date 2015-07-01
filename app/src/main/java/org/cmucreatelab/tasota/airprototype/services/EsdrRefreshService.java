@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.services;
+package org.cmucreatelab.tasota.airprototype.services;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,7 +11,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 public class EsdrRefreshService extends Service {

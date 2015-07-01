@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 6/26/15.
@@ -13,6 +14,7 @@ public class SettingsHandler {
     protected GlobalHandler globalHandler;
     private SharedPreferences sharedPreferences;
     // TODO consider timestamps for last updated user info
+    // TODO should restrict access (get only; only set when settings update)
     public boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
     public String username="",accessToken="",refreshToken="";
 
@@ -80,7 +82,7 @@ public class SettingsHandler {
         editor.putString("username","");
         editor.putString("access_token","");
         editor.putString("refresh_token","");
-        editor.putBoolean("user_logged_in",false);
+        editor.putBoolean("user_logged_in", false);
         editor.apply();
     }
 

@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.services;
+package org.cmucreatelab.tasota.airprototype.services;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.List;
 import java.util.Locale;
 

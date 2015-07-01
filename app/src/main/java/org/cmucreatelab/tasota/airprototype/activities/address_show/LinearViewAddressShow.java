@@ -1,10 +1,9 @@
-package org.cmucreatelab.tasota.airprototype.views.uielements;
+package org.cmucreatelab.tasota.airprototype.activities.address_show;
 
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.helpers.MapGeometry;
-import org.cmucreatelab.tasota.airprototype.views.activities.AddressShowActivity;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
 import java.util.Date;
 
 /**

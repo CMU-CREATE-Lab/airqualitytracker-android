@@ -9,7 +9,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
-import org.cmucreatelab.tasota.airprototype.views.activities.LoginActivity;
+import org.cmucreatelab.tasota.airprototype.activities.LoginActivity;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
 /**

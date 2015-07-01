@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.uielements;
+package org.cmucreatelab.tasota.airprototype.activities.address_search;
 
 import android.location.Address;
 import android.view.View;
@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.views.activities.AddressSearchActivity;
 import java.util.ArrayList;
 
 /**

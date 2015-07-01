@@ -1,12 +1,11 @@
-package org.cmucreatelab.tasota.airprototype.views.uielements;
+package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
-import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 
 /**
  * Created by mike on 6/8/15.

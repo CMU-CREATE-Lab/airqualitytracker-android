@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.uielements;
+package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.address_show.AddressShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
-import org.cmucreatelab.tasota.airprototype.views.activities.AddressListActivity;
-import org.cmucreatelab.tasota.airprototype.views.activities.AddressShowActivity;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
 /**

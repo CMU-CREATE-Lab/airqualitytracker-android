@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.helpers;
+package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 // Sources for conversions are taken from AirNow documents
 // as well as references from Wikipedia:

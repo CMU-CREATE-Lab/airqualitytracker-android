@@ -1,10 +1,10 @@
-package org.cmucreatelab.tasota.airprototype.views.services;
+package org.cmucreatelab.tasota.airprototype.services;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 /**

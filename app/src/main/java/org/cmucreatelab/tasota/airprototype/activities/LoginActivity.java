@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.activities;
+package org.cmucreatelab.tasota.airprototype.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 public class LoginActivity extends ActionBarActivity

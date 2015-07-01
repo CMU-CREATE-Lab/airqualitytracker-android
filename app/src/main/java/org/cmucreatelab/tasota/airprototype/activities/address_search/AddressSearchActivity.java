@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.activities;
+package org.cmucreatelab.tasota.airprototype.activities.address_search;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,10 +10,9 @@ import android.util.Log;
 import android.widget.EditText;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
-import org.cmucreatelab.tasota.airprototype.views.uielements.ArrayAdapterAddressSearch;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 import java.util.List;
 import java.util.Locale;
 

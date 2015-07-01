@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.helpers;
+package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 // AN IMPORTANT NOTE ABOUT CALCULATING DISTANCES ON EARTH
 //

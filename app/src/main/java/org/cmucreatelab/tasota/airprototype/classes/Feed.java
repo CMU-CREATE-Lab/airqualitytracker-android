@@ -1,7 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
 import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
 /**

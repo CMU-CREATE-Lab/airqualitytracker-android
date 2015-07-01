@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.helpers.database;
+package org.cmucreatelab.tasota.airprototype.helpers.static_classes.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

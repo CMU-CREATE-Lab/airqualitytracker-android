@@ -3,10 +3,12 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 import android.location.Location;
 import android.util.Log;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.helpers.database.AddressDbHelper;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -111,7 +113,7 @@ public class AddressFeedsHashMap {
                     size = jsonFeeds .length();
                     for (i=0;i<size;i++) {
                         JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
-                        Feed feed = JsonParser.parseFeedFromJson(jsonFeed,maxTime);
+                        Feed feed = JsonParser.parseFeedFromJson(jsonFeed, maxTime);
                         // only consider non-null feeds
                         if (feed != null) {
                             result.add(feed);

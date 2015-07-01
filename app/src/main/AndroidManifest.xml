@@ -11,14 +11,14 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <service
-            android:name=".views.services.FetchAddressIntentService"
+            android:name=".services.FetchAddressIntentService"
             android:exported="false" />
         <service
-            android:name=".views.services.EsdrRefreshService"
+            android:name=".services.EsdrRefreshService"
             android:exported="false" />
 
         <activity
-            android:name=".views.activities.AddressListActivity"
+            android:name=".activities.address_list.AddressListActivity"
             android:label="@string/title_activity_address_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,20 +27,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.activities.AddressShowActivity"
+            android:name=".activities.address_show.AddressShowActivity"
             android:label="@string/title_activity_address_show" >
         </activity>
         <activity
-            android:name=".views.activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@android:style/Theme.Black" >
         </activity>
         <activity
-            android:name=".views.activities.AddressSearchActivity"
+            android:name=".activities.address_search.AddressSearchActivity"
             android:label="@string/title_activity_address_search" >
         </activity>
         <activity
-            android:name=".views.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="org.cmucreatelab.tasota.airprototype" />

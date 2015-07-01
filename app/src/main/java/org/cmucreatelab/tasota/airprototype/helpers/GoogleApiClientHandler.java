@@ -7,6 +7,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 6/10/15.

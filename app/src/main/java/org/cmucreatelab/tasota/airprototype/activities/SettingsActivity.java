@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.activities;
+package org.cmucreatelab.tasota.airprototype.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

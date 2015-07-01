@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.views.activities;
+package org.cmucreatelab.tasota.airprototype.activities.address_show;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -9,11 +9,11 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
-import org.cmucreatelab.tasota.airprototype.helpers.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.views.uielements.LinearViewAddressShow;
 import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
