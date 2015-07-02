@@ -39,6 +39,8 @@ public class ServicesHandler {
         // only start EsdrRefreshService if the user was logged in
         if (globalHandler.settingsHandler.userLoggedIn) {
             startEsdrRefreshService();
+        } else {
+            stopEsdrRefreshService();
         }
     }
 

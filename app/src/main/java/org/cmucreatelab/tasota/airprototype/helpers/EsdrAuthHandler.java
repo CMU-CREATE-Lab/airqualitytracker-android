@@ -5,7 +5,6 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
@@ -36,13 +35,10 @@ public class EsdrAuthHandler {
     }
 
 
-    public void requestEsdrToken(final LoginActivity loginActivity) {
-        Response.Listener<JSONObject> response;
+    public void requestEsdrToken(String username, String password, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         int requestMethod;
         JSONObject requestParams;
         String requestUrl;
-        final String username=loginActivity.editTextLoginUsername.getText().toString();
-        String password=loginActivity.editTextLoginPassword.getText().toString();
 
         try {
             // (Volley) adds "Content-Type:application/json" to header by default when using JsonObjectRequest
@@ -54,26 +50,7 @@ public class EsdrAuthHandler {
             requestParams.put("client_secret", Constants.Esdr.CLIENT_SECRET);
             requestParams.put("username", username);
             requestParams.put("password", password);
-            response = new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    String accessToken,refreshToken;
-                    Log.d(Constants.LOG_TAG,"requestEsdrToken: got response="+response.toString());
-                    try {
-                        accessToken = response.getString("access_token");
-                        refreshToken = response.getString("refresh_token");
-                        GlobalHandler globalHandler = GlobalHandler.getInstance(appContext);
-                        globalHandler.settingsHandler.updateEsdrAccount(username, accessToken, refreshToken);
-                        globalHandler.settingsHandler.setUserLoggedIn(true);
-                        globalHandler.servicesHandler.startEsdrRefreshService();
-                        loginActivity.display();
-                    } catch (Exception e) {
-                        Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
-                        e.printStackTrace();
-                    }
-                }
-            };
-            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, loginActivity);
+            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
         } catch (Exception e) {
             Log.w(Constants.LOG_TAG, "Failed to request ESDR Token for username=" + username);
             e.printStackTrace();

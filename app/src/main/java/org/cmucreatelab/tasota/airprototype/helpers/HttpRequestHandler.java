@@ -10,7 +10,6 @@ import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.AuthorizedJsonObjectRequest;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
-import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
@@ -87,13 +86,9 @@ public class HttpRequestHandler implements Response.ErrorListener {
     }
 
 
-    // TODO refactor these functions so they make more sense (we really shouldnt pass the entire Activity across twice)
-    public void requestEsdrToken(LoginActivity loginActivity) {
-        esdrAuthHandler.requestEsdrToken(loginActivity);
+    public void requestEsdrToken(String username, String password, Response.Listener<JSONObject> response, Response.ErrorListener error) {
+        esdrAuthHandler.requestEsdrToken(username,password,response,error);
     }
-//    public void requestEsdrToken(String username, String password, Response.ErrorListener error) {
-//        esdrAuthHandler.requestEsdrToken(username,password,error);
-//    }
 
 
     public void requestEsdrRefresh(String refreshToken) {

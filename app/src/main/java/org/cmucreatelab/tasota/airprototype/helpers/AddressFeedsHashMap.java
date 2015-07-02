@@ -104,7 +104,7 @@ public class AddressFeedsHashMap {
             public void onResponse(JSONObject response) {
                 Feed closestFeed;
 
-                JsonParser.populateFeedsFromJson(result,response);
+                JsonParser.populateFeedsFromJson(result,response,maxTime);
                 if (result.size() > 0) {
                     closestFeed = MapGeometry.getClosestFeedToAddress(addr, result);
                     if (closestFeed != null) {

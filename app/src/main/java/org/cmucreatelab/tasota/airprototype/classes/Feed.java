@@ -96,7 +96,7 @@ public class Feed {
 
     @Override
     public String toString() {
-        // TODO this is used by android.R.layout.simple_list_item_1 as a simple ArrayAdapter in AddressShowActivity and should be deleted when no longer used
+        // TODO this is used by android.R.layout.simple_list_item_1 as a simple ArrayAdapter in AddressShowActivity and LoginActivity; should be deleted when no longer used
         return "(" + this.feed_id + ")" + this.name;
     }
 

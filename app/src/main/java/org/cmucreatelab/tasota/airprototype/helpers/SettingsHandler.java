@@ -17,6 +17,8 @@ public class SettingsHandler {
     // TODO should restrict access (get only; only set when settings update)
     public boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
     public String username="",accessToken="",refreshToken="";
+    // run-time only flag to determine if we want to pull info from ESDR
+    public boolean userFeedsNeedsUpdated=true;
 
 
     // Nobody accesses the constructor

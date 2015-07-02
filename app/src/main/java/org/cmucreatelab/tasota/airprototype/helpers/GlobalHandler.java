@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.services.AddressResultReceiver;
@@ -28,6 +29,7 @@ public class GlobalHandler {
     public ServicesHandler servicesHandler;
     // this is the instance used by AddressListActivity and should only be instantiated once.
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
+    public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public ArrayAdapterAddressList listAdapter;

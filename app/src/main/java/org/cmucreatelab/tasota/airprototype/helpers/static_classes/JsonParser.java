@@ -13,7 +13,28 @@ import java.util.Iterator;
  */
 public class JsonParser {
 
-    public static void populateFeedsFromJson(ArrayList<Feed> feeds, JSONObject response) {
+    public static void populateFeedsFromJson(ArrayList<Feed> feeds, JSONObject response, double maxTime) {
+        try {
+            JSONArray jsonFeeds;
+            int i, size;
+
+            jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
+            size = jsonFeeds.length();
+            for (i = 0; i < size; i++) {
+                JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
+                Feed feed = JsonParser.parseFeedFromJson(jsonFeed, maxTime);
+                // only consider non-null feeds with at least 1 channel
+                if (feed != null && feed.getChannels().size() > 0) {
+                    feeds.add(feed);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
+        }
+    }
+
+
+    public static void populateAllFeedsFromJson(ArrayList<Feed> feeds, JSONObject response) {
         try {
             JSONArray jsonFeeds;
             int i, size;
@@ -65,25 +86,26 @@ public class JsonParser {
             result.setProductId(productId);
 
             listChannels = result.getChannels();
-            channels = row.getJSONObject("channelBounds").getJSONObject("channels");
-            keys = channels.keys();
-            while (keys.hasNext()) {
-                // Only grab channels that we care about
-                String channelName = keys.next();
-                for (String cn : Constants.channelNames) {
-                    if (channelName.equals(cn)) {
-                        // NOTICE: we must also make sure that this specific channel
-                        // was updated in the past 24 hours ("maxTime").
-                        JSONObject channel = channels.getJSONObject(channelName);
-                        if (channel.getDouble("maxTimeSecs") >= maxTime) {
-                            listChannels.add(JsonParser.parseChannelFromJson(channelName, result, channel));
-                            break;
+            try {
+                channels = row.getJSONObject("channelBounds").getJSONObject("channels");
+                keys = channels.keys();
+                while (keys.hasNext()) {
+                    // Only grab channels that we care about
+                    String channelName = keys.next();
+                    for (String cn : Constants.channelNames) {
+                        if (channelName.equals(cn)) {
+                            // NOTICE: we must also make sure that this specific channel
+                            // was updated in the past 24 hours ("maxTime").
+                            JSONObject channel = channels.getJSONObject(channelName);
+                            if (channel.getDouble("maxTimeSecs") >= maxTime) {
+                                listChannels.add(JsonParser.parseChannelFromJson(channelName, result, channel));
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            if (listChannels.size() == 0) {
-                return null;
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Failed to grab Channels from Feed (likely null).");
             }
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to parse Feed from JSON.");
