@@ -1,17 +1,13 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Handler;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.services.AddressResultReceiver;
-import org.cmucreatelab.tasota.airprototype.services.FetchAddressIntentService;
 import org.cmucreatelab.tasota.airprototype.activities.address_list.ArrayAdapterAddressList;
 import java.util.ArrayList;
 
@@ -22,13 +18,15 @@ public class GlobalHandler {
 
     private static GlobalHandler classInstance;
     protected Context appContext;
-    public AddressFeedsHashMap addressFeedsHashMap;
+    // managed global instances
     public HttpRequestHandler httpRequestHandler;
     public GoogleApiClientHandler googleApiClientHandler;
     public SettingsHandler settingsHandler;
     public ServicesHandler servicesHandler;
-    // this is the instance used by AddressListActivity and should only be instantiated once.
-    public final ArrayList<SimpleAddress> addressList = new ArrayList<>();
+    // data structure
+    public AddressFeedsHashMap addressFeedsHashMap;
+    // lists used for ListViews and their adapters
+    public final ArrayList<SimpleAddress> addressList = new ArrayList<>(); // used by AddressListActivity and should only be instantiated once.
     public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
@@ -61,7 +59,7 @@ public class GlobalHandler {
 
     public void updateAddresses() {
         addressFeedsHashMap.updateAddresses();
-        if (settingsHandler.appUsesLocation) {
+        if (settingsHandler.appUsesLocation()) {
             updateLastLocation();
             addressFeedsHashMap.hashMap.put(
                     addressFeedsHashMap.gpsAddress,
@@ -80,15 +78,8 @@ public class GlobalHandler {
 
             this.addressFeedsHashMap.setGpsAddressLocation(lastLocation);
             this.notifyGlobalDataSetChanged();
-            // TODO consider this when more than one update can occur.
             if (Geocoder.isPresent()) {
-                Intent intent = new Intent(this.appContext, FetchAddressIntentService.class);
-                AddressResultReceiver resultReceiver = new AddressResultReceiver(new Handler(),this);
-
-                intent.putExtra(Constants.AddressIntent.RECEIVER, resultReceiver);
-                intent.putExtra("latitude",lastLocation.getLatitude());
-                intent.putExtra("longitude",lastLocation.getLongitude());
-                this.appContext.startService(intent);
+                servicesHandler.startFetchAddressIntentService(lastLocation);
             } else {
                 Log.e(Constants.LOG_TAG, "Tried starting FetchAddressIntentService but Geocoder is not present.");
             }
@@ -99,7 +90,7 @@ public class GlobalHandler {
     public ArrayList<SimpleAddress> requestAddressesForDisplay() {
         addressList.clear();
 
-        if (settingsHandler.appUsesLocation) {
+        if (settingsHandler.appUsesLocation()) {
             addressList.add(addressFeedsHashMap.gpsAddress);
         }
         addressList.addAll(addressFeedsHashMap.addresses);

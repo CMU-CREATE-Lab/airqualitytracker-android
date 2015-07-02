@@ -2,11 +2,15 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.os.Handler;
 import android.util.Log;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.services.AddressResultReceiver;
 import org.cmucreatelab.tasota.airprototype.services.EsdrRefreshService;
+import org.cmucreatelab.tasota.airprototype.services.FetchAddressIntentService;
 
 /**
  * Created by mike on 7/1/15.
@@ -37,7 +41,7 @@ public class ServicesHandler {
 
     protected void initializeBackgroundServices() {
         // only start EsdrRefreshService if the user was logged in
-        if (globalHandler.settingsHandler.userLoggedIn) {
+        if (globalHandler.settingsHandler.isUserLoggedIn()) {
             startEsdrRefreshService();
         } else {
             stopEsdrRefreshService();
@@ -63,6 +67,17 @@ public class ServicesHandler {
     // stop periodic location updates
     protected void stopLocationService() {
         LocationServices.FusedLocationApi.removeLocationUpdates(globalHandler.googleApiClientHandler.googleApiClient, globalHandler.googleApiClientHandler);
+    }
+
+
+    protected void startFetchAddressIntentService(Location location) {
+        Intent intent = new Intent(this.appContext, FetchAddressIntentService.class);
+        AddressResultReceiver resultReceiver = new AddressResultReceiver(new Handler(),globalHandler);
+
+        intent.putExtra(Constants.AddressIntent.RECEIVER, resultReceiver);
+        intent.putExtra("latitude",location.getLatitude());
+        intent.putExtra("longitude",location.getLongitude());
+        this.appContext.startService(intent);
     }
 
 

@@ -11,14 +11,31 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 public class SettingsHandler {
 
     private static SettingsHandler classInstance;
-    protected GlobalHandler globalHandler;
     private SharedPreferences sharedPreferences;
     // TODO consider timestamps for last updated user info
-    // TODO should restrict access (get only; only set when settings update)
-    public boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
-    public String username="",accessToken="",refreshToken="";
+    private boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
+    private String username="",accessToken="",refreshToken="";
+    protected GlobalHandler globalHandler;
     // run-time only flag to determine if we want to pull info from ESDR
     public boolean userFeedsNeedsUpdated=true;
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+    public String getAccessToken() {
+        return accessToken;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public boolean isUserLoggedIn() {
+        return userLoggedIn;
+    }
+    public boolean appUsesLocation() {
+        return appUsesLocation;
+    }
+    public boolean isColorblindMode() {
+        return colorblindMode;
+    }
 
 
     // Nobody accesses the constructor

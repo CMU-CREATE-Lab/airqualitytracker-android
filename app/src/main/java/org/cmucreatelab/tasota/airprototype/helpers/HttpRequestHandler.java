@@ -98,7 +98,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e(Constants.LOG_TAG, "Received error from Volley: " + error.getLocalizedMessage());
+        Log.e(Constants.LOG_TAG, "Received error from Volley in HttpRequestHandler (default): " + error.getLocalizedMessage());
     }
 
 }

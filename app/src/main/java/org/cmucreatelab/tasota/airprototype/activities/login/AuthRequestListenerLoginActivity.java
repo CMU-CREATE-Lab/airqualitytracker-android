@@ -17,7 +17,7 @@ public class AuthRequestListenerLoginActivity
     private LoginActivity loginActivity;
 
 
-    public AuthRequestListenerLoginActivity(LoginActivity loginActivity) {
+    protected AuthRequestListenerLoginActivity(LoginActivity loginActivity) {
         this.loginActivity = loginActivity;
     }
 

@@ -66,7 +66,7 @@ public class RowViewAddressList {
             if (index >= 0) {
                 textAddressItemDescription.setText(Constants.SpeckReading.descriptions[index]);
                 try {
-                    if (GlobalHandler.getInstance(context.getApplicationContext()).settingsHandler.colorblindMode) {
+                    if (GlobalHandler.getInstance(context.getApplicationContext()).settingsHandler.isColorblindMode()) {
                         textAddressItemDescription.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
                         textAddressItemDescription.setTextColor(Color.WHITE);
 //                        textAddressItemDescription.setTextColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
