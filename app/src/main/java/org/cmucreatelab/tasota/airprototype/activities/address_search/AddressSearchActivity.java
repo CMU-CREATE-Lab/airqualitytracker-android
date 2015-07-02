@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype.activities.address_search;
 
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,8 +21,27 @@ public class AddressSearchActivity extends ActionBarActivity
         implements TextWatcher {
 
     private ArrayAdapterAddressSearch listAdapter;
+    private long searchTextChangedAt; // a way to track what the last string to be searched was (avoid pointers because Java is trash)
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
     public void afterTextChanged(Editable editable) {}
+
+
+    private void populateSearch(CharSequence text) {
+        Geocoder geocoder = new Geocoder(this.getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> results = geocoder.getFromLocationName(text.toString(), 5);
+            this.listAdapter.clear();
+            for (Address address : results) {
+                Log.d(Constants.LOG_TAG, address.toString());
+                this.listAdapter.add(address);
+            }
+            this.listAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.d(Constants.LOG_TAG,"size of adapter is" +this.listAdapter.getCount());
+    }
 
 
     public void returnAddress(Address address) {
@@ -58,23 +78,20 @@ public class AddressSearchActivity extends ActionBarActivity
 
 
     @Override
-    public void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+    public void onTextChanged(final CharSequence text, int start, int lengthBefore, int lengthAfter) {
+        final long timestamp = System.currentTimeMillis();
+        this.searchTextChangedAt = timestamp;
         if (!text.toString().equals("")) {
-            // TODO this really needs to be asynchronous (it bogs down the app otherwise)
-            Geocoder geocoder = new Geocoder(this.getApplicationContext(), Locale.getDefault());
-            try {
-                List<Address> results = geocoder.getFromLocationName(text.toString(), 5);
-                this.listAdapter.clear();
-                for (Address address : results) {
-                    Log.d(Constants.LOG_TAG, address.toString());
-                    this.listAdapter.add(address);
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (timestamp == searchTextChangedAt) {
+                        populateSearch(text);
+                    }
                 }
-                this.listAdapter.notifyDataSetChanged();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            Log.d(Constants.LOG_TAG,"size of adapter is" +this.listAdapter.getCount());
+            };
+            handler.postDelayed(runnable, 200);
         } else {
             // clear results
             this.listAdapter.clear();
