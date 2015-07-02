@@ -9,7 +9,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.Addr
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
@@ -105,23 +104,7 @@ public class AddressFeedsHashMap {
             public void onResponse(JSONObject response) {
                 Feed closestFeed;
 
-                try {
-                    JSONArray jsonFeeds;
-                    int i,size;
-
-                    jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
-                    size = jsonFeeds .length();
-                    for (i=0;i<size;i++) {
-                        JSONObject jsonFeed = (JSONObject)jsonFeeds.get(i);
-                        Feed feed = JsonParser.parseFeedFromJson(jsonFeed, maxTime);
-                        // only consider non-null feeds
-                        if (feed != null) {
-                            result.add(feed);
-                        }
-                    }
-                } catch (Exception e) {
-                    Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
-                }
+                JsonParser.populateFeedsFromJson(result,response);
                 if (result.size() > 0) {
                     closestFeed = MapGeometry.getClosestFeedToAddress(addr, result);
                     if (closestFeed != null) {

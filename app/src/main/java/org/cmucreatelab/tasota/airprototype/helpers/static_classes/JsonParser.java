@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,6 +12,28 @@ import java.util.Iterator;
  * Created by mike on 6/15/15.
  */
 public class JsonParser {
+
+    public static void populateFeedsFromJson(ArrayList<Feed> feeds, JSONObject response) {
+        try {
+            JSONArray jsonFeeds;
+            int i, size;
+
+            jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
+            size = jsonFeeds.length();
+            for (i = 0; i < size; i++) {
+                JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
+                // TODO implement maxTime?
+                Feed feed = JsonParser.parseFeedFromJson(jsonFeed, 0);
+                // only consider non-null feeds
+                if (feed != null) {
+                    feeds.add(feed);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
+        }
+    }
+
 
     // Helper function to parse a feed's JSON and create objects (also does Channels)
     public static Feed parseFeedFromJson(JSONObject row, double maxTime) {

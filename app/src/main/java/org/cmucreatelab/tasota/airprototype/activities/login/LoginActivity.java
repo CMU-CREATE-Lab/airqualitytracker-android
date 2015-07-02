@@ -1,23 +1,30 @@
-package org.cmucreatelab.tasota.airprototype.activities;
+package org.cmucreatelab.tasota.airprototype.activities.login;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import java.util.ArrayList;
 
 public class LoginActivity extends ActionBarActivity
         implements View.OnClickListener, Response.ErrorListener {
 
     public EditText editTextLoginUsername,editTextLoginPassword;
     public TextView textViewLogoutUsername;
+    public ListView listViewLoginFeeds;
+    public final AuthRequestListenerLoginActivity authRequestListenerLoginActivity = new AuthRequestListenerLoginActivity(this);
+    public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
 
 
     private boolean loggedIn() {
@@ -39,6 +46,15 @@ public class LoginActivity extends ActionBarActivity
     }
 
 
+    // populates the list of feeds
+    public void populateFeeds() {
+        if (listViewLoginFeeds != null) {
+            ArrayAdapter<Feed> feedsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listFeedsUser);
+            listViewLoginFeeds.setAdapter(feedsListAdapter);
+        }
+    }
+
+
     public void display() {
         if (!loggedIn()) {
             setContentView(R.layout.activity_login);
@@ -48,9 +64,11 @@ public class LoginActivity extends ActionBarActivity
         } else {
             setContentView(R.layout.activity_logout);
             textViewLogoutUsername = (TextView) findViewById(R.id.textViewLogoutUsername);
+            listViewLoginFeeds = (ListView) findViewById(R.id.listViewLoginFeeds);
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
             if (globalHandler.settingsHandler.userLoggedIn) {
                 textViewLogoutUsername.setText(globalHandler.settingsHandler.username);
+                globalHandler.httpRequestHandler.requestPrivateFeeds(globalHandler.settingsHandler.accessToken, authRequestListenerLoginActivity);
             }
             findViewById(R.id.buttonLogout).setOnClickListener(this);
         }

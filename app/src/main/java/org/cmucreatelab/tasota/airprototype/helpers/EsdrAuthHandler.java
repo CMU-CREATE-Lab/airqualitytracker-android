@@ -5,7 +5,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import org.cmucreatelab.tasota.airprototype.activities.LoginActivity;
+import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 

@@ -59,6 +59,13 @@ public class EsdrFeedsHandler {
     }
 
 
+    public void requestPrivateFeeds(String authToken, Response.Listener<JSONObject> response) {
+        int requestMethod = Request.Method.GET;
+        String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?where=isPublic=0";
+        httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
+    }
+
+
     public void requestChannelReading(final Feed feed, final Channel channel) {
         int requestMethod;
         String requestUrl;

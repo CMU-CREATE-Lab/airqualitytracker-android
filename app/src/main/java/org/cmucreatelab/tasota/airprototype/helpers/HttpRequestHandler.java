@@ -7,9 +7,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import org.cmucreatelab.tasota.airprototype.classes.AuthorizedJsonObjectRequest;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
-import org.cmucreatelab.tasota.airprototype.activities.LoginActivity;
+import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
@@ -51,9 +52,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
-        JsonObjectRequest jsonRequest;
-
-        jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
         if (requestParams != null) {
             Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
         } else {
@@ -63,8 +62,23 @@ public class HttpRequestHandler implements Response.ErrorListener {
     }
 
 
+    public void sendAuthorizedJsonRequest(String authToken, int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response) {
+        AuthorizedJsonObjectRequest jsonRequest = new AuthorizedJsonObjectRequest(authToken, requestMethod, requestUrl, requestParams, response, this);
+        if (requestParams != null) {
+            Log.d(Constants.LOG_TAG, "sending Authorized JSON request (authToken="+authToken+") with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
+        } else {
+            Log.d(Constants.LOG_TAG, "sending Authorized JSON request (authToken="+authToken+") with requestUrl=" + requestUrl);
+        }
+        this.queue.add(jsonRequest);
+    }
+
+
     public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response) {
         esdrFeedsHandler.requestFeeds(latd, longd, maxTime, response);
+    }
+
+    public void requestPrivateFeeds(String authToken, Response.Listener<JSONObject> response) {
+        esdrFeedsHandler.requestPrivateFeeds(authToken, response);
     }
 
 
