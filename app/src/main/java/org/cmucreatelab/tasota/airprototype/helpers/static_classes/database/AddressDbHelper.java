@@ -74,7 +74,7 @@ public class AddressDbHelper {
             name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
             latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
             longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
-            Log.d(Constants.LOG_TAG, "Read address record _id=" + id);
+            Log.v(Constants.LOG_TAG, "Read address record _id=" + id);
 
             // add to data structure
             simpleAddress = new SimpleAddress(name, latd, longd);

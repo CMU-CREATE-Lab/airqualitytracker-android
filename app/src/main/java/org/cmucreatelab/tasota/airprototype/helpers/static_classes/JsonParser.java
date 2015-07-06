@@ -13,6 +13,8 @@ import java.util.Iterator;
  */
 public class JsonParser {
 
+
+    // parse feeds within maxTime and that have at least 1 valid channel
     public static void populateFeedsFromJson(ArrayList<Feed> feeds, JSONObject response, double maxTime) {
         try {
             JSONArray jsonFeeds;
@@ -34,6 +36,7 @@ public class JsonParser {
     }
 
 
+    // parse feeds, regardless of their last updated time or number of channels
     public static void populateAllFeedsFromJson(ArrayList<Feed> feeds, JSONObject response) {
         try {
             JSONArray jsonFeeds;

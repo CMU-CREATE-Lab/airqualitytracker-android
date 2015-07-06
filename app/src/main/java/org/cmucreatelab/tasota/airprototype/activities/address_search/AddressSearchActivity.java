@@ -32,15 +32,12 @@ public class AddressSearchActivity extends ActionBarActivity
             List<Address> results = geocoder.getFromLocationName(text.toString(), 5);
             this.listAdapter.clear();
             for (Address address : results) {
-                Log.d(Constants.LOG_TAG, address.toString());
                 this.listAdapter.add(address);
             }
             this.listAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        Log.d(Constants.LOG_TAG,"size of adapter is" +this.listAdapter.getCount());
     }
 
 

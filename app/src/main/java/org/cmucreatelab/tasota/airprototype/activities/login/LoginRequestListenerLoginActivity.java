@@ -37,7 +37,7 @@ public class LoginRequestListenerLoginActivity
     @Override
     public void onResponse(JSONObject response) {
         String accessToken,refreshToken;
-        Log.d(Constants.LOG_TAG, "requestEsdrToken: got response=" + response.toString());
+        Log.v(Constants.LOG_TAG, "requestEsdrToken: got response=" + response.toString());
         try {
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");

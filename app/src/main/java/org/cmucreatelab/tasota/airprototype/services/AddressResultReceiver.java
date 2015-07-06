@@ -23,7 +23,7 @@ public class AddressResultReceiver extends ResultReceiver {
 
     @Override
     protected void onReceiveResult(int resultCode, Bundle resultData) {
-        Log.d(Constants.LOG_TAG, "onReceiveResult: " + resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY));
+        Log.v(Constants.LOG_TAG, "onReceiveResult: " + resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY));
         globalHandler.addressFeedsHashMap.getGpsAddress().setName( resultData.getString(Constants.AddressIntent.RESULT_DATA_KEY) );
     }
 

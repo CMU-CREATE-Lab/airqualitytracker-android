@@ -104,7 +104,7 @@ public class MapGeometry {
             Log.w(Constants.LOG_TAG, "getClosestFeedToAddress returning null.");
         }
         else {
-            Log.d(Constants.LOG_TAG, "FEED=" + closestFeed.getFeed_id() + " has closest distance=" + distance);
+            Log.v(Constants.LOG_TAG, "FEED=" + closestFeed.getFeed_id() + " has closest distance=" + distance);
         }
         return closestFeed;
     }

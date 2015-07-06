@@ -53,9 +53,9 @@ public class HttpRequestHandler implements Response.ErrorListener {
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response, Response.ErrorListener error) {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(requestMethod, requestUrl, requestParams, response, error);
         if (requestParams != null) {
-            Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
+            Log.v(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
         } else {
-            Log.d(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
+            Log.v(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
         }
         this.queue.add(jsonRequest);
     }
@@ -64,9 +64,9 @@ public class HttpRequestHandler implements Response.ErrorListener {
     public void sendAuthorizedJsonRequest(String authToken, int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response) {
         AuthorizedJsonObjectRequest jsonRequest = new AuthorizedJsonObjectRequest(authToken, requestMethod, requestUrl, requestParams, response, this);
         if (requestParams != null) {
-            Log.d(Constants.LOG_TAG, "sending Authorized JSON request (authToken="+authToken+") with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
+            Log.v(Constants.LOG_TAG, "sending Authorized JSON request (authToken="+authToken+") with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
         } else {
-            Log.d(Constants.LOG_TAG, "sending Authorized JSON request (authToken="+authToken+") with requestUrl=" + requestUrl);
+            Log.v(Constants.LOG_TAG, "sending Authorized JSON request (authToken="+authToken+") with requestUrl=" + requestUrl);
         }
         this.queue.add(jsonRequest);
     }

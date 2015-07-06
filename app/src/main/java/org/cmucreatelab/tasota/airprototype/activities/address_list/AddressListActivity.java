@@ -34,7 +34,7 @@ public class AddressListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(Constants.LOG_TAG, "AddressListActivity onCreate");
+        Log.v(Constants.LOG_TAG, "AddressListActivity onCreate");
         setContentView(R.layout.activity_address_list);
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
         addresses = globalHandler.requestAddressesForDisplay();
@@ -46,7 +46,7 @@ public class AddressListActivity extends ActionBarActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d(Constants.LOG_TAG, "AddressListActivity onRestoreInstanceState");
+        Log.v(Constants.LOG_TAG, "AddressListActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("dialogDelete")) {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
             openDialogDelete(addresses.get(index));
@@ -78,15 +78,15 @@ public class AddressListActivity extends ActionBarActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_settings:
-                Log.d(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
+                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_refresh:
-                Log.d(Constants.LOG_TAG, "onOptionsItemSelected: REFRESH selected.");
+                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: REFRESH selected.");
                 GlobalHandler.getInstance(this.getApplicationContext()).updateAddresses();
                 return true;
             case R.id.action_new:
-                Log.d(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");
+                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");
                 startActivity(new Intent(this, AddressSearchActivity.class));
                 return true;
         }
