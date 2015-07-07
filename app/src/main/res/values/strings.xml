@@ -5,6 +5,7 @@
     <string name="title_activity_address_list">AddressListActivity</string>
     <string name="title_activity_address_show">AddressShowActivity</string>
     <string name="action_new">Add New</string>
+    <string name="action_share">Share</string>
     <string name="title_activity_address_search">AddressSearchActivity</string>
 
     <string name="hello_world">Hello world!</string>

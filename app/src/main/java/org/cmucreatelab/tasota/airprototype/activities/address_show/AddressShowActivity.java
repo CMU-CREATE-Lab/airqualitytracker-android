@@ -14,9 +14,26 @@ import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
+
+    private SimpleAddress showSimpleAddress;
+
+
+    protected void shareStationAqi() {
+        String message;
+        double aqi;
+        aqi = (long)(100 * Converter.microgramsToAqi(showSimpleAddress.getClosestFeed().getFeedValue()))/100.0;
+        message = "Address " + showSimpleAddress.getName() + " has AQI " + String.valueOf(aqi) + " from station " + showSimpleAddress.getClosestFeed().getName();
+        Log.d(Constants.LOG_TAG,"Sharing string: ''" + message + "''");
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Share Air Quality Index"));
+    }
 
 
     @Override
@@ -24,7 +41,6 @@ public class AddressShowActivity extends ActionBarActivity {
         Intent intent;
         int addressIndex;
         ListView listView;
-        SimpleAddress showSimpleAddress;
         ArrayList<Feed> feeds;
         ArrayAdapter<Feed> feedsListAdapter;
 
@@ -57,9 +73,15 @@ public class AddressShowActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.action_share:
+                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action share selected.");
+                this.shareStationAqi();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
