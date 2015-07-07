@@ -32,9 +32,10 @@ public class GoogleApiClientHandler
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        // make sure you actually CONNECT the api client for it to do anything (so much hatred)
-        Log.i(Constants.LOG_TAG, "connecting googleApiClient...");
-        googleApiClient.connect();
+        if (globalHandler.settingsHandler.appUsesLocation()) {
+            // make sure you actually CONNECT the api client for it to do anything (so much hatred)
+            this.connect();
+        }
     }
 
 
@@ -45,6 +46,18 @@ public class GoogleApiClientHandler
             classInstance = new GoogleApiClientHandler(globalHandler);
         }
         return classInstance;
+    }
+
+
+    public void connect() {
+        Log.i(Constants.LOG_TAG, "connecting googleApiClient...");
+        googleApiClient.connect();
+    }
+
+
+    public void disconnect() {
+        Log.i(Constants.LOG_TAG, "discconnecting googleApiClient");
+        googleApiClient.disconnect();
     }
 
 

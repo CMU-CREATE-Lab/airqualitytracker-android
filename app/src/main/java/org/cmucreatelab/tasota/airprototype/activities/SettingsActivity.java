@@ -19,7 +19,13 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onDestroy() {
         // update the settings before destroying the activity
-        GlobalHandler.getInstance(this.getApplicationContext()).updateSettings();
+        GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
+        globalHandler.updateSettings();
+        if (globalHandler.settingsHandler.appUsesLocation()) {
+            globalHandler.googleApiClientHandler.connect();
+        } else {
+            globalHandler.googleApiClientHandler.disconnect();
+        }
         super.onDestroy();
     }
 

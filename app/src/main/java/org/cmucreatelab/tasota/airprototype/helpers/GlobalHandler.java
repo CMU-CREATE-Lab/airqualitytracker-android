@@ -37,13 +37,12 @@ public class GlobalHandler {
     private GlobalHandler(Context ctx) {
         // context and handlers
         this.appContext = ctx;
-        this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
-        this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         this.settingsHandler = SettingsHandler.getInstance(this);
         this.servicesHandler = ServicesHandler.getInstance(ctx,this);
+        this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
+        this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
-        updateSettings();
         if (Constants.USES_BACKGROUND_SERVICES)
             servicesHandler.initializeBackgroundServices();
     }

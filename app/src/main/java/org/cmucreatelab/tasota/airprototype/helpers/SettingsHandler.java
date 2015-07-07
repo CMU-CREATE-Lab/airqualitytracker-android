@@ -42,7 +42,8 @@ public class SettingsHandler {
     private SettingsHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(globalHandler.appContext);
-        Log.v(Constants.LOG_TAG,"SHAREDPREFERENCES: "+sharedPreferences.getAll().toString());
+        Log.v(Constants.LOG_TAG, "SHAREDPREFERENCES: " + sharedPreferences.getAll().toString());
+        this.updateSettings();
     }
 
 
