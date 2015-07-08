@@ -53,6 +53,47 @@ public final class Constants {
         }
     }
 
+    public static final class AqiReading {
+        public static final String[] descriptions = {
+                "Air quality is considered satisfactory, and air pollution poses little or no risk.",
+                "Air quality is acceptable; however, for some pollutants there may be a moderate " +
+                        "health concern for a very small number of people. For example, people " +
+                        "who are unusually sensitive to ozone may experience respiratory symptoms.",
+                "Although general public is not likely to be affected at this AQI range, people " +
+                        "with lung disease, older adults and children are at a greater risk from " +
+                        "exposure to ozone, whereas persons with heart and lung disease, older " +
+                        "adults and children are at greater risk from the presence of particles " +
+                        "in the air.",
+                "Everyone may begin to experience some adverse health effects, and members of the " +
+                        "sensitive groups may experience more serious effects.",
+                "This would trigger a health alert signifying that everyone may experience more " +
+                        "serious health effects.",
+                "This would trigger a health warnings of emergency conditions. The entire " +
+                        "population is more likely to be affected."
+        };
+        public static final String[] titles = {
+                "Good", "Moderate", "Unhealthy for Sensitive Groups",
+                "Unhealthy", "Very Unhealthy", "Hazardous"
+        };
+        private static final int[] ranges = {
+                50, 100, 150,
+                200, 300
+        };
+
+        public static int getIndexFromReading(double reading) {
+            if (reading < 0) {
+                return -1;
+            }
+            int i;
+            for (i=0;i<ranges.length;i++) {
+                if (reading < ranges[i]) {
+                    break;
+                }
+            }
+            return i;
+        }
+    }
+
     public final class AddressIntent {
         public static final int MAX_RESULTS = 1;
         public static final int SUCCESS_RESULT = 0;
