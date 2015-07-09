@@ -1,6 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Handler;
@@ -17,23 +16,21 @@ import org.cmucreatelab.tasota.airprototype.services.FetchAddressIntentService;
  */
 public class ServicesHandler {
 
-    private Context appContext;
     private static ServicesHandler classInstance;
     private GlobalHandler globalHandler;
 
 
     // Nobody accesses the constructor
-    private ServicesHandler(Context ctx, GlobalHandler globalHandler) {
-        this.appContext = ctx;
+    private ServicesHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
     }
 
 
     // Only way to get instance of class (synchronized means thread-safe)
     // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized ServicesHandler getInstance(Context ctx, GlobalHandler globalHandler) {
+    protected static synchronized ServicesHandler getInstance(GlobalHandler globalHandler) {
         if (classInstance == null) {
-            classInstance = new ServicesHandler(ctx,globalHandler);
+            classInstance = new ServicesHandler(globalHandler);
         }
         return classInstance;
     }
@@ -71,26 +68,26 @@ public class ServicesHandler {
 
 
     protected void startFetchAddressIntentService(Location location) {
-        Intent intent = new Intent(this.appContext, FetchAddressIntentService.class);
+        Intent intent = new Intent(globalHandler.appContext, FetchAddressIntentService.class);
         AddressResultReceiver resultReceiver = new AddressResultReceiver(new Handler(),globalHandler);
 
         intent.putExtra(Constants.AddressIntent.RECEIVER, resultReceiver);
         intent.putExtra("latitude",location.getLatitude());
         intent.putExtra("longitude",location.getLongitude());
-        this.appContext.startService(intent);
+        globalHandler.appContext.startService(intent);
     }
 
 
     public void startEsdrRefreshService() {
-        Intent intent = new Intent(appContext, EsdrRefreshService.class);
+        Intent intent = new Intent(globalHandler.appContext, EsdrRefreshService.class);
         intent.putExtra("startService", true);
-        appContext.startService(intent);
+        globalHandler.appContext.startService(intent);
     }
 
 
     public void stopEsdrRefreshService() {
-        Intent intent = new Intent(appContext, EsdrRefreshService.class);
-        appContext.stopService(intent);
+        Intent intent = new Intent(globalHandler.appContext, EsdrRefreshService.class);
+        globalHandler.appContext.stopService(intent);
     }
 
 }

@@ -1,6 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
-import android.content.Context;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -14,23 +13,21 @@ import org.json.JSONObject;
  */
 public class EsdrFeedsHandler {
 
-    private Context appContext;
-    private HttpRequestHandler httpRequestHandler;
+    private GlobalHandler globalHandler;
     private static EsdrFeedsHandler classInstance;
 
 
     // Nobody accesses the constructor
-    private EsdrFeedsHandler(Context ctx, HttpRequestHandler httpRequestHandler) {
-        this.appContext = ctx;
-        this.httpRequestHandler = httpRequestHandler;
+    private EsdrFeedsHandler(GlobalHandler globalHandler) {
+        this.globalHandler = globalHandler;
     }
 
 
     // Only way to get instance of class (synchronized means thread-safe)
     // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized EsdrFeedsHandler getInstance(Context ctx, HttpRequestHandler httpRequestHandler) {
+    protected static synchronized EsdrFeedsHandler getInstance(GlobalHandler globalHandler) {
         if (classInstance == null) {
-            classInstance = new EsdrFeedsHandler(ctx,httpRequestHandler);
+            classInstance = new EsdrFeedsHandler(globalHandler);
         }
         return classInstance;
     }
@@ -55,14 +52,14 @@ public class EsdrFeedsHandler {
         // only request from ESDR the fields that we care about
         requestUrl += "&fields=id,name,exposure,isMobile,latitude,longitude,productId,channelBounds";
 
-        httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
+        globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
     }
 
 
     public void requestPrivateFeeds(String authToken, Response.Listener<JSONObject> response) {
         int requestMethod = Request.Method.GET;
         String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?where=isPublic=0";
-        httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
+        globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
     }
 
 
@@ -98,15 +95,15 @@ public class EsdrFeedsHandler {
                     e.printStackTrace();
                 }
                 if (resultValue != null && resultTime != null) {
-                    Log.i(Constants.LOG_TAG,"got value \""+resultValue+"\" at time "+resultTime+" for Channel "+channelName);
+                    Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     feed.setFeedValue(Double.parseDouble(resultValue));
                     feed.setLastTime(Double.parseDouble(resultTime));
-                    GlobalHandler.getInstance(appContext).notifyGlobalDataSetChanged();
+                    globalHandler.notifyGlobalDataSetChanged();
                 }
             }
         };
 
-        httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
+        globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
     }
 
 }

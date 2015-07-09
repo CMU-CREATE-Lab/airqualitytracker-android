@@ -38,8 +38,8 @@ public class GlobalHandler {
         // context and handlers
         this.appContext = ctx;
         this.settingsHandler = SettingsHandler.getInstance(this);
-        this.servicesHandler = ServicesHandler.getInstance(ctx,this);
-        this.httpRequestHandler = HttpRequestHandler.getInstance(ctx);
+        this.servicesHandler = ServicesHandler.getInstance(this);
+        this.httpRequestHandler = HttpRequestHandler.getInstance(this);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);

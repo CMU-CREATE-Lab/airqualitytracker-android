@@ -1,6 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
-import android.content.Context;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -13,23 +12,21 @@ import org.json.JSONObject;
  */
 public class EsdrAuthHandler {
 
-    private Context appContext;
-    private HttpRequestHandler httpRequestHandler;
+    private GlobalHandler globalHandler;
     private static EsdrAuthHandler classInstance;
 
 
     // Nobody accesses the constructor
-    private EsdrAuthHandler(Context ctx, HttpRequestHandler httpRequestHandler) {
-        this.appContext = ctx;
-        this.httpRequestHandler = httpRequestHandler;
+    private EsdrAuthHandler(GlobalHandler globalHandler) {
+        this.globalHandler = globalHandler;
     }
 
 
     // Only way to get instance of class (synchronized means thread-safe)
     // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized EsdrAuthHandler getInstance(Context ctx, HttpRequestHandler httpRequestHandler) {
+    protected static synchronized EsdrAuthHandler getInstance(GlobalHandler globalHandler) {
         if (classInstance == null) {
-            classInstance = new EsdrAuthHandler(ctx, httpRequestHandler);
+            classInstance = new EsdrAuthHandler(globalHandler);
         }
         return classInstance;
     }
@@ -50,7 +47,7 @@ public class EsdrAuthHandler {
             requestParams.put("client_secret", Constants.Esdr.CLIENT_SECRET);
             requestParams.put("username", username);
             requestParams.put("password", password);
-            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
+            globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
         } catch (Exception e) {
             Log.w(Constants.LOG_TAG, "Failed to request ESDR Token for username=" + username);
             e.printStackTrace();
@@ -81,7 +78,7 @@ public class EsdrAuthHandler {
                     try {
                         accessToken = response.getString("access_token");
                         refreshToken = response.getString("refresh_token");
-                        GlobalHandler.getInstance(appContext).settingsHandler.updateEsdrTokens(accessToken, refreshToken);
+                        globalHandler.settingsHandler.updateEsdrTokens(accessToken, refreshToken);
                     } catch (Exception e) {
                         Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
                         e.printStackTrace();
@@ -92,12 +89,11 @@ public class EsdrAuthHandler {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e(Constants.LOG_TAG, "Volley received error from refreshToken=" + refreshToken);
-                    GlobalHandler globalHandler = GlobalHandler.getInstance(appContext);
                     globalHandler.settingsHandler.removeEsdrAccount();
                     globalHandler.servicesHandler.stopEsdrRefreshService();
                 }
             };
-            httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
+            globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
         } catch (Exception e) {
             Log.w(Constants.LOG_TAG, "Failed to refresh ESDR Token for refresh_token=" + refreshToken);
             e.printStackTrace();

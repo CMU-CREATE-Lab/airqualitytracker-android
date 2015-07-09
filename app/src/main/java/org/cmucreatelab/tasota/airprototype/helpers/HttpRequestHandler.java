@@ -1,6 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
-import android.content.Context;
 import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,7 +17,7 @@ import org.json.JSONObject;
  */
 public class HttpRequestHandler implements Response.ErrorListener {
 
-    private Context appContext;
+    private GlobalHandler globalHandler;
     private RequestQueue queue;
     private EsdrFeedsHandler esdrFeedsHandler;
     private EsdrAuthHandler esdrAuthHandler;
@@ -26,19 +25,19 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     // Nobody accesses the constructor
-    private HttpRequestHandler(Context ctx) {
-        this.appContext = ctx;
-        this.queue = Volley.newRequestQueue(this.appContext);
-        this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(ctx, this);
-        this.esdrAuthHandler = EsdrAuthHandler.getInstance(ctx, this);
+    private HttpRequestHandler(GlobalHandler globalHandler) {
+        this.globalHandler = globalHandler;
+        this.queue = Volley.newRequestQueue(globalHandler.appContext);
+        this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(globalHandler);
+        this.esdrAuthHandler = EsdrAuthHandler.getInstance(globalHandler);
     }
 
 
     // Only way to get instance of class (synchronized means thread-safe)
     // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized HttpRequestHandler getInstance(Context ctx) {
+    protected static synchronized HttpRequestHandler getInstance(GlobalHandler globalHandler) {
         if (classInstance == null) {
-            classInstance = new HttpRequestHandler(ctx);
+            classInstance = new HttpRequestHandler(globalHandler);
         }
         return classInstance;
     }
