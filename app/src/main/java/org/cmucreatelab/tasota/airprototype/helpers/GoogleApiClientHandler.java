@@ -32,10 +32,6 @@ public class GoogleApiClientHandler
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        if (globalHandler.settingsHandler.appUsesLocation()) {
-            // make sure you actually CONNECT the api client for it to do anything (so much hatred)
-            this.connect();
-        }
     }
 
 

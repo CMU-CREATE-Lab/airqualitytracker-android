@@ -43,7 +43,9 @@ public class AddressFeedsHashMap {
         // populate addresses from database
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         for (SimpleAddress simpleAddress : dbAddresses) {
-            ArrayList<Feed> feed = pullFeedsForAddress(simpleAddress);
+            // prevents making http requests until we actually want to display something
+//            ArrayList<Feed> feed = pullFeedsForAddress(simpleAddress);
+            ArrayList<Feed> feed = new ArrayList<>();
             this.put(simpleAddress, feed);
         }
     }
@@ -87,7 +89,7 @@ public class AddressFeedsHashMap {
 
 
     // Updates the feeds for all current addresses ("refresh")
-    public void updateAddresses() {
+    protected void updateAddresses() {
         for (SimpleAddress address : this.addresses) {
             this.put(address, pullFeedsForAddress(address));
         }

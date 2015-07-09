@@ -59,11 +59,11 @@ public class GlobalHandler {
     public void updateAddresses() {
         addressFeedsHashMap.updateAddresses();
         if (settingsHandler.appUsesLocation()) {
-            updateLastLocation();
-            addressFeedsHashMap.hashMap.put(
-                    addressFeedsHashMap.gpsAddress,
-                    addressFeedsHashMap.pullFeedsForAddress(addressFeedsHashMap.gpsAddress)
-            );
+            if (googleApiClientHandler.googleApiClient.isConnected()) {
+                updateLastLocation();
+            } else {
+                googleApiClientHandler.connect();
+            }
         }
     }
 
