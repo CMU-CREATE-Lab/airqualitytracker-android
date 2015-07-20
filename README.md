@@ -17,4 +17,8 @@ Installation of Android Studio for this system required downloading the JDK from
 
     export JAVA_HOME=/opt/jdk1.8.0_45
 
+If you use iBus on your system, you may also want to add another environment variable:
+
+    export XMODIFIERS=/path/to/android-studio/bin/studio.sh
+
 For setting up other, less-awesome development environments, please refer to the Android documentation. And good luck ;)
