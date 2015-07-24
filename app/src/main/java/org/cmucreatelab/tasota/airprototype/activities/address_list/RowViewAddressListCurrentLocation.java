@@ -1,10 +1,10 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
@@ -44,6 +44,10 @@ public class RowViewAddressListCurrentLocation {
 
         this.isCurrentLocation = address.isCurrentLocation();
         Log.d(Constants.LOG_TAG, address.getName()+"'s isCurrentLocation="+address.isCurrentLocation());
+
+        // use custom fonts
+        Typeface fontAqi = Typeface.createFromAsset(context.getAssets(), "fonts/Dosis-Light.ttf");
+        textAddressItemLocationValue.setTypeface(fontAqi);
     }
 
 

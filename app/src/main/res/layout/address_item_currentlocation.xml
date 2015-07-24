@@ -84,7 +84,7 @@
                     android:textStyle="bold"
                     android:gravity="bottom|right"
                     android:textScaleX=".75"
-                    android:textSize="44dp" />
+                    android:textSize="60dp" />
             </FrameLayout>
 
             <FrameLayout
