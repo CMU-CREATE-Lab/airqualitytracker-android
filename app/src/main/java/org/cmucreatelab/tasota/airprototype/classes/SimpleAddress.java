@@ -14,9 +14,13 @@ public class SimpleAddress {
     private double latitude,longitude;
     private Feed closestFeed = null;
     private IconType iconType;
+    private boolean isCurrentLocation;
 
     public long get_id() {
         return _id;
+    }
+    public boolean isCurrentLocation() {
+        return isCurrentLocation;
     }
     public void set_id(long _id) {
         this._id = _id;
@@ -58,6 +62,13 @@ public class SimpleAddress {
         this.latitude = latitude;
         this.longitude = longitude;
         this.iconType = IconType.DEFAULT;
+        this.isCurrentLocation = false;
+    }
+
+
+    public SimpleAddress(String name, double latitude, double longitude, boolean isCurrentLocation) {
+        this(name, latitude, longitude);
+        this.isCurrentLocation = isCurrentLocation;
     }
 
 }

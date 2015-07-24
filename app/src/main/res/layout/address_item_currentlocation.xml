@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="100dp"
+    android:background="#221100">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CURRENT LOCATION"
+                android:id="@+id/textAddressItemCurrentLocation"
+                android:textColor="#fff"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Washington, DC"
+                android:id="@+id/textAddressItemLocationName"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12345"
+                android:id="@+id/textAddressItemLocationZip"
+                android:textColor="#000"
+                android:textSize="14dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#ff0000"
+                    android:id="@+id/frameAddressItemWeatherValue" />
+
+                <FrameLayout
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00ff00"
+                    android:id="@+id/frameAddressItemWeatherIcon" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="999"
+                    android:id="@+id/textAddressItemLocationValue"
+                    android:layout_gravity="right"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:gravity="bottom|right"
+                    android:textScaleX=".75"
+                    android:textSize="44dp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AQI"
+                    android:id="@+id/textAddressAqiLabel"
+                    android:layout_gravity="left|bottom"
+                    android:textColor="#fff" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -35,7 +35,7 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
 
     public ArrayAdapterAddressList(AddressListActivity context, ArrayList<SimpleAddress> values) {
-        super(context, R.layout.address_item, values);
+        super(context, R.layout.address_item_currentlocation, values);
         this.context = context;
         this.values = values;
         setupListView();
@@ -48,11 +48,11 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = (inflater.inflate(R.layout.address_item, parent, false));
+            rowView = (inflater.inflate(R.layout.address_item_currentlocation, parent, false));
         } else {
             rowView = convertView;
         }
-        new RowViewAddressList(this.context,values.get(position),rowView).populateRowView();
+        new RowViewAddressListCurrentLocation(this.context,values.get(position),rowView).populateRowView();
         return rowView;
     }
 
