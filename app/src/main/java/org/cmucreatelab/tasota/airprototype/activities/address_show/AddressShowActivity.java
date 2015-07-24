@@ -1,8 +1,10 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_show;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,25 +42,31 @@ public class AddressShowActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent;
         int addressIndex;
-        ListView listView;
-        ArrayList<Feed> feeds;
-        ArrayAdapter<Feed> feedsListAdapter;
 
         super.onCreate(savedInstanceState);
         Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
-        setContentView(R.layout.activity_address_show);
+        setContentView(R.layout.activity_address_show_nofeeds);
         intent = getIntent();
         addressIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
         showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);
-        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedsHashMap.getFeedsFromAddressInHashMap(showSimpleAddress);
-        feedsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, feeds);
 
-        // generate content
-        new LinearViewAddressShow(this,showSimpleAddress).populateLinearView();
+        // generate content (no feed list)
+        new LinearViewAddressShowNoFeeds(this,showSimpleAddress).populateLinearView();
 
-        // setup ListView
-        listView = (ListView)findViewById(R.id.listShowAddressFeeds);
-        listView.setAdapter(feedsListAdapter);
+        // no longer list feeds (for now)
+//        ListView listView;
+//        ArrayList<Feed> feeds;
+//        ArrayAdapter<Feed> feedsListAdapter;
+//
+//        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedsHashMap.getFeedsFromAddressInHashMap(showSimpleAddress);
+//        feedsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, feeds);
+//
+//        // generate content
+//        new LinearViewAddressShow(this,showSimpleAddress).populateLinearView();
+//
+//        // setup ListView
+//        listView = (ListView)findViewById(R.id.listShowAddressFeeds);
+//        listView.setAdapter(feedsListAdapter);
     }
 
 

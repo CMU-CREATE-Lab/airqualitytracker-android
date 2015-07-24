@@ -1,6 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 
+import android.util.Log;
+
 /**
  * Created by mike on 6/11/15.
  */
@@ -75,6 +77,10 @@ public final class Constants {
                 "Good", "Moderate", "Unhealthy for Sensitive Groups",
                 "Unhealthy", "Very Unhealthy", "Hazardous"
         };
+        public static final String[] aqiColors = {
+                "#1a9850", "#91cf60", "#d9ef8b",
+                "#FEE08B", "#FC8D59", "#D73027"
+        };
         private static final int[] ranges = {
                 50, 100, 150,
                 200, 300
@@ -91,6 +97,21 @@ public final class Constants {
                 }
             }
             return i;
+        }
+
+        public static String getRangeFromIndex(int index) {
+            String result;
+            if (index < 0) {
+                Log.e(LOG_TAG, "getRangeFromIndex received index < 0.");
+                result = "";
+            } else if (index == 0) {
+                result = "0-" + ranges[0];
+            } else if (index == 5) {
+                result = ranges[4] + "+";
+            } else {
+                result = ranges[index-1] + "-" + ranges[index];
+            }
+            return result;
         }
     }
 
