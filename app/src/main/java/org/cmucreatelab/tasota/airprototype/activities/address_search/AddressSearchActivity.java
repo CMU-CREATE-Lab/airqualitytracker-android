@@ -71,8 +71,8 @@ public class AddressSearchActivity extends ActionBarActivity
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            actionBar.setCustomView(R.layout.action_bar);
+            actionBar.setTitle("Add a Tracker");
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         editText = (EditText)findViewById(R.id.editTextAddressSearch);

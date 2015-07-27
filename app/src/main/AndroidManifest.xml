@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:parentActivityName=".activities.address_list.AddressListActivity"
             android:name=".activities.address_show.AddressShowActivity"
             android:label="@string/title_activity_address_show" >
         </activity>
@@ -36,6 +37,7 @@
             android:theme="@android:style/Theme.Black" >
         </activity>
         <activity
+            android:parentActivityName=".activities.address_list.AddressListActivity"
             android:name=".activities.address_search.AddressSearchActivity"
             android:label="@string/title_activity_address_search" >
         </activity>
