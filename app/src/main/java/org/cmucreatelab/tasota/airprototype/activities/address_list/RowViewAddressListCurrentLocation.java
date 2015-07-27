@@ -43,7 +43,6 @@ public class RowViewAddressListCurrentLocation {
         this.frameAddressItemWeatherIcon = (FrameLayout)rowView.findViewById(R.id.frameAddressItemWeatherIcon);
 
         this.isCurrentLocation = address.isCurrentLocation();
-        Log.d(Constants.LOG_TAG, address.getName()+"'s isCurrentLocation="+address.isCurrentLocation());
 
         // use custom fonts
         Typeface fontAqi = Typeface.createFromAsset(context.getAssets(), "fonts/Dosis-Light.ttf");

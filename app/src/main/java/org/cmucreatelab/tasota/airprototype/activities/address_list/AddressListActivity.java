@@ -49,7 +49,10 @@ public class AddressListActivity extends ActionBarActivity {
         addresses = globalHandler.requestAddressesForDisplay();
         listAdapter = new ArrayAdapterAddressList(this, addresses);
         globalHandler.listAdapter = this.listAdapter;
-        globalHandler.updateAddresses();
+        if (globalHandler.addressListNeedsUpdated) {
+            globalHandler.updateAddresses();
+            globalHandler.addressListNeedsUpdated = false;
+        }
     }
 
 

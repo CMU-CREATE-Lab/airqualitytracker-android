@@ -28,6 +28,9 @@ public class GlobalHandler {
     // lists used for ListViews and their adapters
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>(); // used by AddressListActivity and should only be instantiated once.
     public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
+    // TODO create logic for controlling when update needs to occur
+    // a flag stating whether the views need to update addresses
+    public boolean addressListNeedsUpdated = true;
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public ArrayAdapterAddressList listAdapter;
