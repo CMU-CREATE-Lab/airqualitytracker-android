@@ -82,15 +82,12 @@ public class RowViewAddressListCurrentLocation {
             textAddressAqiLabel.setVisibility(View.GONE);
             rowView.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[0]));
         } else {
+            double aqi = Converter.microgramsToAqi(address.getClosestFeed().getFeedValue());
             textAddressAqiLabel.setVisibility(View.VISIBLE);
-            int index = Constants.SpeckReading.getIndexFromReading(address.getClosestFeed().getFeedValue());
+            int index = Constants.AqiReading.getIndexFromReading(aqi);
             if (index >= 0) {
                 try {
-                    if (GlobalHandler.getInstance(context.getApplicationContext()).settingsHandler.isColorblindMode()) {
-                        rowView.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[index]));
-                    } else {
-                        rowView.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
-                    }
+                    rowView.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[index]));
                 } catch (Exception e) {
                     // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
                     Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);

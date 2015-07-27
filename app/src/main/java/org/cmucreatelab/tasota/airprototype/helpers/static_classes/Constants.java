@@ -3,6 +3,8 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 import android.util.Log;
 
+import org.cmucreatelab.tasota.airprototype.R;
+
 /**
  * Created by mike on 6/11/15.
  */
@@ -78,8 +80,26 @@ public final class Constants {
                 "Unhealthy", "Very Unhealthy", "Hazardous"
         };
         public static final String[] aqiColors = {
-                "#1a9850", "#91cf60", "#d9ef8b",
-                "#FEE08B", "#FC8D59", "#D73027"
+                "#a3ba5c", "#e9b642", "#e98c37",
+                "#e24f36", "#b54382", "#b22651"
+        };
+        public static final String[] aqiFontColors = {
+                "#192015", "#2a1e11", "#261705",
+                "#330004", "#2d0d18", "#28060b"
+        };
+        public static final int[] aqiDrawableGradients = {
+            R.drawable.gradient_0, R.drawable.gradient_1, R.drawable.gradient_2,
+            R.drawable.gradient_3, R.drawable.gradient_4, R.drawable.gradient_5
+        };
+        // these are currently hardcoded into the xml files and are just placeholders in the code for the time being.
+        private static final String[] aqiGradientColorStart = {
+                "#a3ba5c", "#e9b642", "#e98c37",
+                "#e24f36", "#b54382", "#b22651"
+        };
+        // these are currently hardcoded into the xml files and are just placeholders in the code for the time being.
+        private static final String[] aqiGradientColorEnd = {
+                "#7a9055", "#c18f35", "#b44c26",
+                "#ad2227", "#992a68", "#8c1739"
         };
         private static final int[] ranges = {
                 50, 100, 150,

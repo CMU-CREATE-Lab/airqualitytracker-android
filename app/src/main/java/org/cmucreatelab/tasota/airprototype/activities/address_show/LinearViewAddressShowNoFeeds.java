@@ -60,7 +60,8 @@ public class LinearViewAddressShowNoFeeds {
                 textShowAddressAqiRange.setText(Constants.AqiReading.getRangeFromIndex(aqiIndex) + " AQI");
                 textShowAddressAqiTitle.setText( Constants.AqiReading.titles[aqiIndex] );
                 textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[aqiIndex]);
-                layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[aqiIndex]));
+//                layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[aqiIndex]));
+                layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[aqiIndex]);
             }
         } else {
             // TODO error readings (default message?)
