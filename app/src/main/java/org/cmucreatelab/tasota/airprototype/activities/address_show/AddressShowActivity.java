@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype.activities.address_show;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -42,15 +43,15 @@ public class AddressShowActivity extends ActionBarActivity {
         Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
         setContentView(R.layout.activity_address_show_nofeeds);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
-            actionBar.setCustomView(R.layout.action_bar);
-        }
-
         intent = getIntent();
         addressIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
         showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(showSimpleAddress.getName());
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // generate content (no feed list)
         new LinearViewAddressShowNoFeeds(this,showSimpleAddress).populateLinearView();
