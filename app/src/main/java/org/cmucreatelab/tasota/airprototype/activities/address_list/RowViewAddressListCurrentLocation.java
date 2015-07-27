@@ -80,7 +80,7 @@ public class RowViewAddressListCurrentLocation {
         // Description info based on closest feed reading
         if (address.getClosestFeed() == null) {
             textAddressAqiLabel.setVisibility(View.GONE);
-            rowView.setBackgroundColor(Color.parseColor(Constants.SpeckReading.colorblindColors[0]));
+            rowView.setBackgroundColor(Color.parseColor("#404041"));
         } else {
             double aqi = Converter.microgramsToAqi(address.getClosestFeed().getFeedValue());
             textAddressAqiLabel.setVisibility(View.VISIBLE);

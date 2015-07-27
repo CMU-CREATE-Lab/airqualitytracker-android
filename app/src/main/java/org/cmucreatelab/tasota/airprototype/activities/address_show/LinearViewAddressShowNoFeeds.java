@@ -2,6 +2,9 @@ package org.cmucreatelab.tasota.airprototype.activities.address_show;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.opengl.Visibility;
+import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
@@ -21,9 +24,23 @@ public class LinearViewAddressShowNoFeeds {
     private TextView textShowAddressAqiRange;
     private TextView textShowAddressAqiTitle;
     private TextView textShowAddressAqiDescription;
+    private TextView textShowAddressAqiLabel;
     private RelativeLayout layoutShowAddress;
 
     //private FrameLayout frameShowAddressWeatherValue, frameShowAddressWeatherIcon;
+
+
+    private void defaultView() {
+        Log.w(Constants.LOG_TAG, "warning: using default populateLinearView");
+        this.textShowAddressAqiValue.setText("");
+        textShowAddressAqiRange.setText("");
+        textShowAddressAqiLabel.setVisibility(View.INVISIBLE);
+        textShowAddressAqiTitle.setText("Unavailable");
+        textShowAddressAqiDescription.setText("The current AQI for this region is unavailable.");
+//        layoutShowAddress.setBackgroundColor(Color.parseColor("#f1f1f2"));
+//        layoutShowAddress.setBackgroundResource(R.drawable.gradient_0);
+        layoutShowAddress.setBackgroundColor(Color.parseColor("#404041"));
+    }
 
 
     public LinearViewAddressShowNoFeeds(AddressShowActivity activity, SimpleAddress address) {
@@ -33,14 +50,14 @@ public class LinearViewAddressShowNoFeeds {
         this.textShowAddressAqiRange = (TextView)activity.findViewById(R.id.textShowAddressAqiRange);
         this.textShowAddressAqiTitle = (TextView)activity.findViewById(R.id.textShowAddressAqiTitle);
         this.textShowAddressAqiDescription = (TextView)activity.findViewById(R.id.textShowAddressAqiDescription);
+        this.textShowAddressAqiLabel = (TextView)activity.findViewById(R.id.textShowAddressAqiLabel);
         this.layoutShowAddress = (RelativeLayout)activity.findViewById(R.id.layoutShowAddress);
 
         // use custom fonts
         Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
         textShowAddressAqiValue.setTypeface(fontAqi);
 
-        // TODO testing only
-        this.layoutShowAddress.setBackgroundColor(Color.CYAN);
+        this.layoutShowAddress.setBackgroundColor(Color.parseColor("#f1f1f2"));
     }
 
 
@@ -55,7 +72,7 @@ public class LinearViewAddressShowNoFeeds {
             this.textShowAddressAqiValue.setText(String.valueOf(aqi));
             aqiIndex = Constants.AqiReading.getIndexFromReading(aqi);
             if (aqiIndex < 0) {
-                // TODO error readings (default message?)
+                this.defaultView();
             } else {
                 textShowAddressAqiRange.setText(Constants.AqiReading.getRangeFromIndex(aqiIndex) + " AQI");
                 textShowAddressAqiTitle.setText( Constants.AqiReading.titles[aqiIndex] );
@@ -64,11 +81,7 @@ public class LinearViewAddressShowNoFeeds {
                 layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[aqiIndex]);
             }
         } else {
-            // TODO error readings (default message?)
-            this.textShowAddressAqiValue.setText("N/A");
-            textShowAddressAqiRange.setText("");
-            textShowAddressAqiTitle.setText("");
-            textShowAddressAqiDescription.setText("");
+            this.defaultView();
         }
     }
 

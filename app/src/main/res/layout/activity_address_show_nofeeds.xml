@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="AQI    /500"
-                    android:id="@+id/textView5"
+                    android:id="@+id/textShowAddressAqiLabel"
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="22dp"
                     android:textColor="#fff" />
