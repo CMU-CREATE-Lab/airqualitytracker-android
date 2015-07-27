@@ -1,23 +1,17 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_show;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
-import java.util.ArrayList;
 
 public class AddressShowActivity extends ActionBarActivity {
 
@@ -46,6 +40,13 @@ public class AddressShowActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
         setContentView(R.layout.activity_address_show_nofeeds);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+            actionBar.setCustomView(R.layout.action_bar);
+        }
+
         intent = getIntent();
         addressIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
         showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);

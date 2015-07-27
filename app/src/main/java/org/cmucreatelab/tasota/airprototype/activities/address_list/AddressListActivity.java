@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,19 +38,11 @@ public class AddressListActivity extends ActionBarActivity {
         Log.v(Constants.LOG_TAG, "AddressListActivity onCreate");
         setContentView(R.layout.activity_address_list);
 
-        // TODO use a custom view for image in action bar
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        ImageView imageView = new ImageView(actionBar.getThemedContext());
-//        imageView.setScaleType(ImageView.ScaleType.CENTER);
-//        imageView.setImageResource(R.drawable.ic_share_white_24dp);
-//        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
-//                ActionBar.LayoutParams.WRAP_CONTENT,
-//                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL
-//                | Gravity.CENTER_VERTICAL);
-//        layoutParams.rightMargin = 0;
-//        imageView.setLayoutParams(layoutParams);
-//        actionBar.setCustomView(imageView);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            actionBar.setCustomView(R.layout.action_bar);
+        }
 
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
         addresses = globalHandler.requestAddressesForDisplay();

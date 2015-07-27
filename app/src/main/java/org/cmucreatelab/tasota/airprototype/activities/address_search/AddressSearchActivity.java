@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.activities.address_search;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -67,6 +68,12 @@ public class AddressSearchActivity extends ActionBarActivity
         EditText editText;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_search);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            actionBar.setCustomView(R.layout.action_bar);
+        }
 
         editText = (EditText)findViewById(R.id.editTextAddressSearch);
         editText.addTextChangedListener(this);
