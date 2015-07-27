@@ -7,164 +7,170 @@
     tools:context="org.cmucreatelab.tasota.airprototype.activities.address_show.AddressShowActivity"
     android:id="@+id/layoutShowAddress">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
 
-
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-            <TextView
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pittsburgh, PA"
-                android:id="@+id/textShowAddressName"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="24dp"
-                android:textColor="#000" />
-        </FrameLayout>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pittsburgh, PA"
+                    android:id="@+id/textShowAddressName"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="24dp"
+                    android:textColor="#000" />
+            </FrameLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|center_horizontal">
-
-                <FrameLayout
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="#600"
-                    android:visibility="invisible"
-                    android:id="@+id/frameShowAddressWeatherValue">
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="#060"
-                    android:visibility="invisible"
-                    android:id="@+id/frameShowAddressWeatherIcon" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"></FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="999"
-                android:id="@+id/textShowAddressAqiValue"
-                android:textSize="144dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:textColor="#fff" />
-        </FrameLayout>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" >
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal">
 
-            <TextView
+                    <FrameLayout
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="#600"
+                        android:visibility="invisible"
+                        android:id="@+id/frameShowAddressWeatherValue">
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="#060"
+                        android:visibility="invisible"
+                        android:id="@+id/frameShowAddressWeatherIcon" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_weight="1"></FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="999"
+                    android:id="@+id/textShowAddressAqiValue"
+                    android:textSize="144dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="#fff" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AQI    /500"
+                    android:id="@+id/textView5"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="22dp"
+                    android:textColor="#fff" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="10" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0-50 AQI"
+                    android:id="@+id/textShowAddressAqiRange"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="22dp"
+                    android:textColor="#fff" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Good"
+                    android:id="@+id/textShowAddressAqiTitle"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="16dp"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Air quality is considered satisfactory, and air pollution poses little or no risk."
+                    android:id="@+id/textShowAddressAqiDescription"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="16dp"
+                    android:textColor="#000"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AQI    /500"
-                android:id="@+id/textView5"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="22dp"
-                android:textColor="#fff" />
-        </FrameLayout>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" >
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal" >
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                    <FrameLayout
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="#600"
+                        android:visibility="invisible" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0-50 AQI"
-                android:id="@+id/textShowAddressAqiRange"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="22dp"
-                android:textColor="#fff" />
-        </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Good"
-                android:id="@+id/textShowAddressAqiTitle"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="16dp"
-                android:textColor="#000"
-                android:textStyle="bold" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Air quality is considered satisfactory, and air pollution poses little or no risk."
-                android:id="@+id/textShowAddressAqiDescription"
-                android:gravity="center_vertical|center_horizontal"
-                android:textSize="16dp"
-                android:textColor="#000"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" >
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|center_horizontal" >
-
-                <FrameLayout
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:background="#600"
-                    android:visibility="invisible" />
-
-            </LinearLayout>
-        </FrameLayout>
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
