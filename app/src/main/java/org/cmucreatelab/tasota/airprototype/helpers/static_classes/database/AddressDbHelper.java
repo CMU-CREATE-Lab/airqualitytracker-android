@@ -40,7 +40,7 @@ public class AddressDbHelper {
     }
 
 
-    public static SimpleAddress createAddressInDatabase(Context ctx, String name, double latitude, double longitude) {
+    public static SimpleAddress createAddressInDatabase(Context ctx, String name, String zipcode, double latitude, double longitude) {
         AddressContract mDbHelper;
         SQLiteDatabase db;
         ContentValues values;
@@ -51,10 +51,11 @@ public class AddressDbHelper {
         db = mDbHelper.getWritableDatabase();
         values = new ContentValues();
         values.put(AddressContract.COLUMN_NAME, name);
+        values.put(AddressContract.COLUMN_ZIPCODE, zipcode);
         values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(latitude));
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(longitude));
         newId = db.insert(AddressContract.TABLE_NAME, "null", values);
-        simpleAddress = new SimpleAddress(name,latitude,longitude);
+        simpleAddress = new SimpleAddress(name,zipcode,latitude,longitude);
         simpleAddress.set_id(newId);
         Log.i(Constants.LOG_TAG, "inserted new address _id=" + newId);
 
@@ -65,19 +66,20 @@ public class AddressDbHelper {
     public static SimpleAddress generateAddressFromRecord(Cursor cursor) throws IllegalArgumentException {
         SimpleAddress simpleAddress;
         int id;
-        String name;
+        String name,zipcode;
         double latd,longd;
 
         try {
             // read record
             id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
             name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            zipcode = cursor.getString(cursor.getColumnIndexOrThrow("zipcode"));
             latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
             longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
             Log.v(Constants.LOG_TAG, "Read address record _id=" + id);
 
             // add to data structure
-            simpleAddress = new SimpleAddress(name, latd, longd);
+            simpleAddress = new SimpleAddress(name, zipcode, latd, longd);
             simpleAddress.set_id(id);
             return simpleAddress;
         } catch (Exception e) {
@@ -88,7 +90,11 @@ public class AddressDbHelper {
 
 
     public static ArrayList<SimpleAddress> fetchAddressesFromDatabase(Context ctx) {
-        String[] projection = { "_id", AddressContract.COLUMN_NAME, AddressContract.COLUMN_LATITUDE, AddressContract.COLUMN_LONGITUDE };
+        String[] projection = {
+                "_id",
+                AddressContract.COLUMN_NAME, AddressContract.COLUMN_ZIPCODE,
+                AddressContract.COLUMN_LATITUDE, AddressContract.COLUMN_LONGITUDE
+        };
         AddressContract mDbHelper;
         SQLiteDatabase db;
         Cursor cursor;

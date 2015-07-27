@@ -11,6 +11,7 @@ public class SimpleAddress {
     }
     private long _id;
     private String name;
+    private String zipcode;
     private double latitude,longitude;
     private Feed closestFeed = null;
     private IconType iconType;
@@ -55,10 +56,17 @@ public class SimpleAddress {
     public void setIconType(IconType iconType) {
         this.iconType = iconType;
     }
+    public String getZipcode() {
+        return zipcode;
+    }
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
 
 
-    public SimpleAddress(String name, double latitude, double longitude) {
+    public SimpleAddress(String name, String zipcode, double latitude, double longitude) {
         this.name = name;
+        this.zipcode = zipcode;
         this.latitude = latitude;
         this.longitude = longitude;
         this.iconType = IconType.DEFAULT;
@@ -66,8 +74,8 @@ public class SimpleAddress {
     }
 
 
-    public SimpleAddress(String name, double latitude, double longitude, boolean isCurrentLocation) {
-        this(name, latitude, longitude);
+    public SimpleAddress(String name, String zipcode, double latitude, double longitude, boolean isCurrentLocation) {
+        this(name, zipcode, latitude, longitude);
         this.isCurrentLocation = isCurrentLocation;
     }
 

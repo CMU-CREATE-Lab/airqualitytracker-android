@@ -53,6 +53,7 @@ public class RowViewAddressListCurrentLocation {
     public void populateRowView() {
         // Address or Zipcode info
         textAddressItemLocationName.setText(address.getName());
+        textAddressItemLocationZip.setText(address.getZipcode());
 
         // Display based on whether you are the current location
         if (isCurrentLocation) {

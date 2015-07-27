@@ -36,7 +36,7 @@ public class AddressFeedsHashMap {
     public AddressFeedsHashMap(GlobalHandler globalHandler) {
         this.addresses = new ArrayList<>();
         this.hashMap = new HashMap<>();
-        this.gpsAddress = new SimpleAddress("Loading Current Location...", 0.0, 0.0, true);
+        this.gpsAddress = new SimpleAddress("Loading Current Location...", "", 0.0, 0.0, true);
         gpsAddress.setIconType(SimpleAddress.IconType.GPS);
         hashMap.put(gpsAddress, new ArrayList<Feed>());
         this.globalHandler = globalHandler;

@@ -44,7 +44,7 @@ public class AddressSearchActivity extends ActionBarActivity
 
     public void returnAddress(Address address) {
         double latd,longd;
-        String name;
+        String name, zipcode;
         SimpleAddress result;
 
         latd = address.getLatitude();
@@ -54,9 +54,13 @@ public class AddressSearchActivity extends ActionBarActivity
         } else {
             name = ((EditText)findViewById(R.id.editTextAddressSearch)).getText().toString();
         }
+        zipcode = address.getPostalCode();
+        if (zipcode == null) {
+            zipcode = "";
+        }
 
-        Log.d(Constants.LOG_TAG,"AddressSearchActivity returning with latd="+latd+", longd="+longd+" using name="+name);
-        result = AddressDbHelper.createAddressInDatabase(this, name, latd, longd);
+        Log.d(Constants.LOG_TAG,"AddressSearchActivity returning with latd="+latd+", longd="+longd+" using name="+name+" and zipcode="+zipcode);
+        result = AddressDbHelper.createAddressInDatabase(this, name, zipcode, latd, longd);
         GlobalHandler globalHandler = GlobalHandler.getInstance(this);
         globalHandler.addressFeedsHashMap.addAddress(result);
         finish();
