@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.AboutActivity;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -90,6 +91,10 @@ public class AddressShowActivity extends ActionBarActivity {
             case R.id.action_share:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action share selected.");
                 this.shareStationAqi();
+                return true;
+            case R.id.action_about:
+                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about selected.");
+                startActivity(new Intent(this, AboutActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
