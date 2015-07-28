@@ -7,11 +7,11 @@
         android:summary="@string/description_location"
         android:defaultValue="true" />
 
-    <CheckBoxPreference
-        android:key="checkbox_colorblind"
-        android:title="Colorblind Mode"
-        android:summary="@string/description_colorblind"
-        android:defaultValue="false" />
+    <!--<CheckBoxPreference-->
+        <!--android:key="checkbox_colorblind"-->
+        <!--android:title="Colorblind Mode"-->
+        <!--android:summary="@string/description_colorblind"-->
+        <!--android:defaultValue="false" />-->
 
     <PreferenceScreen
         android:title="SpeckSensor User Account"
