@@ -22,16 +22,22 @@ public class AddressShowActivity extends ActionBarActivity {
 
 
     protected void shareStationAqi() {
-        String message;
-        double aqi;
-        aqi = (long)(100 * Converter.microgramsToAqi(showSimpleAddress.getClosestFeed().getFeedValue()))/100.0;
-        message = "Address " + showSimpleAddress.getName() + " has AQI " + String.valueOf(aqi) + " from station " + showSimpleAddress.getClosestFeed().getName();
-        Log.d(Constants.LOG_TAG,"Sharing string: ''" + message + "''");
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
-        sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, "Share Air Quality Index"));
+        try {
+            String message, label;
+            double aqi;
+            aqi = (long) (100 * Converter.microgramsToAqi(showSimpleAddress.getClosestFeed().getFeedValue())) / 100.0;
+            label = Constants.AqiReading.titles[Constants.AqiReading.getIndexFromReading(aqi)];
+            // "My air quality is <AQI label>. Learn more at https://www.specksensor.com/"
+            message = "My air quality is " + label + ". Learn more at https://www.specksensor.com/";
+            Log.d(Constants.LOG_TAG, "Sharing string: ''" + message + "''");
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+            sendIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent, "Share Air Quality Index"));
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG,"Received error while trying to share station's AQI on AddressShowActivity.");
+        }
     }
 
 

@@ -171,6 +171,33 @@
                 </LinearLayout>
             </FrameLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:id="@+id/imageView2"
+                        android:src="@drawable/twitterlogo_small_white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Join the conversation @SpeckSensor"
+                        android:id="@+id/textView9"
+                        android:textColor="#fff" />
+                </LinearLayout>
+            </FrameLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
