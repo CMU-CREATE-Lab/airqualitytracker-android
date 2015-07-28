@@ -14,8 +14,8 @@
         android:defaultValue="false" />
 
     <PreferenceScreen
-        android:title="ESDR User Account"
-        android:summary="Manage your ESDR user account" >
+        android:title="SpeckSensor User Account"
+        android:summary="Manage your SpeckSensor user account" >
         <intent android:action="org.cmucreatelab.tasota.airprototype" />
     </PreferenceScreen>
 
