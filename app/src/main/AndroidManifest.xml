@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AboutActivity"
+            android:name=".activities.AboutAirQualityActivity"
             android:label="@string/title_activity_about" >
         </activity>
     </application>

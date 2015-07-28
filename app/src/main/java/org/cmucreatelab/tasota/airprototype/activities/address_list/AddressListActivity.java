@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import org.cmucreatelab.tasota.airprototype.activities.AboutActivity;
+import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
@@ -104,7 +104,7 @@ public class AddressListActivity extends ActionBarActivity {
                 return true;
             case R.id.action_about:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about selected.");
-                startActivity(new Intent(this, AboutActivity.class));
+                startActivity(new Intent(this, AboutAirQualityActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
