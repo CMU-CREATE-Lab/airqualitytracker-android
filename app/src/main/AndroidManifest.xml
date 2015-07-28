@@ -27,9 +27,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:parentActivityName=".activities.address_list.AddressListActivity"
             android:name=".activities.address_show.AddressShowActivity"
-            android:label="@string/title_activity_address_show" >
+            android:label="@string/title_activity_address_show"
+            android:parentActivityName=".activities.address_list.AddressListActivity" >
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
@@ -37,9 +37,9 @@
             android:theme="@android:style/Theme.Black" >
         </activity>
         <activity
-            android:parentActivityName=".activities.address_list.AddressListActivity"
             android:name=".activities.address_search.AddressSearchActivity"
-            android:label="@string/title_activity_address_search" >
+            android:label="@string/title_activity_address_search"
+            android:parentActivityName=".activities.address_list.AddressListActivity" >
         </activity>
         <activity
             android:name=".activities.login.LoginActivity"
@@ -53,6 +53,10 @@
         <activity
             android:name=".activities.AboutAirQualityActivity"
             android:label="@string/title_activity_about" >
+        </activity>
+        <activity
+            android:name=".activities.AboutSpeckActivity"
+            android:label="@string/title_activity_about_speck" >
         </activity>
     </application>
 
