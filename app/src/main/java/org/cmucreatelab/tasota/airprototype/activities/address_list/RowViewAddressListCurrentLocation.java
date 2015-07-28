@@ -60,6 +60,7 @@ public class RowViewAddressListCurrentLocation {
             textAddressItemLocationZip.setVisibility(View.GONE);
             textAddressItemCurrentLocation.setVisibility(View.VISIBLE);
         } else {
+            textAddressItemLocationZip.setVisibility(View.VISIBLE);
             textAddressItemCurrentLocation.setVisibility(View.GONE);
         }
 
