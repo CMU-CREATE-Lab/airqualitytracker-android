@@ -6,7 +6,45 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity">
 
-    <TextView android:text="This is the Speck page (to be filled with content)" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" >
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The Speck Sensor (www.specksensor.com) is an air quality monitor that detects fine particulate matter in your indoor environment and informs you about trends and changes in particle concentration. At its core, Speck is about empowerment, enabling you to make informed decisions about how to improve your air quality. Data collected with Speck belongs to you, its user, and you have the power to decide how to apply that information and take action to breathe easier!"
+                android:id="@+id/textAboutSpeckLink1" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Many people are already using the Speck Sensors to monitor trends when using a vacuum, cleaning or dusting with different products, cooking, maintaining air conditioning systems, or testing air purification systems."
+                android:id="@+id/textView11" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coming soon! Login to your www.specksensor.com account."
+                android:id="@+id/textAboutSpeckLink2" />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

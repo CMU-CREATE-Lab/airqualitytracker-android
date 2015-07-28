@@ -6,7 +6,195 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity">
 
-    <TextView android:text="This is the about page (to be filled with content)" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" >
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Air Quality Index"
+                android:id="@+id/textView5"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The Air Quality Index (AQI) is a measure for reporting daily air quality based on how clean or polluted the air is in your community. A high AQI value is associated with a greater level of air pollution and increased health risks. AQI is based on five major pollutants - ozone, fine particulate matter, nitrogen dioxide, carbon monoxide, and sulphur dioxide. The two that pose the highest health risks are ozone and fine particulate matter.The EPA implemented the Clean Air Act to control air pollution, but millions of Americans live in areas that exceed government-established safety levels."
+                android:id="@+id/textView6" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"></FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="People with diabetes, lung disease, asthma, or heart disease are very sensitive to air pollution. A high AQI reading can make it harder to breathe or worsen chronic disease by irritating lungs and airways. Fine particles can lodge deep in the lungs and enter the bloodstream."
+                android:id="@+id/textView7" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Children are particularly susceptible to asthma because their lungs and defense systems are developing. Children breathe more rapidly than adults, and take in more air per pound, which exposes them to higher levels of fine particles or pollutants."
+                android:id="@+id/textView8" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:text="Help keep our air pollution laws strong by joining the @SpeckSensor conversation on Facebook and Twitter! You can also purchase your own indoor air quality monitor at http://www.specksensor.com."
+                android:id="@+id/textAboutAirqualityLink1" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="AQI Scale"
+                android:id="@+id/textView10"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    android:background="#a3ba5c"></FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    android:background="#e9b642" />
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    android:background="#e98c37" />
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    android:background="#e24f36" />
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    android:background="#b54382" />
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    android:background="#b22651" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:text="Each category corresponds to a different level of health concern. The six levels of health concern and what they mean are taken from AirNow's website: http://airnow.gov"
+                android:id="@+id/textAboutAirqualityLink2" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Good AQI is 0 - 50. Air quality is considered satisfactory, and air pollution poses little or no risk."
+                android:id="@+id/textView12" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moderate AQI is 51 - 100. Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people. For example, people who are unusually sensitive to ozone may experience respiratory symptoms."
+                android:id="@+id/textView13" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unhealthy for Sensitive Groups AQI is 101 - 150. Although general public is not likely to be affected at this AQI range, people with lung disease, older adults and children are at a greater risk from exposure to ozone, whereas persons with heart and lung disease, older adults and children are at greater risk from the presence of particles in the air."
+                android:id="@+id/textView14" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unhealthy AQI is 151 - 200. Everyone may begin to experience some adverse health effects, and members of the sensitive groups may experience more serious effects."
+                android:id="@+id/textView15" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Very Unhealthy AQI is 201 - 300. This would trigger a health alert signifying that everyone may experience more serious health effects."
+                android:id="@+id/textView16" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hazardous AQI is greater than 300. This would trigger a health warning of emergency conditions. The entire population is more likely to be affected."
+                android:id="@+id/textView17" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

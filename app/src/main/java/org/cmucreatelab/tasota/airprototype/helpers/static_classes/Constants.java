@@ -72,7 +72,7 @@ public final class Constants {
                         "sensitive groups may experience more serious effects.",
                 "This would trigger a health alert signifying that everyone may experience more " +
                         "serious health effects.",
-                "This would trigger a health warnings of emergency conditions. The entire " +
+                "This would trigger a health warning of emergency conditions. The entire " +
                         "population is more likely to be affected."
         };
         public static final String[] titles = {
