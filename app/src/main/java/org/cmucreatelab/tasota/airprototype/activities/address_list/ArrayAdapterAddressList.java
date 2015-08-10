@@ -2,7 +2,6 @@ package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
 
     public ArrayAdapterAddressList(AddressListActivity context, ArrayList<SimpleAddress> values) {
-        super(context, R.layout.address_item_currentlocation, values);
+        super(context, R.layout.address_item, values);
         this.context = context;
         this.values = values;
         setupListView();
@@ -48,11 +47,11 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = (inflater.inflate(R.layout.address_item_currentlocation, parent, false));
+            rowView = (inflater.inflate(R.layout.address_item, parent, false));
         } else {
             rowView = convertView;
         }
-        new RowViewAddressListCurrentLocation(this.context,values.get(position),rowView).populateRowView();
+        new RowViewAddressList(this.context,values.get(position),rowView).populateRowView();
         return rowView;
     }
 

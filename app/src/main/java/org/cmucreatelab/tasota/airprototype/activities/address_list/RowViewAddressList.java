@@ -15,7 +15,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 /**
  * Created by mike on 6/15/15.
  */
-public class RowViewAddressListCurrentLocation {
+public class RowViewAddressList {
 
     private final AddressListActivity context;
     private SimpleAddress address;
@@ -30,7 +30,7 @@ public class RowViewAddressListCurrentLocation {
     private boolean isCurrentLocation;
 
 
-    public RowViewAddressListCurrentLocation(AddressListActivity context, SimpleAddress address, View rowView) {
+    public RowViewAddressList(AddressListActivity context, SimpleAddress address, View rowView) {
         this.context = context;
         this.address = address;
         this.rowView = rowView;
