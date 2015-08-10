@@ -41,8 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:id="@+id/textAddressItemIcon"
-                        android:layout_gravity="left|top"
-                        android:src="@drawable/block1" />
+                        android:layout_gravity="left|top" />
                 </FrameLayout>
 
                 <TextView

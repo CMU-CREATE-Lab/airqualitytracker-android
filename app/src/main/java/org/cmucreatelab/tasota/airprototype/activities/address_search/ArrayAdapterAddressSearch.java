@@ -28,7 +28,7 @@ public class ArrayAdapterAddressSearch extends ArrayAdapter<Address>
 
 
     public ArrayAdapterAddressSearch(AddressSearchActivity context) {
-        super(context, R.layout.address_item, new ArrayList<Address>());
+        super(context, R.layout.address_search_item, new ArrayList<Address>());
         this.context = context;
         setupListView();
     }

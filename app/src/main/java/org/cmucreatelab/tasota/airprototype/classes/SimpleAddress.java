@@ -6,15 +6,11 @@ package org.cmucreatelab.tasota.airprototype.classes;
  */
 public class SimpleAddress {
 
-    public enum IconType {
-        GPS, SPECK, DEFAULT
-    }
     private long _id;
     private String name;
     private String zipcode;
     private double latitude,longitude;
     private Feed closestFeed = null;
-    private IconType iconType;
     private boolean isCurrentLocation;
 
     public long get_id() {
@@ -50,12 +46,6 @@ public class SimpleAddress {
     public void setClosestFeed(Feed closestFeed) {
         this.closestFeed = closestFeed;
     }
-    public IconType getIconType() {
-        return iconType;
-    }
-    public void setIconType(IconType iconType) {
-        this.iconType = iconType;
-    }
     public String getZipcode() {
         return zipcode;
     }
@@ -69,7 +59,6 @@ public class SimpleAddress {
         this.zipcode = zipcode;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.iconType = IconType.DEFAULT;
         this.isCurrentLocation = false;
     }
 
