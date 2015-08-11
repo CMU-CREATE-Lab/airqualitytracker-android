@@ -48,7 +48,7 @@ public class AddressShowActivity extends ActionBarActivity {
 
         super.onCreate(savedInstanceState);
         Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
-        setContentView(R.layout.activity_address_show_nofeeds);
+        setContentView(R.layout.__address_show__activity);
 
         intent = getIntent();
         addressIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
@@ -61,7 +61,7 @@ public class AddressShowActivity extends ActionBarActivity {
         }
 
         // generate content (no feed list)
-        new LinearViewAddressShowNoFeeds(this,showSimpleAddress).populateLinearView();
+        new LinearViewAddressShow(this,showSimpleAddress).populateLinearView();
 
         // no longer list feeds (for now)
 //        ListView listView;

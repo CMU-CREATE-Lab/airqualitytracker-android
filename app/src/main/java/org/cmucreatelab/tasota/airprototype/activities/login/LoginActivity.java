@@ -49,12 +49,12 @@ public class LoginActivity extends ActionBarActivity
 
     public void display() {
         if (!loggedIn) {
-            setContentView(R.layout.activity_login);
+            setContentView(R.layout.__login__login_activity);
             editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
             editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
             findViewById(R.id.buttonLogin).setOnClickListener(this);
         } else {
-            setContentView(R.layout.activity_logout);
+            setContentView(R.layout.__login__logout_activity);
             textViewLogoutUsername = (TextView) findViewById(R.id.textViewLogoutUsername);
             listViewLoginFeeds = (ListView) findViewById(R.id.listViewLoginFeeds);
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());

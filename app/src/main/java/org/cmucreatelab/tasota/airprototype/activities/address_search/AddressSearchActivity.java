@@ -71,7 +71,7 @@ public class AddressSearchActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         EditText editText;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address_search);
+        setContentView(R.layout.__address_search__activity);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

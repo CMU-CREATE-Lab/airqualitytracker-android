@@ -38,7 +38,7 @@ public class AddressListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(Constants.LOG_TAG, "AddressListActivity onCreate");
-        setContentView(R.layout.activity_address_list);
+        setContentView(R.layout.__address_list__activity);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

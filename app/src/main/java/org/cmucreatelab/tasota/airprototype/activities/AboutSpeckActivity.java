@@ -22,7 +22,7 @@ public class AboutSpeckActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_speck);
+        setContentView(R.layout.__about__speck);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
