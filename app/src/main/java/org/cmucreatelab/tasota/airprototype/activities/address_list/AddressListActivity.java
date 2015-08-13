@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class AddressListActivity extends ActionBarActivity {
 
+    private static final String GRID_TAG = "tag_countries_fragment";
     public ArrayList<SimpleAddress> addresses;
     public ArrayAdapterAddressList listAdapter;
     public AlertDialogAddressListDelete dialogDelete;
@@ -48,11 +49,18 @@ public class AddressListActivity extends ActionBarActivity {
 
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
         addresses = globalHandler.requestAddressesForDisplay();
-        listAdapter = new ArrayAdapterAddressList(this, addresses);
-        globalHandler.listAdapter = this.listAdapter;
-        if (globalHandler.addressListNeedsUpdated) {
-            globalHandler.updateAddresses();
-            globalHandler.addressListNeedsUpdated = false;
+        // TODO use new adapter
+//        listAdapter = new ArrayAdapterAddressList(this, addresses);
+//        globalHandler.listAdapter = this.listAdapter;
+//        if (globalHandler.addressListNeedsUpdated) {
+//            globalHandler.updateAddresses();
+//            globalHandler.addressListNeedsUpdated = false;
+//        }
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.mycontainer, new StickyGridFragment(), GRID_TAG)
+                    .commit();
         }
     }
 

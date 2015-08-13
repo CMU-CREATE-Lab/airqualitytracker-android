@@ -8,14 +8,9 @@
     tools:context="org.cmucreatelab.tasota.airprototype.activities.address_list.AddressListActivity"
     android:background="#222">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewAddresses"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:divider="#fff"
-        android:dividerHeight="1dp"
-        android:drawSelectorOnTop="true" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mycontainer"></FrameLayout>
 
 </RelativeLayout>

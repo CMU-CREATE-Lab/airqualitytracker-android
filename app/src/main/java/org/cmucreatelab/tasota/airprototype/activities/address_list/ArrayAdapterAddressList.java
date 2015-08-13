@@ -25,11 +25,12 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
 
     private void setupListView() {
-        ListView listView = (ListView)context.findViewById(R.id.listViewAddresses);
-        listView.setAdapter(this);
-        listView.setLongClickable(true);
-        listView.setOnItemClickListener(this);
-        listView.setOnItemLongClickListener(this);
+        // TODO commenting out for now to test new view that will supersede this one anyways
+//        ListView listView = (ListView)context.findViewById(R.id.listViewAddresses);
+//        listView.setAdapter(this);
+//        listView.setLongClickable(true);
+//        listView.setOnItemClickListener(this);
+//        listView.setOnItemLongClickListener(this);
     }
 
 
