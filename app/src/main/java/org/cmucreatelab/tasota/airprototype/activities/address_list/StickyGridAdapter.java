@@ -38,6 +38,21 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         }
     }
 
+    // TODO delete (only meant to test dataset changing after creation)
+    public void test() {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(mContext);
+        ArrayList<SimpleAddress> addresses = globalHandler.requestAddressesForDisplay();
+        SimpleAddress simpleAddress = addresses.get(addresses.size()-1);
+        int sectionFirstPosition = mItems.get(mItems.size()-1).sectionFirstPosition;
+        // Test change of entire structure
+        ArrayList<LineItem> items = (ArrayList<LineItem>)mItems.clone();
+        mItems.clear();
+        mItems.addAll(items);
+        //
+        mItems.add(new LineItem(simpleAddress.getName(), false, sectionFirstPosition));
+        notifyDataSetChanged();
+    }
+
 
     public StickyGridAdapter(Context context, int headerMode, boolean marginsFixed) {
         mContext = context;
@@ -101,7 +116,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_box, parent, false);
         }
-        return new StickyGridViewHolder(view, viewType == VIEW_TYPE_HEADER);
+        return new StickyGridViewHolder(view, viewType == VIEW_TYPE_HEADER, this);
     }
 
 
