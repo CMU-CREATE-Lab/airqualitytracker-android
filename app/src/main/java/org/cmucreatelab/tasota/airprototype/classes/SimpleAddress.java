@@ -1,18 +1,33 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import android.util.Log;
+import com.android.volley.Response;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by mike on 6/1/15.
  */
-public class SimpleAddress {
+public class SimpleAddress implements Readable {
 
+    private static final Readable.Type readableType = Readable.Type.ADDRESS;
     private long _id;
     private String name;
     private String zipcode;
     private double latitude,longitude;
     private Feed closestFeed = null;
+    // TODO not yet implemented/used
+    public final ArrayList<Feed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
 
+    public Type getReadableType() {
+        return readableType;
+    }
     public long get_id() {
         return _id;
     }
@@ -66,6 +81,50 @@ public class SimpleAddress {
     public SimpleAddress(String name, String zipcode, double latitude, double longitude, boolean isCurrentLocation) {
         this(name, zipcode, latitude, longitude);
         this.isCurrentLocation = isCurrentLocation;
+    }
+
+
+    // TODO replace pullFeeds code with just updateFeeds (we don't need to return them in this fashion anymore)
+    public ArrayList<Feed> pullFeeds(final GlobalHandler globalHandler) {
+        updateFeeds(globalHandler);
+        return this.feeds;
+    }
+
+    public void updateFeeds(final GlobalHandler globalHandler) {
+//        final ArrayList<Feed> result = new ArrayList<>();
+        this.feeds.clear();
+        // the past 24 hours
+        final double maxTime = new Date().getTime() / 1000.0 - 86400;
+
+        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Feed closestFeed;
+
+                JsonParser.populateFeedsFromJson(feeds, response, maxTime);
+                if (feeds.size() > 0) {
+                    closestFeed = MapGeometry.getClosestFeedToAddress(SimpleAddress.this, feeds);
+                    if (closestFeed != null) {
+                        SimpleAddress.this.setClosestFeed(closestFeed);
+                        // ASSERT all channels in the list of channels are usable readings
+                        // TODO we use the first channel listed; handle when we do not have all channels as PM25
+                        globalHandler.httpRequestHandler.requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
+                        globalHandler.notifyGlobalDataSetChanged();
+                    }
+                } else {
+                    Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
+                }
+            }
+        };
+        globalHandler.httpRequestHandler.requestFeeds(this.latitude, this.longitude, maxTime, response);
+
+//        return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 
 }

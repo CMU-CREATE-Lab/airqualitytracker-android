@@ -25,6 +25,7 @@ public class GlobalHandler {
     public ServicesHandler servicesHandler;
     // data structure
     public AddressFeedsHashMap addressFeedsHashMap;
+    public HeaderReadingsHashMap headerReadingsHashMap;
     // lists used for ListViews and their adapters
     public final ArrayList<SimpleAddress> addressList = new ArrayList<>(); // used by AddressListActivity and should only be instantiated once.
     public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
@@ -46,12 +47,13 @@ public class GlobalHandler {
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         // data structures
         this.addressFeedsHashMap = new AddressFeedsHashMap(this);
+        this.headerReadingsHashMap = new HeaderReadingsHashMap(this);
         if (Constants.USES_BACKGROUND_SERVICES)
             servicesHandler.initializeBackgroundServices();
     }
 
 
-    protected void notifyGlobalDataSetChanged() {
+    public void notifyGlobalDataSetChanged() {
         // TODO this function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
         if (this.listAdapter != null) {
             this.listAdapter.notifyDataSetChanged();

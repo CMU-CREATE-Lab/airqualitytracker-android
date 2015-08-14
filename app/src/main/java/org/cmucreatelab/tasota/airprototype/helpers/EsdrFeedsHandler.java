@@ -91,7 +91,7 @@ public class EsdrFeedsHandler {
                             .getJSONObject("mostRecentDataSample")
                             .getString("timeSecs");
                 } catch (Exception e) {
-                    Log.w(Constants.LOG_TAG, "Failed to request Channel Reading for " + channelName);
+                    Log.w(Constants.LOG_TAG, "Failed to request Channel Readable for " + channelName);
                     e.printStackTrace();
                 }
                 if (resultValue != null && resultTime != null) {

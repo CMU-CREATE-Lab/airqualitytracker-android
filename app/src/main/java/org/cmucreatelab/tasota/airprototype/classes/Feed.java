@@ -9,20 +9,24 @@ import java.util.ArrayList;
  */
 public class Feed {
 
+    private static final Readable.Type readableType = Readable.Type.FEED;
     // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
-    private long feed_id;
-    private String name;
+    protected long feed_id;
+    protected String name;
     // (FROM DOCS): an enum and must be one of indoor, outdoor, or virtual
-    private String exposure;
-    private boolean isMobile;
-    private double latitude;
-    private double longitude;
-    private long productId;
-    private ArrayList<Channel> channels;
+    protected String exposure;
+    protected boolean isMobile;
+    protected double latitude;
+    protected double longitude;
+    protected long productId;
+    protected ArrayList<Channel> channels;
     // The relevant value (PM2.5) pulled for the given Feed
-    private double feedValue;
-    private double lastTime;
+    protected double feedValue;
+    protected double lastTime;
 
+    public Readable.Type getReadableType() {
+        return readableType;
+    }
     public long getProductId() {
         return productId;
     }
