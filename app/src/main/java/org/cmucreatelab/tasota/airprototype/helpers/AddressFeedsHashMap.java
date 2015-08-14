@@ -3,6 +3,8 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 import android.location.Location;
 import android.util.Log;
 import com.android.volley.Response;
+
+import org.cmucreatelab.tasota.airprototype.classes.Device;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
@@ -24,6 +26,7 @@ public class AddressFeedsHashMap {
     // this ArrayList ensures an ordered list of addresses
     // (required to react to AddressListActivity events and displaying on AddressShowActivity)
     protected ArrayList<SimpleAddress> addresses;
+    protected ArrayList<Device> devices; // TODO store devices
     protected HashMap<SimpleAddress,ArrayList<Feed>> hashMap;
     public SimpleAddress getGpsAddress() {
         return gpsAddress;

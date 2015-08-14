@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.tonicartos.superslim.GridSLM;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -41,21 +45,50 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         mMarginsFixed = marginsFixed;
         mItems = new ArrayList<>();
 
-        final String[] countryNames = context.getResources().getStringArray(R.array.country_names);
-        String lastHeader = "";
+        GlobalHandler globalHandler = GlobalHandler.getInstance(context);
+        ArrayList<SimpleAddress> addresses = globalHandler.requestAddressesForDisplay();
+//        ArrayList<SimpleAddress> devices;
+
         int headerCount = 0;
         int sectionFirstPosition = 0;
-        for (int i = 0; i < countryNames.length; i++) {
-            String header = countryNames[i].substring(0, 1);
-            if (!TextUtils.equals(lastHeader, header)) {
-                // Insert new header view
-                sectionFirstPosition = i + headerCount;
-                lastHeader = header;
-                headerCount += 1;
-                mItems.add(new LineItem(header, true, sectionFirstPosition));
-            }
-            mItems.add(new LineItem(countryNames[i], false, sectionFirstPosition));
+        int position = 0;
+        // header 1
+        // Insert new header view
+//        sectionFirstPosition = headerCount + position;
+        headerCount += 1;
+        mItems.add(new LineItem("SPECK DEVICES", true, sectionFirstPosition));
+        // grid cells
+        // TODO use real devices object
+        for (SimpleAddress simpleAddress : addresses) {
+            position += 1;
+            mItems.add(new LineItem(simpleAddress.getName(), false, sectionFirstPosition));
         }
+        // header 2
+        // Insert new header view
+        sectionFirstPosition = headerCount + position;
+        headerCount += 1;
+        mItems.add(new LineItem("CITIES", true, sectionFirstPosition));
+        // grid cells
+        for (SimpleAddress simpleAddress : addresses) {
+            position += 1;
+            mItems.add(new LineItem(simpleAddress.getName(), false, sectionFirstPosition));
+        }
+
+//        final String[] countryNames = context.getResources().getStringArray(R.array.country_names);
+//        String lastHeader = "";
+//        int headerCount = 0;
+//        int sectionFirstPosition = 0;
+//        for (int i = 0; i < countryNames.length; i++) {
+//            String header = countryNames[i].substring(0, 1);
+//            if (!TextUtils.equals(lastHeader, header)) {
+//                // Insert new header view
+//                sectionFirstPosition = i + headerCount;
+//                lastHeader = header;
+//                headerCount += 1;
+//                mItems.add(new LineItem(header, true, sectionFirstPosition));
+//            }
+//            mItems.add(new LineItem(countryNames[i], false, sectionFirstPosition));
+//        }
     }
 
 
