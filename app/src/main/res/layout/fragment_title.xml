@@ -4,25 +4,24 @@
     app:slm_headerDisplay="inline|sticky"
     app:slm_isHeader="true"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="50dp"
+    android:background="#555">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/boxFrame"
-        android:background="#2a2a2a">
+        android:layout_alignParentStart="true" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textViewHeader"
+            android:text="TITLE"
+            android:id="@+id/textViewFragmentTitle"
             android:layout_gravity="left|center_vertical"
-            android:textStyle="bold"
-            android:textSize="24dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
             android:textColor="#fff" />
     </FrameLayout>
 </RelativeLayout>

@@ -24,7 +24,7 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder {
     public void bindItem(String text) {
         TextView mTextView;
         if (this.isHeader) {
-            mTextView = (TextView) view.findViewById(R.id.textViewHeader);
+            mTextView = (TextView) view.findViewById(R.id.textViewFragmentTitle);
         } else {
             mTextView = (TextView) view.findViewById(R.id.textView);
         }
