@@ -57,34 +57,12 @@ public class HeaderReadingsHashMap {
     
     
     public void populateAdapterList() {
-//        int headerCount = 0;
-//        int sectionFirstPosition = 0;
-//        int position = 0;
-//        // header 1
-//        // Insert new header view
-////        sectionFirstPosition = headerCount + position;
-//        headerCount += 1;
-//        adapterList.add(new StickyGridAdapter.LineItem("SPECK DEVICES", true, sectionFirstPosition));
-//        // grid cells
-//        // TODO use real specks object
-//        for (SimpleAddress simpleAddress : addresses) {
-//            position += 1;
-//            adapterList.add(new StickyGridAdapter.LineItem(simpleAddress.getName(), false, sectionFirstPosition));
-//        }
-//        // header 2
-//        // Insert new header view
-//        sectionFirstPosition = headerCount + position;
-//        headerCount += 1;
-//        adapterList.add(new StickyGridAdapter.LineItem("CITIES", true, sectionFirstPosition));
-//        // grid cells
-//        for (SimpleAddress simpleAddress : addresses) {
-//            position += 1;
-//            adapterList.add(new StickyGridAdapter.LineItem(simpleAddress.getName(), false, sectionFirstPosition));
-//        }
-
+        // Tracks the number of headers displayed
         int headerCount = 0;
-        int sectionFirstPosition = 0;
+        // Tracks current position in the list; used to label section headers and their contents
+        int sectionFirstPosition;
         int position = 0;
+
         for (String header : headers) {
             sectionFirstPosition = headerCount + position;
             headerCount += 1;

@@ -8,7 +8,7 @@ import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.activities.address_list.ArrayAdapterAddressList;
+import org.cmucreatelab.tasota.airprototype.activities.address_list.old_list_code.ArrayAdapterAddressList;
 import java.util.ArrayList;
 
 /**
