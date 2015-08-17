@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.tonicartos.superslim.GridSLM;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 import java.lang.reflect.Array;
@@ -31,18 +32,24 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         public int sectionFirstPosition;
         public boolean isHeader;
         public String text;
+        public Readable readable;
 
         public LineItem(String text, boolean isHeader, int sectionFirstPosition) {
             this.isHeader = isHeader;
             this.text = text;
             this.sectionFirstPosition = sectionFirstPosition;
         }
+
+        public LineItem(boolean isHeader, int sectionFirstPosition, Readable r) {
+            this("", isHeader, sectionFirstPosition);
+            this.readable = r;
+        }
     }
 
     // TODO delete (only meant to test dataset changing after creation)
     public void test() {
         GlobalHandler globalHandler = GlobalHandler.getInstance(mContext);
-        ArrayList<SimpleAddress> addresses = globalHandler.requestAddressesForDisplay();
+        ArrayList<SimpleAddress> addresses = globalHandler.headerReadingsHashMap.addresses;
         SimpleAddress simpleAddress = addresses.get(addresses.size()-1);
         int sectionFirstPosition = mItems.get(mItems.size()-1).sectionFirstPosition;
         // Test change of entire structure
@@ -50,7 +57,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         mItems.clear();
         mItems.addAll(items);
         //
-        mItems.add(new LineItem(simpleAddress.getName(), false, sectionFirstPosition));
+        mItems.add(new LineItem(false, sectionFirstPosition, simpleAddress));
         notifyDataSetChanged();
     }
 
@@ -62,6 +69,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
 //        mItems = new ArrayList<>();
 
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
+        globalHandler.gridAdapter = this;
         mItems = globalHandler.headerReadingsHashMap.adapterList;
 //        ArrayList<SimpleAddress> addresses = globalHandler.requestAddressesForDisplay();
 ////        ArrayList<SimpleAddress> specks;
@@ -128,7 +136,12 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         final View itemView = holder.itemView;
 
         // bind view with LineItem (populates info at this point)
-        holder.bindItem(item.text);
+//        holder.bindItem(item.text);
+        if (item.isHeader) {
+            holder.bindHeader(item.text);
+        } else {
+            holder.bindItem(item.readable);
+        }
 
         final GridSLM.LayoutParams lp = GridSLM.LayoutParams.from(itemView.getLayoutParams());
 //        // Overrides xml attrs, could use different layouts too.

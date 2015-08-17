@@ -68,8 +68,9 @@ public class ArrayAdapterAddressList extends ArrayAdapter<SimpleAddress>
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        SimpleAddress simpleAddress = context.addresses.get(i);
-        context.openDialogDelete(simpleAddress);
+        // TODO address to be deleted
+//        SimpleAddress simpleAddress = context.addresses.get(i);
+//        context.openDialogDelete(simpleAddress);
         return true;
     }
 

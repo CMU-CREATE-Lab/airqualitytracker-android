@@ -5,6 +5,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
+
+import org.cmucreatelab.tasota.airprototype.activities.address_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -24,10 +26,10 @@ public class GlobalHandler {
     public SettingsHandler settingsHandler;
     public ServicesHandler servicesHandler;
     // data structure
-    public AddressFeedsHashMap addressFeedsHashMap;
+//    public AddressFeedsHashMap addressFeedsHashMap;
     public HeaderReadingsHashMap headerReadingsHashMap;
     // lists used for ListViews and their adapters
-    public final ArrayList<SimpleAddress> addressList = new ArrayList<>(); // used by AddressListActivity and should only be instantiated once.
+//    public final ArrayList<SimpleAddress> addressList = new ArrayList<>(); // used by AddressListActivity and should only be instantiated once.
     public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
     // TODO create logic for controlling when update needs to occur
     // a flag stating whether the views need to update addresses
@@ -35,6 +37,7 @@ public class GlobalHandler {
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public ArrayAdapterAddressList listAdapter;
+    public StickyGridAdapter gridAdapter;
 
 
     // Nobody accesses the constructor
@@ -46,7 +49,7 @@ public class GlobalHandler {
         this.httpRequestHandler = HttpRequestHandler.getInstance(this);
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         // data structures
-        this.addressFeedsHashMap = new AddressFeedsHashMap(this);
+//        this.addressFeedsHashMap = new AddressFeedsHashMap(this);
         this.headerReadingsHashMap = new HeaderReadingsHashMap(this);
         if (Constants.USES_BACKGROUND_SERVICES)
             servicesHandler.initializeBackgroundServices();
@@ -58,11 +61,15 @@ public class GlobalHandler {
         if (this.listAdapter != null) {
             this.listAdapter.notifyDataSetChanged();
         }
+        if (this.gridAdapter != null) {
+            this.gridAdapter.notifyDataSetChanged();
+        }
     }
 
 
     public void updateAddresses() {
-        addressFeedsHashMap.updateAddresses();
+//        addressFeedsHashMap.updateAddresses();
+        headerReadingsHashMap.updateAddresses();
         if (settingsHandler.appUsesLocation()) {
             if (googleApiClientHandler.googleApiClient.isConnected()) {
                 updateLastLocation();
@@ -80,7 +87,8 @@ public class GlobalHandler {
         } else {
             Log.d(Constants.LOG_TAG, "getLastLocation returned: " + lastLocation.toString());
 
-            this.addressFeedsHashMap.setGpsAddressLocation(lastLocation);
+//            this.addressFeedsHashMap.setGpsAddressLocation(lastLocation);
+            this.headerReadingsHashMap.setGpsAddressLocation(lastLocation);
             this.notifyGlobalDataSetChanged();
             if (Geocoder.isPresent()) {
                 servicesHandler.startFetchAddressIntentService(lastLocation);
@@ -91,21 +99,24 @@ public class GlobalHandler {
     }
 
 
-    public ArrayList<SimpleAddress> requestAddressesForDisplay() {
-        addressList.clear();
-
-        if (settingsHandler.appUsesLocation()) {
-            addressList.add(addressFeedsHashMap.gpsAddress);
-        }
-        addressList.addAll(addressFeedsHashMap.addresses);
-
-        return addressList;
-    }
+//    public ArrayList<SimpleAddress> requestAddressesForDisplay() {
+//        addressList.clear();
+//
+//        if (settingsHandler.appUsesLocation()) {
+////            addressList.add(addressFeedsHashMap.gpsAddress);
+//            addressList.add(headerReadingsHashMap.gpsAddress);
+//        }
+////        addressList.addAll(addressFeedsHashMap.addresses);
+//        addressList.addAll(headerReadingsHashMap.addresses);
+//
+//        return addressList;
+//    }
 
 
     public void updateSettings() {
         this.settingsHandler.updateSettings();
-        requestAddressesForDisplay();
+//        requestAddressesForDisplay();
+        headerReadingsHashMap.refreshHash();
         this.notifyGlobalDataSetChanged();
     }
 

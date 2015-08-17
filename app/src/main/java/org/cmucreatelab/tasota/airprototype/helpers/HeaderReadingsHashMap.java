@@ -22,9 +22,9 @@ public class HeaderReadingsHashMap {
     };
 
     private GlobalHandler globalHandler;
-    private SimpleAddress gpsAddress; // also listed in addresses
+    public SimpleAddress gpsAddress; // also listed in addresses
     // using ArrayList ensures an ordered list
-    private final ArrayList<SimpleAddress> addresses;
+    public final ArrayList<SimpleAddress> addresses;
     private final ArrayList<Speck> specks;
     // section headers for the table; also should match the the hashmap keys
     private final ArrayList<String> headers;
@@ -47,11 +47,7 @@ public class HeaderReadingsHashMap {
         addresses.addAll(dbAddresses);
         // TODO populate specks
 
-        // construct hashmap
-        Collections.addAll(headers, HEADER_TITLES);
-        // TODO use specks instead of addresses
-        this.hashMap.put(HEADER_TITLES[0], addresses);
-        this.hashMap.put(HEADER_TITLES[1], addresses);
+        refreshHash();
         populateAdapterList();
     }
     
@@ -70,7 +66,7 @@ public class HeaderReadingsHashMap {
             // grid cells
             for (Readable r : (ArrayList<Readable>)hashMap.get(header)) {
                 position += 1;
-                adapterList.add(new StickyGridAdapter.LineItem(r.toString(), false, sectionFirstPosition));
+                adapterList.add(new StickyGridAdapter.LineItem(false, sectionFirstPosition, r));
             }
         }
     }
@@ -107,7 +103,7 @@ public class HeaderReadingsHashMap {
                 this.addresses.remove((SimpleAddress) readable);
                 break;
             case SPECK:
-                this.specks.remove((Speck)readable);
+                this.specks.remove((Speck) readable);
                 break;
             default:
                 Log.e(Constants.LOG_TAG, "WARNING tried to add Readable of unknown Type in HeaderReadingsHashMap ");
@@ -118,6 +114,24 @@ public class HeaderReadingsHashMap {
     public void updateAddresses() {
         for (SimpleAddress address : this.addresses) {
             address.updateFeeds(globalHandler);
+        }
+    }
+
+
+    public void refreshHash() {
+        this.hashMap.clear();
+
+        // construct hashmap
+        Collections.addAll(headers, HEADER_TITLES);
+        // TODO use specks instead of addresses
+        this.hashMap.put(HEADER_TITLES[0], addresses);
+        if (globalHandler.settingsHandler.appUsesLocation()) {
+            final ArrayList<Readable> tempAddresses = new ArrayList<>();
+            tempAddresses.add(this.gpsAddress);
+            tempAddresses.addAll(this.addresses);
+            this.hashMap.put(HEADER_TITLES[1], tempAddresses);
+        } else {
+            this.hashMap.put(HEADER_TITLES[1], addresses);
         }
     }
 

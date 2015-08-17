@@ -21,13 +21,13 @@ import java.util.ArrayList;
 public class AddressListActivity extends ActionBarActivity {
 
     private static final String GRID_TAG = "tag_countries_fragment";
-    public ArrayList<SimpleAddress> addresses;
+//    public ArrayList<SimpleAddress> addresses;
     public ArrayAdapterAddressList listAdapter;
     public AlertDialogAddressListDelete dialogDelete;
 
 
     public void openDialogDelete(final SimpleAddress simpleAddress) {
-        if (simpleAddress == GlobalHandler.getInstance(this.getApplicationContext()).addressFeedsHashMap.getGpsAddress()) {
+        if (simpleAddress == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
             dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
@@ -49,7 +49,7 @@ public class AddressListActivity extends ActionBarActivity {
         }
 
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
-        addresses = globalHandler.requestAddressesForDisplay();
+//        addresses = globalHandler.requestAddressesForDisplay();
         // TODO use new adapter
 //        listAdapter = new ArrayAdapterAddressList(this, addresses);
 //        globalHandler.listAdapter = this.listAdapter;
@@ -57,6 +57,7 @@ public class AddressListActivity extends ActionBarActivity {
 //            globalHandler.updateAddresses();
 //            globalHandler.addressListNeedsUpdated = false;
 //        }
+        globalHandler.updateAddresses();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -72,7 +73,8 @@ public class AddressListActivity extends ActionBarActivity {
         Log.v(Constants.LOG_TAG, "AddressListActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("dialogDelete")) {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
-            openDialogDelete(addresses.get(index));
+            // TODO address to be deleted (save)
+//            openDialogDelete(addresses.get(index));
         }
     }
 
@@ -82,7 +84,8 @@ public class AddressListActivity extends ActionBarActivity {
         super.onSaveInstanceState(outState);
         if (dialogDelete != null && dialogDelete.getAlertDialog().isShowing()) {
             outState.putBoolean("dialogDelete", true);
-            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getAddressToBeDeleted()));
+            // TODO address to be deleted (save)
+//            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getAddressToBeDeleted()));
             dialogDelete.getAlertDialog().dismiss();
         }
     }

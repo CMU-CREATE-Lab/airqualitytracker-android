@@ -62,7 +62,8 @@ public class AddressSearchActivity extends ActionBarActivity
         Log.d(Constants.LOG_TAG,"AddressSearchActivity returning with latd="+latd+", longd="+longd+" using name="+name+" and zipcode="+zipcode);
         result = AddressDbHelper.createAddressInDatabase(this, name, zipcode, latd, longd);
         GlobalHandler globalHandler = GlobalHandler.getInstance(this);
-        globalHandler.addressFeedsHashMap.addAddress(result);
+//        globalHandler.addressFeedsHashMap.addAddress(result);
+        globalHandler.headerReadingsHashMap.addReading(result);
         finish();
     }
 

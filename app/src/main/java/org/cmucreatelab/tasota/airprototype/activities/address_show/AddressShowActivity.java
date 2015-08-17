@@ -52,7 +52,9 @@ public class AddressShowActivity extends ActionBarActivity {
 
         intent = getIntent();
         addressIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
-        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);
+        // TODO get proper address
+//        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);
+        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

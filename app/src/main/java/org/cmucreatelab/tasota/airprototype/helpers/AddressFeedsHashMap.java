@@ -58,14 +58,14 @@ public class AddressFeedsHashMap {
     public void removeAddress(SimpleAddress simpleAddress) {
         this.hashMap.remove(simpleAddress);
         addresses.remove(simpleAddress);
-        globalHandler.requestAddressesForDisplay();
+//        globalHandler.requestAddressesForDisplay();
     }
 
 
     public void addAddress(SimpleAddress simpleAddress) {
         ArrayList<Feed> feed = simpleAddress.pullFeeds(globalHandler);
         this.put(simpleAddress, feed);
-        globalHandler.requestAddressesForDisplay();
+//        globalHandler.requestAddressesForDisplay();
     }
 
 

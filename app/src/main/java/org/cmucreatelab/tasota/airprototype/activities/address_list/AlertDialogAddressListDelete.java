@@ -29,7 +29,7 @@ public class AlertDialogAddressListDelete {
             this.setMessage("Remove this Address from your list?");
             this.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    GlobalHandler.getInstance(ctx).addressFeedsHashMap.removeAddress(simpleAddress);
+                    GlobalHandler.getInstance(ctx).headerReadingsHashMap.removeReading(simpleAddress);
                     AddressDbHelper.destroy(simpleAddress, ctx);
                     activityContext.listAdapter.notifyDataSetChanged();
                 }
