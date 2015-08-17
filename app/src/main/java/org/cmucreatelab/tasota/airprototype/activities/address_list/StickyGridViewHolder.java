@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,15 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
         this.isHeader = isHeader;
         this.view = view;
         this.adapter = adapter;
+
+        if (!isHeader) {
+            TextView textView = (TextView) view.findViewById(R.id.textAddressItemLocationValue);
+            Typeface fontAqi = Typeface.createFromAsset(view.getContext().getAssets(), "fonts/Dosis-Light.ttf");
+            textView.setTypeface(fontAqi);
+
+            view.findViewById(R.id.frameAddressItemWeatherValue).setVisibility(View.GONE);;
+            view.findViewById(R.id.frameAddressItemWeatherIcon).setVisibility(View.GONE);;
+        }
     }
 
     public void bindItem(String text) {
@@ -33,7 +43,7 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
 //            view.setOnClickListener(this);
 //            view.setOnLongClickListener(this);
         } else {
-            mTextView = (TextView) view.findViewById(R.id.textView);
+            mTextView = (TextView) view.findViewById(R.id.textAddressItemLocationName);
             view.setLongClickable(true);
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
@@ -45,7 +55,11 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
 
     @Override
     public void onClick(View view) {
-        Log.i(Constants.LOG_TAG, "CLICK HANDLER: " + ((TextView)view.findViewById(R.id.textView)).getText() );
+        if (!isHeader) {
+            Log.i(Constants.LOG_TAG, "CLICK HANDLER: " + ((TextView) view.findViewById(R.id.textAddressItemLocationName)).getText());
+        } else {
+            Log.i(Constants.LOG_TAG, "CLICK HANDLER (header)");
+        }
     }
 
 

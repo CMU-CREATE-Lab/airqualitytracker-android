@@ -116,7 +116,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         if (viewType == VIEW_TYPE_HEADER) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_title, parent, false);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_box, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__address_list__grid_item_address, parent, false);
         }
         return new StickyGridViewHolder(view, viewType == VIEW_TYPE_HEADER, this);
     }

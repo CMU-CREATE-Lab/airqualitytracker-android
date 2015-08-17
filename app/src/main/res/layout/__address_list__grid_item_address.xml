@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="180dp"
+    android:background="#000"
+    android:padding="1px">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBackground"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#3a3a3a">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#ff0000"
+                    android:id="@+id/frameAddressItemWeatherValue"
+                    android:layout_margin="5dp" />
+
+                <FrameLayout
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00ff00"
+                    android:id="@+id/frameAddressItemWeatherIcon"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:padding="5dp">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="99"
+                    android:id="@+id/textAddressItemLocationValue"
+                    android:layout_gravity="right|top"
+                    android:textStyle="bold"
+                    android:textSize="80sp"
+                    android:textColor="#fff"
+                    android:singleLine="true"
+                    android:layout_marginTop="-10dp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AQI"
+                    android:id="@+id/textAddressAqiLabel"
+                    android:layout_gravity="left|top"
+                    android:textSize="14dp"
+                    android:layout_margin="5dp"
+                    android:textColor="#fff" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="New Text"
+                android:id="@+id/textAddressItemLocationName"
+                android:gravity="center_vertical"
+                android:textSize="16dp"
+                android:singleLine="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>
