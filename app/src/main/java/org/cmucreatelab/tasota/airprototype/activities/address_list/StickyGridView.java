@@ -86,7 +86,6 @@ class StickyGridView extends RecyclerView.ViewHolder
                     textAddressItemLocationValue.setText("N/A");
                 } else {
                     double label = Converter.microgramsToAqi(simpleAddress.getClosestFeed().getFeedValue());
-                    // TODO looks like we are showing whole numbers?
                     textAddressItemLocationValue.setText(String.valueOf((int)label));
                 }
 

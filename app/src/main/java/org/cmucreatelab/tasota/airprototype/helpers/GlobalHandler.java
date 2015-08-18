@@ -49,8 +49,10 @@ public class GlobalHandler {
     }
 
 
+    /*
+     * This function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
+     */
     public void notifyGlobalDataSetChanged() {
-        // TODO this function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
         if (this.gridAdapter != null) {
             this.gridAdapter.notifyDataSetChanged();
         }

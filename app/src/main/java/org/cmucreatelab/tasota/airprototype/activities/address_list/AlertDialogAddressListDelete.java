@@ -32,7 +32,6 @@ public class AlertDialogAddressListDelete {
             this.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     GlobalHandler.getInstance(ctx).headerReadingsHashMap.removeReading(lineItem.readable);
-                    // TODO find type (and do actions if speck)
                     switch (lineItem.readable.getReadableType()) {
                         case SPECK:
                             // TODO speck delete

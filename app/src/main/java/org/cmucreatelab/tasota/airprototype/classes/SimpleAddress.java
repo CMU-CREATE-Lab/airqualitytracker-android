@@ -21,7 +21,6 @@ public class SimpleAddress implements Readable {
     private String zipcode;
     private double latitude,longitude;
     private Feed closestFeed = null;
-    // TODO not yet implemented/used
     public final ArrayList<Feed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
 
@@ -113,12 +112,6 @@ public class SimpleAddress implements Readable {
             }
         };
         globalHandler.httpRequestHandler.requestFeeds(this.latitude, this.longitude, maxTime, response);
-    }
-
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 
 }
