@@ -32,6 +32,8 @@ public class HeaderReadingsHashMap {
     protected HashMap<String,ArrayList> hashMap;
     // this is the data structure used by StickyGridAdapter
     public final ArrayList<StickyGridAdapter.LineItem> adapterList = new ArrayList<>();
+    // stores a Reading temporarily to be restored on AddressListActivity (presumably the delete dialog)
+    public Readable tempReading;
 
 
     public HeaderReadingsHashMap(GlobalHandler globalHandler) {

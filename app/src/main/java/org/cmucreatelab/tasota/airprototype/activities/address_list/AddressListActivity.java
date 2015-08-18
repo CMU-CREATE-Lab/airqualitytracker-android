@@ -29,7 +29,9 @@ public class AddressListActivity extends ActionBarActivity {
 
 
     public void openDialogDelete(final Readable readable) {
-        if (readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
+        if (readable == null) {
+            Log.e(Constants.LOG_TAG, "Tried deleting null Reading.");
+        } else if (readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
             dialogDelete = new AlertDialogAddressListDelete(this, readable);
@@ -78,6 +80,7 @@ public class AddressListActivity extends ActionBarActivity {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
             // TODO address to be deleted (save)
 //            openDialogDelete(addresses.get(index));
+            openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.tempReading);
         }
     }
 
@@ -89,6 +92,7 @@ public class AddressListActivity extends ActionBarActivity {
             outState.putBoolean("dialogDelete", true);
             // TODO address to be deleted (save)
 //            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getReadingToBeDeleted()));
+            GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.tempReading = dialogDelete.getReadingToBeDeleted();
             dialogDelete.getAlertDialog().dismiss();
         }
     }
