@@ -38,7 +38,7 @@ public class StickyGridFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        return inflater.inflate(R.layout.__address_list__stickygrid_fragment, container, false);
     }
 
 

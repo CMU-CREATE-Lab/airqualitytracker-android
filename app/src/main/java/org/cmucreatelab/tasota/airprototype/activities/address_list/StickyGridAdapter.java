@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Class is based on example code from SuperSLiM's github repo: https://github.com/TonicArtos/SuperSLiM
  */
-public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder> {
+public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
 
     private static final int VIEW_TYPE_HEADER = 0x09;
     private static final int VIEW_TYPE_CONTENT = 0x00;
@@ -53,20 +53,20 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
 
 
     @Override
-    public StickyGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StickyGridView onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
         if (viewType == VIEW_TYPE_HEADER) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_title, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__address_list__stickygrid_header, parent, false);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__address_list__grid_item_address, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__address_list__stickygrid_item, parent, false);
         }
-        return new StickyGridViewHolder(view, viewType == VIEW_TYPE_HEADER, this.mContext);
+        return new StickyGridView(view, viewType == VIEW_TYPE_HEADER, this.mContext);
     }
 
 
     @Override
-    public void onBindViewHolder(StickyGridViewHolder holder, int position) {
+    public void onBindViewHolder(StickyGridView holder, int position) {
         final LineItem item = mItems.get(position);
         final View itemView = holder.itemView;
 

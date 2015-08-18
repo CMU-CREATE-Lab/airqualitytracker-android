@@ -19,7 +19,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 /**
  * Class is based on example code from SuperSLiM's github repo: https://github.com/TonicArtos/SuperSLiM
  */
-class StickyGridViewHolder extends RecyclerView.ViewHolder
+class StickyGridView extends RecyclerView.ViewHolder
         implements View.OnClickListener,View.OnLongClickListener {
 
     private View view;
@@ -27,7 +27,7 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
     private AddressListActivity context;
     private StickyGridAdapter.LineItem lineItem;
 
-    StickyGridViewHolder(View view, boolean isHeader, AddressListActivity context) {
+    StickyGridView(View view, boolean isHeader, AddressListActivity context) {
         super(view);
         this.isHeader = isHeader;
         this.view = view;
