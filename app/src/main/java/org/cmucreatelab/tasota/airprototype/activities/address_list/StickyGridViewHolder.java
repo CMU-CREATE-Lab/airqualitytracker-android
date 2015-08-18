@@ -3,7 +3,6 @@ package org.cmucreatelab.tasota.airprototype.activities.address_list;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -25,9 +24,7 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
 
     private View view;
     private boolean isHeader;
-//    private StickyGridAdapter adapter;
     private AddressListActivity context;
-//    private Readable readable;
     private StickyGridAdapter.LineItem lineItem;
 
     StickyGridViewHolder(View view, boolean isHeader, AddressListActivity context) {
@@ -134,12 +131,11 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
 
     @Override
     public boolean onLongClick(View view) {
-//        GlobalHandler.getInstance(context).gridAdapter.test();
         if (!isHeader) {
-            Log.i(Constants.LOG_TAG, "LONG-CLICK HANDLER");
+            Log.i(Constants.LOG_TAG, "long-click on grid item");
             context.openDialogDelete(this.lineItem);
         } else {
-            Log.i(Constants.LOG_TAG, "Header long-click does nothing");
+            Log.i(Constants.LOG_TAG, "long-click (header) does nothing");
         }
         return true;
     }

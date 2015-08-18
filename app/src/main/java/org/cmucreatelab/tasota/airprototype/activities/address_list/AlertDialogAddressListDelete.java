@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.*;
-import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
@@ -16,7 +14,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.Addr
  */
 public class AlertDialogAddressListDelete {
 
-//    private Readable readingToBeDeleted;
     private StickyGridAdapter.LineItem lineItemToBeDeleted;
     private AlertDialog alertDialog;
     public StickyGridAdapter.LineItem getLineItemToBeDeleted() {
@@ -46,7 +43,6 @@ public class AlertDialogAddressListDelete {
                         default:
                             Log.e(Constants.LOG_TAG,"Unknown Readable type.");
                     }
-//                    activityContext.listAdapter.notifyDataSetChanged();
                     GlobalHandler.getInstance(activityContext).notifyGlobalDataSetChanged();
                 }
             });

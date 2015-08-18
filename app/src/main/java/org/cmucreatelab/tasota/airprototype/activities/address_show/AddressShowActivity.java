@@ -53,7 +53,6 @@ public class AddressShowActivity extends ActionBarActivity {
 
         intent = getIntent();
         itemIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
-//        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);
         Readable readable = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(itemIndex).readable;
         switch(readable.getReadableType()) {
             case ADDRESS:
@@ -65,7 +64,6 @@ public class AddressShowActivity extends ActionBarActivity {
                 finish();
                 return;
         }
-//        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -75,21 +73,6 @@ public class AddressShowActivity extends ActionBarActivity {
 
         // generate content (no feed list)
         new LinearViewAddressShow(this,showSimpleAddress).populateLinearView();
-
-        // no longer list feeds (for now)
-//        ListView listView;
-//        ArrayList<Feed> feeds;
-//        ArrayAdapter<Feed> feedsListAdapter;
-//
-//        feeds = GlobalHandler.getInstance(this.getApplicationContext()).addressFeedsHashMap.getFeedsFromAddressInHashMap(showSimpleAddress);
-//        feedsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, feeds);
-//
-//        // generate content
-//        new LinearViewAddressShow(this,showSimpleAddress).populateLinearView();
-//
-//        // setup ListView
-//        listView = (ListView)findViewById(R.id.listShowAddressFeeds);
-//        listView.setAdapter(feedsListAdapter);
     }
 
 

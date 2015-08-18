@@ -18,8 +18,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 public class AddressListActivity extends ActionBarActivity {
 
     private static final String GRID_TAG = "tag_countries_fragment";
-//    public ArrayList<SimpleAddress> addresses;
-//    public ArrayAdapterAddressList listAdapter;
     public AlertDialogAddressListDelete dialogDelete;
     public StickyGridFragment stickyGrid;
 
@@ -49,14 +47,6 @@ public class AddressListActivity extends ActionBarActivity {
         }
 
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
-//        addresses = globalHandler.requestAddressesForDisplay();
-        // TODO use new adapter
-//        listAdapter = new ArrayAdapterAddressList(this, addresses);
-//        globalHandler.listAdapter = this.listAdapter;
-//        if (globalHandler.addressListNeedsUpdated) {
-//            globalHandler.updateAddresses();
-//            globalHandler.addressListNeedsUpdated = false;
-//        }
         globalHandler.updateAddresses();
 
         if (savedInstanceState == null) {
@@ -74,8 +64,6 @@ public class AddressListActivity extends ActionBarActivity {
         Log.v(Constants.LOG_TAG, "AddressListActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("dialogDelete")) {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
-            // TODO address to be deleted (save)
-//            openDialogDelete(addresses.get(index));
             openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
         }
     }
@@ -86,9 +74,6 @@ public class AddressListActivity extends ActionBarActivity {
         super.onSaveInstanceState(outState);
         if (dialogDelete != null && dialogDelete.getAlertDialog().isShowing()) {
             outState.putBoolean("dialogDelete", true);
-            // TODO address to be deleted (save)
-//            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getLineItemToBeDeleted()));
-//            GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.tempReading = dialogDelete.getLineItemToBeDeleted();
             outState.putInt("dialogDeleteAddressIndex", GlobalHandler.getInstance(getApplicationContext()).
                     headerReadingsHashMap.adapterList.indexOf(dialogDelete.getLineItemToBeDeleted()));
             dialogDelete.getAlertDialog().dismiss();

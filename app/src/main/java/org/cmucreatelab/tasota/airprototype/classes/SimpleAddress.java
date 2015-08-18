@@ -84,14 +84,10 @@ public class SimpleAddress implements Readable {
     }
 
 
-    // TODO replace pullFeeds code with just updateFeeds (we don't need to return them in this fashion anymore)
-    public ArrayList<Feed> pullFeeds(final GlobalHandler globalHandler) {
-        updateFeeds(globalHandler);
-        return this.feeds;
-    }
-
-    public void updateFeeds(final GlobalHandler globalHandler) {
-//        final ArrayList<Feed> result = new ArrayList<>();
+    /*
+     * Handles updating feeds asynchronously
+     */
+    public void requestUpdateFeeds(final GlobalHandler globalHandler) {
         this.feeds.clear();
         // the past 24 hours
         final double maxTime = new Date().getTime() / 1000.0 - 86400;
@@ -117,8 +113,6 @@ public class SimpleAddress implements Readable {
             }
         };
         globalHandler.httpRequestHandler.requestFeeds(this.latitude, this.longitude, maxTime, response);
-
-//        return result;
     }
 
 

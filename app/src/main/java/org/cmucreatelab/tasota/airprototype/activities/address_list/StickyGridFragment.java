@@ -20,7 +20,6 @@ public class StickyGridFragment extends Fragment {
     private ViewHolder mViews;
     private StickyGridAdapter mAdapter;
     private int mHeaderDisplay = 17;
-//    public AddressListActivity addressListActivity;
 
     private static class ViewHolder {
         private final RecyclerView mRecyclerView;
