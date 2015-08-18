@@ -140,9 +140,9 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         // bind view with LineItem (populates info at this point)
 //        holder.bindItem(item.text);
         if (item.isHeader) {
-            holder.bindHeader(item.text);
+            holder.bindHeader(item);
         } else {
-            holder.bindItem(item.readable);
+            holder.bindItem(item);
         }
 
         final GridSLM.LayoutParams lp = GridSLM.LayoutParams.from(itemView.getLayoutParams());

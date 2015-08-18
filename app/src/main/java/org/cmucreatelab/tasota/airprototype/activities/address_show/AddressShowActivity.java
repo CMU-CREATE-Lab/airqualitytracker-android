@@ -11,7 +11,8 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
@@ -44,17 +45,27 @@ public class AddressShowActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent;
-        int addressIndex;
+        int itemIndex;
 
         super.onCreate(savedInstanceState);
         Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
         setContentView(R.layout.__address_show__activity);
 
         intent = getIntent();
-        addressIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
-        // TODO get proper address
+        itemIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
 //        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).requestAddressesForDisplay().get(addressIndex);
-        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress;
+        Readable readable = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(itemIndex).readable;
+        switch(readable.getReadableType()) {
+            case ADDRESS:
+                this.showSimpleAddress = (SimpleAddress)readable;
+                break;
+            default:
+                // TODO implement other shows
+                Log.e(Constants.LOG_TAG, "Tried to show non-SimpleAddress Readable (not implemented)");
+                finish();
+                return;
+        }
+//        showSimpleAddress = GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

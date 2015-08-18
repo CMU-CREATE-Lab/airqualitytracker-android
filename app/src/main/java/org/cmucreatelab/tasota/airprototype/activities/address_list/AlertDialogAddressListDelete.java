@@ -16,31 +16,32 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.Addr
  */
 public class AlertDialogAddressListDelete {
 
-    private Readable readingToBeDeleted;
+//    private Readable readingToBeDeleted;
+    private StickyGridAdapter.LineItem lineItemToBeDeleted;
     private AlertDialog alertDialog;
-    public Readable getReadingToBeDeleted() {
-        return readingToBeDeleted;
+    public StickyGridAdapter.LineItem getLineItemToBeDeleted() {
+        return lineItemToBeDeleted;
     }
     public AlertDialog getAlertDialog() {
         return alertDialog;
     }
 
     private class AlertDialogBuilderAddressListDelete extends AlertDialog.Builder {
-        public AlertDialogBuilderAddressListDelete(final AddressListActivity activityContext, final Readable readable) {
+        public AlertDialogBuilderAddressListDelete(final AddressListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
             super(activityContext);
             final Context ctx;
             ctx = activityContext.getApplicationContext();
             this.setMessage("Remove this Address from your list?");
             this.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    GlobalHandler.getInstance(ctx).headerReadingsHashMap.removeReading(readable);
+                    GlobalHandler.getInstance(ctx).headerReadingsHashMap.removeReading(lineItem.readable);
                     // TODO find type (and do actions if speck)
-                    switch (readable.getReadableType()) {
+                    switch (lineItem.readable.getReadableType()) {
                         case SPECK:
                             // TODO speck delete
                             break;
                         case ADDRESS:
-                            AddressDbHelper.destroy((SimpleAddress)readable, ctx);
+                            AddressDbHelper.destroy((SimpleAddress)lineItem.readable, ctx);
                             break;
                         default:
                             Log.e(Constants.LOG_TAG,"Unknown Readable type.");
@@ -54,9 +55,9 @@ public class AlertDialogAddressListDelete {
     }
 
 
-    public AlertDialogAddressListDelete(final AddressListActivity activityContext, final Readable readable) {
-        this.readingToBeDeleted = readable;
-        this.alertDialog = (new AlertDialogBuilderAddressListDelete(activityContext,this.readingToBeDeleted)).create();
+    public AlertDialogAddressListDelete(final AddressListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
+        this.lineItemToBeDeleted = lineItem;
+        this.alertDialog = (new AlertDialogBuilderAddressListDelete(activityContext,this.lineItemToBeDeleted)).create();
     }
 
 }

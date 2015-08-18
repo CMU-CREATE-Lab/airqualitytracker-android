@@ -10,14 +10,11 @@ import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.address_list.old_list_code.ArrayAdapterAddressList;
-import org.cmucreatelab.tasota.airprototype.classes.*;
-import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import java.util.ArrayList;
 
 public class AddressListActivity extends ActionBarActivity {
 
@@ -28,13 +25,13 @@ public class AddressListActivity extends ActionBarActivity {
     public StickyGridFragment stickyGrid;
 
 
-    public void openDialogDelete(final Readable readable) {
-        if (readable == null) {
+    public void openDialogDelete(final StickyGridAdapter.LineItem lineItem) {
+        if (lineItem.readable == null) {
             Log.e(Constants.LOG_TAG, "Tried deleting null Reading.");
-        } else if (readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
+        } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
-            dialogDelete = new AlertDialogAddressListDelete(this, readable);
+            dialogDelete = new AlertDialogAddressListDelete(this, lineItem);
             dialogDelete.getAlertDialog().show();
         }
     }
@@ -80,7 +77,7 @@ public class AddressListActivity extends ActionBarActivity {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
             // TODO address to be deleted (save)
 //            openDialogDelete(addresses.get(index));
-            openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.tempReading);
+            openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
         }
     }
 
@@ -91,8 +88,10 @@ public class AddressListActivity extends ActionBarActivity {
         if (dialogDelete != null && dialogDelete.getAlertDialog().isShowing()) {
             outState.putBoolean("dialogDelete", true);
             // TODO address to be deleted (save)
-//            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getReadingToBeDeleted()));
-            GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.tempReading = dialogDelete.getReadingToBeDeleted();
+//            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getLineItemToBeDeleted()));
+//            GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.tempReading = dialogDelete.getLineItemToBeDeleted();
+            outState.putInt("dialogDeleteAddressIndex", GlobalHandler.getInstance(getApplicationContext()).
+                    headerReadingsHashMap.adapterList.indexOf(dialogDelete.getLineItemToBeDeleted()));
             dialogDelete.getAlertDialog().dismiss();
         }
     }

@@ -1,13 +1,16 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_list;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.address_show.AddressShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -24,7 +27,8 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
     private boolean isHeader;
 //    private StickyGridAdapter adapter;
     private AddressListActivity context;
-    private Readable readable;
+//    private Readable readable;
+    private StickyGridAdapter.LineItem lineItem;
 
     StickyGridViewHolder(View view, boolean isHeader, AddressListActivity context) {
         super(view);
@@ -44,10 +48,10 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
     }
 
 
-    public void bindHeader(String headerText) {
+    public void bindHeader(StickyGridAdapter.LineItem lineItem) {
         TextView textViewFragmentTitle;
         textViewFragmentTitle = (TextView) view.findViewById(R.id.textViewFragmentTitle);
-        textViewFragmentTitle.setText(headerText);
+        textViewFragmentTitle.setText(lineItem.text);
         // TODO also handle as header?
 //        view.setLongClickable(true);
 //        view.setOnClickListener(this);
@@ -55,11 +59,13 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
     }
 
 
-    public void bindItem(Readable r) {
+    public void bindItem(StickyGridAdapter.LineItem lineItem) {
         TextView textAddressItemLocationName,textAddressItemLocationValue,textAddressAqiLabel;
         LinearLayout background;
-        this.readable = r;
+        Readable readable;
 
+        this.lineItem = lineItem;
+        readable = lineItem.readable;
         textAddressItemLocationName = (TextView) view.findViewById(R.id.textAddressItemLocationName);
         textAddressItemLocationValue = (TextView) view.findViewById(R.id.textAddressItemLocationValue);
         textAddressAqiLabel = (TextView) view.findViewById(R.id.textAddressAqiLabel);
@@ -69,14 +75,14 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
         view.setOnClickListener(this);
         view.setOnLongClickListener(this);
 
-        switch(r.getReadableType()) {
+        switch(readable.getReadableType()) {
             case SPECK:
-                Speck speck = (Speck)r;
+                Speck speck = (Speck)readable;
 
                 textAddressItemLocationName.setText(speck.getName());
                 break;
             case ADDRESS:
-                SimpleAddress simpleAddress = (SimpleAddress)r;
+                SimpleAddress simpleAddress = (SimpleAddress)readable;
 
                 textAddressItemLocationName.setText(simpleAddress.getName());
                 if (simpleAddress.getClosestFeed() == null) {
@@ -116,6 +122,10 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
     public void onClick(View view) {
         if (!isHeader) {
             Log.i(Constants.LOG_TAG, "CLICK HANDLER: " + ((TextView) view.findViewById(R.id.textAddressItemLocationName)).getText());
+            Intent intent = new Intent(context, AddressShowActivity.class);
+            intent.putExtra(Constants.AddressList.ADDRESS_INDEX,
+                    GlobalHandler.getInstance(context).headerReadingsHashMap.adapterList.indexOf(this.lineItem));
+            context.startActivity(intent);
         } else {
             Log.i(Constants.LOG_TAG, "CLICK HANDLER (header)");
         }
@@ -127,7 +137,7 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
 //        GlobalHandler.getInstance(context).gridAdapter.test();
         if (!isHeader) {
             Log.i(Constants.LOG_TAG, "LONG-CLICK HANDLER");
-            context.openDialogDelete(this.readable);
+            context.openDialogDelete(this.lineItem);
         } else {
             Log.i(Constants.LOG_TAG, "Header long-click does nothing");
         }
