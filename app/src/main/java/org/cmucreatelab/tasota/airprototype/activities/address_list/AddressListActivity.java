@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
-import org.cmucreatelab.tasota.airprototype.activities.address_list.old_list_code.ArrayAdapterAddressList;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
@@ -20,7 +19,7 @@ public class AddressListActivity extends ActionBarActivity {
 
     private static final String GRID_TAG = "tag_countries_fragment";
 //    public ArrayList<SimpleAddress> addresses;
-    public ArrayAdapterAddressList listAdapter;
+//    public ArrayAdapterAddressList listAdapter;
     public AlertDialogAddressListDelete dialogDelete;
     public StickyGridFragment stickyGrid;
 

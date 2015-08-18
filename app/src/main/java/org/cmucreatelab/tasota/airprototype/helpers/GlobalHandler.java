@@ -10,7 +10,6 @@ import org.cmucreatelab.tasota.airprototype.activities.address_list.StickyGridAd
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.activities.address_list.old_list_code.ArrayAdapterAddressList;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +35,6 @@ public class GlobalHandler {
     public boolean addressListNeedsUpdated = true;
 
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
-    public ArrayAdapterAddressList listAdapter;
     public StickyGridAdapter gridAdapter;
 
 
@@ -58,9 +56,6 @@ public class GlobalHandler {
 
     public void notifyGlobalDataSetChanged() {
         // TODO this function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
-        if (this.listAdapter != null) {
-            this.listAdapter.notifyDataSetChanged();
-        }
         if (this.gridAdapter != null) {
             this.gridAdapter.notifyDataSetChanged();
         }
