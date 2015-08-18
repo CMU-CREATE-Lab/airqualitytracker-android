@@ -17,7 +17,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 public class AddressListActivity extends ActionBarActivity {
 
-    private static final String GRID_TAG = "tag_countries_fragment";
     public AlertDialogAddressListDelete dialogDelete;
     public StickyGridFragment stickyGrid;
 
@@ -52,7 +51,7 @@ public class AddressListActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             this.stickyGrid = new StickyGridFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mycontainer, stickyGrid, GRID_TAG)
+                    .add(R.id.mycontainer, stickyGrid, Constants.StickyGrid.GRID_TAG)
                     .commit();
         }
     }

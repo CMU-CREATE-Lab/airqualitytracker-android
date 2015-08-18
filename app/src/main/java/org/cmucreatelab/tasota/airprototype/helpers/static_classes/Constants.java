@@ -1,8 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
-
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.R;
 
 /**
@@ -151,7 +149,13 @@ public final class Constants {
     }
 
     public final class AddressList {
-        public final static String ADDRESS_INDEX = APP_PACKAGE_NAME + ".addressindex";
+        public static final String ADDRESS_INDEX = APP_PACKAGE_NAME + ".addressindex";
+    }
+
+    public final class StickyGrid {
+        public static final String GRID_TAG = "tag_grid_fragment";
+        public static final String KEY_HEADER_POSITIONING = "key_header_mode";
+        public static final String KEY_MARGINS_FIXED = "key_margins_fixed";
     }
 
     public final class Esdr {

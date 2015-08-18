@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.tonicartos.superslim.LayoutManager;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
  * Class is based on example code from SuperSLiM's github repo: https://github.com/TonicArtos/SuperSLiM
  */
 public class StickyGridFragment extends Fragment {
 
-    private static final String KEY_HEADER_POSITIONING = "key_header_mode";
-    private static final String KEY_MARGINS_FIXED = "key_margins_fixed";
     private final boolean mAreMarginsFixed = true;
     private ViewHolder mViews;
     private StickyGridAdapter mAdapter;
@@ -58,8 +57,8 @@ public class StickyGridFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(KEY_HEADER_POSITIONING, mHeaderDisplay);
-        outState.putBoolean(KEY_MARGINS_FIXED, mAreMarginsFixed);
+        outState.putInt(Constants.StickyGrid.KEY_HEADER_POSITIONING, mHeaderDisplay);
+        outState.putBoolean(Constants.StickyGrid.KEY_MARGINS_FIXED, mAreMarginsFixed);
     }
 
 }
