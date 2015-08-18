@@ -42,6 +42,9 @@ public class HeaderReadingsHashMap {
         this.gpsAddress = new SimpleAddress("Loading Current Location...", "", 0.0, 0.0, true);
         this.globalHandler = globalHandler;
 
+        // construct hashmap
+        Collections.addAll(headers, HEADER_TITLES);
+
         // populate addresses from database
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         addresses.addAll(dbAddresses);
@@ -124,8 +127,6 @@ public class HeaderReadingsHashMap {
     public void refreshHash() {
         this.hashMap.clear();
 
-        // construct hashmap
-        Collections.addAll(headers, HEADER_TITLES);
         // TODO use specks instead of addresses
         this.hashMap.put(HEADER_TITLES[0], addresses);
         if (globalHandler.settingsHandler.appUsesLocation()) {
@@ -136,9 +137,9 @@ public class HeaderReadingsHashMap {
         } else {
             this.hashMap.put(HEADER_TITLES[1], addresses);
         }
-        globalHandler.notifyGlobalDataSetChanged();
 
         this.populateAdapterList();
+        globalHandler.notifyGlobalDataSetChanged();
     }
 
 }
