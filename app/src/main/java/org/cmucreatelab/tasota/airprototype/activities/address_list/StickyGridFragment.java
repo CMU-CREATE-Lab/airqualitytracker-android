@@ -20,6 +20,7 @@ public class StickyGridFragment extends Fragment {
     private ViewHolder mViews;
     private StickyGridAdapter mAdapter;
     private int mHeaderDisplay = 17;
+//    public AddressListActivity addressListActivity;
 
     private static class ViewHolder {
         private final RecyclerView mRecyclerView;
@@ -48,7 +49,8 @@ public class StickyGridFragment extends Fragment {
 
         mViews = new ViewHolder(view);
         mViews.initViews(new LayoutManager(getActivity()));
-        mAdapter = new StickyGridAdapter(getActivity(), mHeaderDisplay, mAreMarginsFixed);
+        // ASSERT: we can cast getActivity to be AddressListActivity
+        mAdapter = new StickyGridAdapter((AddressListActivity)getActivity(), mHeaderDisplay, mAreMarginsFixed);
         mViews.setAdapter(mAdapter);
     }
 

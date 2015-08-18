@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
@@ -21,13 +22,15 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
 
     private View view;
     private boolean isHeader;
-    private StickyGridAdapter adapter;
+//    private StickyGridAdapter adapter;
+    private AddressListActivity context;
+    private Readable readable;
 
-    StickyGridViewHolder(View view, boolean isHeader, StickyGridAdapter adapter) {
+    StickyGridViewHolder(View view, boolean isHeader, AddressListActivity context) {
         super(view);
         this.isHeader = isHeader;
         this.view = view;
-        this.adapter = adapter;
+        this.context = context;
 
         if (!isHeader) {
             TextView textView = (TextView) view.findViewById(R.id.textAddressItemLocationValue);
@@ -55,6 +58,7 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
     public void bindItem(Readable r) {
         TextView textAddressItemLocationName,textAddressItemLocationValue,textAddressAqiLabel;
         LinearLayout background;
+        this.readable = r;
 
         textAddressItemLocationName = (TextView) view.findViewById(R.id.textAddressItemLocationName);
         textAddressItemLocationValue = (TextView) view.findViewById(R.id.textAddressItemLocationValue);
@@ -120,9 +124,13 @@ class StickyGridViewHolder extends RecyclerView.ViewHolder
 
     @Override
     public boolean onLongClick(View view) {
-        Log.i(Constants.LOG_TAG, "LONG-CLICK HANDLER");
-        // TODO delete
-        adapter.test();
+//        GlobalHandler.getInstance(context).gridAdapter.test();
+        if (!isHeader) {
+            Log.i(Constants.LOG_TAG, "LONG-CLICK HANDLER");
+            context.openDialogDelete(this.readable);
+        } else {
+            Log.i(Constants.LOG_TAG, "Header long-click does nothing");
+        }
         return true;
     }
 

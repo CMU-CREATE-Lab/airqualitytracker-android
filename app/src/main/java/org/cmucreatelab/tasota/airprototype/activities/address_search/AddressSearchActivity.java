@@ -64,6 +64,8 @@ public class AddressSearchActivity extends ActionBarActivity
         GlobalHandler globalHandler = GlobalHandler.getInstance(this);
 //        globalHandler.addressFeedsHashMap.addAddress(result);
         globalHandler.headerReadingsHashMap.addReading(result);
+        globalHandler.updateAddresses();
+        globalHandler.headerReadingsHashMap.refreshHash();
         finish();
     }
 

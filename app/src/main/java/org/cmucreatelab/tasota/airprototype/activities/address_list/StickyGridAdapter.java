@@ -26,7 +26,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
     private final ArrayList<LineItem> mItems;
     private int mHeaderDisplay;
     private boolean mMarginsFixed;
-    private final Context mContext;
+    private final AddressListActivity mContext;
 
     public static class LineItem {
         public int sectionFirstPosition;
@@ -46,23 +46,25 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         }
     }
 
-    // TODO delete (only meant to test dataset changing after creation)
+//    // TODO delete (only meant to test dataset changing after creation)
     public void test() {
         GlobalHandler globalHandler = GlobalHandler.getInstance(mContext);
         ArrayList<SimpleAddress> addresses = globalHandler.headerReadingsHashMap.addresses;
         SimpleAddress simpleAddress = addresses.get(addresses.size()-1);
-        int sectionFirstPosition = mItems.get(mItems.size()-1).sectionFirstPosition;
+//        int sectionFirstPosition = mItems.get(mItems.size()-1).sectionFirstPosition;
+        int sectionFirstPosition = mItems.get(0).sectionFirstPosition;
         // Test change of entire structure
         ArrayList<LineItem> items = (ArrayList<LineItem>)mItems.clone();
         mItems.clear();
-        mItems.addAll(items);
+//        mItems.addAll(items);
+        mItems.add(items.get(0));
         //
         mItems.add(new LineItem(false, sectionFirstPosition, simpleAddress));
         notifyDataSetChanged();
     }
 
 
-    public StickyGridAdapter(Context context, int headerMode, boolean marginsFixed) {
+    public StickyGridAdapter(AddressListActivity context, int headerMode, boolean marginsFixed) {
         mContext = context;
         mHeaderDisplay = headerMode;
         mMarginsFixed = marginsFixed;
@@ -126,7 +128,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridViewHolder
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__address_list__grid_item_address, parent, false);
         }
-        return new StickyGridViewHolder(view, viewType == VIEW_TYPE_HEADER, this);
+        return new StickyGridViewHolder(view, viewType == VIEW_TYPE_HEADER, this.mContext);
     }
 
 

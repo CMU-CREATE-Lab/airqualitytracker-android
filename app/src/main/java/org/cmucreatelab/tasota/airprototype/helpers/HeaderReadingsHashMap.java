@@ -48,7 +48,7 @@ public class HeaderReadingsHashMap {
         // TODO populate specks
 
         refreshHash();
-        populateAdapterList();
+//        populateAdapterList();
     }
     
     
@@ -58,6 +58,7 @@ public class HeaderReadingsHashMap {
         // Tracks current position in the list; used to label section headers and their contents
         int sectionFirstPosition;
         int position = 0;
+        adapterList.clear();
 
         for (String header : headers) {
             sectionFirstPosition = headerCount + position;
@@ -93,6 +94,7 @@ public class HeaderReadingsHashMap {
             default:
                 Log.e(Constants.LOG_TAG, "WARNING tried to add Readable of unknown Type in HeaderReadingsHashMap ");
         }
+        refreshHash();
     }
 
 
@@ -108,6 +110,7 @@ public class HeaderReadingsHashMap {
             default:
                 Log.e(Constants.LOG_TAG, "WARNING tried to add Readable of unknown Type in HeaderReadingsHashMap ");
         }
+        refreshHash();
     }
 
 
@@ -133,6 +136,9 @@ public class HeaderReadingsHashMap {
         } else {
             this.hashMap.put(HEADER_TITLES[1], addresses);
         }
+        globalHandler.notifyGlobalDataSetChanged();
+
+        this.populateAdapterList();
     }
 
 }

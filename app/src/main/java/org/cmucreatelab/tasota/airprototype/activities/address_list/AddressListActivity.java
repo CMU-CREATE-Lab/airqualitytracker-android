@@ -10,7 +10,8 @@ import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.address_list.old_list_code.ArrayAdapterAddressList;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
@@ -24,13 +25,14 @@ public class AddressListActivity extends ActionBarActivity {
 //    public ArrayList<SimpleAddress> addresses;
     public ArrayAdapterAddressList listAdapter;
     public AlertDialogAddressListDelete dialogDelete;
+    public StickyGridFragment stickyGrid;
 
 
-    public void openDialogDelete(final SimpleAddress simpleAddress) {
-        if (simpleAddress == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
+    public void openDialogDelete(final Readable readable) {
+        if (readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
-            dialogDelete = new AlertDialogAddressListDelete(this, simpleAddress);
+            dialogDelete = new AlertDialogAddressListDelete(this, readable);
             dialogDelete.getAlertDialog().show();
         }
     }
@@ -60,8 +62,9 @@ public class AddressListActivity extends ActionBarActivity {
         globalHandler.updateAddresses();
 
         if (savedInstanceState == null) {
+            this.stickyGrid = new StickyGridFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mycontainer, new StickyGridFragment(), GRID_TAG)
+                    .add(R.id.mycontainer, stickyGrid, GRID_TAG)
                     .commit();
         }
     }
@@ -85,7 +88,7 @@ public class AddressListActivity extends ActionBarActivity {
         if (dialogDelete != null && dialogDelete.getAlertDialog().isShowing()) {
             outState.putBoolean("dialogDelete", true);
             // TODO address to be deleted (save)
-//            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getAddressToBeDeleted()));
+//            outState.putInt("dialogDeleteAddressIndex", this.addresses.indexOf(dialogDelete.getReadingToBeDeleted()));
             dialogDelete.getAlertDialog().dismiss();
         }
     }
