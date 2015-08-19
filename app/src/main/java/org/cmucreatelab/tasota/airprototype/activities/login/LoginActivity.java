@@ -87,6 +87,8 @@ public class LoginActivity extends ActionBarActivity
             globalHandler.settingsHandler.setUserLoggedIn(false);
             this.loggedIn = false;
             globalHandler.settingsHandler.userFeedsNeedsUpdated = true;
+            // clears specks on logout
+            globalHandler.headerReadingsHashMap.populateSpecks();
             display();
         }
     }

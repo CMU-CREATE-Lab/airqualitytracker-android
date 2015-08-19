@@ -61,6 +61,7 @@ public class GlobalHandler {
 
     public void updateAddresses() {
         headerReadingsHashMap.updateAddresses();
+        headerReadingsHashMap.updateSpecks();
         if (settingsHandler.appUsesLocation()) {
             if (googleApiClientHandler.googleApiClient.isConnected()) {
                 updateLastLocation();

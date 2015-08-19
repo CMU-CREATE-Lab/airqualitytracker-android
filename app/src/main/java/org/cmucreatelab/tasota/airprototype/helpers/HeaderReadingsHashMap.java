@@ -55,7 +55,7 @@ public class HeaderReadingsHashMap {
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         addresses.addAll(dbAddresses);
         // TODO populate specks
-        updateSpecks();
+        populateSpecks();
 
         refreshHash();
     }
@@ -132,8 +132,20 @@ public class HeaderReadingsHashMap {
 
 
     public void updateSpecks() {
-        specks.clear();
+        for (Speck speck : specks) {
+            if (speck.getChannels().size() > 0) {
+                // ASSERT all channels in the list of channels are usable readings
+                // TODO we use the first channel listed; handle when we do not have all channels as PM25
+                globalHandler.httpRequestHandler.requestPrivateChannelReading(globalHandler.settingsHandler.getAccessToken(),speck, speck.getChannels().get(0));
+            } else {
+                Log.e(Constants.LOG_TAG,"No channels found from speck id="+speck.getFeed_id());
+            }
+        }
+    }
 
+
+    public void populateSpecks() {
+        specks.clear();
         if (globalHandler.settingsHandler.isUserLoggedIn()) {
             Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
                 @Override
