@@ -84,6 +84,7 @@ public class LinearViewAddressShow {
                     textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[aqiIndex]);
                     //                layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[aqiIndex]));
                     layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[aqiIndex]);
+                    textShowAddressAqiLabel.setText("AQI    /500");
                 }
             } else {
                 this.defaultView();
@@ -103,6 +104,7 @@ public class LinearViewAddressShow {
 //                    textShowAddressAqiDescription.setText(Constants.SpeckReading.descriptions[ugIndex]);
                     textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[ugIndex]);
                     layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[ugIndex]));
+                    textShowAddressAqiLabel.setText("µg/m³    /500");
                 }
             } else {
                 this.defaultView();
