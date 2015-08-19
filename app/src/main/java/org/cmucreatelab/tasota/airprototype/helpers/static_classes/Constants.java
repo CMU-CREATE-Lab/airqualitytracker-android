@@ -23,6 +23,15 @@ public final class Constants {
     }
 
     public static final class SpeckReading {
+        // TODO replace with speck descriptions?
+        public static final String[] descriptions = {
+                "Air quality is considered Good.",
+                "Air quality is considered Moderate.",
+                "Air quality is considered Slightly Elevated.",
+                "Air quality is considered Elevated.",
+                "Air quality is considered High.",
+                "Air quality is considered Very High."
+        };
         public static final String[] normalColors = {
                 "#1a9850", "#91cf60", "#d9ef8b",
                 "#FEE08B", "#FC8D59", "#D73027"
@@ -31,7 +40,7 @@ public final class Constants {
                 "#4575b4", "#91bfdb", "#e0f3f8",
                 "#fee090", "#fc8d59", "#d73027"
         };
-        public static final String[] descriptions = {
+        public static final String[] titles = {
                 "Good", "Moderate", "Slightly Elevated",
                 "Elevated", "High", "Very High"
         };
