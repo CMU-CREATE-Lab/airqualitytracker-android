@@ -27,6 +27,13 @@ public class Feed {
     public Readable.Type getReadableType() {
         return readableType;
     }
+    public boolean hasReadableValue() {
+        return (channels.size() > 0);
+    }
+    public double getReadableValue() {
+        return this.feedValue;
+    }
+
     public long getProductId() {
         return productId;
     }

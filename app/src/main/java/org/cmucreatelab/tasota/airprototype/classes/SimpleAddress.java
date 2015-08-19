@@ -27,6 +27,13 @@ public class SimpleAddress implements Readable {
     public Type getReadableType() {
         return readableType;
     }
+    public boolean hasReadableValue() {
+        return this.getClosestFeed() != null;
+    }
+    public double getReadableValue() {
+        return this.getClosestFeed().getFeedValue();
+    }
+
     public long get_id() {
         return _id;
     }

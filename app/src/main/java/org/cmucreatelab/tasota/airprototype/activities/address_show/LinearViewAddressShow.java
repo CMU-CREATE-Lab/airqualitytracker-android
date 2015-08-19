@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 
@@ -17,7 +18,8 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
  */
 public class LinearViewAddressShow {
 
-    private SimpleAddress address;
+//    private SimpleAddress address;
+    private Readable readable;
 
     private TextView textShowAddressName;
     private TextView textShowAddressAqiValue;
@@ -31,6 +33,7 @@ public class LinearViewAddressShow {
 
 
     private void defaultView() {
+        // TODO change default message?
         Log.w(Constants.LOG_TAG, "warning: using default populateLinearView");
         this.textShowAddressAqiValue.setText("");
         textShowAddressAqiRange.setText("");
@@ -43,8 +46,8 @@ public class LinearViewAddressShow {
     }
 
 
-    public LinearViewAddressShow(AddressShowActivity activity, SimpleAddress address) {
-        this.address = address;
+    public LinearViewAddressShow(AddressShowActivity activity, Readable readable) {
+        this.readable = readable;
         this.textShowAddressName = (TextView)activity.findViewById(R.id.textShowAddressName);
         this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);
         this.textShowAddressAqiRange = (TextView)activity.findViewById(R.id.textShowAddressAqiRange);
@@ -62,25 +65,50 @@ public class LinearViewAddressShow {
 
 
     public void populateLinearView() {
-        this.textShowAddressName.setText(this.address.getName());
+        this.textShowAddressName.setText(this.readable.getName());
+        double readableValue = readable.getReadableValue();
 
-        if (address.getClosestFeed() != null) {
-            int aqiIndex;
-            long aqi;
+        if (readable.getReadableType() == Readable.Type.ADDRESS) {
+            if (readable.hasReadableValue()) {
+                int aqiIndex;
+                long aqi;
 
-            aqi = (long)Converter.microgramsToAqi(address.getClosestFeed().getFeedValue());
-            this.textShowAddressAqiValue.setText(String.valueOf(aqi));
-            aqiIndex = Constants.AqiReading.getIndexFromReading(aqi);
-            if (aqiIndex < 0) {
-                this.defaultView();
+                aqi = (long) Converter.microgramsToAqi(readableValue);
+                this.textShowAddressAqiValue.setText(String.valueOf(aqi));
+                aqiIndex = Constants.AqiReading.getIndexFromReading(aqi);
+                if (aqiIndex < 0) {
+                    this.defaultView();
+                } else {
+                    textShowAddressAqiRange.setText(Constants.AqiReading.getRangeFromIndex(aqiIndex) + " AQI");
+                    textShowAddressAqiTitle.setText(Constants.AqiReading.titles[aqiIndex]);
+                    textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[aqiIndex]);
+                    //                layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[aqiIndex]));
+                    layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[aqiIndex]);
+                }
             } else {
-                textShowAddressAqiRange.setText(Constants.AqiReading.getRangeFromIndex(aqiIndex) + " AQI");
-                textShowAddressAqiTitle.setText( Constants.AqiReading.titles[aqiIndex] );
-                textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[aqiIndex]);
-//                layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[aqiIndex]));
-                layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[aqiIndex]);
+                this.defaultView();
+            }
+        } else if (readable.getReadableType() == Readable.Type.SPECK) {
+            if (readable.hasReadableValue()) {
+                int ugIndex;
+
+                this.textShowAddressAqiValue.setText(String.valueOf((long)readableValue));
+                ugIndex = Constants.AqiReading.getIndexFromReading((long)readableValue);
+                if (ugIndex < 0) {
+                    this.defaultView();
+                } else {
+                    textShowAddressAqiRange.setText(Constants.SpeckReading.getRangeFromIndex(ugIndex) + " Micrograms");
+                    textShowAddressAqiTitle.setText(Constants.SpeckReading.titles[ugIndex]);
+                    // TODO descriptions for speck
+//                    textShowAddressAqiDescription.setText(Constants.SpeckReading.descriptions[ugIndex]);
+                    textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[ugIndex]);
+                    layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[ugIndex]));
+                }
+            } else {
+                this.defaultView();
             }
         } else {
+            Log.w(Constants.LOG_TAG, "Tried to populate LinearView in AddressShow with unimplemented Readable object.");
             this.defaultView();
         }
     }

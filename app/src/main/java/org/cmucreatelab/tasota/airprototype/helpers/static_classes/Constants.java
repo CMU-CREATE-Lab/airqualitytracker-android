@@ -62,6 +62,21 @@ public final class Constants {
             }
             return i;
         }
+
+        public static String getRangeFromIndex(int index) {
+            String result;
+            if (index < 0) {
+                Log.e(LOG_TAG, "getRangeFromIndex received index < 0.");
+                result = "";
+            } else if (index == 0) {
+                result = "0-" + ranges[0];
+            } else if (index == 5) {
+                result = ranges[4] + "+";
+            } else {
+                result = ranges[index-1] + "-" + ranges[index];
+            }
+            return result;
+        }
     }
 
     public static final class AqiReading {

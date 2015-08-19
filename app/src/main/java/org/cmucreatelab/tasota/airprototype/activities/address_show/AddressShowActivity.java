@@ -19,14 +19,16 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 
 public class AddressShowActivity extends ActionBarActivity {
 
-    private SimpleAddress showSimpleAddress;
+//    private SimpleAddress showSimpleAddress;
+    private Readable readable;
 
 
     protected void shareStationAqi() {
         try {
             String message, label;
             double aqi;
-            aqi = (long) (100 * Converter.microgramsToAqi(showSimpleAddress.getClosestFeed().getFeedValue())) / 100.0;
+//            aqi = (long) (100 * Converter.microgramsToAqi(showSimpleAddress.getClosestFeed().getFeedValue())) / 100.0;
+            aqi = (long) (100 * Converter.microgramsToAqi(readable.getReadableValue())) / 100.0;
             label = Constants.AqiReading.titles[Constants.AqiReading.getIndexFromReading(aqi)];
             // "My air quality is <AQI label>. Learn more at https://www.specksensor.com/"
             message = "My air quality is " + label + ". Learn more at https://www.specksensor.com/";
@@ -53,17 +55,12 @@ public class AddressShowActivity extends ActionBarActivity {
 
         intent = getIntent();
         itemIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
-        Readable readable = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(itemIndex).readable;
+        this.readable = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(itemIndex).readable;
         switch(readable.getReadableType()) {
             case ADDRESS:
-                this.showSimpleAddress = (SimpleAddress)readable;
                 break;
             case SPECK:
-                // TODO implement other shows
-                Speck speck = (Speck)readable;
-                Log.e(Constants.LOG_TAG, "Tried to show non-SimpleAddress Readable (not implemented) reading="+speck.getFeedValue());
-                finish();
-                return;
+                break;
             default:
                 Log.e(Constants.LOG_TAG, "Tried to show non-SimpleAddress Readable (not implemented)");
                 finish();
@@ -72,12 +69,11 @@ public class AddressShowActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(showSimpleAddress.getName());
+            actionBar.setTitle(readable.getName());
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // generate content (no feed list)
-        new LinearViewAddressShow(this,showSimpleAddress).populateLinearView();
+        new LinearViewAddressShow(this,readable).populateLinearView();
     }
 
 
