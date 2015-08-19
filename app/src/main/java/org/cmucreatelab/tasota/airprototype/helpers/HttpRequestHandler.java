@@ -83,6 +83,9 @@ public class HttpRequestHandler implements Response.ErrorListener {
     public void requestChannelReading(final Feed feed, final Channel channel) {
         esdrFeedsHandler.requestChannelReading(feed, channel);
     }
+    public void requestPrivateChannelReading(String authToken, final Feed feed, final Channel channel) {
+        esdrFeedsHandler.requestPrivateChannelReading(authToken,feed,channel);
+    }
 
 
     public void requestEsdrToken(String username, String password, Response.Listener<JSONObject> response, Response.ErrorListener error) {

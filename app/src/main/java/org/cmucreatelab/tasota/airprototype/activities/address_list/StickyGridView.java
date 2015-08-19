@@ -75,8 +75,30 @@ class StickyGridView extends RecyclerView.ViewHolder
         switch(readable.getReadableType()) {
             case SPECK:
                 Speck speck = (Speck)readable;
+                Log.i(Constants.LOG_TAG,"Found Speck name="+speck.getName());
 
                 textAddressItemLocationName.setText(speck.getName());
+                if (speck.getFeedValue() <= 0.0) {
+                    textAddressItemLocationValue.setText("N/A");
+                    textAddressAqiLabel.setVisibility(View.GONE);
+                    background.setBackgroundColor(Color.parseColor("#404041"));
+                } else {
+                    int label = (int)speck.getFeedValue();
+                    textAddressItemLocationValue.setText(String.valueOf(label));
+
+                    double aqi = Converter.microgramsToAqi(label);
+                    textAddressAqiLabel.setVisibility(View.VISIBLE);
+                    textAddressAqiLabel.setText("µg/m³");
+                    int index = Constants.AqiReading.getIndexFromReading(aqi);
+                    if (index >= 0) {
+                        try {
+                            background.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+                        } catch (Exception e) {
+                            // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
+                            Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);
+                        }
+                    }
+                }
                 break;
             case ADDRESS:
                 SimpleAddress simpleAddress = (SimpleAddress)readable;
@@ -96,13 +118,14 @@ class StickyGridView extends RecyclerView.ViewHolder
                 } else {
                     double aqi = Converter.microgramsToAqi(simpleAddress.getClosestFeed().getFeedValue());
                     textAddressAqiLabel.setVisibility(View.VISIBLE);
+                    textAddressAqiLabel.setText("AQI");
                     int index = Constants.AqiReading.getIndexFromReading(aqi);
                     if (index >= 0) {
                         try {
                             background.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[index]));
                         } catch (Exception e) {
                             // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
-                            Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);
+                            Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.AqiReading.aqiColors[index]);
                         }
                     }
                 }

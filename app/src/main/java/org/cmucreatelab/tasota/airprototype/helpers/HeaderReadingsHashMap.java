@@ -2,11 +2,17 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.location.Location;
 import android.util.Log;
+
+import com.android.volley.Response;
+
 import org.cmucreatelab.tasota.airprototype.activities.address_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,6 +55,7 @@ public class HeaderReadingsHashMap {
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         addresses.addAll(dbAddresses);
         // TODO populate specks
+        updateSpecks();
 
         refreshHash();
     }
@@ -63,13 +70,16 @@ public class HeaderReadingsHashMap {
         adapterList.clear();
 
         for (String header : headers) {
-            sectionFirstPosition = headerCount + position;
-            headerCount += 1;
-            adapterList.add(new StickyGridAdapter.LineItem(header, true, sectionFirstPosition));
-            // grid cells
-            for (Readable r : (ArrayList<Readable>)hashMap.get(header)) {
-                position += 1;
-                adapterList.add(new StickyGridAdapter.LineItem(false, sectionFirstPosition, r));
+            ArrayList<Readable> items = (ArrayList<Readable>)hashMap.get(header);
+            if (items.size() > 0) {
+                sectionFirstPosition = headerCount + position;
+                headerCount += 1;
+                adapterList.add(new StickyGridAdapter.LineItem(header, true, sectionFirstPosition));
+                // grid cells
+                for (Readable r : items) {
+                    position += 1;
+                    adapterList.add(new StickyGridAdapter.LineItem(false, sectionFirstPosition, r));
+                }
             }
         }
     }
@@ -86,10 +96,10 @@ public class HeaderReadingsHashMap {
         Readable.Type type = readable.getReadableType();
         switch(type) {
             case ADDRESS:
-                this.addresses.add((SimpleAddress)readable);
+                this.addresses.add((SimpleAddress) readable);
                 break;
             case SPECK:
-                this.specks.add((Speck)readable);
+                this.specks.add((Speck) readable);
                 break;
             default:
                 Log.e(Constants.LOG_TAG, "WARNING tried to add Readable of unknown Type in HeaderReadingsHashMap ");
@@ -121,11 +131,41 @@ public class HeaderReadingsHashMap {
     }
 
 
+    public void updateSpecks() {
+        specks.clear();
+
+        if (globalHandler.settingsHandler.isUserLoggedIn()) {
+            Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    ArrayList<Feed> feeds = new ArrayList<>();
+                    Log.v(Constants.LOG_TAG, "updateSpecks handling response=" + response.toString());
+                    JsonParser.populateAllFeedsFromJson(feeds, response);
+                    globalHandler.settingsHandler.userFeedsNeedsUpdated = false;
+
+                    for (Feed feed : feeds) {
+                        Speck speck = new Speck(feed);
+                        specks.add(speck);
+                        if (speck.getChannels().size() > 0) {
+                            // ASSERT all channels in the list of channels are usable readings
+                            // TODO we use the first channel listed; handle when we do not have all channels as PM25
+                            globalHandler.httpRequestHandler.requestPrivateChannelReading(globalHandler.settingsHandler.getAccessToken(),speck, speck.getChannels().get(0));
+                        } else {
+                            Log.e(Constants.LOG_TAG,"No channels found from speck id="+speck.getFeed_id());
+                        }
+                    }
+                    HeaderReadingsHashMap.this.refreshHash();
+                }
+            };
+            globalHandler.httpRequestHandler.requestPrivateFeeds(globalHandler.settingsHandler.getAccessToken(), response);
+        }
+    }
+
+
     public void refreshHash() {
         this.hashMap.clear();
 
-        // TODO use specks instead of addresses
-        this.hashMap.put(HEADER_TITLES[0], addresses);
+        this.hashMap.put(HEADER_TITLES[0], specks);
         if (globalHandler.settingsHandler.appUsesLocation()) {
             final ArrayList<Readable> tempAddresses = new ArrayList<>();
             tempAddresses.add(this.gpsAddress);

@@ -104,7 +104,7 @@ public class SimpleAddress implements Readable {
                         // ASSERT all channels in the list of channels are usable readings
                         // TODO we use the first channel listed; handle when we do not have all channels as PM25
                         globalHandler.httpRequestHandler.requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
-                        globalHandler.notifyGlobalDataSetChanged();
+//                        globalHandler.notifyGlobalDataSetChanged();
                     }
                 } else {
                     Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");

@@ -58,8 +58,13 @@ public class AddressShowActivity extends ActionBarActivity {
             case ADDRESS:
                 this.showSimpleAddress = (SimpleAddress)readable;
                 break;
-            default:
+            case SPECK:
                 // TODO implement other shows
+                Speck speck = (Speck)readable;
+                Log.e(Constants.LOG_TAG, "Tried to show non-SimpleAddress Readable (not implemented) reading="+speck.getFeedValue());
+                finish();
+                return;
+            default:
                 Log.e(Constants.LOG_TAG, "Tried to show non-SimpleAddress Readable (not implemented)");
                 finish();
                 return;
