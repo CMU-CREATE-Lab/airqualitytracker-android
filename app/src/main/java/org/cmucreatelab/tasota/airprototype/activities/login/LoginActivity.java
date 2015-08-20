@@ -3,12 +3,9 @@ package org.cmucreatelab.tasota.airprototype.activities.login;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 public class LoginActivity extends ActionBarActivity
@@ -18,9 +15,25 @@ public class LoginActivity extends ActionBarActivity
     protected String username="",password="";
     protected boolean loggedIn=false; // locally determines if you should be viewing the Login or Logout view.
     public TextView textViewLogoutUsername;
-    public ListView listViewLoginFeeds;
-    public final AuthRequestListenerLoginActivity authRequest = new AuthRequestListenerLoginActivity(this);
     public final LoginRequestListenerLoginActivity loginRequest = new LoginRequestListenerLoginActivity(this);
+
+
+    public void display() {
+        if (!loggedIn) {
+            setContentView(R.layout.__login__login_activity);
+            editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
+            editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
+            findViewById(R.id.buttonLogin).setOnClickListener(this);
+        } else {
+            setContentView(R.layout.__login__logout_activity);
+            textViewLogoutUsername = (TextView) findViewById(R.id.textViewLogoutUsername);
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+            if (globalHandler.settingsHandler.isUserLoggedIn()) {
+                textViewLogoutUsername.setText(globalHandler.settingsHandler.getUsername());
+            }
+            findViewById(R.id.buttonLogout).setOnClickListener(this);
+        }
+    }
 
 
     @Override
@@ -35,39 +48,6 @@ public class LoginActivity extends ActionBarActivity
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         display();
-    }
-
-
-    // populates the list of feeds
-    public void populateFeeds() {
-        if (listViewLoginFeeds != null) {
-            ArrayAdapter<Feed> feedsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, GlobalHandler.getInstance(getApplicationContext()).listFeedsUser);
-            listViewLoginFeeds.setAdapter(feedsListAdapter);
-        }
-    }
-
-
-    public void display() {
-        if (!loggedIn) {
-            setContentView(R.layout.__login__login_activity);
-            editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
-            editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-            findViewById(R.id.buttonLogin).setOnClickListener(this);
-        } else {
-            setContentView(R.layout.__login__logout_activity);
-            textViewLogoutUsername = (TextView) findViewById(R.id.textViewLogoutUsername);
-            listViewLoginFeeds = (ListView) findViewById(R.id.listViewLoginFeeds);
-            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-            if (globalHandler.settingsHandler.isUserLoggedIn()) {
-                textViewLogoutUsername.setText(globalHandler.settingsHandler.getUsername());
-                if (globalHandler.settingsHandler.userFeedsNeedsUpdated) {
-                    globalHandler.httpRequestHandler.requestPrivateFeeds(globalHandler.settingsHandler.getAccessToken(), authRequest);
-                } else {
-                    populateFeeds();
-                }
-            }
-            findViewById(R.id.buttonLogout).setOnClickListener(this);
-        }
     }
 
 

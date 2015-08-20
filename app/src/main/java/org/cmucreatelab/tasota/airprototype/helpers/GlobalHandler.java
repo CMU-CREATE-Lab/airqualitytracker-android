@@ -25,7 +25,7 @@ public class GlobalHandler {
     // data structure
     public HeaderReadingsHashMap headerReadingsHashMap;
     // lists used for ListViews and their adapters
-    public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
+//    public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
     // TODO create logic for controlling when update needs to occur
     // a flag stating whether the views need to update addresses
     public boolean addressListNeedsUpdated = true;
