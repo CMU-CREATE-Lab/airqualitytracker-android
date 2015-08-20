@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.activities.login;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +42,14 @@ public class LoginActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         loggedIn = GlobalHandler.getInstance(getApplicationContext()).settingsHandler.isUserLoggedIn();
         display();
+
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            actionBar.setCustomView(R.layout.action_bar);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 

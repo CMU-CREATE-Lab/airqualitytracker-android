@@ -43,7 +43,8 @@
         </activity>
         <activity
             android:name=".activities.login.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".activities.login.LoginActivity" >
             <intent-filter>
                 <action android:name="org.cmucreatelab.tasota.airprototype" />
 
