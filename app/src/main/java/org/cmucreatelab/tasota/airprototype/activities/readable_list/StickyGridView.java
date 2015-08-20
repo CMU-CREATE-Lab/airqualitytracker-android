@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.address_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.activities.address_show.AddressShowActivity;
+import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -24,10 +24,10 @@ class StickyGridView extends RecyclerView.ViewHolder
 
     private View view;
     private boolean isHeader;
-    private AddressListActivity context;
+    private ReadableListActivity context;
     private StickyGridAdapter.LineItem lineItem;
 
-    StickyGridView(View view, boolean isHeader, AddressListActivity context) {
+    StickyGridView(View view, boolean isHeader, ReadableListActivity context) {
         super(view);
         this.isHeader = isHeader;
         this.view = view;
@@ -139,7 +139,7 @@ class StickyGridView extends RecyclerView.ViewHolder
     public void onClick(View view) {
         if (!isHeader) {
             Log.i(Constants.LOG_TAG, "CLICK HANDLER: " + ((TextView) view.findViewById(R.id.textAddressItemLocationName)).getText());
-            Intent intent = new Intent(context, AddressShowActivity.class);
+            Intent intent = new Intent(context, ReadableShowActivity.class);
             intent.putExtra(Constants.AddressList.ADDRESS_INDEX,
                     GlobalHandler.getInstance(context).headerReadingsHashMap.adapterList.indexOf(this.lineItem));
             context.startActivity(intent);

@@ -18,7 +18,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.address_list.AddressListActivity"
+            android:name=".activities.readable_list.ReadableListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +27,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.address_show.AddressShowActivity"
+            android:name=".activities.readable_show.ReadableShowActivity"
             android:label="@string/title_activity_address_show"
-            android:parentActivityName=".activities.address_list.AddressListActivity" >
+            android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
@@ -39,7 +39,7 @@
         <activity
             android:name=".activities.address_search.AddressSearchActivity"
             android:label="@string/title_activity_address_search"
-            android:parentActivityName=".activities.address_list.AddressListActivity" >
+            android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>
         <activity
             android:name=".activities.login.LoginActivity"

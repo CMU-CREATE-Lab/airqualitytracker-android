@@ -1,14 +1,12 @@
-package org.cmucreatelab.tasota.airprototype.activities.address_show;
+package org.cmucreatelab.tasota.airprototype.activities.readable_show;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.opengl.Visibility;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
@@ -16,7 +14,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 /**
  * Created by mike on 6/18/15.
  */
-public class LinearViewAddressShow {
+public class LinearViewReadableShow {
 
 //    private SimpleAddress address;
     private Readable readable;
@@ -46,7 +44,7 @@ public class LinearViewAddressShow {
     }
 
 
-    public LinearViewAddressShow(AddressShowActivity activity, Readable readable) {
+    public LinearViewReadableShow(ReadableShowActivity activity, Readable readable) {
         this.readable = readable;
         this.textShowAddressName = (TextView)activity.findViewById(R.id.textShowAddressName);
         this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);

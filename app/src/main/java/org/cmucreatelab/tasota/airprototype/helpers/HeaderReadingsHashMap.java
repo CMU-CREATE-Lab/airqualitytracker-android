@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.android.volley.Response;
 
-import org.cmucreatelab.tasota.airprototype.activities.address_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;

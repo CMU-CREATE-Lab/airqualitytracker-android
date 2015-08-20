@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.address_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
     private final ArrayList<LineItem> mItems;
     private int mHeaderDisplay;
     private boolean mMarginsFixed;
-    private final AddressListActivity mContext;
+    private final ReadableListActivity mContext;
 
     public static class LineItem {
         public int sectionFirstPosition;
@@ -41,7 +41,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
     }
 
 
-    public StickyGridAdapter(AddressListActivity context, int headerMode, boolean marginsFixed) {
+    public StickyGridAdapter(ReadableListActivity context, int headerMode, boolean marginsFixed) {
         mContext = context;
         mHeaderDisplay = headerMode;
         mMarginsFixed = marginsFixed;
@@ -57,9 +57,9 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
         View view;
 
         if (viewType == VIEW_TYPE_HEADER) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__address_list__stickygrid_header, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__readable_list__stickygrid_header, parent, false);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__address_list__stickygrid_item, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__readable_list__stickygrid_item, parent, false);
         }
         return new StickyGridView(view, viewType == VIEW_TYPE_HEADER, this.mContext);
     }

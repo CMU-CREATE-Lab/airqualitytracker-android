@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.address_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +12,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.Addr
 /**
  * Created by mike on 6/8/15.
  */
-public class AlertDialogAddressListDelete {
+public class AlertDialogReadableList {
 
     private StickyGridAdapter.LineItem lineItemToBeDeleted;
     private AlertDialog alertDialog;
@@ -23,8 +23,8 @@ public class AlertDialogAddressListDelete {
         return alertDialog;
     }
 
-    private class AlertDialogBuilderAddressListDelete extends AlertDialog.Builder {
-        public AlertDialogBuilderAddressListDelete(final AddressListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
+    private class AlertDialogBuilder extends AlertDialog.Builder {
+        public AlertDialogBuilder(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
             super(activityContext);
             final Context ctx;
             ctx = activityContext.getApplicationContext();
@@ -50,9 +50,9 @@ public class AlertDialogAddressListDelete {
     }
 
 
-    public AlertDialogAddressListDelete(final AddressListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
+    public AlertDialogReadableList(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
         this.lineItemToBeDeleted = lineItem;
-        this.alertDialog = (new AlertDialogBuilderAddressListDelete(activityContext,this.lineItemToBeDeleted)).create();
+        this.alertDialog = (new AlertDialogBuilder(activityContext,this.lineItemToBeDeleted)).create();
     }
 
 }

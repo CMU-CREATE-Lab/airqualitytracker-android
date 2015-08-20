@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.address_show;
+package org.cmucreatelab.tasota.airprototype.activities.readable_show;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 
-public class AddressShowActivity extends ActionBarActivity {
+public class ReadableShowActivity extends ActionBarActivity {
 
 //    private SimpleAddress showSimpleAddress;
     private Readable readable;
@@ -47,7 +47,7 @@ public class AddressShowActivity extends ActionBarActivity {
             sendIntent.setType("text/plain");
             startActivity(Intent.createChooser(sendIntent, "Share Air Quality Index"));
         } catch (Exception e) {
-            Log.e(Constants.LOG_TAG,"Received error while trying to share station's AQI on AddressShowActivity.");
+            Log.e(Constants.LOG_TAG,"Received error while trying to share station's AQI on ReadableShowActivity.");
         }
     }
 
@@ -58,8 +58,8 @@ public class AddressShowActivity extends ActionBarActivity {
         int itemIndex;
 
         super.onCreate(savedInstanceState);
-        Log.d(Constants.LOG_TAG, "AddressShowActivity onCreate");
-        setContentView(R.layout.__address_show__activity);
+        Log.d(Constants.LOG_TAG, "ReadableShowActivity onCreate");
+        setContentView(R.layout.__readable_show__activity);
 
         intent = getIntent();
         itemIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
@@ -81,7 +81,7 @@ public class AddressShowActivity extends ActionBarActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        new LinearViewAddressShow(this,readable).populateLinearView();
+        new LinearViewReadableShow(this,readable).populateLinearView();
     }
 
 

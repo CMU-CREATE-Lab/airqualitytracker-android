@@ -5,10 +5,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
-import org.cmucreatelab.tasota.airprototype.activities.address_list.StickyGridAdapter;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import java.util.ArrayList;
 
 /**
  * Created by mike on 6/2/15.

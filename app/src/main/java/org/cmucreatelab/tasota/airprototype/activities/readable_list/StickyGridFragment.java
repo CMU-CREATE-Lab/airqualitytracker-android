@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.address_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,7 +37,7 @@ public class StickyGridFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.__address_list__stickygrid_fragment, container, false);
+        return inflater.inflate(R.layout.__readable_list__stickygrid_fragment, container, false);
     }
 
 
@@ -47,8 +47,8 @@ public class StickyGridFragment extends Fragment {
 
         mViews = new ViewHolder(view);
         mViews.initViews(new LayoutManager(getActivity()));
-        // ASSERT: we can cast getActivity to be AddressListActivity
-        mAdapter = new StickyGridAdapter((AddressListActivity)getActivity(), mHeaderDisplay, mAreMarginsFixed);
+        // ASSERT: we can cast getActivity to be ReadableListActivity
+        mAdapter = new StickyGridAdapter((ReadableListActivity)getActivity(), mHeaderDisplay, mAreMarginsFixed);
         mViews.setAdapter(mAdapter);
     }
 

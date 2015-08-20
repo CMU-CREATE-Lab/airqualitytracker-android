@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.address_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -15,9 +15,9 @@ import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
-public class AddressListActivity extends ActionBarActivity {
+public class ReadableListActivity extends ActionBarActivity {
 
-    public AlertDialogAddressListDelete dialogDelete;
+    public AlertDialogReadableList dialogDelete;
     public StickyGridFragment stickyGrid;
 
 
@@ -27,7 +27,7 @@ public class AddressListActivity extends ActionBarActivity {
         } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
-            dialogDelete = new AlertDialogAddressListDelete(this, lineItem);
+            dialogDelete = new AlertDialogReadableList(this, lineItem);
             dialogDelete.getAlertDialog().show();
         }
     }
@@ -36,8 +36,8 @@ public class AddressListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(Constants.LOG_TAG, "AddressListActivity onCreate");
-        setContentView(R.layout.__address_list__activity);
+        Log.v(Constants.LOG_TAG, "ReadableListActivity onCreate");
+        setContentView(R.layout.__readable_list__activity);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -60,7 +60,7 @@ public class AddressListActivity extends ActionBarActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.v(Constants.LOG_TAG, "AddressListActivity onRestoreInstanceState");
+        Log.v(Constants.LOG_TAG, "ReadableListActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("dialogDelete")) {
             int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
             openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
