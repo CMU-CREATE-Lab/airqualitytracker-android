@@ -51,13 +51,10 @@ public class HeaderReadingsHashMap {
         // construct hashmap
         Collections.addAll(headers, HEADER_TITLES);
 
-        // populate addresses from database
+        // populate addresses from database and specks from login info
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         addresses.addAll(dbAddresses);
-        // TODO populate specks
         populateSpecks();
-
-        refreshHash();
     }
     
     
@@ -171,6 +168,7 @@ public class HeaderReadingsHashMap {
             };
             globalHandler.httpRequestHandler.requestPrivateFeeds(globalHandler.settingsHandler.getAccessToken(), response);
         }
+        refreshHash();
     }
 
 

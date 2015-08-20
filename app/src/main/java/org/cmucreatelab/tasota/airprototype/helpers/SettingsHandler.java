@@ -72,6 +72,8 @@ public class SettingsHandler {
         editor.putBoolean("user_logged_in",userLoggedIn);
         editor.apply();
         this.userLoggedIn = userLoggedIn;
+        // repopulates specks on successful login/logout
+        globalHandler.headerReadingsHashMap.populateSpecks();
     }
 
 
@@ -102,8 +104,8 @@ public class SettingsHandler {
         editor.putString("username","");
         editor.putString("access_token","");
         editor.putString("refresh_token","");
-        editor.putBoolean("user_logged_in", false);
         editor.apply();
+        this.setUserLoggedIn(false);
     }
 
 }

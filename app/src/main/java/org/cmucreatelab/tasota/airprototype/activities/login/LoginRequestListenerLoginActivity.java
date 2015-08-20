@@ -46,8 +46,6 @@ public class LoginRequestListenerLoginActivity
             globalHandler.settingsHandler.setUserLoggedIn(true);
             globalHandler.servicesHandler.startEsdrRefreshService();
             loginActivity.display();
-            // grabs specks on successful login
-            globalHandler.headerReadingsHashMap.populateSpecks();
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
             e.printStackTrace();
