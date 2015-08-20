@@ -85,11 +85,9 @@ class StickyGridView extends RecyclerView.ViewHolder
                 } else {
                     int label = (int)speck.getFeedValue();
                     textAddressItemLocationValue.setText(String.valueOf(label));
-
-                    double aqi = Converter.microgramsToAqi(label);
                     textAddressAqiLabel.setVisibility(View.VISIBLE);
                     textAddressAqiLabel.setText("µg/m³");
-                    int index = Constants.AqiReading.getIndexFromReading(aqi);
+                    int index = Constants.SpeckReading.getIndexFromReading(label);
                     if (index >= 0) {
                         try {
                             background.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));

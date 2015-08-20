@@ -11,7 +11,6 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
-import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
@@ -23,13 +22,22 @@ public class AddressShowActivity extends ActionBarActivity {
     private Readable readable;
 
 
-    protected void shareStationAqi() {
+    protected void shareReading() {
         try {
-            String message, label;
-            double aqi;
-//            aqi = (long) (100 * Converter.microgramsToAqi(showSimpleAddress.getClosestFeed().getFeedValue())) / 100.0;
-            aqi = (long) (100 * Converter.microgramsToAqi(readable.getReadableValue())) / 100.0;
-            label = Constants.AqiReading.titles[Constants.AqiReading.getIndexFromReading(aqi)];
+            String message, label="";
+            switch(readable.getReadableType()) {
+                case SPECK:
+                    long micrograms = (long)readable.getReadableValue();
+                    label = Constants.SpeckReading.titles[Constants.SpeckReading.getIndexFromReading(micrograms)];
+                    break;
+                case ADDRESS:
+                    double aqi = (long) (100 * Converter.microgramsToAqi(readable.getReadableValue())) / 100.0;
+                    label = Constants.AqiReading.titles[Constants.AqiReading.getIndexFromReading(aqi)];
+                    break;
+                default:
+                    Log.e(Constants.LOG_TAG,"shareReading could not find Readable type.");
+                    break;
+            }
             // "My air quality is <AQI label>. Learn more at https://www.specksensor.com/"
             message = "My air quality is " + label + ". Learn more at https://www.specksensor.com/";
             Log.d(Constants.LOG_TAG, "Sharing string: ''" + message + "''");
@@ -95,7 +103,7 @@ public class AddressShowActivity extends ActionBarActivity {
                 return true;
             case R.id.action_share:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action share selected.");
-                this.shareStationAqi();
+                this.shareReading();
                 return true;
             case R.id.action_about_airquality:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about selected.");
