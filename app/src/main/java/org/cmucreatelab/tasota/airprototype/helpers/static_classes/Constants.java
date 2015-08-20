@@ -12,7 +12,8 @@ public final class Constants {
     // these are the channel names that we want our feeds to report
     public static final String[] channelNames = {
             "pm2_5", "PM2_5", "pm2_5_1hr",
-            "pm2_5_24hr", "PM25B_UG_M3", "PM25_UG_M3"
+            "pm2_5_24hr", "PM25B_UG_M3", "PM25_UG_M3",
+            "particle_concentration"
     };
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
     public static final boolean USES_BACKGROUND_SERVICES = true;
