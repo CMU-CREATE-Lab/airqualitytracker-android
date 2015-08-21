@@ -36,17 +36,23 @@ public class ArrayAdapterAddressSearch extends ArrayAdapter<Address>
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LinearLayout linearLayout = new LinearLayout(this.context);
+        LinearLayout linearLayout;
+        Address address;
+        int size,i;
+
+        linearLayout= new LinearLayout(this.context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        Address address = this.getItem(position);
+
+        address = this.getItem(position);
         if (address.getFeatureName() != null) {
             TextView textView = new TextView(this.context);
             textView.setText(address.getFeatureName());
             textView.setTextSize(24);
             linearLayout.addView(textView);
         }
-        int size = address.getMaxAddressLineIndex();
-        for (int i=0;i<size;i++) {
+
+        size = address.getMaxAddressLineIndex();
+        for (i=0;i<size;i++) {
             TextView textView = new TextView(this.context);
             textView.setText(address.getAddressLine(i));
             textView.setTextSize(16);

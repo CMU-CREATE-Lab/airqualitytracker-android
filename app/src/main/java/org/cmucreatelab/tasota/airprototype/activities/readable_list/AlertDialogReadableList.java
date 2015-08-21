@@ -16,37 +16,42 @@ public class AlertDialogReadableList {
 
     private StickyGridAdapter.LineItem lineItemToBeDeleted;
     private AlertDialog alertDialog;
-    public StickyGridAdapter.LineItem getLineItemToBeDeleted() {
-        return lineItemToBeDeleted;
-    }
-    public AlertDialog getAlertDialog() {
-        return alertDialog;
-    }
 
     private class AlertDialogBuilder extends AlertDialog.Builder {
         public AlertDialogBuilder(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
             super(activityContext);
-            final Context ctx;
-            ctx = activityContext.getApplicationContext();
-            this.setMessage("Remove this Address from your list?");
-            this.setPositiveButton("Erase", new DialogInterface.OnClickListener() {
+
+            final Context context = activityContext.getApplicationContext();
+            this.setMessage("Remove this from your list?");
+            this.setNegativeButton("Cancel", null);
+            this.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    GlobalHandler.getInstance(ctx).headerReadingsHashMap.removeReading(lineItem.readable);
+                    GlobalHandler globalHandler = GlobalHandler.getInstance(context);
+                    globalHandler.headerReadingsHashMap.removeReading(lineItem.readable);
                     switch (lineItem.readable.getReadableType()) {
                         case SPECK:
-                            // TODO speck delete
                             break;
                         case ADDRESS:
-                            AddressDbHelper.destroy((SimpleAddress)lineItem.readable, ctx);
+                            AddressDbHelper.destroy((SimpleAddress) lineItem.readable, context);
                             break;
                         default:
-                            Log.e(Constants.LOG_TAG,"Unknown Readable type.");
+                            Log.e(Constants.LOG_TAG, "Unknown Readable type.");
+                            break;
                     }
-                    GlobalHandler.getInstance(activityContext).notifyGlobalDataSetChanged();
+                    globalHandler.notifyGlobalDataSetChanged();
                 }
             });
-            this.setNegativeButton("Cancel",null);
         }
+    }
+
+
+    public StickyGridAdapter.LineItem getLineItemToBeDeleted() {
+        return lineItemToBeDeleted;
+    }
+
+
+    public AlertDialog getAlertDialog() {
+        return alertDialog;
     }
 
 

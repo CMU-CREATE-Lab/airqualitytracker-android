@@ -31,7 +31,10 @@ public class SimpleAddress implements Readable {
         return this.getClosestFeed() != null;
     }
     public double getReadableValue() {
-        return this.getClosestFeed().getFeedValue();
+        if (hasReadableValue())
+            return this.getClosestFeed().getFeedValue();
+        Log.w(Constants.LOG_TAG,"Tried getReadableValue on SimpleAddress with hasReadableValue=false; returning 0");
+        return 0.0;
     }
 
     public long get_id() {

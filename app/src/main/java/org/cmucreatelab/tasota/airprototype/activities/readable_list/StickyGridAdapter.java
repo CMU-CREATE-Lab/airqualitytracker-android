@@ -8,6 +8,7 @@ import com.tonicartos.superslim.GridSLM;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
 /**
@@ -15,12 +16,8 @@ import java.util.ArrayList;
  */
 public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
 
-    private static final int VIEW_TYPE_HEADER = 0x09;
-    private static final int VIEW_TYPE_CONTENT = 0x00;
-    private final ArrayList<LineItem> mItems;
-    private int mHeaderDisplay;
-    private boolean mMarginsFixed;
-    private final ReadableListActivity mContext;
+    private final ArrayList<LineItem> lineItemsList;
+    private final ReadableListActivity context;
 
     public static class LineItem {
         public int sectionFirstPosition;
@@ -41,43 +38,35 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
     }
 
 
-    public StickyGridAdapter(ReadableListActivity context, int headerMode, boolean marginsFixed) {
-        mContext = context;
-        mHeaderDisplay = headerMode;
-        mMarginsFixed = marginsFixed;
-
+    public StickyGridAdapter(ReadableListActivity context) {
+        this.context = context;
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
         globalHandler.gridAdapter = this;
-        mItems = globalHandler.headerReadingsHashMap.adapterList;
+        lineItemsList = globalHandler.headerReadingsHashMap.adapterList;
     }
 
 
     @Override
     public StickyGridView onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-
-        if (viewType == VIEW_TYPE_HEADER) {
+        if (viewType == Constants.StickyGrid.VIEW_TYPE_HEADER) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__readable_list__stickygrid_header, parent, false);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.__readable_list__stickygrid_item, parent, false);
         }
-        return new StickyGridView(view, viewType == VIEW_TYPE_HEADER, this.mContext);
+        return new StickyGridView(view, viewType == Constants.StickyGrid.VIEW_TYPE_HEADER, this.context);
     }
 
 
     @Override
     public void onBindViewHolder(StickyGridView holder, int position) {
-        final LineItem item = mItems.get(position);
+        final LineItem item = lineItemsList.get(position);
         final View itemView = holder.itemView;
+        final GridSLM.LayoutParams lp = GridSLM.LayoutParams.from(itemView.getLayoutParams());
 
         // bind view with LineItem (populates info at this point)
-        if (item.isHeader) {
-            holder.bindHeader(item);
-        } else {
-            holder.bindItem(item);
-        }
-
-        final GridSLM.LayoutParams lp = GridSLM.LayoutParams.from(itemView.getLayoutParams());
+        holder.bindItem(item);
+        // other layout params
         lp.setSlm(GridSLM.ID);
         lp.setNumColumns(2);
         lp.setFirstPosition(item.sectionFirstPosition);
@@ -87,13 +76,13 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
 
     @Override
     public int getItemViewType(int position) {
-        return mItems.get(position).isHeader ? VIEW_TYPE_HEADER : VIEW_TYPE_CONTENT;
+        return lineItemsList.get(position).isHeader ? Constants.StickyGrid.VIEW_TYPE_HEADER : Constants.StickyGrid.VIEW_TYPE_CONTENT;
     }
 
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return lineItemsList.size();
     }
 
 }

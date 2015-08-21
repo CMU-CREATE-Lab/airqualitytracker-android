@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.activities.login;
 
 import android.util.Log;
-import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
@@ -25,10 +24,12 @@ public class LoginRequestListenerLoginActivity
     @Override
     public void onErrorResponse(VolleyError error) {
         // ASSERT onErrorResponse implies that we failed to log in.
-        Toast.makeText(loginActivity, "Authorization Failed to log in", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(loginActivity, "Authorization Failed to log in", Toast.LENGTH_SHORT).show();
+
         GlobalHandler globalHandler = GlobalHandler.getInstance(loginActivity.getApplicationContext());
         globalHandler.settingsHandler.setUserLoggedIn(false);
         globalHandler.servicesHandler.stopEsdrRefreshService();
+
         loginActivity.loggedIn = false;
         loginActivity.display();
     }
@@ -38,6 +39,7 @@ public class LoginRequestListenerLoginActivity
     public void onResponse(JSONObject response) {
         String accessToken,refreshToken;
         Log.v(Constants.LOG_TAG, "requestEsdrToken: got response=" + response.toString());
+
         try {
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");
@@ -51,4 +53,5 @@ public class LoginRequestListenerLoginActivity
             e.printStackTrace();
         }
     }
+
 }

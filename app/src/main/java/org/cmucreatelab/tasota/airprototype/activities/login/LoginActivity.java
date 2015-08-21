@@ -13,10 +13,10 @@ public class LoginActivity extends ActionBarActivity
         implements View.OnClickListener {
 
     private EditText editTextLoginUsername,editTextLoginPassword;
+    private TextView textViewLogoutUsername;
+    private final LoginRequestListenerLoginActivity loginRequest = new LoginRequestListenerLoginActivity(this);
     protected String username="",password="";
     protected boolean loggedIn=false; // locally determines if you should be viewing the Login or Logout view.
-    public TextView textViewLogoutUsername;
-    public final LoginRequestListenerLoginActivity loginRequest = new LoginRequestListenerLoginActivity(this);
 
 
     public void display() {
@@ -43,7 +43,6 @@ public class LoginActivity extends ActionBarActivity
         loggedIn = GlobalHandler.getInstance(getApplicationContext()).settingsHandler.isUserLoggedIn();
         display();
 
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -62,8 +61,10 @@ public class LoginActivity extends ActionBarActivity
 
     @Override
     public void onClick(View view) {
+        GlobalHandler globalHandler;
+
         if (!loggedIn) {
-            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+            globalHandler = GlobalHandler.getInstance(getApplicationContext());
             this.username = editTextLoginUsername.getText().toString();
             this.password = editTextLoginPassword.getText().toString();
             globalHandler.settingsHandler.userFeedsNeedsUpdated = true;
@@ -71,7 +72,7 @@ public class LoginActivity extends ActionBarActivity
             this.loggedIn = true;
             display();
         } else {
-            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+            globalHandler = GlobalHandler.getInstance(getApplicationContext());
             globalHandler.servicesHandler.stopEsdrRefreshService();
             globalHandler.settingsHandler.setUserLoggedIn(false);
             this.loggedIn = false;

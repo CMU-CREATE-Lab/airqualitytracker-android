@@ -18,13 +18,14 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 
 public class ReadableShowActivity extends ActionBarActivity {
 
-//    private SimpleAddress showSimpleAddress;
     private Readable readable;
 
 
     protected void shareReading() {
+        String message, label;
+        Intent sendIntent = new Intent();
+
         try {
-            String message, label="";
             switch(readable.getReadableType()) {
                 case SPECK:
                     long micrograms = (long)readable.getReadableValue();
@@ -36,12 +37,11 @@ public class ReadableShowActivity extends ActionBarActivity {
                     break;
                 default:
                     Log.e(Constants.LOG_TAG,"shareReading could not find Readable type.");
-                    break;
+                    return;
             }
-            // "My air quality is <AQI label>. Learn more at https://www.specksensor.com/"
             message = "My air quality is " + label + ". Learn more at https://www.specksensor.com/";
+
             Log.d(Constants.LOG_TAG, "Sharing string: ''" + message + "''");
-            Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, message);
             sendIntent.setType("text/plain");
@@ -56,9 +56,9 @@ public class ReadableShowActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent;
         int itemIndex;
+        ActionBar actionBar;
 
         super.onCreate(savedInstanceState);
-        Log.d(Constants.LOG_TAG, "ReadableShowActivity onCreate");
         setContentView(R.layout.__readable_show__activity);
 
         intent = getIntent();
@@ -75,7 +75,7 @@ public class ReadableShowActivity extends ActionBarActivity {
                 return;
         }
 
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(readable.getName());
             actionBar.setDisplayHomeAsUpEnabled(true);

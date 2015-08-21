@@ -11,9 +11,9 @@ import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 
 /**
@@ -26,8 +26,70 @@ class StickyGridView extends RecyclerView.ViewHolder
     private boolean isHeader;
     private ReadableListActivity context;
     private StickyGridAdapter.LineItem lineItem;
+    private class CellViews {
+        TextView textAddressItemLocationName,textAddressItemLocationValue,textAddressAqiLabel;
+        LinearLayout background;
 
-    StickyGridView(View view, boolean isHeader, ReadableListActivity context) {
+        public CellViews(View view) {
+            textAddressItemLocationName = (TextView) view.findViewById(R.id.textAddressItemLocationName);
+            textAddressItemLocationValue = (TextView) view.findViewById(R.id.textAddressItemLocationValue);
+            textAddressAqiLabel = (TextView) view.findViewById(R.id.textAddressAqiLabel);
+            background = (LinearLayout) view.findViewById(R.id.linearLayoutBackground);
+        }
+    }
+
+
+    private void bindSpeck(Speck speck, CellViews cellViews) {
+        int label;
+        int index;
+
+        cellViews.textAddressItemLocationName.setText(speck.getName());
+        cellViews.textAddressAqiLabel.setVisibility(View.VISIBLE);
+        cellViews.textAddressAqiLabel.setText(Constants.Units.MICROGRAMS_PER_CUBIC_METER);
+
+        label = (int)speck.getFeedValue();
+        cellViews.textAddressItemLocationValue.setText(String.valueOf(label));
+        index = Constants.SpeckReading.getIndexFromReading(label);
+        if (index >= 0) {
+            try {
+                cellViews.background.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);
+            }
+        }
+    }
+
+
+    private void bindAddress(SimpleAddress simpleAddress, CellViews cellViews) {
+        double aqi;
+        int index;
+
+        cellViews.textAddressItemLocationName.setText(simpleAddress.getName());
+        cellViews.textAddressAqiLabel.setVisibility(View.VISIBLE);
+        cellViews.textAddressAqiLabel.setText(Constants.Units.AQI);
+
+        aqi = Converter.microgramsToAqi(simpleAddress.getClosestFeed().getFeedValue());
+        cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
+        index = Constants.AqiReading.getIndexFromReading(aqi);
+        if (index >= 0) {
+            try {
+                cellViews.background.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[index]));
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.AqiReading.aqiColors[index]);
+            }
+        }
+    }
+
+
+    private void bindDefault(Readable readable, CellViews cellViews) {
+        cellViews.textAddressItemLocationName.setText(readable.getName());
+        cellViews.textAddressItemLocationValue.setText(Constants.DefaultReading.DEFAULT_LOCATION);
+        cellViews.textAddressAqiLabel.setVisibility(View.GONE);
+        cellViews.background.setBackgroundColor(Color.parseColor(Constants.DefaultReading.DEFAULT_COLOR_BACKGROUND));
+    }
+
+
+    public StickyGridView(View view, boolean isHeader, ReadableListActivity context) {
         super(view);
         this.isHeader = isHeader;
         this.view = view;
@@ -45,92 +107,36 @@ class StickyGridView extends RecyclerView.ViewHolder
     }
 
 
-    public void bindHeader(StickyGridAdapter.LineItem lineItem) {
-        TextView textViewFragmentTitle;
-        textViewFragmentTitle = (TextView) view.findViewById(R.id.textViewFragmentTitle);
-        textViewFragmentTitle.setText(lineItem.text);
-        // TODO also handle as header?
-//        view.setLongClickable(true);
-//        view.setOnClickListener(this);
-//        view.setOnLongClickListener(this);
-    }
-
-
     public void bindItem(StickyGridAdapter.LineItem lineItem) {
-        TextView textAddressItemLocationName,textAddressItemLocationValue,textAddressAqiLabel;
-        LinearLayout background;
-        Readable readable;
+        if (lineItem.isHeader) {
+            TextView textViewFragmentTitle;
 
-        this.lineItem = lineItem;
-        readable = lineItem.readable;
-        textAddressItemLocationName = (TextView) view.findViewById(R.id.textAddressItemLocationName);
-        textAddressItemLocationValue = (TextView) view.findViewById(R.id.textAddressItemLocationValue);
-        textAddressAqiLabel = (TextView) view.findViewById(R.id.textAddressAqiLabel);
-        background = (LinearLayout) view.findViewById(R.id.linearLayoutBackground);
+            textViewFragmentTitle = (TextView) view.findViewById(R.id.textViewFragmentTitle);
+            textViewFragmentTitle.setText(lineItem.text);
+        } else {
+            CellViews cellViews = new CellViews(view);
+            this.lineItem = lineItem;
 
-        view.setLongClickable(true);
-        view.setOnClickListener(this);
-        view.setOnLongClickListener(this);
+            view.setLongClickable(true);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
 
-        switch(readable.getReadableType()) {
-            case SPECK:
-                Speck speck = (Speck)readable;
-                Log.i(Constants.LOG_TAG,"Found Speck name="+speck.getName());
-
-                textAddressItemLocationName.setText(speck.getName());
-                if (speck.getFeedValue() <= 0.0) {
-                    textAddressItemLocationValue.setText("N/A");
-                    textAddressAqiLabel.setVisibility(View.GONE);
-                    background.setBackgroundColor(Color.parseColor("#404041"));
-                } else {
-                    int label = (int)speck.getFeedValue();
-                    textAddressItemLocationValue.setText(String.valueOf(label));
-                    textAddressAqiLabel.setVisibility(View.VISIBLE);
-                    textAddressAqiLabel.setText("µg/m³");
-                    int index = Constants.SpeckReading.getIndexFromReading(label);
-                    if (index >= 0) {
-                        try {
-                            background.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
-                        } catch (Exception e) {
-                            // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
-                            Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);
-                        }
-                    }
+            if (lineItem.readable.hasReadableValue()) {
+                switch(lineItem.readable.getReadableType()) {
+                    case SPECK:
+                        bindSpeck((Speck)lineItem.readable, cellViews);
+                        break;
+                    case ADDRESS:
+                        bindAddress((SimpleAddress)lineItem.readable, cellViews);
+                        break;
+                    default:
+                        Log.e(Constants.LOG_TAG,"Unknown readable type");
+                        bindDefault(lineItem.readable, cellViews);
+                        break;
                 }
-                break;
-            case ADDRESS:
-                SimpleAddress simpleAddress = (SimpleAddress)readable;
-
-                textAddressItemLocationName.setText(simpleAddress.getName());
-                if (simpleAddress.getClosestFeed() == null) {
-                    textAddressItemLocationValue.setText("N/A");
-                } else {
-                    double label = Converter.microgramsToAqi(simpleAddress.getClosestFeed().getFeedValue());
-                    textAddressItemLocationValue.setText(String.valueOf((int)label));
-                }
-
-                // Description info based on closest feed reading
-                if (simpleAddress.getClosestFeed() == null) {
-                    textAddressAqiLabel.setVisibility(View.GONE);
-                    background.setBackgroundColor(Color.parseColor("#404041"));
-                } else {
-                    double aqi = Converter.microgramsToAqi(simpleAddress.getClosestFeed().getFeedValue());
-                    textAddressAqiLabel.setVisibility(View.VISIBLE);
-                    textAddressAqiLabel.setText("AQI");
-                    int index = Constants.AqiReading.getIndexFromReading(aqi);
-                    if (index >= 0) {
-                        try {
-                            background.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[index]));
-                        } catch (Exception e) {
-                            // Has to catch failure to parse (0x doesn't work but # does because Java is trash)
-                            Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.AqiReading.aqiColors[index]);
-                        }
-                    }
-                }
-                break;
-            default:
-                Log.e(Constants.LOG_TAG,"Unknown readable type");
-                break;
+            } else {
+                bindDefault(lineItem.readable, cellViews);
+            }
         }
     }
 
@@ -138,13 +144,13 @@ class StickyGridView extends RecyclerView.ViewHolder
     @Override
     public void onClick(View view) {
         if (!isHeader) {
-            Log.i(Constants.LOG_TAG, "CLICK HANDLER: " + ((TextView) view.findViewById(R.id.textAddressItemLocationName)).getText());
+            Log.v(Constants.LOG_TAG, "CLICK HANDLER: " + ((TextView) view.findViewById(R.id.textAddressItemLocationName)).getText());
             Intent intent = new Intent(context, ReadableShowActivity.class);
             intent.putExtra(Constants.AddressList.ADDRESS_INDEX,
                     GlobalHandler.getInstance(context).headerReadingsHashMap.adapterList.indexOf(this.lineItem));
             context.startActivity(intent);
         } else {
-            Log.i(Constants.LOG_TAG, "CLICK HANDLER (header)");
+            Log.v(Constants.LOG_TAG, "CLICK HANDLER (header)");
         }
     }
 
@@ -152,10 +158,10 @@ class StickyGridView extends RecyclerView.ViewHolder
     @Override
     public boolean onLongClick(View view) {
         if (!isHeader) {
-            Log.i(Constants.LOG_TAG, "long-click on grid item");
+            Log.v(Constants.LOG_TAG, "long-click on grid item");
             context.openDialogDelete(this.lineItem);
         } else {
-            Log.i(Constants.LOG_TAG, "long-click (header) does nothing");
+            Log.v(Constants.LOG_TAG, "long-click (header) does nothing");
         }
         return true;
     }

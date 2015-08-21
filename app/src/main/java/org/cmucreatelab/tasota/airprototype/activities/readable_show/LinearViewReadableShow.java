@@ -16,9 +16,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
  */
 public class LinearViewReadableShow {
 
-//    private SimpleAddress address;
     private Readable readable;
-
     private TextView textShowAddressName;
     private TextView textShowAddressAqiValue;
     private TextView textShowAddressAqiRange;
@@ -27,20 +25,52 @@ public class LinearViewReadableShow {
     private TextView textShowAddressAqiLabel;
     private RelativeLayout layoutShowAddress;
 
-    //private FrameLayout frameShowAddressWeatherValue, frameShowAddressWeatherIcon;
-
 
     private void defaultView() {
-        // TODO change default message?
         Log.w(Constants.LOG_TAG, "warning: using default populateLinearView");
         this.textShowAddressAqiValue.setText("");
         textShowAddressAqiRange.setText("");
         textShowAddressAqiLabel.setVisibility(View.INVISIBLE);
-        textShowAddressAqiTitle.setText("Unavailable");
-        textShowAddressAqiDescription.setText("The current AQI for this region is unavailable.");
-//        layoutShowAddress.setBackgroundColor(Color.parseColor("#f1f1f2"));
-//        layoutShowAddress.setBackgroundResource(R.drawable.gradient_0);
-        layoutShowAddress.setBackgroundColor(Color.parseColor("#404041"));
+        textShowAddressAqiTitle.setText(Constants.DefaultReading.DEFAULT_TITLE);
+        textShowAddressAqiDescription.setText(Constants.DefaultReading.DEFAULT_DESCRIPTION);
+        layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.DefaultReading.DEFAULT_COLOR_BACKGROUND));
+    }
+
+
+    private void addressView(double readableValue) {
+        int aqi,index;
+
+        aqi = (int) Converter.microgramsToAqi(readableValue);
+        this.textShowAddressAqiValue.setText(String.valueOf(aqi));
+        index = Constants.AqiReading.getIndexFromReading(aqi);
+        if (index < 0) {
+            this.defaultView();
+        } else {
+            textShowAddressAqiRange.setText(Constants.AqiReading.getRangeFromIndex(index) + " AQI");
+            textShowAddressAqiTitle.setText(Constants.AqiReading.titles[index]);
+            textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
+            layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[index]);
+            textShowAddressAqiLabel.setText(Constants.Units.RANGE_MICROGRAMS_PER_CUBIC_METER);
+        }
+    }
+
+
+    private void speckView(double readableValue) {
+        int index;
+
+        this.textShowAddressAqiValue.setText(String.valueOf((long)readableValue));
+        index = Constants.AqiReading.getIndexFromReading((long)readableValue);
+        if (index < 0) {
+            this.defaultView();
+        } else {
+            textShowAddressAqiRange.setText(Constants.SpeckReading.getRangeFromIndex(index) + " Micrograms");
+            textShowAddressAqiTitle.setText(Constants.SpeckReading.titles[index]);
+            // TODO descriptions for speck
+//                    textShowAddressAqiDescription.setText(Constants.SpeckReading.descriptions[ugIndex]);
+            textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
+            layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+            textShowAddressAqiLabel.setText(Constants.Units.RANGE_AQI);
+        }
     }
 
 
@@ -57,59 +87,25 @@ public class LinearViewReadableShow {
         // use custom fonts
         Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
         textShowAddressAqiValue.setTypeface(fontAqi);
-
-        this.layoutShowAddress.setBackgroundColor(Color.parseColor("#f1f1f2"));
     }
 
 
     public void populateLinearView() {
-        this.textShowAddressName.setText(this.readable.getName());
-        double readableValue = readable.getReadableValue();
+        this.textShowAddressName.setText(readable.getName());
 
-        if (readable.getReadableType() == Readable.Type.ADDRESS) {
-            if (readable.hasReadableValue()) {
-                int aqiIndex;
-                long aqi;
+        if (readable.hasReadableValue()) {
+            double readableValue = readable.getReadableValue();
 
-                aqi = (long) Converter.microgramsToAqi(readableValue);
-                this.textShowAddressAqiValue.setText(String.valueOf(aqi));
-                aqiIndex = Constants.AqiReading.getIndexFromReading(aqi);
-                if (aqiIndex < 0) {
-                    this.defaultView();
-                } else {
-                    textShowAddressAqiRange.setText(Constants.AqiReading.getRangeFromIndex(aqiIndex) + " AQI");
-                    textShowAddressAqiTitle.setText(Constants.AqiReading.titles[aqiIndex]);
-                    textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[aqiIndex]);
-                    //                layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[aqiIndex]));
-                    layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[aqiIndex]);
-                    textShowAddressAqiLabel.setText("AQI    /500");
-                }
+            if (readable.getReadableType() == Readable.Type.ADDRESS) {
+                addressView(readableValue);
+            } else if (readable.getReadableType() == Readable.Type.SPECK) {
+                speckView(readableValue);
             } else {
-                this.defaultView();
-            }
-        } else if (readable.getReadableType() == Readable.Type.SPECK) {
-            if (readable.hasReadableValue()) {
-                int ugIndex;
-
-                this.textShowAddressAqiValue.setText(String.valueOf((long)readableValue));
-                ugIndex = Constants.AqiReading.getIndexFromReading((long)readableValue);
-                if (ugIndex < 0) {
-                    this.defaultView();
-                } else {
-                    textShowAddressAqiRange.setText(Constants.SpeckReading.getRangeFromIndex(ugIndex) + " Micrograms");
-                    textShowAddressAqiTitle.setText(Constants.SpeckReading.titles[ugIndex]);
-                    // TODO descriptions for speck
-//                    textShowAddressAqiDescription.setText(Constants.SpeckReading.descriptions[ugIndex]);
-                    textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[ugIndex]);
-                    layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[ugIndex]));
-                    textShowAddressAqiLabel.setText("µg/m³    /500");
-                }
-            } else {
-                this.defaultView();
+                Log.w(Constants.LOG_TAG, "Tried to populate LinearView in AddressShow with unimplemented Readable object.");
+                defaultView();
             }
         } else {
-            Log.w(Constants.LOG_TAG, "Tried to populate LinearView in AddressShow with unimplemented Readable object.");
-            this.defaultView();
+            defaultView();
         }
     }
 

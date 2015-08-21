@@ -36,7 +36,6 @@ public class ReadableListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(Constants.LOG_TAG, "ReadableListActivity onCreate");
         setContentView(R.layout.__readable_list__activity);
 
         ActionBar actionBar = getSupportActionBar();
@@ -45,8 +44,7 @@ public class ReadableListActivity extends ActionBarActivity {
             actionBar.setCustomView(R.layout.action_bar);
         }
 
-        GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
-        globalHandler.updateAddresses();
+        GlobalHandler.getInstance(getApplicationContext()).updateReadings();
 
         if (savedInstanceState == null) {
             this.stickyGrid = new StickyGridFragment();
@@ -98,7 +96,7 @@ public class ReadableListActivity extends ActionBarActivity {
                 return true;
             case R.id.action_refresh:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: REFRESH selected.");
-                GlobalHandler.getInstance(this.getApplicationContext()).updateAddresses();
+                GlobalHandler.getInstance(this.getApplicationContext()).updateReadings();
                 return true;
             case R.id.action_new:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");

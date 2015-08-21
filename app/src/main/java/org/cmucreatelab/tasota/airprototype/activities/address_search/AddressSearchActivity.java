@@ -46,42 +46,54 @@ public class AddressSearchActivity extends ActionBarActivity
         double latd,longd;
         String name, zipcode;
         SimpleAddress result;
+        GlobalHandler globalHandler;
 
+        // get lat/long
         latd = address.getLatitude();
         longd = address.getLongitude();
+
+        // get name
         if (address.getFeatureName() != null) {
             name = address.getFeatureName();
         } else {
             name = ((EditText)findViewById(R.id.editTextAddressSearch)).getText().toString();
         }
+
+        // get zipcode (if it exists)
         zipcode = address.getPostalCode();
         if (zipcode == null) {
             zipcode = "";
         }
 
-        Log.d(Constants.LOG_TAG,"AddressSearchActivity returning with latd="+latd+", longd="+longd+" using name="+name+" and zipcode="+zipcode);
+        // add to database and data structure
+        Log.i(Constants.LOG_TAG,"AddressSearchActivity returning with latd="+latd+", longd="+longd+" using name="+name+" and zipcode="+zipcode);
         result = AddressDbHelper.createAddressInDatabase(this, name, zipcode, latd, longd);
-        GlobalHandler globalHandler = GlobalHandler.getInstance(this);
-//        globalHandler.addressFeedsHashMap.addAddress(result);
+        globalHandler = GlobalHandler.getInstance(this);
         globalHandler.headerReadingsHashMap.addReading(result);
-        globalHandler.updateAddresses();
-        globalHandler.headerReadingsHashMap.refreshHash();
+        globalHandler.updateReadings();
+
+        // finish activity
         finish();
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar actionBar;
         EditText editText;
+
+        // init activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__address_search__activity);
 
-        ActionBar actionBar = getSupportActionBar();
+        // setup action bar
+        actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Add a Tracker");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        // add listener on text field
         editText = (EditText)findViewById(R.id.editTextAddressSearch);
         editText.addTextChangedListener(this);
         listAdapter = new ArrayAdapterAddressSearch(this);

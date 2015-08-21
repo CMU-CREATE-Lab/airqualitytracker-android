@@ -15,22 +15,17 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
  */
 public class StickyGridFragment extends Fragment {
 
-    private final boolean mAreMarginsFixed = true;
-    private ViewHolder mViews;
-    private StickyGridAdapter mAdapter;
-    private int mHeaderDisplay = 17;
-
     private static class ViewHolder {
-        private final RecyclerView mRecyclerView;
+        private final RecyclerView recyclerView;
 
         public ViewHolder(View view) {
-            mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+            recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         }
         public void initViews(LayoutManager lm) {
-            mRecyclerView.setLayoutManager(lm);
+            recyclerView.setLayoutManager(lm);
         }
         public void setAdapter(RecyclerView.Adapter<?> adapter) {
-            mRecyclerView.setAdapter(adapter);
+            recyclerView.setAdapter(adapter);
         }
     }
 
@@ -44,12 +39,15 @@ public class StickyGridFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ViewHolder viewHolder;
+        StickyGridAdapter adapter;
 
-        mViews = new ViewHolder(view);
-        mViews.initViews(new LayoutManager(getActivity()));
         // ASSERT: we can cast getActivity to be ReadableListActivity
-        mAdapter = new StickyGridAdapter((ReadableListActivity)getActivity(), mHeaderDisplay, mAreMarginsFixed);
-        mViews.setAdapter(mAdapter);
+        adapter = new StickyGridAdapter((ReadableListActivity)getActivity());
+
+        viewHolder = new ViewHolder(view);
+        viewHolder.initViews(new LayoutManager(getActivity()));
+        viewHolder.setAdapter(adapter);
     }
 
 
@@ -57,8 +55,8 @@ public class StickyGridFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(Constants.StickyGrid.KEY_HEADER_POSITIONING, mHeaderDisplay);
-        outState.putBoolean(Constants.StickyGrid.KEY_MARGINS_FIXED, mAreMarginsFixed);
+        outState.putInt(Constants.StickyGrid.KEY_HEADER_POSITIONING, Constants.StickyGrid.HEADER_DISPLAY);
+        outState.putBoolean(Constants.StickyGrid.KEY_MARGINS_FIXED, Constants.StickyGrid.MARGINS_ARE_FIXED);
     }
 
 }

@@ -57,7 +57,7 @@ public class GlobalHandler {
     }
 
 
-    public void updateAddresses() {
+    public void updateReadings() {
         headerReadingsHashMap.updateAddresses();
         headerReadingsHashMap.updateSpecks();
         if (settingsHandler.appUsesLocation()) {

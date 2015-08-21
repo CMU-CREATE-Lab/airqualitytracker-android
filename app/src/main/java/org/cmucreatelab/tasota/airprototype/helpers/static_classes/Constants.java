@@ -9,18 +9,35 @@ import org.cmucreatelab.tasota.airprototype.R;
 public final class Constants {
 
     public static final String LOG_TAG = "AirPrototype";
+
     // these are the channel names that we want our feeds to report
     public static final String[] channelNames = {
             "pm2_5", "PM2_5", "pm2_5_1hr",
             "pm2_5_24hr", "PM25B_UG_M3", "PM25_UG_M3",
             "particle_concentration"
     };
+
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
+
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
     public static final class Location {
         public static final long LOCATION_REQUEST_INTERVAL = 600000;
         public static final long LOCATION_REQUEST_FASTEST_INTERVAL = 60000;
+    }
+
+    public static final class Units {
+        public static final String MICROGRAMS_PER_CUBIC_METER = "µg/m³";
+        public static final String AQI = "AQI";
+        public static final String RANGE_MICROGRAMS_PER_CUBIC_METER = "µg/m³    /500";
+        public static final String RANGE_AQI = "AQI    /500";
+    }
+
+    public static final class DefaultReading {
+        public static final String DEFAULT_LOCATION = "N/A";
+        public static final String DEFAULT_COLOR_BACKGROUND = "#404041";
+        public static final String DEFAULT_TITLE = "Unavailable";
+        public static final String DEFAULT_DESCRIPTION = "The current AQI for this region is unavailable.";
     }
 
     public static final class SpeckReading {
@@ -181,6 +198,10 @@ public final class Constants {
         public static final String GRID_TAG = "tag_grid_fragment";
         public static final String KEY_HEADER_POSITIONING = "key_header_mode";
         public static final String KEY_MARGINS_FIXED = "key_margins_fixed";
+        public static final boolean MARGINS_ARE_FIXED = true;
+        public static final int HEADER_DISPLAY = 17;
+        public static final int VIEW_TYPE_HEADER = 0x09;
+        public static final int VIEW_TYPE_CONTENT = 0x00;
     }
 
     public final class Esdr {
