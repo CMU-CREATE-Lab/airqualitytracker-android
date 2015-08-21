@@ -17,6 +17,11 @@ public final class Constants {
             "particle_concentration"
     };
 
+    public static final String[] HEADER_TITLES = {
+            "SPECK DEVICES",
+            "CITIES"
+    };
+
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
 
     public static final boolean USES_BACKGROUND_SERVICES = true;

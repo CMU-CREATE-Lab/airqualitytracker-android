@@ -18,11 +18,13 @@ public class ServicesHandler {
 
     private static ServicesHandler classInstance;
     private GlobalHandler globalHandler;
+    public GoogleApiClientHandler googleApiClientHandler;
 
 
     // Nobody accesses the constructor
     private ServicesHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
+        this.googleApiClientHandler = GoogleApiClientHandler.getInstance(globalHandler);
     }
 
 
@@ -48,13 +50,13 @@ public class ServicesHandler {
 
     // perform location updates periodically
     protected void startLocationService() {
-        if (globalHandler.googleApiClientHandler.isClientConnected()) {
+        if (googleApiClientHandler.isClientConnected()) {
             LocationRequest locationRequest = new LocationRequest();
             locationRequest.setInterval(Constants.Location.LOCATION_REQUEST_INTERVAL);
             locationRequest.setFastestInterval(Constants.Location.LOCATION_REQUEST_FASTEST_INTERVAL);
             locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
             LocationServices.FusedLocationApi.requestLocationUpdates(
-                    globalHandler.googleApiClientHandler.googleApiClient, locationRequest, globalHandler.googleApiClientHandler);
+                    googleApiClientHandler.googleApiClient, locationRequest, googleApiClientHandler);
         } else {
             Log.e(Constants.LOG_TAG, "googleApiClientHandler client is not connected.");
         }
@@ -63,7 +65,7 @@ public class ServicesHandler {
 
     // stop periodic location updates
     protected void stopLocationService() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(globalHandler.googleApiClientHandler.googleApiClient, globalHandler.googleApiClientHandler);
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClientHandler.googleApiClient, googleApiClientHandler);
     }
 
 

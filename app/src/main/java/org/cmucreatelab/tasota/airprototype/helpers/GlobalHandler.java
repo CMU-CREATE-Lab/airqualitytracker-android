@@ -17,17 +17,10 @@ public class GlobalHandler {
     protected Context appContext;
     // managed global instances
     public HttpRequestHandler httpRequestHandler;
-    public GoogleApiClientHandler googleApiClientHandler;
     public SettingsHandler settingsHandler;
     public ServicesHandler servicesHandler;
     // data structure
     public HeaderReadingsHashMap headerReadingsHashMap;
-    // lists used for ListViews and their adapters
-//    public final ArrayList<Feed> listFeedsUser = new ArrayList<>();
-    // TODO create logic for controlling when update needs to occur
-    // a flag stating whether the views need to update addresses
-    public boolean addressListNeedsUpdated = true;
-
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public StickyGridAdapter gridAdapter;
 
@@ -39,7 +32,6 @@ public class GlobalHandler {
         this.settingsHandler = SettingsHandler.getInstance(this);
         this.servicesHandler = ServicesHandler.getInstance(this);
         this.httpRequestHandler = HttpRequestHandler.getInstance(this);
-        this.googleApiClientHandler = GoogleApiClientHandler.getInstance(this);
         // data structures
         this.headerReadingsHashMap = new HeaderReadingsHashMap(this);
         if (Constants.USES_BACKGROUND_SERVICES)
@@ -47,9 +39,8 @@ public class GlobalHandler {
     }
 
 
-    /*
-     * This function provides a mechanism for notifying all (active) list adapters in the app when the dataset gets updated.
-     */
+    // This function provides a mechanism for notifying all (active) list adapters
+    // in the app when the dataset gets updated.
     public void notifyGlobalDataSetChanged() {
         if (this.gridAdapter != null) {
             this.gridAdapter.notifyDataSetChanged();
@@ -61,17 +52,17 @@ public class GlobalHandler {
         headerReadingsHashMap.updateAddresses();
         headerReadingsHashMap.updateSpecks();
         if (settingsHandler.appUsesLocation()) {
-            if (googleApiClientHandler.googleApiClient.isConnected()) {
+            if (servicesHandler.googleApiClientHandler.googleApiClient.isConnected()) {
                 updateLastLocation();
             } else {
-                googleApiClientHandler.connect();
+                servicesHandler.googleApiClientHandler.connect();
             }
         }
     }
 
 
     public void updateLastLocation() {
-        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClientHandler.googleApiClient);
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(servicesHandler.googleApiClientHandler.googleApiClient);
         if (lastLocation == null) {
             Log.w(Constants.LOG_TAG, "getLastLocation returned null.");
         } else {

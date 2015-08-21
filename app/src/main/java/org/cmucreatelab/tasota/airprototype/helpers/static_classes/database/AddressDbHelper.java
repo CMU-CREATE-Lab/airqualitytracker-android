@@ -16,7 +16,7 @@ public class AddressDbHelper {
 
 
     // destroy address in database
-    public static boolean destroy(SimpleAddress simpleAddress, Context ctx) {
+    public static boolean destroy(SimpleAddress simpleAddress, Context context) {
         if (simpleAddress.get_id() < 0) {
             return false;
         } else {
@@ -26,7 +26,7 @@ public class AddressDbHelper {
             String[] selectionArgs = { String.valueOf(simpleAddress.get_id()) };
             int result;
 
-            mDbHelper = new AddressContract(ctx);
+            mDbHelper = new AddressContract(context);
             db = mDbHelper.getWritableDatabase();
             result = db.delete(AddressContract.TABLE_NAME, selection, selectionArgs);
             if (result == 1) {

@@ -16,10 +16,10 @@ public class JsonParser {
 
     // parse feeds within maxTime and that have at least 1 valid channel
     public static void populateFeedsFromJson(ArrayList<Feed> feeds, JSONObject response, double maxTime) {
-        try {
-            JSONArray jsonFeeds;
-            int i, size;
+        JSONArray jsonFeeds;
+        int i, size;
 
+        try {
             jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
             size = jsonFeeds.length();
             for (i = 0; i < size; i++) {
@@ -38,10 +38,10 @@ public class JsonParser {
 
     // parse feeds, regardless of their last updated time or number of channels
     public static void populateAllFeedsFromJson(ArrayList<Feed> feeds, JSONObject response) {
-        try {
-            JSONArray jsonFeeds;
-            int i, size;
+        JSONArray jsonFeeds;
+        int i, size;
 
+        try {
             jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
             size = jsonFeeds.length();
             for (i = 0; i < size; i++) {

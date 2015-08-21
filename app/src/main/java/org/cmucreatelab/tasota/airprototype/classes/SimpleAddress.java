@@ -111,7 +111,6 @@ public class SimpleAddress implements Readable {
                     if (closestFeed != null) {
                         SimpleAddress.this.setClosestFeed(closestFeed);
                         // ASSERT all channels in the list of channels are usable readings
-                        // TODO we use the first channel listed; handle when we do not have all channels as PM25
                         globalHandler.httpRequestHandler.requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
                     }
                 } else {

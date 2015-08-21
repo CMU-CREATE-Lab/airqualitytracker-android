@@ -11,7 +11,6 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         setupSimplePreferencesScreen();
     }
 
@@ -22,9 +21,9 @@ public class SettingsActivity extends PreferenceActivity {
         GlobalHandler globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
         globalHandler.updateSettings();
         if (globalHandler.settingsHandler.appUsesLocation()) {
-            globalHandler.googleApiClientHandler.connect();
+            globalHandler.servicesHandler.googleApiClientHandler.connect();
         } else {
-            globalHandler.googleApiClientHandler.disconnect();
+            globalHandler.servicesHandler.googleApiClientHandler.disconnect();
         }
         super.onDestroy();
     }
