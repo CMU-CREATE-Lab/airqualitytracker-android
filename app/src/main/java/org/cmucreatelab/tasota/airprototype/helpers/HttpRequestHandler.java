@@ -12,6 +12,8 @@ import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by mike on 5/29/15.
  */
@@ -81,12 +83,13 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     public void requestChannelReading(final Feed feed, final Channel channel) {
-        esdrFeedsHandler.requestChannelReading("",feed, channel);
+        esdrFeedsHandler.requestChannelReading("",feed, channel, 0);
     }
 
 
     public void requestAuthorizedChannelReading(String authToken, final Feed feed, final Channel channel) {
-        esdrFeedsHandler.requestChannelReading(authToken, feed, channel);
+        esdrFeedsHandler.requestChannelReading(authToken, feed, channel,
+                (long)(new Date().getTime() / 1000.0) - Constants.SPECKS_MAX_TIME_RANGE);
     }
 
 

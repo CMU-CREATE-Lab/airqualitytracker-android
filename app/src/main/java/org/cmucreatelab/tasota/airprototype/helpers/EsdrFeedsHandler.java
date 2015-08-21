@@ -64,7 +64,7 @@ public class EsdrFeedsHandler {
     }
 
 
-    public void requestChannelReading(String authToken, final Feed feed, final Channel channel) {
+    public void requestChannelReading(String authToken, final Feed feed, final Channel channel, final long maxTime) {
         int requestMethod;
         String requestUrl;
         Response.Listener<JSONObject> response;
@@ -97,8 +97,23 @@ public class EsdrFeedsHandler {
                 }
                 if (resultValue != null && resultTime != null) {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
-                    feed.setFeedValue(Double.parseDouble(resultValue));
-                    feed.setLastTime(Double.parseDouble(resultTime));
+                    if (maxTime <= 0) {
+                        feed.setFeedValue(Double.parseDouble(resultValue));
+                        feed.setLastTime(Double.parseDouble(resultTime));
+                    } else {
+                        // TODO there might be a better (more organized) way to verify a channel's maxTime
+                        Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
+                        if (maxTime <= Long.parseLong(resultTime)) {
+                            feed.setHasReadableValue(true);
+                            feed.setFeedValue(Double.parseDouble(resultValue));
+                            feed.setLastTime(Double.parseDouble(resultTime));
+                        } else {
+                            feed.setHasReadableValue(false);
+                            feed.setFeedValue(0);
+                            feed.setLastTime(Double.parseDouble(resultTime));
+                            Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
+                        }
+                    }
                     globalHandler.notifyGlobalDataSetChanged();
                 }
             }

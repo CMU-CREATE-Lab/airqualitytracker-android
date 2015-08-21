@@ -10,11 +10,16 @@ import java.util.ArrayList;
 public class Feed implements Readable {
 
     private static final Type readableType = Readable.Type.FEED;
+    private boolean hasReadableValue;
+    public void setHasReadableValue(boolean hasReadableValue) {
+        this.hasReadableValue = hasReadableValue;
+    }
     public Type getReadableType() {
         return readableType;
     }
     public boolean hasReadableValue() {
-        return (channels.size() > 0);
+//        return (channels.size() > 0);
+        return this.hasReadableValue;
     }
     public double getReadableValue() {
         return this.feedValue;

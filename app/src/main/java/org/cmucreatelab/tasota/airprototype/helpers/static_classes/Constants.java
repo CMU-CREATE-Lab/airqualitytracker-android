@@ -28,9 +28,11 @@ public final class Constants {
 
     public static final long READINGS_MAX_TIME_RANGE = 86400; // 24 hours
 
+    public static final long SPECKS_MAX_TIME_RANGE = 1800; // 30 minutes
+
     public static final class Location {
-        public static final long LOCATION_REQUEST_INTERVAL = 600000;
-        public static final long LOCATION_REQUEST_FASTEST_INTERVAL = 60000;
+        public static final long LOCATION_REQUEST_INTERVAL = 600000; // 10 minutes
+        public static final long LOCATION_REQUEST_FASTEST_INTERVAL = 60000; // 1 minute
     }
 
     public static final class Units {
@@ -193,8 +195,7 @@ public final class Constants {
     public final class EsdrRefreshIntent {
         public static final String RECEIVER = APP_PACKAGE_NAME + ".esdrrefreshintent.receiver";
         public static final String ALARM_RECEIVER = RECEIVER + ".alarmmanager";
-        // TODO this interval should be much larger (days, even 1 week); shortened for testing only
-        public static final long ALARM_INTERVAL_MILLISECONDS = 60000;
+        public static final long ALARM_INTERVAL_MILLISECONDS = 86400000; // 24 hours
     }
 
     public final class AddressList {
