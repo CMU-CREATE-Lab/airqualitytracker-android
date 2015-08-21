@@ -7,9 +7,22 @@ import java.util.ArrayList;
 /**
  * Created by mike on 6/1/15.
  */
-public class Feed {
+public class Feed implements Readable {
 
-    private static final Readable.Type readableType = Readable.Type.FEED;
+    private static final Type readableType = Readable.Type.FEED;
+    public Type getReadableType() {
+        return readableType;
+    }
+    public boolean hasReadableValue() {
+        return (channels.size() > 0);
+    }
+    public double getReadableValue() {
+        return this.feedValue;
+    }
+    public String getName() {
+        return name;
+    }
+
     // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
     protected long feed_id;
     protected String name;
@@ -20,20 +33,8 @@ public class Feed {
     protected double longitude;
     protected long productId;
     protected ArrayList<Channel> channels;
-    // The relevant value (PM2.5) pulled for the given Feed
     protected double feedValue;
     protected double lastTime;
-
-    public Readable.Type getReadableType() {
-        return readableType;
-    }
-    public boolean hasReadableValue() {
-        return (channels.size() > 0);
-    }
-    public double getReadableValue() {
-        return this.feedValue;
-    }
-
     public long getProductId() {
         return productId;
     }
@@ -45,9 +46,6 @@ public class Feed {
     }
     public void setFeed_id(long feed_id) {
         this.feed_id = feed_id;
-    }
-    public String getName() {
-        return name;
     }
     public void setName(String name) {
         this.name = name;
@@ -102,13 +100,6 @@ public class Feed {
         this.channels = new ArrayList<>();
         this.name = "";
         this.exposure = "";
-    }
-
-
-    @Override
-    public String toString() {
-        // TODO this is used by android.R.layout.simple_list_item_1 as a simple ArrayAdapter in ReadableShowActivity and LoginActivity; should be deleted when no longer used
-        return "(" + this.feed_id + ")" + this.name;
     }
 
 }

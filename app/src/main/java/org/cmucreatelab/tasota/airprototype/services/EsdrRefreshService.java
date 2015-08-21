@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
-import android.widget.Toast;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
@@ -42,17 +41,11 @@ public class EsdrRefreshService extends Service {
                 destroyAlarm();
             }
 
-            // TODO handle intent (if we ever decide to send something)
-
             // create alarm manager/handler
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     String refreshToken = globalHandler.settingsHandler.getRefreshToken();
-                    // TODO toast for debugging only
-                    Log.d(Constants.LOG_TAG, "EsdrRefreshService onHandleIntent: refreshToken=" + refreshToken);
-                    Toast.makeText(EsdrRefreshService.this, "refreshToken is "+refreshToken, Toast.LENGTH_SHORT).show();
-
                     globalHandler.httpRequestHandler.requestEsdrRefresh(refreshToken);
                 }
             };

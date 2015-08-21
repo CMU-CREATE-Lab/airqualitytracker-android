@@ -21,6 +21,8 @@ public final class Constants {
 
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
+    public static final long READINGS_MAX_TIME_RANGE = 86400; // 24 hours
+
     public static final class Location {
         public static final long LOCATION_REQUEST_INTERVAL = 600000;
         public static final long LOCATION_REQUEST_FASTEST_INTERVAL = 60000;

@@ -4,12 +4,13 @@ package org.cmucreatelab.tasota.airprototype.classes;
 /**
  * Created by mike on 8/14/15.
  */
-public class Speck extends Feed implements Readable {
+public class Speck extends Feed {
 
-    private static final Readable.Type readableType = Readable.Type.SPECK;
-    public Readable.Type getReadableType() {
+    private static final Type readableType = Readable.Type.SPECK;
+    public Type getReadableType() {
         return readableType;
     }
+
 
     public Speck(Feed feed) {
         this.feed_id = feed.feed_id;

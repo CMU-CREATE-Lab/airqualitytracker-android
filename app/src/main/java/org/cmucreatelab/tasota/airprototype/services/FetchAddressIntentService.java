@@ -52,8 +52,6 @@ public class FetchAddressIntentService extends IntentService {
             deliverResultToReceiver(Constants.AddressIntent.FAILURE_RESULT, "FAILED");
         } else {
             Address address = results.get(0);
-            // avoid printing zip along with city?
-//            deliverResultToReceiver(Constants.AddressIntent.SUCCESS_RESULT, address.getAddressLine(address.getMaxAddressLineIndex()-1) );
             deliverResultToReceiver(Constants.AddressIntent.SUCCESS_RESULT, address.getLocality());
         }
     }

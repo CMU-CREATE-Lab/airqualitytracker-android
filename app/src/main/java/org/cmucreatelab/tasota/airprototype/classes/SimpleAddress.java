@@ -15,15 +15,7 @@ import java.util.Date;
  */
 public class SimpleAddress implements Readable {
 
-    private static final Readable.Type readableType = Readable.Type.ADDRESS;
-    private long _id;
-    private String name;
-    private String zipcode;
-    private double latitude,longitude;
-    private Feed closestFeed = null;
-    public final ArrayList<Feed> feeds = new ArrayList<>();
-    private boolean isCurrentLocation;
-
+    private static final Type readableType = Readable.Type.ADDRESS;
     public Type getReadableType() {
         return readableType;
     }
@@ -36,7 +28,17 @@ public class SimpleAddress implements Readable {
         Log.w(Constants.LOG_TAG,"Tried getReadableValue on SimpleAddress with hasReadableValue=false; returning 0");
         return 0.0;
     }
+    public String getName() {
+        return name;
+    }
 
+    private long _id;
+    private String name;
+    private String zipcode;
+    private double latitude,longitude;
+    private Feed closestFeed = null;
+    public final ArrayList<Feed> feeds = new ArrayList<>();
+    private boolean isCurrentLocation;
     public long get_id() {
         return _id;
     }
@@ -45,9 +47,6 @@ public class SimpleAddress implements Readable {
     }
     public void set_id(long _id) {
         this._id = _id;
-    }
-    public String getName() {
-        return name;
     }
     public void setName(String name) {
         this.name = name;
@@ -99,7 +98,7 @@ public class SimpleAddress implements Readable {
     public void requestUpdateFeeds(final GlobalHandler globalHandler) {
         this.feeds.clear();
         // the past 24 hours
-        final double maxTime = new Date().getTime() / 1000.0 - 86400;
+        final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
@@ -114,7 +113,6 @@ public class SimpleAddress implements Readable {
                         // ASSERT all channels in the list of channels are usable readings
                         // TODO we use the first channel listed; handle when we do not have all channels as PM25
                         globalHandler.httpRequestHandler.requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
-//                        globalHandler.notifyGlobalDataSetChanged();
                     }
                 } else {
                     Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
