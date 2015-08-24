@@ -59,7 +59,7 @@ public class LinearViewReadableShow {
         int index;
 
         this.textShowAddressAqiValue.setText(String.valueOf((long)readableValue));
-        index = Constants.AqiReading.getIndexFromReading((long)readableValue);
+        index = Constants.SpeckReading.getIndexFromReading((long)readableValue);
         if (index < 0) {
             this.defaultView();
         } else {
