@@ -50,7 +50,7 @@ public class LinearViewReadableShow {
             textShowAddressAqiTitle.setText(Constants.AqiReading.titles[index]);
             textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
             layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[index]);
-            textShowAddressAqiLabel.setText(Constants.Units.RANGE_MICROGRAMS_PER_CUBIC_METER);
+            textShowAddressAqiLabel.setText(Constants.Units.RANGE_AQI);
         }
     }
 
@@ -69,7 +69,7 @@ public class LinearViewReadableShow {
 //                    textShowAddressAqiDescription.setText(Constants.SpeckReading.descriptions[ugIndex]);
             textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
             layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
-            textShowAddressAqiLabel.setText(Constants.Units.RANGE_AQI);
+            textShowAddressAqiLabel.setText(Constants.Units.RANGE_MICROGRAMS_PER_CUBIC_METER);
         }
     }
 
