@@ -28,9 +28,13 @@ public class LoginActivity extends ActionBarActivity
         } else {
             setContentView(R.layout.__login__logout_activity);
             textViewLogoutUsername = (TextView) findViewById(R.id.textViewLogoutUsername);
-            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-            if (globalHandler.settingsHandler.isUserLoggedIn()) {
-                textViewLogoutUsername.setText(globalHandler.settingsHandler.getUsername());
+            if (username.equals("")) {
+                GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+                if (globalHandler.settingsHandler.isUserLoggedIn()) {
+                    textViewLogoutUsername.setText(globalHandler.settingsHandler.getUsername());
+                }
+            } else {
+                textViewLogoutUsername.setText(username);
             }
             findViewById(R.id.buttonLogout).setOnClickListener(this);
         }
