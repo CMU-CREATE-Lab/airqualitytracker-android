@@ -84,10 +84,10 @@ public final class Constants {
             int i;
             for (i=0;i<ranges.length;i++) {
                 if (reading < ranges[i]) {
-                    break;
+                    return i;
                 }
             }
-            return i;
+            return -1;
         }
 
         public static String getRangeFromIndex(int index) {
@@ -162,10 +162,10 @@ public final class Constants {
             int i;
             for (i=0;i<ranges.length;i++) {
                 if (reading < ranges[i]) {
-                    break;
+                    return i;
                 }
             }
-            return i;
+            return -1;
         }
 
         public static String getRangeFromIndex(int index) {
