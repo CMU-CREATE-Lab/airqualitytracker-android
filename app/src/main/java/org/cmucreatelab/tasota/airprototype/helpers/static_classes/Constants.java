@@ -10,21 +10,16 @@ public final class Constants {
 
     public static final String LOG_TAG = "AirPrototype";
 
+    public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
+
+    public static final boolean USES_BACKGROUND_SERVICES = true;
+
     // these are the channel names that we want our feeds to report
     public static final String[] channelNames = {
             "pm2_5", "PM2_5", "pm2_5_1hr",
             "pm2_5_24hr", "PM25B_UG_M3", "PM25_UG_M3",
             "particle_concentration"
     };
-
-    public static final String[] HEADER_TITLES = {
-            "SPECK DEVICES",
-            "CITIES"
-    };
-
-    public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
-
-    public static final boolean USES_BACKGROUND_SERVICES = true;
 
     public static final long READINGS_MAX_TIME_RANGE = 86400; // 24 hours
 
@@ -41,6 +36,64 @@ public final class Constants {
         public static final String RANGE_MICROGRAMS_PER_CUBIC_METER = "µg/m³    /500";
         public static final String RANGE_AQI = "AQI    /500";
     }
+
+    public final class Esdr {
+        public static final String API_URL = "https://esdr.cmucreatelab.org";
+        public static final String GRANT_TYPE_TOKEN = "password";
+        public static final String GRANT_TYPE_REFRESH = "refresh_token";
+        // TODO placeholder for actual Client information (don't push to git)
+        public static final String CLIENT_ID = "client_id";
+        public static final String CLIENT_SECRET = "this should never work";
+    }
+
+    public final class MapGeometry {
+        // Distance from central point, in kilometers (box dimension will be 2x larger)
+        public static final double BOUNDBOX_HEIGHT = 20.0;
+        // Distance from central point, in kilometers (box dimension will be 2x larger)
+        public static final double BOUNDBOX_LENGTH = 20.0;
+        // radius of Earth (in kilometers)
+        public static final double RADIUS_EARTH = 6371.0;
+        // ASSERT these values will be less than 90.0
+        public static final double BOUNDBOX_LAT = BOUNDBOX_HEIGHT / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
+        public static final double BOUNDBOX_LONG = BOUNDBOX_LENGTH / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
+    }
+
+    // Interface-related tags
+
+    public static final String[] HEADER_TITLES = {
+            "SPECK DEVICES",
+            "CITIES"
+    };
+
+    public final class AddressIntent {
+        public static final int MAX_RESULTS = 1;
+        public static final int SUCCESS_RESULT = 0;
+        public static final int FAILURE_RESULT = 1;
+        public static final String RESULT_DATA_KEY = APP_PACKAGE_NAME + ".addressName";
+        public static final String RECEIVER = APP_PACKAGE_NAME + ".addressintent.receiver";
+    }
+
+    public final class EsdrRefreshIntent {
+        public static final String RECEIVER = APP_PACKAGE_NAME + ".esdrrefreshintent.receiver";
+        public static final String ALARM_RECEIVER = RECEIVER + ".alarmmanager";
+        public static final long ALARM_INTERVAL_MILLISECONDS = 86400000; // 24 hours
+    }
+
+    public final class AddressList {
+        public static final String ADDRESS_INDEX = APP_PACKAGE_NAME + ".addressindex";
+    }
+
+    public final class StickyGrid {
+        public static final String GRID_TAG = "tag_grid_fragment";
+        public static final String KEY_HEADER_POSITIONING = "key_header_mode";
+        public static final String KEY_MARGINS_FIXED = "key_margins_fixed";
+        public static final boolean MARGINS_ARE_FIXED = true;
+        public static final int HEADER_DISPLAY = 17;
+        public static final int VIEW_TYPE_HEADER = 0x09;
+        public static final int VIEW_TYPE_CONTENT = 0x00;
+    }
+
+    // Content for Readable
 
     public static final class DefaultReading {
         public static final String DEFAULT_LOCATION = "N/A";
@@ -73,8 +126,8 @@ public final class Constants {
         };
         // ranges measured in ug/m^3
         private static final int[] ranges = {
-            21, 41, 81,
-            161, 321
+                21, 41, 81,
+                161, 321
         };
 
         public static int getIndexFromReading(double reading) {
@@ -137,8 +190,8 @@ public final class Constants {
                 "#330004", "#2d0d18", "#28060b"
         };
         public static final int[] aqiDrawableGradients = {
-            R.drawable.gradient_0, R.drawable.gradient_1, R.drawable.gradient_2,
-            R.drawable.gradient_3, R.drawable.gradient_4, R.drawable.gradient_5
+                R.drawable.gradient_0, R.drawable.gradient_1, R.drawable.gradient_2,
+                R.drawable.gradient_3, R.drawable.gradient_4, R.drawable.gradient_5
         };
         // these are currently hardcoded into the xml files and are just placeholders in the code for the time being.
         private static final String[] aqiGradientColorStart = {
@@ -183,54 +236,4 @@ public final class Constants {
             return result;
         }
     }
-
-    public final class AddressIntent {
-        public static final int MAX_RESULTS = 1;
-        public static final int SUCCESS_RESULT = 0;
-        public static final int FAILURE_RESULT = 1;
-        public static final String RESULT_DATA_KEY = APP_PACKAGE_NAME + ".addressName";
-        public static final String RECEIVER = APP_PACKAGE_NAME + ".addressintent.receiver";
-    }
-
-    public final class EsdrRefreshIntent {
-        public static final String RECEIVER = APP_PACKAGE_NAME + ".esdrrefreshintent.receiver";
-        public static final String ALARM_RECEIVER = RECEIVER + ".alarmmanager";
-        public static final long ALARM_INTERVAL_MILLISECONDS = 86400000; // 24 hours
-    }
-
-    public final class AddressList {
-        public static final String ADDRESS_INDEX = APP_PACKAGE_NAME + ".addressindex";
-    }
-
-    public final class StickyGrid {
-        public static final String GRID_TAG = "tag_grid_fragment";
-        public static final String KEY_HEADER_POSITIONING = "key_header_mode";
-        public static final String KEY_MARGINS_FIXED = "key_margins_fixed";
-        public static final boolean MARGINS_ARE_FIXED = true;
-        public static final int HEADER_DISPLAY = 17;
-        public static final int VIEW_TYPE_HEADER = 0x09;
-        public static final int VIEW_TYPE_CONTENT = 0x00;
-    }
-
-    public final class Esdr {
-        public static final String API_URL = "https://esdr.cmucreatelab.org";
-        public static final String GRANT_TYPE_TOKEN = "password";
-        public static final String GRANT_TYPE_REFRESH = "refresh_token";
-        // TODO placeholder for actual Client information (don't push to git)
-        public static final String CLIENT_ID = "client_id";
-        public static final String CLIENT_SECRET = "this should never work";
-    }
-
-    public final class MapGeometry {
-        // Distance from central point, in kilometers (box dimension will be 2x larger)
-        public static final double BOUNDBOX_HEIGHT = 20.0;
-        // Distance from central point, in kilometers (box dimension will be 2x larger)
-        public static final double BOUNDBOX_LENGTH = 20.0;
-        // radius of Earth (in kilometers)
-        public static final double RADIUS_EARTH = 6371.0;
-        // ASSERT these values will be less than 90.0
-        public static final double BOUNDBOX_LAT = BOUNDBOX_HEIGHT / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
-        public static final double BOUNDBOX_LONG = BOUNDBOX_LENGTH / ( RADIUS_EARTH * 2 * Math.PI ) * 360.0;
-    }
-
 }
