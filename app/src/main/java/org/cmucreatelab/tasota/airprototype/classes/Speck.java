@@ -1,5 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import android.util.Log;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 8/14/15.
@@ -26,5 +29,14 @@ public class Speck extends Feed {
     }
 
     // TODO add speck device-specific attributes
+
+    public void requestUpdate(final GlobalHandler globalHandler) {
+        if (this.getChannels().size() > 0) {
+            // ASSERT all channels in the list of channels are usable readings
+            globalHandler.httpRequestHandler.requestAuthorizedChannelReading(globalHandler.settingsHandler.getAccessToken(), this, this.getChannels().get(0));
+        } else {
+            Log.e(Constants.LOG_TAG, "No channels found from speck id=" + this.getFeed_id());
+        }
+    }
 
 }

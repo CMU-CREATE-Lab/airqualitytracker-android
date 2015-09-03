@@ -101,7 +101,7 @@ public class HeaderReadingsHashMap {
                 this.specks.remove((Speck) readable);
                 break;
             default:
-                Log.e(Constants.LOG_TAG, "Tried to add Readable of unknown Type in HeaderReadingsHashMap ");
+                Log.e(Constants.LOG_TAG, "Tried to remove Readable of unknown Type in HeaderReadingsHashMap ");
         }
         refreshHash();
     }
@@ -116,14 +116,7 @@ public class HeaderReadingsHashMap {
 
     public void updateSpecks() {
         for (Speck speck : specks) {
-            if (speck.getChannels().size() > 0) {
-                // ASSERT all channels in the list of channels are usable readings
-                globalHandler.httpRequestHandler.requestAuthorizedChannelReading(
-                        globalHandler.settingsHandler.getAccessToken(),
-                        speck, speck.getChannels().get(0));
-            } else {
-                Log.e(Constants.LOG_TAG,"No channels found from speck id="+speck.getFeed_id());
-            }
+            speck.requestUpdate(globalHandler);
         }
     }
 
@@ -142,12 +135,7 @@ public class HeaderReadingsHashMap {
                     for (Feed feed : feeds) {
                         Speck speck = new Speck(feed);
                         specks.add(speck);
-                        if (speck.getChannels().size() > 0) {
-                            // ASSERT all channels in the list of channels are usable readings
-                            globalHandler.httpRequestHandler.requestAuthorizedChannelReading(globalHandler.settingsHandler.getAccessToken(), speck, speck.getChannels().get(0));
-                        } else {
-                            Log.e(Constants.LOG_TAG,"No channels found from speck id="+speck.getFeed_id());
-                        }
+                        speck.requestUpdate(globalHandler);
                     }
                     HeaderReadingsHashMap.this.refreshHash();
                 }
