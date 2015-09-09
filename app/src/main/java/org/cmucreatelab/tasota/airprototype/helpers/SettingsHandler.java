@@ -13,7 +13,7 @@ public class SettingsHandler {
     private static SettingsHandler classInstance;
     private SharedPreferences sharedPreferences;
     // TODO consider timestamps for last updated user info
-    private boolean appUsesLocation=true,colorblindMode=false,userLoggedIn=false;
+    private boolean appUsesLocation=true,userLoggedIn=false;
     private String username="",accessToken="",refreshToken="";
     protected GlobalHandler globalHandler;
     // run-time only flag to determine if we want to pull info from ESDR
@@ -32,9 +32,6 @@ public class SettingsHandler {
     }
     public boolean appUsesLocation() {
         return appUsesLocation;
-    }
-    public boolean isColorblindMode() {
-        return colorblindMode;
     }
 
 
@@ -58,18 +55,18 @@ public class SettingsHandler {
 
 
     protected void updateSettings() {
-        appUsesLocation = this.sharedPreferences.getBoolean("checkbox_location",true);
-        colorblindMode = this.sharedPreferences.getBoolean("checkbox_colorblind", false);
-        userLoggedIn = this.sharedPreferences.getBoolean("user_logged_in", false);
-        username = this.sharedPreferences.getString("username", "");
-        accessToken = this.sharedPreferences.getString("access_token", "");
-        refreshToken = this.sharedPreferences.getString("refresh_token", "");
+        appUsesLocation = this.sharedPreferences.getBoolean(Constants.SettingsKeys.appUsesLocation,(Boolean)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.appUsesLocation));
+        userLoggedIn = this.sharedPreferences.getBoolean(Constants.SettingsKeys.userLoggedIn,(Boolean)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.userLoggedIn));
+        username = this.sharedPreferences.getString(Constants.SettingsKeys.username,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.username));
+        accessToken = this.sharedPreferences.getString(Constants.SettingsKeys.accessToken,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.accessToken));
+        refreshToken = this.sharedPreferences.getString(Constants.SettingsKeys.refreshToken,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.refreshToken));
     }
 
 
     public void setUserLoggedIn(boolean userLoggedIn) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putBoolean("user_logged_in",userLoggedIn);
+        editor.putBoolean(Constants.SettingsKeys.userLoggedIn,userLoggedIn);
+        // TODO commit() vs. apply() ?
         editor.apply();
         this.userLoggedIn = userLoggedIn;
         // repopulates specks on successful login/logout
@@ -79,9 +76,9 @@ public class SettingsHandler {
 
     public void updateEsdrAccount(String username, String accessToken, String refreshToken) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString("username",username);
-        editor.putString("access_token",accessToken);
-        editor.putString("refresh_token",refreshToken);
+        editor.putString(Constants.SettingsKeys.username,username);
+        editor.putString(Constants.SettingsKeys.accessToken,accessToken);
+        editor.putString(Constants.SettingsKeys.refreshToken,refreshToken);
         editor.apply();
         this.username = username;
         this.accessToken = accessToken;
@@ -91,8 +88,8 @@ public class SettingsHandler {
 
     public void updateEsdrTokens(String accessToken, String refreshToken) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString("access_token",accessToken);
-        editor.putString("refresh_token", refreshToken);
+        editor.putString(Constants.SettingsKeys.accessToken,accessToken);
+        editor.putString(Constants.SettingsKeys.refreshToken, refreshToken);
         editor.apply();
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
@@ -101,9 +98,9 @@ public class SettingsHandler {
 
     public void removeEsdrAccount() {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString("username","");
-        editor.putString("access_token","");
-        editor.putString("refresh_token","");
+        editor.putString(Constants.SettingsKeys.username,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.username));
+        editor.putString(Constants.SettingsKeys.accessToken,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.accessToken));
+        editor.putString(Constants.SettingsKeys.refreshToken,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.refreshToken));
         editor.apply();
         this.setUserLoggedIn(false);
     }

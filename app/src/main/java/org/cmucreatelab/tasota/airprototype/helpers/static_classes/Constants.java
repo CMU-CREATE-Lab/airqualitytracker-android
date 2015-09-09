@@ -3,6 +3,8 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.R;
 
+import java.util.HashMap;
+
 /**
  * Created by mike on 6/11/15.
  */
@@ -14,6 +16,15 @@ public final class Constants {
 
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
+    // TODO settings key-values & default
+    public static final HashMap<String, Object> DEFAULT_SETTINGS = new HashMap(){{
+        put(SettingsKeys.appUsesLocation, true);
+        put(SettingsKeys.userLoggedIn, false);
+        put(SettingsKeys.username, "");
+        put(SettingsKeys.accessToken, "");
+        put(SettingsKeys.refreshToken, "");
+    }};
+
     // these are the channel names that we want our feeds to report
     public static final String[] channelNames = {
             "pm2_5", "PM2_5", "pm2_5_1hr",
@@ -24,6 +35,14 @@ public final class Constants {
     public static final long READINGS_MAX_TIME_RANGE = 86400; // 24 hours
 
     public static final long SPECKS_MAX_TIME_RANGE = 1800; // 30 minutes
+
+    public static final class SettingsKeys {
+        public static final String appUsesLocation = "app_uses_location";
+        public static final String userLoggedIn = "user_logged_in";
+        public static final String username = "username";
+        public static final String accessToken = "access_token";
+        public static final String refreshToken = "refresh_token";
+    }
 
     public static final class Location {
         public static final long LOCATION_REQUEST_INTERVAL = 600000; // 10 minutes
