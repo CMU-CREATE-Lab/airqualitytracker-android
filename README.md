@@ -4,7 +4,7 @@ Air Quality Tracker For Android
 Overview
 --------
 
-The **Air Quality Tracker For Android** is an application for Android OS (minimum SDK version 8). This project pulls information from the [ESDR](https://github.com/CMU-CREATE-Lab/esdr) project through HTTP requests and displays it on the screen conveniently for the user.
+The **Air Quality Tracker For Android** is an application for Android OS (minimum SDK version 11). This project pulls information from the [ESDR](https://github.com/CMU-CREATE-Lab/esdr) project through HTTP requests and displays it on the screen conveniently for the user.
 
 Development Environment
 -----------------------
