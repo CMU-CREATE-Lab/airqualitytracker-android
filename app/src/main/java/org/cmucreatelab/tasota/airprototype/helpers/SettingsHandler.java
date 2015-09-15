@@ -15,6 +15,7 @@ public class SettingsHandler {
     // TODO consider timestamps for last updated user info
     private boolean appUsesLocation=true,userLoggedIn=false;
     private String username="",accessToken="",refreshToken="";
+    private long userId;
     protected GlobalHandler globalHandler;
     // run-time only flag to determine if we want to pull info from ESDR
     public boolean userFeedsNeedsUpdated=true;
@@ -32,6 +33,9 @@ public class SettingsHandler {
     }
     public boolean appUsesLocation() {
         return appUsesLocation;
+    }
+    public long getUserId() {
+        return userId;
     }
 
 
@@ -57,9 +61,10 @@ public class SettingsHandler {
     protected void updateSettings() {
         appUsesLocation = this.sharedPreferences.getBoolean(Constants.SettingsKeys.appUsesLocation,(Boolean)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.appUsesLocation));
         userLoggedIn = this.sharedPreferences.getBoolean(Constants.SettingsKeys.userLoggedIn,(Boolean)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.userLoggedIn));
-        username = this.sharedPreferences.getString(Constants.SettingsKeys.username,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.username));
+        username = this.sharedPreferences.getString(Constants.SettingsKeys.username, (String) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.username));
         accessToken = this.sharedPreferences.getString(Constants.SettingsKeys.accessToken,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.accessToken));
         refreshToken = this.sharedPreferences.getString(Constants.SettingsKeys.refreshToken,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.refreshToken));
+        userId = this.sharedPreferences.getLong(Constants.SettingsKeys.userId, (int)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.userId));
     }
 
 
@@ -74,13 +79,15 @@ public class SettingsHandler {
     }
 
 
-    public void updateEsdrAccount(String username, String accessToken, String refreshToken) {
+    public void updateEsdrAccount(String username, long userId, String accessToken, String refreshToken) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString(Constants.SettingsKeys.username,username);
         editor.putString(Constants.SettingsKeys.accessToken,accessToken);
         editor.putString(Constants.SettingsKeys.refreshToken,refreshToken);
+        editor.putLong(Constants.SettingsKeys.userId,userId);
         editor.apply();
         this.username = username;
+        this.userId = userId;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }

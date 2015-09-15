@@ -56,10 +56,10 @@ public class EsdrFeedsHandler {
     }
 
 
-    public void requestPrivateFeeds(String authToken, Response.Listener<JSONObject> response) {
+    public void requestSpecks(String authToken, long userId, Response.Listener<JSONObject> response) {
         int requestMethod = Request.Method.GET;
         // TODO only request fields that we want?
-        String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?whereAnd=isPublic=0,productId=9";
+        String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?whereAnd=userId="+userId+",productId=9";
         globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
     }
 

@@ -38,13 +38,15 @@ public class LoginRequestListenerLoginActivity
     @Override
     public void onResponse(JSONObject response) {
         String accessToken,refreshToken;
+        long userId;
         Log.v(Constants.LOG_TAG, "requestEsdrToken: got response=" + response.toString());
 
         try {
+            userId = response.getLong("userId");
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");
             GlobalHandler globalHandler = GlobalHandler.getInstance(loginActivity.getApplicationContext());
-            globalHandler.settingsHandler.updateEsdrAccount(loginActivity.username, accessToken, refreshToken);
+            globalHandler.settingsHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken);
             globalHandler.settingsHandler.setUserLoggedIn(true);
             globalHandler.servicesHandler.startEsdrRefreshService();
             loginActivity.display();

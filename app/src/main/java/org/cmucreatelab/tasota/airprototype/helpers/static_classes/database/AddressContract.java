@@ -26,7 +26,7 @@ public class AddressContract extends SQLiteOpenHelper {
 
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "AddressReader.db";
 
     public AddressContract(Context context) {

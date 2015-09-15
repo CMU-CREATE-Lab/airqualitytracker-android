@@ -140,7 +140,7 @@ public class HeaderReadingsHashMap {
                     HeaderReadingsHashMap.this.refreshHash();
                 }
             };
-            globalHandler.httpRequestHandler.requestPrivateFeeds(globalHandler.settingsHandler.getAccessToken(), response);
+            globalHandler.httpRequestHandler.requestSpecks(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), response);
         }
         refreshHash();
     }
