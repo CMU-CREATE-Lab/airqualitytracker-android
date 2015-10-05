@@ -2,7 +2,6 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.R;
-
 import java.util.HashMap;
 
 /**

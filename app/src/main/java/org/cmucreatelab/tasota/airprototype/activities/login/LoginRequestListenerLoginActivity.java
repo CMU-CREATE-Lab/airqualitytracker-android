@@ -23,9 +23,6 @@ public class LoginRequestListenerLoginActivity
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        // ASSERT onErrorResponse implies that we failed to log in.
-//        Toast.makeText(loginActivity, "Authorization Failed to log in", Toast.LENGTH_SHORT).show();
-
         GlobalHandler globalHandler = GlobalHandler.getInstance(loginActivity.getApplicationContext());
         globalHandler.settingsHandler.setUserLoggedIn(false);
         globalHandler.servicesHandler.stopEsdrRefreshService();

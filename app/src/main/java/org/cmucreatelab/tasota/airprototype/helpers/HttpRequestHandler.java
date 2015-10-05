@@ -11,7 +11,6 @@ import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
-
 import java.util.Date;
 
 /**
@@ -76,6 +75,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
     public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response) {
         esdrFeedsHandler.requestFeeds(latd, longd, maxTime, response);
     }
+
 
     public void requestSpecks(String authToken, long userId, Response.Listener<JSONObject> response) {
         esdrFeedsHandler.requestSpecks(authToken, userId, response);

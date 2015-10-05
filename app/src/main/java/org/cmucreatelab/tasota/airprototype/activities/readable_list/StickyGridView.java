@@ -101,8 +101,8 @@ class StickyGridView extends RecyclerView.ViewHolder
             textView.setTypeface(fontAqi);
 
             // TODO hides weather (for now)
-            view.findViewById(R.id.frameAddressItemWeatherValue).setVisibility(View.GONE);;
-            view.findViewById(R.id.frameAddressItemWeatherIcon).setVisibility(View.GONE);;
+            view.findViewById(R.id.frameAddressItemWeatherValue).setVisibility(View.GONE);
+            view.findViewById(R.id.frameAddressItemWeatherIcon).setVisibility(View.GONE);
         }
     }
 
