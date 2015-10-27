@@ -77,8 +77,11 @@ public class HttpRequestHandler implements Response.ErrorListener {
     }
 
 
-    public void requestSpecks(String authToken, long userId, Response.Listener<JSONObject> response) {
-        esdrFeedsHandler.requestSpecks(authToken, userId, response);
+    public void requestSpeckFeeds(String authToken, long userId, Response.Listener<JSONObject> response) {
+        esdrFeedsHandler.requestSpeckFeeds(authToken, userId, response);
+    }
+    public void requestSpeckDevices(String authToken, long userId, Response.Listener<JSONObject> response) {
+        esdrFeedsHandler.requestSpeckDevices(authToken, userId, response);
     }
 
 

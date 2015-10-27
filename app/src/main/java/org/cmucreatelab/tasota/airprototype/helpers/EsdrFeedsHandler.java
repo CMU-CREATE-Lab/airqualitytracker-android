@@ -56,10 +56,20 @@ public class EsdrFeedsHandler {
     }
 
 
-    public void requestSpecks(String authToken, long userId, Response.Listener<JSONObject> response) {
+    public void requestSpeckFeeds(String authToken, long userId, Response.Listener<JSONObject> response) {
         int requestMethod = Request.Method.GET;
         // TODO only request fields that we want?
         String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?whereAnd=userId="+userId+",productId=9";
+        globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
+    }
+
+
+    public void requestSpeckDevices(String authToken, long userId, Response.Listener<JSONObject> response) {
+        // generate safe URL
+        String requestUrl = Constants.Esdr.API_URL + "/api/v1/devices?whereAnd=userId="+userId+",productId=9";
+
+        // create and send request
+        int requestMethod = Request.Method.GET;
         globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
     }
 

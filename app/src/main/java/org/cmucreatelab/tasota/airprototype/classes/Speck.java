@@ -15,7 +15,7 @@ public class Speck extends Feed {
     }
 
 
-    public Speck(Feed feed) {
+    public Speck(Feed feed, int deviceId) {
         this.feed_id = feed.feed_id;
         this.name = feed.name;
         this.exposure = feed.exposure;
@@ -26,9 +26,19 @@ public class Speck extends Feed {
         this.channels = feed.channels;
         this.feedValue = feed.feedValue;
         this.lastTime = feed.lastTime;
+        this.deviceId = deviceId;
     }
 
     // TODO add speck device-specific attributes
+    protected int deviceId;
+
+    // getters and setters for device-specific attributes
+    public int getDeviceId() {
+        return deviceId;
+    }
+    public void setDeviceId(int deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public void requestUpdate(final GlobalHandler globalHandler) {
         if (this.getChannels().size() > 0) {

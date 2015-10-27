@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.location.Location;
+import android.preference.PreferenceActivity;
 import android.util.Log;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
@@ -9,6 +10,7 @@ import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -124,23 +126,51 @@ public class HeaderReadingsHashMap {
     public void populateSpecks() {
         specks.clear();
         if (globalHandler.settingsHandler.isUserLoggedIn()) {
-            Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+            final Response.Listener<JSONObject> feedsResponse,devicesResponse;
+
+            // bad variable ordering is brought to you by: Java
+            devicesResponse = new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    ArrayList<Feed> feeds = new ArrayList<>();
-                    Log.v(Constants.LOG_TAG, "updateSpecks handling response=" + response.toString());
-                    JsonParser.populateAllFeedsFromJson(feeds, response);
-                    globalHandler.settingsHandler.userFeedsNeedsUpdated = false;
-
-                    for (Feed feed : feeds) {
-                        Speck speck = new Speck(feed);
-                        specks.add(speck);
-                        speck.requestUpdate(globalHandler);
+                    try {
+                        JSONArray jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
+                        int size = jsonFeeds.length();
+                        for (int i = 0; i < size; i++) {
+                            JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
+                            int deviceId = jsonFeed.getInt("id");
+                            String prettyName = jsonFeed.getString("name");
+                            for (Speck speck : HeaderReadingsHashMap.this.specks) {
+                                if (speck.getDeviceId() == deviceId) {
+                                    speck.setName(prettyName);
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
                     }
                     HeaderReadingsHashMap.this.refreshHash();
                 }
             };
-            globalHandler.httpRequestHandler.requestSpecks(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), response);
+
+            feedsResponse = new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    ArrayList<Speck> specks = new ArrayList<>();
+                    Log.v(Constants.LOG_TAG, "updateSpecks handling response=" + response.toString());
+                    JsonParser.populateSpecksFromJson(specks, response);
+                    // TODO not sure if needed anymore?
+                    globalHandler.settingsHandler.userFeedsNeedsUpdated = false;
+
+                    for (Speck speck : specks) {
+                        HeaderReadingsHashMap.this.specks.add(speck);
+                        speck.requestUpdate(globalHandler);
+                    }
+                    globalHandler.httpRequestHandler.requestSpeckDevices(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), devicesResponse);
+                }
+            };
+
+            globalHandler.httpRequestHandler.requestSpeckFeeds(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), feedsResponse);
         }
         refreshHash();
     }

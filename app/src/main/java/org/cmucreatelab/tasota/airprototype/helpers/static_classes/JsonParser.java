@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -36,9 +37,26 @@ public class JsonParser {
     }
 
 
-    // parse feeds, regardless of their last updated time or number of channels
-    public static void populateAllFeedsFromJson(ArrayList<Feed> feeds, JSONObject response) {
-        populateFeedsFromJson(feeds,response,0);
+    public static void populateSpecksFromJson(ArrayList<Speck> specks, JSONObject response) {
+        JSONArray jsonFeeds;
+        int i, size, deviceId;
+
+        try {
+            jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
+            size = jsonFeeds.length();
+            for (i = 0; i < size; i++) {
+                JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
+                Feed feed = JsonParser.parseFeedFromJson(jsonFeed, 0);
+                // only consider non-null feeds with at least 1 channel
+                if (feed != null && feed.getChannels().size() > 0) {
+                    deviceId = jsonFeed.getInt("deviceId");
+                    Speck speck = new Speck(feed, deviceId);
+                    specks.add(speck);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
+        }
     }
 
 
