@@ -39,6 +39,25 @@ public class AddressDbHelper {
         }
     }
 
+    public static void addAddressToDatabase(Context ctx, SimpleAddress address) {
+        AddressContract mDbHelper;
+        SQLiteDatabase db;
+        ContentValues values;
+        long newId;
+
+        mDbHelper = new AddressContract(ctx);
+        db = mDbHelper.getWritableDatabase();
+        values = new ContentValues();
+        values.put(AddressContract.COLUMN_NAME, address.getName());
+        values.put(AddressContract.COLUMN_ZIPCODE, address.getZipcode());
+        values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(address.getLatitude()));
+        values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(address.getLongitude()));
+        newId = db.insert(AddressContract.TABLE_NAME, "null", values);
+
+        address.set_id(newId);
+        Log.i(Constants.LOG_TAG, "inserted new address _id=" + newId);
+    }
+
 
     public static SimpleAddress createAddressInDatabase(Context ctx, String name, String zipcode, double latitude, double longitude) {
         AddressContract mDbHelper;

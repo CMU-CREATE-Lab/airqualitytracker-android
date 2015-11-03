@@ -1,10 +1,11 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
-import android.location.Address;
-import android.location.Geocoder;
+import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
-import java.util.List;
-import java.util.Locale;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.json.JSONObject;
+import java.util.ArrayList;
 
 /**
  * Created by mike on 11/3/15.
@@ -12,6 +13,16 @@ import java.util.Locale;
 public class AutocompleteTimer extends Timer {
 
     private AddressSearchActivity activity;
+    final Response.Listener<JSONObject> completionHandler = new Response.Listener<JSONObject>() {
+        @Override
+        public void onResponse(JSONObject response) {
+            activity.listAdapter.clear();
+            ArrayList<SimpleAddress> results = JsonParser.parseAddressesFromJson(response);
+            for (SimpleAddress address : results) {
+                activity.listAdapter.add(address);
+            }
+        }
+    };
 
 
     public AutocompleteTimer(AddressSearchActivity activity, int timerInterval) {
@@ -22,17 +33,8 @@ public class AutocompleteTimer extends Timer {
 
     @Override
     public void timerExpires() {
-        Geocoder geocoder = new Geocoder(activity.getApplicationContext(), Locale.getDefault());
-        try {
-            List<Address> results = geocoder.getFromLocationName(activity.searchText.toString(), 5);
-            activity.listAdapter.clear();
-            for (Address address : results) {
-                activity.listAdapter.add(address);
-            }
-            activity.listAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        GlobalHandler globalhandler = GlobalHandler.getInstance(activity.getApplicationContext());
+        globalhandler.httpRequestHandler.requestGeocodingFromApi(activity.searchText.toString(), completionHandler);
     }
 
 }

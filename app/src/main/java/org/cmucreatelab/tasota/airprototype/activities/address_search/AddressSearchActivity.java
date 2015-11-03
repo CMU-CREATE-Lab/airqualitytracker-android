@@ -1,17 +1,14 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_search;
 
-import android.location.Address;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.AutocompleteTimer;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 
@@ -25,34 +22,11 @@ public class AddressSearchActivity extends ActionBarActivity
     public void afterTextChanged(Editable editable) {}
 
 
-    public void returnAddress(Address address) {
-        double latd,longd;
-        String name, zipcode;
-        SimpleAddress result;
-        GlobalHandler globalHandler;
-
-        // get lat/long
-        latd = address.getLatitude();
-        longd = address.getLongitude();
-
-        // get name
-        if (address.getFeatureName() != null) {
-            name = address.getFeatureName();
-        } else {
-            name = ((EditText)findViewById(R.id.editTextAddressSearch)).getText().toString();
-        }
-
-        // get zipcode (if it exists)
-        zipcode = address.getPostalCode();
-        if (zipcode == null) {
-            zipcode = "";
-        }
-
+    public void returnAddress(SimpleAddress address) {
         // add to database and data structure
-        Log.i(Constants.LOG_TAG,"AddressSearchActivity returning with latd="+latd+", longd="+longd+" using name="+name+" and zipcode="+zipcode);
-        result = AddressDbHelper.createAddressInDatabase(this, name, zipcode, latd, longd);
-        globalHandler = GlobalHandler.getInstance(this);
-        globalHandler.headerReadingsHashMap.addReading(result);
+        AddressDbHelper.addAddressToDatabase(this,address);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(this);
+        globalHandler.headerReadingsHashMap.addReading(address);
         globalHandler.updateReadings();
 
         // finish activity

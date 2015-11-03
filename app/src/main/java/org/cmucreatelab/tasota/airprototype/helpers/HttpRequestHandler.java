@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.util.Log;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -46,7 +47,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
     // helper method which assumes that you want to use this instance as the default ErrorListener
     public void sendJsonRequest(int requestMethod, String requestUrl, JSONObject requestParams, Response.Listener<JSONObject> response) {
-        sendJsonRequest(requestMethod,requestUrl,requestParams,response,this);
+        sendJsonRequest(requestMethod, requestUrl, requestParams, response, this);
     }
 
 
@@ -92,17 +93,23 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
     public void requestAuthorizedChannelReading(String authToken, final Feed feed, final Channel channel) {
         esdrFeedsHandler.requestChannelReading(authToken, feed, channel,
-                (long)(new Date().getTime() / 1000.0) - Constants.SPECKS_MAX_TIME_RANGE);
+                (long) (new Date().getTime() / 1000.0) - Constants.SPECKS_MAX_TIME_RANGE);
     }
 
 
     public void requestEsdrToken(String username, String password, Response.Listener<JSONObject> response, Response.ErrorListener error) {
-        esdrAuthHandler.requestEsdrToken(username,password,response,error);
+        esdrAuthHandler.requestEsdrToken(username, password, response, error);
     }
 
 
     public void requestEsdrRefresh(String refreshToken) {
         esdrAuthHandler.requestEsdrRefresh(refreshToken);
+    }
+
+
+    public void requestGeocodingFromApi(String input, Response.Listener<JSONObject> response) {
+        String requestUrl = "http://autocomplete.wunderground.com/aq?query="+input+"&c=US";
+        this.sendJsonRequest(Request.Method.GET, requestUrl, null, response);
     }
 
 
