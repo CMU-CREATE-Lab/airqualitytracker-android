@@ -19,6 +19,11 @@ public class ReadableListActivity extends ActionBarActivity {
 
     public AlertDialogReadableList dialogDelete;
     public StickyGridFragment stickyGrid;
+    // Keeps track of the activity to know if it was being displayed before the app
+    // gets thrown into the background. There is no Event in android to check for
+    // when the app returns to the foreground (ios: applicationDidBecomeActive) so
+    // we use this instead; only runs through this activity though.
+    private boolean needsRefreshed = true;
 
 
     public void openDialogDelete(final StickyGridAdapter.LineItem lineItem) {
@@ -52,6 +57,32 @@ public class ReadableListActivity extends ActionBarActivity {
                     .add(R.id.mycontainer, stickyGrid, Constants.StickyGrid.GRID_TAG)
                     .commit();
         }
+    }
+
+
+    @Override
+    protected void onRestart() {
+        if (needsRefreshed) {
+            Log.i(Constants.LOG_TAG,"onRestart() was called and needsRefreshed! running updateReadings()");
+            GlobalHandler.getInstance(this).updateReadings();
+        }
+        needsRefreshed = true;
+        super.onRestart();
+    }
+
+
+    @Override
+    public void startActivity(Intent intent) {
+        needsRefreshed = false;
+        super.startActivity(intent);
+    }
+
+
+    // TODO this might not be used; just added this to be more thorough
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        needsRefreshed = false;
+        super.startActivityForResult(intent, requestCode, options);
     }
 
 
