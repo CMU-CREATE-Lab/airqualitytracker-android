@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
+import org.cmucreatelab.tasota.airprototype.classes.RefreshTimer;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
@@ -23,7 +24,9 @@ public class ReadableListActivity extends ActionBarActivity {
     // gets thrown into the background. There is no Event in android to check for
     // when the app returns to the foreground (ios: applicationDidBecomeActive) so
     // we use this instead; only runs through this activity though.
-    private boolean needsRefreshed = true;
+    public boolean activityIsActive = true;
+    // refresh every 5 minutes (...with some caveats regarding active activities)
+    private RefreshTimer refreshTimer = new RefreshTimer(this, 300000);
 
 
     public void openDialogDelete(final StickyGridAdapter.LineItem lineItem) {
@@ -61,19 +64,37 @@ public class ReadableListActivity extends ActionBarActivity {
 
 
     @Override
+    protected void onResume() {
+        Log.i(Constants.LOG_TAG, "onResume() was called");
+        if (!refreshTimer.isStarted)
+            refreshTimer.startTimer();
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onStop() {
+        Log.i(Constants.LOG_TAG, "onStop() was called");
+        if (activityIsActive)
+            refreshTimer.stopTimer();
+        super.onStop();
+    }
+
+
+    @Override
     protected void onRestart() {
-        if (needsRefreshed) {
-            Log.i(Constants.LOG_TAG,"onRestart() was called and needsRefreshed! running updateReadings()");
+        if (activityIsActive) {
+            Log.i(Constants.LOG_TAG,"onRestart() was called and activityIsActive! running updateReadings()");
             GlobalHandler.getInstance(this).updateReadings();
         }
-        needsRefreshed = true;
+        activityIsActive = true;
         super.onRestart();
     }
 
 
     @Override
     public void startActivity(Intent intent) {
-        needsRefreshed = false;
+        activityIsActive = false;
         super.startActivity(intent);
     }
 
@@ -81,7 +102,7 @@ public class ReadableListActivity extends ActionBarActivity {
     // TODO this might not be used; just added this to be more thorough
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
-        needsRefreshed = false;
+        activityIsActive = false;
         super.startActivityForResult(intent, requestCode, options);
     }
 
