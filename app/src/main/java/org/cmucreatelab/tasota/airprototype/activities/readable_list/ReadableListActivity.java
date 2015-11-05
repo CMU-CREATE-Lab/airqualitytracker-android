@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class ReadableListActivity extends ActionBarActivity {
 
     public AlertDialogReadableList dialogDelete;
     public StickyGridFragment stickyGrid;
+    private SwipeRefreshLayout swipeRefresh;
     // Keeps track of the activity to know if it was being displayed before the app
     // gets thrown into the background. There is no Event in android to check for
     // when the app returns to the foreground (ios: applicationDidBecomeActive) so
@@ -57,8 +59,16 @@ public class ReadableListActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             this.stickyGrid = new StickyGridFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mycontainer, stickyGrid, Constants.StickyGrid.GRID_TAG)
+                    .add(R.id.readable_list_refresher, stickyGrid, Constants.StickyGrid.GRID_TAG)
                     .commit();
+            swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.readable_list_refresher);
+            swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    GlobalHandler.getInstance(getApplicationContext()).updateReadings();
+                    swipeRefresh.setRefreshing(false);
+                }
+            });
         }
     }
 

@@ -8,9 +8,10 @@
     tools:context="org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity"
     android:background="#222">
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mycontainer"></FrameLayout>
+        android:id="@+id/readable_list_refresher">
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
