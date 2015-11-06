@@ -108,7 +108,7 @@ public final class Constants {
         public static final String KEY_HEADER_POSITIONING = "key_header_mode";
         public static final String KEY_MARGINS_FIXED = "key_margins_fixed";
         public static final boolean MARGINS_ARE_FIXED = true;
-        public static final int HEADER_DISPLAY = 17;
+        public static final int HEADER_DISPLAY = 1;
         public static final int VIEW_TYPE_HEADER = 0x09;
         public static final int VIEW_TYPE_CONTENT = 0x00;
     }
