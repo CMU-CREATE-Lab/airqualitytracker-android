@@ -23,6 +23,8 @@ public final class Constants {
         put(SettingsKeys.accessToken, "");
         put(SettingsKeys.refreshToken, "");
         put(SettingsKeys.userId, -1);
+        put(SettingsKeys.addressLastPosition, 1);
+        put(SettingsKeys.speckLastPosition, 1);
     }};
 
     // these are the channel names that we want our feeds to report
@@ -43,6 +45,8 @@ public final class Constants {
         public static final String accessToken = "access_token";
         public static final String refreshToken = "refresh_token";
         public static final String userId = "user_id";
+        public static final String addressLastPosition = "address_last_position";
+        public static final String speckLastPosition = "speck_last_position";
     }
 
     public static final class Location {

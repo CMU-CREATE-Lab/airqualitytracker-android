@@ -41,7 +41,8 @@ public class JsonParser {
 
     public static void populateSpecksFromJson(ArrayList<Speck> specks, JSONObject response) {
         JSONArray jsonFeeds;
-        int i, size, deviceId;
+        int i, size;
+        long deviceId;
 
         try {
             jsonFeeds = response.getJSONObject("data").getJSONArray("rows");
@@ -51,8 +52,9 @@ public class JsonParser {
                 Feed feed = JsonParser.parseFeedFromJson(jsonFeed, 0);
                 // only consider non-null feeds with at least 1 channel
                 if (feed != null && feed.getChannels().size() > 0) {
-                    deviceId = jsonFeed.getInt("deviceId");
+                    deviceId = jsonFeed.getLong("deviceId");
                     Speck speck = new Speck(feed, deviceId);
+                    speck.setApiKeyReadOnly(jsonFeed.get("apiKeyReadOnly").toString());
                     specks.add(speck);
                 }
             }

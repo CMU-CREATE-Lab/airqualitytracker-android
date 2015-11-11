@@ -10,6 +10,7 @@ import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -43,7 +44,27 @@ public class HeaderReadingsHashMap {
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.appContext);
         addresses.addAll(dbAddresses);
         // specks from login info
+        ArrayList<Speck> dbSpecks = SpeckDbHelper.fetchSpecksFromDatabase(this.globalHandler.appContext);
+//        specks.addAll(dbSpecks);
+        for (Speck speck : dbSpecks) {
+            addReading(speck);
+            globalHandler.httpRequestHandler.requestChannelsForSpeck(speck);
+        }
         populateSpecks();
+    }
+
+
+    // helper function to determine if a speck with deviceId exists in specks list
+    // returns -1 if speck doesn't exist, returns index otherwise
+    private int findIndexOfSpeckWithDeviceId(long deviceId) {
+        int index=0;
+        for (Speck speck: specks) {
+            if (speck.getDeviceId() == deviceId) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
     }
     
     
@@ -123,8 +144,18 @@ public class HeaderReadingsHashMap {
     }
 
 
-    public void populateSpecks() {
+    public void clearSpecks() {
+        // TODO make this clear the table instead of iterating?
+        for (Speck speck : specks) {
+            SpeckDbHelper.destroy(speck, globalHandler.appContext);
+        }
         specks.clear();
+        refreshHash();
+    }
+
+
+    public void populateSpecks() {
+//        specks.clear();
         if (globalHandler.settingsHandler.isUserLoggedIn()) {
             final Response.Listener<JSONObject> feedsResponse,devicesResponse;
 
@@ -146,6 +177,12 @@ public class HeaderReadingsHashMap {
                                 }
                             }
                         }
+                        // add all specks into the database which arent in there already
+                        for (Speck speck: specks) {
+                            if (speck.get_id() <= 0) {
+                                SpeckDbHelper.addSpeckToDatabase(globalHandler.appContext,speck);
+                            }
+                        }
                     } catch (Exception e) {
                         Log.e(Constants.LOG_TAG, "JSON Format error (missing \"data\" or \"rows\" field).");
                     }
@@ -163,8 +200,11 @@ public class HeaderReadingsHashMap {
                     globalHandler.settingsHandler.userFeedsNeedsUpdated = false;
 
                     for (Speck speck : specks) {
-                        HeaderReadingsHashMap.this.specks.add(speck);
-                        speck.requestUpdate(globalHandler);
+                        // only add what isnt in the DB already
+                        if (findIndexOfSpeckWithDeviceId(speck.getDeviceId()) < 0) {
+                            HeaderReadingsHashMap.this.specks.add(speck);
+                            speck.requestUpdate(globalHandler);
+                        }
                     }
                     globalHandler.httpRequestHandler.requestSpeckDevices(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), devicesResponse);
                 }

@@ -39,6 +39,7 @@ public class SimpleAddress implements Readable {
     private Feed closestFeed = null;
     public final ArrayList<Feed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
+    private int positionId;
     public long get_id() {
         return _id;
     }
@@ -74,6 +75,12 @@ public class SimpleAddress implements Readable {
     }
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+    public int getPositionId() {
+        return positionId;
+    }
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
     }
 
 

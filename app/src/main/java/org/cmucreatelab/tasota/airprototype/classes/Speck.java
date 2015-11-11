@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.classes;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import java.util.Collection;
 
 /**
  * Created by mike on 8/14/15.
@@ -14,8 +15,13 @@ public class Speck extends Feed {
         return readableType;
     }
 
+    public void setChannels(Collection<Channel> channels) {
+        this.channels.clear();
+        this.channels.addAll(channels);
+    }
 
-    public Speck(Feed feed, int deviceId) {
+
+    public Speck(Feed feed, long deviceId) {
         this.feed_id = feed.feed_id;
         this.name = feed.name;
         this.exposure = feed.exposure;
@@ -29,15 +35,50 @@ public class Speck extends Feed {
         this.deviceId = deviceId;
     }
 
+
+    public Speck(String apiKeyReadOnly, long deviceId, String exposure, long feedId, boolean isMobile, double latitude, double longitude, String name, int positionId, long productId) {
+        this.apiKeyReadOnly = apiKeyReadOnly;
+        this.deviceId = deviceId;
+        this.exposure = exposure;
+        this.feed_id = feedId;
+        this.isMobile = isMobile;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.name = name;
+        this.positionId = positionId;
+        this.productId = productId;
+    }
+
     // TODO add speck device-specific attributes
-    protected int deviceId;
+    protected long deviceId;
+    private int positionId;
+    private long _id;
+    private String apiKeyReadOnly;
 
     // getters and setters for device-specific attributes
-    public int getDeviceId() {
+    public long getDeviceId() {
         return deviceId;
     }
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(long deviceId) {
         this.deviceId = deviceId;
+    }
+    public int getPositionId() {
+        return positionId;
+    }
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
+    }
+    public long get_id() {
+        return _id;
+    }
+    public void set_id(long _id) {
+        this._id = _id;
+    }
+    public String getApiKeyReadOnly() {
+        return apiKeyReadOnly;
+    }
+    public void setApiKeyReadOnly(String apiKeyReadOnly) {
+        this.apiKeyReadOnly = apiKeyReadOnly;
     }
 
     public void requestUpdate(final GlobalHandler globalHandler) {

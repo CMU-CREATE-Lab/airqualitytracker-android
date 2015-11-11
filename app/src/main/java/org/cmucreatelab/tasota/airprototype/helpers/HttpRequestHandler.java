@@ -10,9 +10,14 @@ import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.AuthorizedJsonObjectRequest;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Created by mike on 5/29/15.
@@ -87,7 +92,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     public void requestChannelReading(final Feed feed, final Channel channel) {
-        esdrFeedsHandler.requestChannelReading("",feed, channel, 0);
+        esdrFeedsHandler.requestChannelReading("", feed, channel, 0);
     }
 
 
@@ -110,6 +115,49 @@ public class HttpRequestHandler implements Response.ErrorListener {
     public void requestGeocodingFromApi(String input, Response.Listener<JSONObject> response) {
         String requestUrl = "http://autocomplete.wunderground.com/aq?query="+input+"&c=US";
         this.sendJsonRequest(Request.Method.GET, requestUrl, null, response);
+    }
+
+
+    public void requestChannelsForSpeck(final Speck speck) {
+        int requestMethod;
+        String requestUrl;
+
+        Response.Listener<JSONObject> channelsResponse = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject channels;
+                Iterator<String> keys;
+                ArrayList<Channel> listChannels = new ArrayList<>();
+
+                try {
+                    channels = response.getJSONObject("data").getJSONObject("channelBounds").getJSONObject("channels");
+                    keys = channels.keys();
+                    while (keys.hasNext()) {
+                        // Only grab channels that we care about
+                        String channelName = keys.next();
+                        for (String cn : Constants.channelNames) {
+                            if (channelName.equals(cn)) {
+                                // TODO do we check/need-to-check for 24 hours?
+                                // NOTICE: we must also make sure that this specific channel
+                                // was updated in the past 24 hours ("maxTime").
+                                JSONObject channel = channels.getJSONObject(channelName);
+                                listChannels.add(JsonParser.parseChannelFromJson(channelName, speck, channel));
+                                break;
+                            }
+                        }
+                    }
+                    speck.setChannels(listChannels);
+                    speck.requestUpdate(globalHandler);
+                } catch (Exception e) {
+                    Log.e(Constants.LOG_TAG,"failed to request channel for speck apiKeyReadOnly="+speck.getApiKeyReadOnly());
+                }
+            }
+        };
+
+        // generate safe URL
+        requestMethod = Request.Method.GET;
+        requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + speck.getApiKeyReadOnly();
+        sendJsonRequest(requestMethod, requestUrl, null, channelsResponse);
     }
 
 

@@ -20,13 +20,13 @@ public class AddressDbHelper {
         if (simpleAddress.get_id() < 0) {
             return false;
         } else {
-            AddressContract mDbHelper;
+            SpeckSensorSQLiteOpenHelper mDbHelper;
             SQLiteDatabase db;
             String selection = "_id LIKE ?";
             String[] selectionArgs = { String.valueOf(simpleAddress.get_id()) };
             int result;
 
-            mDbHelper = new AddressContract(context);
+            mDbHelper = new SpeckSensorSQLiteOpenHelper(context);
             db = mDbHelper.getWritableDatabase();
             result = db.delete(AddressContract.TABLE_NAME, selection, selectionArgs);
             if (result == 1) {
@@ -40,18 +40,19 @@ public class AddressDbHelper {
     }
 
     public static void addAddressToDatabase(Context ctx, SimpleAddress address) {
-        AddressContract mDbHelper;
+        SpeckSensorSQLiteOpenHelper mDbHelper;
         SQLiteDatabase db;
         ContentValues values;
         long newId;
 
-        mDbHelper = new AddressContract(ctx);
+        mDbHelper = new SpeckSensorSQLiteOpenHelper(ctx);
         db = mDbHelper.getWritableDatabase();
         values = new ContentValues();
         values.put(AddressContract.COLUMN_NAME, address.getName());
         values.put(AddressContract.COLUMN_ZIPCODE, address.getZipcode());
         values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(address.getLatitude()));
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(address.getLongitude()));
+        values.put(AddressContract.COLUMN_POSITION_ID, address.getPositionId());
         newId = db.insert(AddressContract.TABLE_NAME, "null", values);
 
         address.set_id(newId);
@@ -59,20 +60,21 @@ public class AddressDbHelper {
     }
 
 
-    public static SimpleAddress createAddressInDatabase(Context ctx, String name, String zipcode, double latitude, double longitude) {
-        AddressContract mDbHelper;
+    public static SimpleAddress createAddressInDatabase(Context ctx, String name, String zipcode, double latitude, double longitude, int positionId) {
+        SpeckSensorSQLiteOpenHelper mDbHelper;
         SQLiteDatabase db;
         ContentValues values;
         long newId;
         SimpleAddress simpleAddress;
 
-        mDbHelper = new AddressContract(ctx);
+        mDbHelper = new SpeckSensorSQLiteOpenHelper(ctx);
         db = mDbHelper.getWritableDatabase();
         values = new ContentValues();
         values.put(AddressContract.COLUMN_NAME, name);
         values.put(AddressContract.COLUMN_ZIPCODE, zipcode);
         values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(latitude));
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(longitude));
+        values.put(AddressContract.COLUMN_POSITION_ID, positionId);
         newId = db.insert(AddressContract.TABLE_NAME, "null", values);
         simpleAddress = new SimpleAddress(name,zipcode,latitude,longitude);
         simpleAddress.set_id(newId);
@@ -84,22 +86,24 @@ public class AddressDbHelper {
 
     public static SimpleAddress generateAddressFromRecord(Cursor cursor) throws IllegalArgumentException {
         SimpleAddress simpleAddress;
-        int id;
+        int id,positionId;
         String name,zipcode;
         double latd,longd;
 
         try {
             // read record
             id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-            name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-            zipcode = cursor.getString(cursor.getColumnIndexOrThrow("zipcode"));
-            latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
-            longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
-            Log.v(Constants.LOG_TAG, "Read address record _id=" + id);
+            name = cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_NAME));
+            zipcode = cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_ZIPCODE));
+            latd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_LATITUDE)));
+            longd = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_LONGITUDE)));
+            positionId = cursor.getInt(cursor.getColumnIndexOrThrow(AddressContract.COLUMN_POSITION_ID));
+            Log.v(Constants.LOG_TAG, "Read address record _id=" + id + " with lat,long=("+latd+","+longd+")");
 
             // add to data structure
             simpleAddress = new SimpleAddress(name, zipcode, latd, longd);
             simpleAddress.set_id(id);
+            simpleAddress.setPositionId(positionId);
             return simpleAddress;
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to read from cursor! cursor.toString()=" + cursor.toString());
@@ -112,14 +116,15 @@ public class AddressDbHelper {
         String[] projection = {
                 "_id",
                 AddressContract.COLUMN_NAME, AddressContract.COLUMN_ZIPCODE,
-                AddressContract.COLUMN_LATITUDE, AddressContract.COLUMN_LONGITUDE
+                AddressContract.COLUMN_LATITUDE, AddressContract.COLUMN_LONGITUDE,
+                AddressContract.COLUMN_POSITION_ID
         };
-        AddressContract mDbHelper;
+        SpeckSensorSQLiteOpenHelper mDbHelper;
         SQLiteDatabase db;
         Cursor cursor;
         ArrayList<SimpleAddress> result = new ArrayList<>();
 
-        mDbHelper = new AddressContract(ctx);
+        mDbHelper = new SpeckSensorSQLiteOpenHelper(ctx);
         db = mDbHelper.getWritableDatabase();
         cursor = db.query(AddressContract.TABLE_NAME, projection,
                 null, null, // columns and values for WHERE clause
