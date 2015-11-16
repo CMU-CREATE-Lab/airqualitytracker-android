@@ -4,6 +4,7 @@
     <string name="action_about_airquality">About Air Quality</string>
     <string name="action_about_speck">About Speck Sensor</string>
     <string name="action_refresh">Refresh</string>
+    <string name="action_trackers">Edit Trackers</string>
     <string name="title_activity_address_list">AddressListActivity</string>
     <string name="title_activity_address_show">AddressShowActivity</string>
     <string name="action_new">Add New</string>
@@ -14,4 +15,5 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_about_speck">AboutSpeckActivity</string>
+    <string name="title_activity_manage_trackers">ManageTrackersActivity</string>
 </resources>

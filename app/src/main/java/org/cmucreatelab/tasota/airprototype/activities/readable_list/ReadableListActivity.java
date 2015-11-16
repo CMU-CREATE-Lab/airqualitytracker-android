@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
+import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity;
 import org.cmucreatelab.tasota.airprototype.classes.RefreshTimer;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
@@ -171,6 +172,10 @@ public class ReadableListActivity extends ActionBarActivity {
             case R.id.action_about_speck:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about speck selected.");
                 startActivity(new Intent(this, AboutSpeckActivity.class));
+                return true;
+            case R.id.action_trackers:
+                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: edit trackers selected.");
+                startActivity(new Intent(this, ManageTrackersActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -59,6 +59,10 @@
             android:name=".activities.AboutSpeckActivity"
             android:label="@string/title_activity_about_speck" >
         </activity>
+        <activity
+            android:name=".activities.manage_trackers.ManageTrackersActivity"
+            android:label="@string/title_activity_manage_trackers" >
+        </activity>
     </application>
 
 </manifest>

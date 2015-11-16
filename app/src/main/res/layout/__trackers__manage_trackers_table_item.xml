@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="80dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="D"
+            android:id="@+id/buttonDelete"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="E"
+            android:id="@+id/buttonEdit"
+            android:layout_alignTop="@+id/buttonDelete"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="M"
+            android:id="@+id/buttonMove"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/buttonEdit"
+            android:layout_toStartOf="@+id/buttonEdit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tracker Name Here"
+            android:id="@+id/textViewReadingName"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/buttonDelete"
+            android:layout_toLeftOf="@+id/buttonMove"
+            android:layout_toStartOf="@+id/buttonMove"
+            android:textSize="20dp" />
+    </RelativeLayout>
+</TableRow>
