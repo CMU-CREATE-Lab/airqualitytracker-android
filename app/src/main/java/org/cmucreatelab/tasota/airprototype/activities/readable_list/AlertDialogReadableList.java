@@ -2,12 +2,15 @@ package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.audiofx.BassBoost;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
 
 /**
  * Created by mike on 6/8/15.
@@ -30,6 +33,9 @@ public class AlertDialogReadableList {
                     globalHandler.headerReadingsHashMap.removeReading(lineItem.readable);
                     switch (lineItem.readable.getReadableType()) {
                         case SPECK:
+                            Speck speck = (Speck)lineItem.readable;
+                            SpeckDbHelper.destroy(speck, context);
+                            GlobalHandler.getInstance(context).settingsHandler.addToBlacklistedDevices(speck.getDeviceId());
                             break;
                         case ADDRESS:
                             AddressDbHelper.destroy((SimpleAddress) lineItem.readable, context);

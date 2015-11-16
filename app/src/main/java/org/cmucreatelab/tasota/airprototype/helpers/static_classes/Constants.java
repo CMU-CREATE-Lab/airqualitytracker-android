@@ -25,6 +25,7 @@ public final class Constants {
         put(SettingsKeys.userId, -1);
         put(SettingsKeys.addressLastPosition, 1);
         put(SettingsKeys.speckLastPosition, 1);
+        put(SettingsKeys.blacklistedDevices, "");
     }};
 
     // these are the channel names that we want our feeds to report
@@ -47,6 +48,7 @@ public final class Constants {
         public static final String userId = "user_id";
         public static final String addressLastPosition = "address_last_position";
         public static final String speckLastPosition = "speck_last_position";
+        public static final String blacklistedDevices = "blacklisted_devices";
     }
 
     public static final class Location {

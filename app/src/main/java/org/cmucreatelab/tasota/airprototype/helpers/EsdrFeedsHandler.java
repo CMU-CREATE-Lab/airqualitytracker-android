@@ -60,6 +60,13 @@ public class EsdrFeedsHandler {
         int requestMethod = Request.Method.GET;
         // TODO only request fields that we want?
         String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?whereAnd=userId="+userId+",productId=9";
+        String listDevices = "";
+
+        for (Long id: globalHandler.settingsHandler.blacklistedDevices) {
+            listDevices += ",deviceId<>"+id;
+        }
+        requestUrl += listDevices;
+
         globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
     }
 
@@ -67,6 +74,12 @@ public class EsdrFeedsHandler {
     public void requestSpeckDevices(String authToken, long userId, Response.Listener<JSONObject> response) {
         // generate safe URL
         String requestUrl = Constants.Esdr.API_URL + "/api/v1/devices?whereAnd=userId="+userId+",productId=9";
+        String listDevices = "";
+
+        for (Long id: globalHandler.settingsHandler.blacklistedDevices) {
+            listDevices += ",id<>"+id;
+        }
+        requestUrl += listDevices;
 
         // create and send request
         int requestMethod = Request.Method.GET;
