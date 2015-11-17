@@ -11,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 import java.util.ArrayList;
 
@@ -25,14 +26,9 @@ public class ManageTrackersActivity extends ActionBarActivity {
         setContentView(R.layout.__trackers__manage_trackers);
 
         listViewTrackers = (ListView)findViewById(R.id.listViewTrackers);
-        ArrayList<String> list = new ArrayList<>();
-        list.add("One");
-        list.add("Two");
-        list.add("3");
-        for (int i=0;i<4;i++) {
-            list.add("foo");
-        }
-        listViewTrackers.setAdapter(new TrackersAdapter(this,list));
+
+        ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.trackerList;
+        listViewTrackers.setAdapter( new TrackersAdapter(this,list) );
     }
 
     @Override

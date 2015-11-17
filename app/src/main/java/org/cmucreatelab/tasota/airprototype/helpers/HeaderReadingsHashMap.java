@@ -4,6 +4,8 @@ import android.location.Location;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import com.android.volley.Response;
+
+import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
@@ -33,6 +35,8 @@ public class HeaderReadingsHashMap {
     private final HashMap<String,ArrayList> hashMap = new HashMap<>();
     // this is the data structure used by StickyGridAdapter
     public final ArrayList<StickyGridAdapter.LineItem> adapterList = new ArrayList<>();
+    // used by tracker manager
+    public final ArrayList<TrackersAdapter.TrackerListItem> trackerList = new ArrayList<>();
 
 
     public HeaderReadingsHashMap(GlobalHandler globalHandler) {
@@ -72,7 +76,9 @@ public class HeaderReadingsHashMap {
         // sectionFirstPosition marks the position of the header in each section
         int headerCount=0,sectionFirstPosition,position=0;
         adapterList.clear();
+        trackerList.clear();
 
+        // adapterList
         for (String header : headers) {
             ArrayList<Readable> items = (ArrayList<Readable>)hashMap.get(header);
             // only display headers with non-empty contents
@@ -85,6 +91,19 @@ public class HeaderReadingsHashMap {
                 for (Readable r : items) {
                     position += 1;
                     adapterList.add(new StickyGridAdapter.LineItem(false, sectionFirstPosition, r));
+                }
+            }
+        }
+        // trackerList
+        for (String header : headers) {
+            ArrayList<Readable> items = (ArrayList<Readable>)hashMap.get(header);
+            // only display headers with non-empty contents
+            if (items.size() > 0) {
+                trackerList.add( new TrackersAdapter.TrackerListItem(header) );
+
+                // grid cells
+                for (Readable r : items) {
+                    trackerList.add( new TrackersAdapter.TrackerListItem(r) );
                 }
             }
         }
