@@ -134,7 +134,13 @@ public class DynamicListView extends ListView {
                     int itemNum = position - getFirstVisiblePosition();
 
                     View selectedView = getChildAt(itemNum);
-                    mMobileItemId = getAdapter().getItemId(position);
+//                    mMobileItemId = getAdapter().getItemId(position);
+                    TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+                    if (adapter.getItem(position).isHeader) {
+                        Log.i(Constants.LOG_TAG,"Tried to long click HEADER");
+                        return false;
+                    }
+                    mMobileItemId = adapter.getItemId(position);
                     mHoverCell = getAndAddHoverView(selectedView);
                     selectedView.setVisibility(INVISIBLE);
 
@@ -329,8 +335,26 @@ public class DynamicListView extends ListView {
         // isn't doing invisible properly for the moving element
         if (isBelow || isAbove) {
 
-            final long switchItemID = isBelow ? mBelowItemId : mAboveItemId;
-            View switchView = isBelow ? belowView : aboveView;
+            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+            final long switchItemID;
+            View switchView;
+            if (isBelow) {
+                if (adapter.getItem(getPositionForID(mBelowItemId)).isHeader) {
+                    Log.i(Constants.LOG_TAG,"Tried to swap below HEADER");
+                    return;
+                }
+                switchItemID = isBelow ? mBelowItemId : mAboveItemId;
+                switchView = isBelow ? belowView : aboveView;
+            } else {
+                if (adapter.getItem(getPositionForID(mAboveItemId)).isHeader) {
+                    Log.i(Constants.LOG_TAG,"Tried to swap above HEADER");
+                    return;
+                }
+                switchItemID = isBelow ? mBelowItemId : mAboveItemId;
+                switchView = isBelow ? belowView : aboveView;
+            }
+//            final long switchItemID = isBelow ? mBelowItemId : mAboveItemId;
+//            View switchView = isBelow ? belowView : aboveView;
             final int originalItem = getPositionForView(mobileView);
 
             if (switchView == null) {
@@ -341,7 +365,7 @@ public class DynamicListView extends ListView {
             Log.i(Constants.LOG_TAG, "Swapping " + originalItem + " and " + getPositionForView(switchView));
             swapElements(mCheeseList, originalItem, getPositionForView(switchView));
 
-            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+//            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
             TrackersAdapter.TrackerListItem switchItem = adapter.getItem(getPositionForView(switchView));
             TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(originalItem);
             adapter.notifyDataSetChanged();

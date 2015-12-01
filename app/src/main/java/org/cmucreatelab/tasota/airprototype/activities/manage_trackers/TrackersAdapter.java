@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListItem> {
     public static class TrackerListItem {
-        protected boolean isHeader;
+        public boolean isHeader;
         protected String name;
         protected Readable readable;
         public boolean hidden = false;
