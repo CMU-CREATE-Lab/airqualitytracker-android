@@ -29,6 +29,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
         protected String name;
         protected Readable readable;
         public boolean hidden = false;
+        public View view;
 
         public TrackerListItem(String name) {
             isHeader = true;
@@ -40,10 +41,10 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
         }
     }
 
-    private final Context context;
+    private final ManageTrackersActivity context;
 //    public final ArrayList<TrackersAdapter.TrackerListItem> values;
 
-    public TrackersAdapter(Context context, ArrayList<TrackersAdapter.TrackerListItem> values) {
+    public TrackersAdapter(ManageTrackersActivity context, ArrayList<TrackersAdapter.TrackerListItem> values) {
         super(context, R.layout.__trackers__manage_trackers_table_item, values);
         this.context = context;
 //        this.values = values;
@@ -57,7 +58,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        TrackerListItem item = values.get(position);
-        TrackerListItem item = getItem(position);
+        final TrackerListItem item = getItem(position);
         View rowView;
 
         if (item.isHeader) {
@@ -70,6 +71,17 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
 
             TextView textViewReadingName = (TextView)rowView.findViewById(R.id.textViewReadingName);
             textViewReadingName.setText(item.readable.getName());
+
+            FrameLayout frameTrackerMove = (FrameLayout)rowView.findViewById(R.id.frameTrackerMove);
+            frameTrackerMove.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Log.i(Constants.LOG_TAG, "Touched Frame!");
+                    // this is why we need context to be specific to ManageTrackersActivity
+                    context.listViewTrackers.startListMovementFromItem(item);
+                    return false;
+                }
+            });
 
 //            rowView.setTag("icon bitmap");
 //            FrameLayout frameTrackerMove = (FrameLayout)rowView.findViewById(R.id.frameTrackerMove);
@@ -103,6 +115,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
 //            item.hidden = false;
         }
 
+        item.view = rowView;
         return rowView;
     }
 
@@ -111,7 +124,14 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
 
     HashMap<TrackersAdapter.TrackerListItem, Integer> mIdMap = new HashMap<TrackersAdapter.TrackerListItem, Integer>();
 
-    public TrackersAdapter(Context context, int textViewResourceId, List<TrackersAdapter.TrackerListItem> objects) {
+    // TODO helper to unhide all views
+    public void unhideAllListItems() {
+        for (TrackerListItem item: mIdMap.keySet()) {
+            item.hidden = false;
+        }
+    }
+
+    public TrackersAdapter(ManageTrackersActivity context, int textViewResourceId, List<TrackersAdapter.TrackerListItem> objects) {
         super(context, textViewResourceId, objects);
         this.context = context;
         for (int i = 0; i < objects.size(); ++i) {

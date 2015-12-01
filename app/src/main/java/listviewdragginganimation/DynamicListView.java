@@ -115,7 +115,7 @@ public class DynamicListView extends ListView {
     }
 
     public void init(Context context) {
-        setOnItemLongClickListener(mOnItemLongClickListener);
+//        setOnItemLongClickListener(mOnItemLongClickListener);
         setOnScrollListener(mScrollListener);
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         mSmoothScrollAmountAtEdge = (int)(SMOOTH_SCROLL_AMOUNT_AT_EDGE / metrics.density);
@@ -151,6 +151,22 @@ public class DynamicListView extends ListView {
                     return true;
                 }
             };
+
+    public void startListMovementFromItem(TrackersAdapter.TrackerListItem mobileItem) {
+        TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+        int position = adapter.getPosition(mobileItem);
+        // offset is important (otherwise it will select the wrong item)
+        View selectedView = getChildAt(position - getFirstVisiblePosition());
+
+        mTotalOffset = 0;
+        mMobileItemId = adapter.getItemId(position);
+        mHoverCell = getAndAddHoverView(selectedView);
+        selectedView.setVisibility(INVISIBLE);
+
+        mCellIsMobile = true;
+
+        updateNeighborViewsForID(mMobileItemId);
+    }
 
     /**
      * Creates the hover cell with the appropriate bitmap and of appropriate
@@ -456,9 +472,12 @@ public class DynamicListView extends ListView {
                     mMobileItemId = INVALID_ID;
                     mBelowItemId = INVALID_ID;
                     TrackersAdapter adapter = (TrackersAdapter) getAdapter();
-                    TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
-                    mobileItem.hidden = false;
+                    adapter.unhideAllListItems();
                     adapter.notifyDataSetChanged();
+//                    TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+//                    TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
+//                    mobileItem.hidden = false;
+//                    adapter.notifyDataSetChanged();
 //                    mobileView.setVisibility(VISIBLE);
                     mHoverCell = null;
                     setEnabled(true);
