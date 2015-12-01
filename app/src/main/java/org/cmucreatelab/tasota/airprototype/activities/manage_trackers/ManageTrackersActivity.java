@@ -15,20 +15,28 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 import java.util.ArrayList;
 
+import listviewdragginganimation.Cheeses;
+import listviewdragginganimation.DynamicListView;
+import listviewdragginganimation.StableArrayAdapter;
+
 
 public class ManageTrackersActivity extends ActionBarActivity {
 
-    private ListView listViewTrackers;
+    private DynamicListView listViewTrackers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__trackers__manage_trackers);
 
-        listViewTrackers = (ListView)findViewById(R.id.listViewTrackers);
-
         ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.trackerList;
-        listViewTrackers.setAdapter( new TrackersAdapter(this,list) );
+
+        TrackersAdapter adapter = new TrackersAdapter(this,list);
+        listViewTrackers = (DynamicListView)findViewById(R.id.listViewTrackers);
+
+        listViewTrackers.setCheeseList(list);
+        listViewTrackers.setAdapter(adapter);
+        listViewTrackers.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     @Override

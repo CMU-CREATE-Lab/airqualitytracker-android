@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "org.cmucreatelab.tasota.airprototype"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 22
         versionCode 15
         versionName "1.5"
