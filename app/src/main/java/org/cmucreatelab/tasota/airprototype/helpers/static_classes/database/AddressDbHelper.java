@@ -60,6 +60,11 @@ public class AddressDbHelper {
     }
 
 
+    public static void updateAddressInDatabase(SimpleAddress address) {
+        // TODO perform update actions
+    }
+
+
     public static SimpleAddress createAddressInDatabase(Context ctx, String name, String zipcode, double latitude, double longitude, int positionId) {
         SpeckSensorSQLiteOpenHelper mDbHelper;
         SQLiteDatabase db;

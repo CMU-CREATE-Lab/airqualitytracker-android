@@ -378,7 +378,6 @@ public class DynamicListView extends ListView {
                 return;
             }
 
-            Log.i(Constants.LOG_TAG, "Swapping " + originalItem + " and " + getPositionForView(switchView));
             swapElements(mCheeseList, originalItem, getPositionForView(switchView));
 
 //            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
@@ -427,6 +426,12 @@ public class DynamicListView extends ListView {
         Object temp = arrayList.get(indexOne);
         arrayList.set(indexOne, arrayList.get(indexTwo));
         arrayList.set(indexTwo, temp);
+
+        // notify the swapping to higher-ups
+        TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+        TrackersAdapter.TrackerListItem item1 = adapter.getItem(indexOne);
+        TrackersAdapter.TrackerListItem item2 = adapter.getItem(indexTwo);
+        Log.i(Constants.LOG_TAG, "SWAPPING: "+item1.readable.getName()+" // "+item2.readable.getName());
     }
 
 

@@ -70,8 +70,18 @@ public class HeaderReadingsHashMap {
         }
         return -1;
     }
-    
-    
+
+
+    private void reorderAddressPositions() {
+        // TODO change position IDs for all addresses and update database
+    }
+
+
+    private void reorderSpeckPositions() {
+        // TODO change position IDs for all specks and update database
+    }
+
+
     public void populateAdapterList() {
         // sectionFirstPosition marks the position of the header in each section
         int headerCount=0,sectionFirstPosition,position=0;
@@ -103,6 +113,9 @@ public class HeaderReadingsHashMap {
 
                 // grid cells
                 for (Readable r : items) {
+                    if (r.getReadableType() == Readable.Type.ADDRESS && ((SimpleAddress)r).isCurrentLocation()) {
+                        continue;
+                    }
                     trackerList.add( new TrackersAdapter.TrackerListItem(r) );
                 }
             }
@@ -146,6 +159,55 @@ public class HeaderReadingsHashMap {
                 Log.e(Constants.LOG_TAG, "Tried to remove Readable of unknown Type in HeaderReadingsHashMap ");
         }
         refreshHash();
+    }
+
+
+    public void renameReading(Readable readable, String name) {
+        Readable.Type type = readable.getReadableType();
+        switch(type) {
+            case ADDRESS:
+                SimpleAddress address = (SimpleAddress)readable;
+                address.setName(name);
+                AddressDbHelper.updateAddressInDatabase(address);
+                break;
+            case SPECK:
+                Speck speck = (Speck)readable;
+                speck.setName(name);
+                SpeckDbHelper.updateSpeckInDatabase(speck);
+                break;
+            default:
+                Log.e(Constants.LOG_TAG, "Tried to rename Readable of unknown Type in HeaderReadingsHashMap ");
+        }
+    }
+
+
+    // NOTICE: the operation performed via android code does NOT match
+    // the operation performed by iOS code. In iOS, we only handle after
+    // the user has finished their swapping. In Android, we handle each
+    // neighbor's swap (since it had to be implemented from scratch).
+    // Regardless, the function logic still works in Java.
+    public void reorderReading(Readable reading, Readable destination) {
+        if (reading.getReadableType() == destination.getReadableType()) {
+            int to,from;
+            Readable.Type type = reading.getReadableType();
+            switch (type) {
+                case ADDRESS:
+                    to = addresses.indexOf(destination);
+                    addresses.remove(reading);
+                    addresses.add(to,(SimpleAddress)reading);
+                    break;
+                case SPECK:
+                    to = specks.indexOf(destination);
+                    specks.remove(reading);
+                    specks.add(to,(Speck)reading);
+                    break;
+                default:
+                    Log.e(Constants.LOG_TAG, "Tried to reorder Readables of unknown (matching) Type in HeaderReadingsHashMap ");
+            }
+            reorderAddressPositions();
+            reorderSpeckPositions();
+            refreshHash();
+        }
     }
 
 

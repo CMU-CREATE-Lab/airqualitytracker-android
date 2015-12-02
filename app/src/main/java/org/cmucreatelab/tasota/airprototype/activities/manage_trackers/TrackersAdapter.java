@@ -27,7 +27,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
     public static class TrackerListItem {
         public boolean isHeader;
         protected String name;
-        protected Readable readable;
+        public Readable readable;
         public boolean hidden = false;
         public View view;
 

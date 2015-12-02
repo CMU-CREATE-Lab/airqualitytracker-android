@@ -67,6 +67,10 @@ public class SpeckDbHelper {
     }
 
 
+    public static void updateSpeckInDatabase(Speck speck) {
+        // TODO perform update actions
+    }
+
     public static Speck createSpeckInDatabase(
             Context ctx,
             String apiKeyReadOnly,
