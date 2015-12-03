@@ -5,6 +5,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
+
+import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
@@ -23,6 +25,7 @@ public class GlobalHandler {
     public HeaderReadingsHashMap headerReadingsHashMap;
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public StickyGridAdapter gridAdapter;
+    public TrackersAdapter trackersAdapter;
 
 
     // Nobody accesses the constructor

@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -40,6 +41,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
+import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
@@ -422,6 +424,8 @@ public class DynamicListView extends ListView {
         }
     }
 
+    private TrackersAdapter.TrackerListItem mLastSwitchedItem;
+
     private void swapElements(ArrayList arrayList, int indexOne, int indexTwo) {
         Object temp = arrayList.get(indexOne);
         arrayList.set(indexOne, arrayList.get(indexTwo));
@@ -431,7 +435,10 @@ public class DynamicListView extends ListView {
         TrackersAdapter adapter = (TrackersAdapter) getAdapter();
         TrackersAdapter.TrackerListItem item1 = adapter.getItem(indexOne);
         TrackersAdapter.TrackerListItem item2 = adapter.getItem(indexTwo);
-        Log.i(Constants.LOG_TAG, "SWAPPING: "+item1.readable.getName()+" // "+item2.readable.getName());
+        Log.i(Constants.LOG_TAG, "SWAPPING: " + item1.readable.getName() + " // " + item2.readable.getName());
+//
+//        GlobalHandler.getInstance(getContext()).headerReadingsHashMap.reorderReading(item1.readable, item2.readable);
+        mLastSwitchedItem = item1;
     }
 
 
@@ -441,6 +448,19 @@ public class DynamicListView extends ListView {
      */
     private void touchEventsEnded () {
         final View mobileView = getViewForID(mMobileItemId);
+
+        // NEW
+        if (mLastSwitchedItem != null) {
+            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+            TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
+            Log.i(Constants.LOG_TAG, "You were moving mobileItem name=" + mobileItem.readable.getName() + " prep to switch with " + mLastSwitchedItem.readable.getName());
+            // TODO how to swap without crashing?
+//            GlobalHandler.getInstance(getContext()).headerReadingsHashMap.reorderReading(mobileItem.readable, mLastSwitchedItem.readable);
+            mLastSwitchedItem = null;
+        }
+//        mobileItem.hidden = false;
+//        adapter.notifyDataSetChanged();
+
         if (mCellIsMobile|| mIsWaitingForScrollFinish) {
             mCellIsMobile = false;
             mIsWaitingForScrollFinish = false;

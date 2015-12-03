@@ -73,12 +73,24 @@ public class HeaderReadingsHashMap {
 
 
     private void reorderAddressPositions() {
-        // TODO change position IDs for all addresses and update database
+        int index = 1;
+        for (SimpleAddress address: addresses) {
+            address.setPositionId(index);
+            AddressDbHelper.updateAddressInDatabase(globalHandler.appContext, address);
+            index ++;
+        }
+        globalHandler.settingsHandler.setAddressLastPosition(index);
     }
 
 
     private void reorderSpeckPositions() {
-        // TODO change position IDs for all specks and update database
+        int index = 1;
+        for (Speck speck: specks) {
+            speck.setPositionId(index);
+            SpeckDbHelper.updateSpeckInDatabase(globalHandler.appContext, speck);
+            index ++;
+        }
+        globalHandler.settingsHandler.setSpeckLastPosition(index);
     }
 
 
@@ -168,12 +180,12 @@ public class HeaderReadingsHashMap {
             case ADDRESS:
                 SimpleAddress address = (SimpleAddress)readable;
                 address.setName(name);
-                AddressDbHelper.updateAddressInDatabase(address);
+                AddressDbHelper.updateAddressInDatabase(globalHandler.appContext,address);
                 break;
             case SPECK:
                 Speck speck = (Speck)readable;
                 speck.setName(name);
-                SpeckDbHelper.updateSpeckInDatabase(speck);
+                SpeckDbHelper.updateSpeckInDatabase(globalHandler.appContext, speck);
                 break;
             default:
                 Log.e(Constants.LOG_TAG, "Tried to rename Readable of unknown Type in HeaderReadingsHashMap ");

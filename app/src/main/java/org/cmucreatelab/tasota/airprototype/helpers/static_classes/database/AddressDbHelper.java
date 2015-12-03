@@ -60,8 +60,35 @@ public class AddressDbHelper {
     }
 
 
-    public static void updateAddressInDatabase(SimpleAddress address) {
-        // TODO perform update actions
+    public static void updateAddressInDatabase(Context context, SimpleAddress address) {
+        if (address.get_id() >= 0) {
+            SpeckSensorSQLiteOpenHelper mDbHelper;
+            SQLiteDatabase db;
+            String selection = "_id LIKE ?";
+            String[] selectionArgs = { String.valueOf(address.get_id()) };
+            int result;
+            ContentValues contentValues;
+
+            mDbHelper = new SpeckSensorSQLiteOpenHelper(context);
+            db = mDbHelper.getWritableDatabase();
+
+            // find values to be updated
+            contentValues = new ContentValues();
+            contentValues.put(AddressContract.COLUMN_NAME, address.getName());
+            contentValues.put(AddressContract.COLUMN_ZIPCODE, address.getZipcode());
+            contentValues.put(AddressContract.COLUMN_LATITUDE, address.getLatitude());
+            contentValues.put(AddressContract.COLUMN_LONGITUDE, address.getLongitude());
+            contentValues.put(AddressContract.COLUMN_POSITION_ID, address.getPositionId());
+
+            // perform update
+            result = db.update(AddressContract.TABLE_NAME, contentValues, selection, selectionArgs);
+            if (result == 1) {
+                Log.i(Constants.LOG_TAG, "updated address _id=" + address.get_id());
+            } else {
+                Log.w(Constants.LOG_TAG, "Attempted to update address _id=" +
+                        address.get_id() + " but updated " + result + " items.");
+            }
+        }
     }
 
 

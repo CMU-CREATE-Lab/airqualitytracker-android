@@ -67,8 +67,39 @@ public class SpeckDbHelper {
     }
 
 
-    public static void updateSpeckInDatabase(Speck speck) {
-        // TODO perform update actions
+    public static void updateSpeckInDatabase(Context context, Speck speck) {
+        if (speck.get_id() >= 0) {
+            SpeckSensorSQLiteOpenHelper mDbHelper;
+            SQLiteDatabase db;
+            String selection = "_id LIKE ?";
+            String[] selectionArgs = { String.valueOf(speck.get_id()) };
+            int result;
+            ContentValues contentValues;
+
+            mDbHelper = new SpeckSensorSQLiteOpenHelper(context);
+            db = mDbHelper.getWritableDatabase();
+
+            // find values to be updated
+            contentValues = new ContentValues();
+            contentValues.put(SpeckContract.COLUMN_NAME, speck.getName());
+            contentValues.put(SpeckContract.COLUMN_LATITUDE, speck.getLatitude());
+            contentValues.put(SpeckContract.COLUMN_LONGITUDE, speck.getLongitude());
+            contentValues.put(SpeckContract.COLUMN_POSITION_ID, speck.getPositionId());
+            contentValues.put(SpeckContract.COLUMN_DEVICE_ID, speck.getDeviceId());
+            contentValues.put(SpeckContract.COLUMN_EXPOSURE, speck.getExposure());
+            contentValues.put(SpeckContract.COLUMN_FEED_ID, speck.getFeed_id());
+            contentValues.put(SpeckContract.COLUMN_IS_MOBILE, speck.isMobile());
+            contentValues.put(SpeckContract.COLUMN_PRODUCT_ID, speck.getProductId());
+
+            // perform update
+            result = db.update(SpeckContract.TABLE_NAME, contentValues, selection, selectionArgs);
+            if (result == 1) {
+                Log.i(Constants.LOG_TAG, "updated speck _id=" + speck.get_id());
+            } else {
+                Log.w(Constants.LOG_TAG, "Attempted to update speck _id=" +
+                        speck.get_id() + " but updated " + result + " items.");
+            }
+        }
     }
 
     public static Speck createSpeckInDatabase(
