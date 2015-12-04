@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -27,6 +28,9 @@ import listviewdragginganimation.StableArrayAdapter;
 public class ManageTrackersActivity extends ActionBarActivity {
 
     protected DynamicListView listViewTrackers;
+
+    private DeleteDialogTrackerListItem deleteDialog;
+    private EditDialogTrackerListItem editDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,56 @@ public class ManageTrackersActivity extends ActionBarActivity {
 //            });
 //        }
     }
+
+    public void showDeleteDialog() {
+        deleteDialog = new DeleteDialogTrackerListItem(this);
+        deleteDialog.getAlertDialog().show();
+    }
+
+    public void showEditDialog() {
+        editDialog = new EditDialogTrackerListItem(this);
+        editDialog.getAlertDialog().show();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // TODO restore objects
+        Log.v(Constants.LOG_TAG, "ManageTrackersActivity onRestoreInstanceState");
+        if (savedInstanceState.getBoolean("deleteDialog")) {
+//            int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
+//            openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
+            showDeleteDialog();
+        }
+        if (savedInstanceState.getBoolean("editDialog")) {
+            String input = savedInstanceState.getString("editDialogString");
+            showEditDialog();
+            ((EditText)editDialog.getAlertDialog().findViewById(R.id.editDialogInputText)).setText(input);
+        }
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // TODO save objects
+        if (deleteDialog != null && deleteDialog.getAlertDialog().isShowing()) {
+            outState.putBoolean("deleteDialog", true);
+//            outState.putInt("dialogDeleteAddressIndex", GlobalHandler.getInstance(getApplicationContext()).
+//                    headerReadingsHashMap.adapterList.indexOf(dialogDelete.getLineItemToBeDeleted()));
+//            dialogDelete.getAlertDialog().dismiss();
+            deleteDialog.getAlertDialog().dismiss();
+        }
+        if (editDialog != null && editDialog.getAlertDialog().isShowing()) {
+            outState.putBoolean("editDialog", true);
+            String input = ((EditText)editDialog.getAlertDialog().findViewById(R.id.editDialogInputText)).getText().toString();
+            outState.putString("editDialogString", input);
+            editDialog.getAlertDialog().dismiss();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

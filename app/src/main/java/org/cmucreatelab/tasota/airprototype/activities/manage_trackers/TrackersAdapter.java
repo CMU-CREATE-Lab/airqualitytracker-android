@@ -83,6 +83,26 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
                 }
             });
 
+            FrameLayout frameTrackerDelete = (FrameLayout)rowView.findViewById(R.id.frameTrackerDelete);
+            frameTrackerDelete.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Log.i(Constants.LOG_TAG, "Touched (delete) Frame!");
+                    context.showDeleteDialog();
+                    return false;
+                }
+            });
+
+            FrameLayout frameTrackerEdit = (FrameLayout)rowView.findViewById(R.id.frameTrackerEdit);
+            frameTrackerEdit.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Log.i(Constants.LOG_TAG, "Touched (edit) Frame!");
+                    context.showEditDialog();
+                    return false;
+                }
+            });
+
 //            rowView.setTag("icon bitmap");
 //            FrameLayout frameTrackerMove = (FrameLayout)rowView.findViewById(R.id.frameTrackerMove);
 //
