@@ -218,7 +218,8 @@ public class HeaderReadingsHashMap {
             }
             reorderAddressPositions();
             reorderSpeckPositions();
-            refreshHash();
+            // TODO this crashes in the TrackersAdapter code (TrackersAdapter.getItemId) but would be nice (for completeness sake) if it could be called in this method
+//            refreshHash();
         }
     }
 

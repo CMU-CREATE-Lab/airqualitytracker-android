@@ -77,6 +77,7 @@ public class ReadableListActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         Log.i(Constants.LOG_TAG, "onResume() was called");
+        GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.refreshHash();
         if (!refreshTimer.isStarted)
             refreshTimer.startTimer();
         super.onResume();

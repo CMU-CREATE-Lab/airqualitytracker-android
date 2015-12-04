@@ -101,6 +101,10 @@ public class DynamicListView extends ListView {
     private boolean mIsWaitingForScrollFinish = false;
     private int mScrollState = OnScrollListener.SCROLL_STATE_IDLE;
 
+    // This ensures we don't click one, move it, then click another while the animation
+    // of the previous was still finishing (causes it to crash).
+    private boolean mTouchIsBusy = false;
+
     public DynamicListView(Context context) {
         super(context);
         init(context);
@@ -155,6 +159,10 @@ public class DynamicListView extends ListView {
             };
 
     public void startListMovementFromItem(TrackersAdapter.TrackerListItem mobileItem) {
+        if (mTouchIsBusy) {
+            return;
+        }
+        mTouchIsBusy = true;
         TrackersAdapter adapter = (TrackersAdapter) getAdapter();
         int position = adapter.getPosition(mobileItem);
         // offset is important (otherwise it will select the wrong item)
@@ -454,8 +462,7 @@ public class DynamicListView extends ListView {
             TrackersAdapter adapter = (TrackersAdapter) getAdapter();
             TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
             Log.i(Constants.LOG_TAG, "You were moving mobileItem name=" + mobileItem.readable.getName() + " prep to switch with " + mLastSwitchedItem.readable.getName());
-            // TODO how to swap without crashing?
-//            GlobalHandler.getInstance(getContext()).headerReadingsHashMap.reorderReading(mobileItem.readable, mLastSwitchedItem.readable);
+            GlobalHandler.getInstance(getContext()).headerReadingsHashMap.reorderReading(mobileItem.readable, mLastSwitchedItem.readable);
             mLastSwitchedItem = null;
         }
 //        mobileItem.hidden = false;
@@ -507,6 +514,7 @@ public class DynamicListView extends ListView {
                     mHoverCell = null;
                     setEnabled(true);
                     invalidate();
+                    mTouchIsBusy = false;
                 }
             });
             hoverViewAnimator.start();
