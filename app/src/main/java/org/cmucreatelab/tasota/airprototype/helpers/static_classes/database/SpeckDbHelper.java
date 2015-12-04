@@ -197,7 +197,7 @@ public class SpeckDbHelper {
         cursor = db.query(SpeckContract.TABLE_NAME, projection,
                 null, null, // columns and values for WHERE clause
                 null, null, // group rows, filter row groups
-                null // sort order
+                SpeckContract.COLUMN_POSITION_ID + " ASC" // sort order
         );
 
         cursor.moveToFirst();

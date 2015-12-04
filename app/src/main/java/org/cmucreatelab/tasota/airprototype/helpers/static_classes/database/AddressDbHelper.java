@@ -161,7 +161,7 @@ public class AddressDbHelper {
         cursor = db.query(AddressContract.TABLE_NAME, projection,
                 null, null, // columns and values for WHERE clause
                 null, null, // group rows, filter row groups
-                null // sort order
+                AddressContract.COLUMN_POSITION_ID + " ASC" // sort order
         );
 
         cursor.moveToFirst();
