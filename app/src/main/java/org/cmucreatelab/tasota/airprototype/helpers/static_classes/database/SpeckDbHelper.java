@@ -47,6 +47,10 @@ public class SpeckDbHelper {
         ContentValues values;
         long newId;
 
+        if (speck.getPositionId() <= 0) {
+            speck.setPositionId(GlobalHandler.getInstance(ctx).settingsHandler.getSpeckLastPosition());
+        }
+
         mDbHelper = new SpeckSensorSQLiteOpenHelper(ctx);
         db = mDbHelper.getWritableDatabase();
         values = new ContentValues();
