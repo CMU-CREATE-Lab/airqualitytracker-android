@@ -1,27 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity">
+    tools:context="org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity"
+    android:background="#585858">
 
-    <TextView android:text="Current Location" android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:id="@+id/textViewCurrentLocation"
-        android:layout_toLeftOf="@+id/checkBoxCurrentLocation"
-        android:layout_alignParentTop="true"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/relativeLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="24dp"
-        android:elegantTextHeight="false" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBoxCurrentLocation"
-        android:layout_alignTop="@+id/textViewCurrentLocation"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:checked="false" />
+        <TextView android:text="Current Location" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewCurrentLocation"
+            android:layout_toLeftOf="@+id/checkBoxCurrentLocation"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="24dp"
+            android:elegantTextHeight="false"
+            android:textColor="#fff"
+            android:layout_centerVertical="true" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxCurrentLocation"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:checked="false"
+            android:layout_centerVertical="true"
+            android:backgroundTint="#f00" />
+    </RelativeLayout>
 
     <listviewdragginganimation.DynamicListView
         android:layout_width="wrap_content"
@@ -32,6 +46,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/textViewCurrentLocation" />
+        android:divider="#111"
+        android:dividerHeight="1px"
+        android:background="#3a3a3a"
+        android:layout_below="@+id/relativeLayout" />
 
 </RelativeLayout>

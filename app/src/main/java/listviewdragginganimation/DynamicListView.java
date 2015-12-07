@@ -125,6 +125,9 @@ public class DynamicListView extends ListView {
         setOnScrollListener(mScrollListener);
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         mSmoothScrollAmountAtEdge = (int)(SMOOTH_SCROLL_AMOUNT_AT_EDGE / metrics.density);
+        // use this to remove all divider lines (otherwise specified in xml)
+//        setDivider(null);
+//        setDividerHeight(0);
     }
 
     /**
