@@ -8,14 +8,14 @@
         android:title="@string/action_new"
         app:showAsAction="always" />
 
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_about_airquality" android:title="@string/action_about_airquality"
-        android:orderInCategory="200" app:showAsAction="never" />
-    <item android:id="@+id/action_about_speck" android:title="@string/action_about_speck"
-        android:orderInCategory="300" app:showAsAction="never" />
-    <item android:id="@+id/action_refresh" android:title="@string/action_refresh"
-        android:orderInCategory="400" app:showAsAction="never" />
     <item android:id="@+id/action_trackers" android:title="@string/action_trackers"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_login" android:title="@string/action_login"
+        android:orderInCategory="200" app:showAsAction="never" />
+    <item android:id="@+id/action_about_airquality" android:title="@string/action_about_airquality"
+        android:orderInCategory="300" app:showAsAction="never" />
+    <item android:id="@+id/action_about_speck" android:title="@string/action_about_speck"
         android:orderInCategory="400" app:showAsAction="never" />
+    <item android:id="@+id/action_refresh" android:title="@string/action_refresh"
+        android:orderInCategory="500" app:showAsAction="never" />
 </menu>
