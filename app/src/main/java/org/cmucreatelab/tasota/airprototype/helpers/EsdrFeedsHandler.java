@@ -41,7 +41,7 @@ public class EsdrFeedsHandler {
         requestMethod = Request.Method.GET;
         requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds";
         // only request AirNow (11) or ACHD (1)
-        requestUrl += "?whereOr=ProductId=11,ProductId=1";
+        requestUrl += "?whereJoin=AND&whereOr=productId=11,productId=1";
         // get bounding box
         la1 = latd-Constants.MapGeometry.BOUNDBOX_LAT;
         la2 = latd+Constants.MapGeometry.BOUNDBOX_LONG;
