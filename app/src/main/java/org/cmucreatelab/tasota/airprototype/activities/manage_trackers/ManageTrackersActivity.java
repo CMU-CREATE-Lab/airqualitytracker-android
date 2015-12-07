@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
@@ -32,17 +33,30 @@ public class ManageTrackersActivity extends ActionBarActivity {
 
     private DeleteDialogTrackerListItem deleteDialog;
     private EditDialogTrackerListItem editDialog;
+    private CheckBox checkBoxCurrentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__trackers__manage_trackers);
 
-        ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.trackerList;
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        ArrayList<TrackersAdapter.TrackerListItem> list = globalHandler.headerReadingsHashMap.trackerList;
 
         listViewTrackers = (DynamicListView)findViewById(R.id.listViewTrackers);
-        TrackersAdapter adapter = new TrackersAdapter(this,list);
+        checkBoxCurrentLocation = (CheckBox)findViewById(R.id.checkBoxCurrentLocation);
 
+        checkBoxCurrentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isChecked = checkBoxCurrentLocation.isChecked();
+                Log.i(Constants.LOG_TAG, "Clicked checkbox: now set to " + isChecked);
+                globalHandler.settingsHandler.setAppUsesLocation(isChecked);
+            }
+        });
+        checkBoxCurrentLocation.setChecked(globalHandler.settingsHandler.appUsesLocation());
+
+        TrackersAdapter adapter = new TrackersAdapter(this,list);
         listViewTrackers.setCheeseList(list);
         listViewTrackers.setAdapter(adapter);
         listViewTrackers.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

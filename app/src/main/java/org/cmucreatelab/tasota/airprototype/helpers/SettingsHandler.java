@@ -185,4 +185,18 @@ public class SettingsHandler {
         editor.apply();
     }
 
+
+    public void setAppUsesLocation(boolean appUsesLocation) {
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putBoolean(Constants.SettingsKeys.appUsesLocation, appUsesLocation);
+        editor.apply();
+        this.appUsesLocation = appUsesLocation;
+        if (this.appUsesLocation) {
+            globalHandler.servicesHandler.googleApiClientHandler.connect();
+        } else {
+            globalHandler.servicesHandler.googleApiClientHandler.disconnect();
+        }
+        globalHandler.headerReadingsHashMap.refreshHash();
+    }
+
 }
