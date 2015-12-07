@@ -88,7 +88,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     Log.i(Constants.LOG_TAG, "Touched (delete) Frame!");
-                    context.showDeleteDialog();
+                    context.showDeleteDialog(item);
                     return false;
                 }
             });
@@ -98,7 +98,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     Log.i(Constants.LOG_TAG, "Touched (edit) Frame!");
-                    context.showEditDialog();
+                    context.showEditDialog(item);
                     return false;
                 }
             });

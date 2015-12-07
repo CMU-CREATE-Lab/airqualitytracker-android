@@ -15,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
@@ -59,13 +60,13 @@ public class ManageTrackersActivity extends ActionBarActivity {
 //        }
     }
 
-    public void showDeleteDialog() {
-        deleteDialog = new DeleteDialogTrackerListItem(this);
+    public void showDeleteDialog(TrackersAdapter.TrackerListItem trackerListItem) {
+        deleteDialog = new DeleteDialogTrackerListItem(this, trackerListItem);
         deleteDialog.getAlertDialog().show();
     }
 
-    public void showEditDialog() {
-        editDialog = new EditDialogTrackerListItem(this);
+    public void showEditDialog(TrackersAdapter.TrackerListItem trackerListItem) {
+        editDialog = new EditDialogTrackerListItem(this, trackerListItem);
         editDialog.getAlertDialog().show();
     }
 
@@ -76,13 +77,15 @@ public class ManageTrackersActivity extends ActionBarActivity {
         // TODO restore objects
         Log.v(Constants.LOG_TAG, "ManageTrackersActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("deleteDialog")) {
-//            int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
-//            openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
-            showDeleteDialog();
+            int index = savedInstanceState.getInt("deleteDialogReadableIndex");
+            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.trackerList.get(index);
+            showDeleteDialog(item);
         }
         if (savedInstanceState.getBoolean("editDialog")) {
             String input = savedInstanceState.getString("editDialogString");
-            showEditDialog();
+            int index = savedInstanceState.getInt("editDialogReadableIndex");
+            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.trackerList.get(index);
+            showEditDialog(item);
             ((EditText)editDialog.getAlertDialog().findViewById(R.id.editDialogInputText)).setText(input);
         }
     }
@@ -95,15 +98,16 @@ public class ManageTrackersActivity extends ActionBarActivity {
         // TODO save objects
         if (deleteDialog != null && deleteDialog.getAlertDialog().isShowing()) {
             outState.putBoolean("deleteDialog", true);
-//            outState.putInt("dialogDeleteAddressIndex", GlobalHandler.getInstance(getApplicationContext()).
-//                    headerReadingsHashMap.adapterList.indexOf(dialogDelete.getLineItemToBeDeleted()));
-//            dialogDelete.getAlertDialog().dismiss();
+            outState.putInt("deleteDialogReadableIndex", GlobalHandler.getInstance(getApplicationContext()).
+                    headerReadingsHashMap.trackerList.indexOf(deleteDialog.item));
             deleteDialog.getAlertDialog().dismiss();
         }
         if (editDialog != null && editDialog.getAlertDialog().isShowing()) {
             outState.putBoolean("editDialog", true);
             String input = ((EditText)editDialog.getAlertDialog().findViewById(R.id.editDialogInputText)).getText().toString();
             outState.putString("editDialogString", input);
+            outState.putInt("editDialogReadableIndex", GlobalHandler.getInstance(getApplicationContext()).
+                    headerReadingsHashMap.trackerList.indexOf(editDialog.item));
             editDialog.getAlertDialog().dismiss();
         }
     }
