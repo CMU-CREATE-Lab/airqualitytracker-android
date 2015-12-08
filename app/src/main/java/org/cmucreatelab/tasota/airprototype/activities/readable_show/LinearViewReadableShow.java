@@ -4,10 +4,13 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
 
@@ -24,6 +27,10 @@ public class LinearViewReadableShow {
     private TextView textShowAddressAqiDescription;
     private TextView textShowAddressAqiLabel;
     private RelativeLayout layoutShowAddress;
+    private FrameLayout frameClosestFeed;
+    private TextView textViewClosestFeedName;
+    final private ReadableShowActivity context;
+    private AlertDialogReadableShow alertDialogHelper;
 
 
     private void defaultView() {
@@ -34,13 +41,14 @@ public class LinearViewReadableShow {
         textShowAddressAqiTitle.setText(Constants.DefaultReading.DEFAULT_TITLE);
         textShowAddressAqiDescription.setText(Constants.DefaultReading.DEFAULT_DESCRIPTION);
         layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.DefaultReading.DEFAULT_COLOR_BACKGROUND));
+        this.frameClosestFeed.setVisibility(View.INVISIBLE);
     }
 
 
-    private void addressView(double readableValue) {
+    private void addressView(final SimpleAddress address) {
         int aqi,index;
 
-        aqi = (int) Converter.microgramsToAqi(readableValue);
+        aqi = (int) Converter.microgramsToAqi(address.getReadableValue());
         this.textShowAddressAqiValue.setText(String.valueOf(aqi));
         index = Constants.AqiReading.getIndexFromReading(aqi);
         if (index < 0) {
@@ -51,15 +59,25 @@ public class LinearViewReadableShow {
             textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
             layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[index]);
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_AQI);
+            this.frameClosestFeed.setVisibility(View.VISIBLE);
+            this.textViewClosestFeedName.setText(address.getClosestFeed().getName());
+            this.frameClosestFeed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(Constants.LOG_TAG, "Just clicked frameClosestFeed!");
+                    alertDialogHelper = new AlertDialogReadableShow(context, address.getClosestFeed());
+                    alertDialogHelper.getAlertDialog().show();
+                }
+            });
         }
     }
 
 
-    private void speckView(double readableValue) {
+    private void speckView(Speck speck) {
         int index;
 
-        this.textShowAddressAqiValue.setText(String.valueOf((long)readableValue));
-        index = Constants.SpeckReading.getIndexFromReading((long)readableValue);
+        this.textShowAddressAqiValue.setText(String.valueOf((long)speck.getReadableValue()));
+        index = Constants.SpeckReading.getIndexFromReading((long)speck.getReadableValue());
         if (index < 0) {
             this.defaultView();
         } else {
@@ -70,11 +88,13 @@ public class LinearViewReadableShow {
             textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
             layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_MICROGRAMS_PER_CUBIC_METER);
+            this.frameClosestFeed.setVisibility(View.INVISIBLE);
         }
     }
 
 
     public LinearViewReadableShow(ReadableShowActivity activity, Readable readable) {
+        this.context = activity;
         this.readable = readable;
         this.textShowAddressName = (TextView)activity.findViewById(R.id.textShowAddressName);
         this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);
@@ -83,6 +103,8 @@ public class LinearViewReadableShow {
         this.textShowAddressAqiDescription = (TextView)activity.findViewById(R.id.textShowAddressAqiDescription);
         this.textShowAddressAqiLabel = (TextView)activity.findViewById(R.id.textShowAddressAqiLabel);
         this.layoutShowAddress = (RelativeLayout)activity.findViewById(R.id.layoutShowAddress);
+        this.frameClosestFeed = (FrameLayout)activity.findViewById(R.id.frameClosestFeed);
+        this.textViewClosestFeedName = (TextView)activity.findViewById(R.id.textViewClosestFeedName);
 
         // use custom fonts
         Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
@@ -97,9 +119,9 @@ public class LinearViewReadableShow {
             double readableValue = readable.getReadableValue();
 
             if (readable.getReadableType() == Readable.Type.ADDRESS) {
-                addressView(readableValue);
+                addressView((SimpleAddress)readable);
             } else if (readable.getReadableType() == Readable.Type.SPECK) {
-                speckView(readableValue);
+                speckView((Speck)readable);
             } else {
                 Log.w(Constants.LOG_TAG, "Tried to populate LinearView in AddressShow with unimplemented Readable object.");
                 defaultView();

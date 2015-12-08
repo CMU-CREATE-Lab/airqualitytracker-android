@@ -5,7 +5,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity"
-    android:id="@+id/layoutShowAddress">
+    android:id="@+id/layoutShowAddress"
+    android:background="#666">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -41,29 +42,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp" >
+                android:paddingBottom="10dp"
+                android:id="@+id/frameClosestFeed">
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|center_horizontal">
+                    android:layout_height="match_parent">
 
-                    <FrameLayout
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="#600"
-                        android:visibility="invisible"
-                        android:id="@+id/frameShowAddressWeatherValue">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Last reading from feed:"
+                        android:id="@+id/textView19"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14dp"
+                        android:textColor="#000" />
 
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="#060"
-                        android:visibility="invisible"
-                        android:id="@+id/frameShowAddressWeatherIcon" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Feed Name"
+                        android:id="@+id/textViewClosestFeedName"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14dp"
+                        android:textColor="#000" />
                 </LinearLayout>
             </FrameLayout>
 
