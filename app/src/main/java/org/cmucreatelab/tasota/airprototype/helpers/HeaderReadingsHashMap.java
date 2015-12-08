@@ -265,7 +265,7 @@ public class HeaderReadingsHashMap {
                             int deviceId = jsonFeed.getInt("id");
                             String prettyName = jsonFeed.getString("name");
                             for (Speck speck : HeaderReadingsHashMap.this.specks) {
-                                if (speck.getDeviceId() == deviceId) {
+                                if (speck.getDeviceId() == deviceId && speck.get_id() <= 0) {
                                     speck.setName(prettyName);
                                     break;
                                 }
