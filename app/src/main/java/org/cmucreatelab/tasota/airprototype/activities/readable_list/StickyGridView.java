@@ -27,14 +27,23 @@ class StickyGridView extends RecyclerView.ViewHolder
     private ReadableListActivity context;
     private StickyGridAdapter.LineItem lineItem;
     private class CellViews {
-        TextView textAddressItemLocationName,textAddressItemLocationValue,textAddressAqiLabel;
+        TextView textAddressItemLocationName,textAddressItemLocationValue,textAddressAqiLabel,textCurrentLocation;
         LinearLayout background;
 
         public CellViews(View view) {
             textAddressItemLocationName = (TextView) view.findViewById(R.id.textAddressItemLocationName);
             textAddressItemLocationValue = (TextView) view.findViewById(R.id.textAddressItemLocationValue);
             textAddressAqiLabel = (TextView) view.findViewById(R.id.textAddressAqiLabel);
+            textCurrentLocation = (TextView) view.findViewById(R.id.textCurrentLocation);
             background = (LinearLayout) view.findViewById(R.id.linearLayoutBackground);
+        }
+
+        public void showCurrentLocation(boolean visible) {
+            if (visible) {
+                textCurrentLocation.setVisibility(View.VISIBLE);
+            } else {
+                textCurrentLocation.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -67,6 +76,10 @@ class StickyGridView extends RecyclerView.ViewHolder
         cellViews.textAddressItemLocationName.setText(simpleAddress.getName());
         cellViews.textAddressAqiLabel.setVisibility(View.VISIBLE);
         cellViews.textAddressAqiLabel.setText(Constants.Units.AQI);
+
+        if (simpleAddress.isCurrentLocation()) {
+            cellViews.textCurrentLocation.setVisibility(View.VISIBLE);
+        }
 
         aqi = Converter.microgramsToAqi(simpleAddress.getClosestFeed().getFeedValue());
         cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
@@ -120,6 +133,7 @@ class StickyGridView extends RecyclerView.ViewHolder
             view.setLongClickable(true);
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
+            cellViews.textCurrentLocation.setVisibility(View.INVISIBLE);
 
             if (lineItem.readable.hasReadableValue()) {
                 switch(lineItem.readable.getReadableType()) {
