@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
+import android.net.Uri;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,6 +16,8 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -113,7 +116,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     public void requestGeocodingFromApi(String input, Response.Listener<JSONObject> response) {
-        String requestUrl = "http://autocomplete.wunderground.com/aq?query="+input+"&c=US";
+        String requestUrl = "http://autocomplete.wunderground.com/aq?query="+Uri.encode(input)+"&c=US";
         this.sendJsonRequest(Request.Method.GET, requestUrl, null, response);
     }
 
