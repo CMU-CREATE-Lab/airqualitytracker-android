@@ -63,6 +63,10 @@
             android:name=".activities.manage_trackers.ManageTrackersActivity"
             android:label="@string/title_activity_manage_trackers" >
         </activity>
+        <activity
+            android:name=".activities.secret_menu.DebugActivity"
+            android:label="@string/title_activity_debug" >
+        </activity>
     </application>
 
 </manifest>
