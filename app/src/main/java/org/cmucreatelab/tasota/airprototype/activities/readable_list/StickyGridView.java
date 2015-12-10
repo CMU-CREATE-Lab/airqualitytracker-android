@@ -1,11 +1,9 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
-import org.cmucreatelab.tasota.airprototype.activities.secret_menu.DebugActivity;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
@@ -134,25 +131,35 @@ class StickyGridView extends RecyclerView.ViewHolder
             view.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    Log.i(Constants.LOG_TAG, "NO TOUCHING: action=" + motionEvent.getActionMasked()+"," +
-                            "pointers="+motionEvent.getPointerCount());
-
                     int action = motionEvent.getActionMasked();
                     switch (action) {
-                        case MotionEvent.ACTION_DOWN:
-                            Log.i(Constants.LOG_TAG,"ACTION_DOWN");
-                            break;
+//                        case MotionEvent.ACTION_DOWN:
+//                            Log.i(Constants.LOG_TAG,"ACTION_DOWN");
+//                            break;
                         case MotionEvent.ACTION_POINTER_DOWN:
                             Log.i(Constants.LOG_TAG,"ACTION_POINTER_DOWN");
+                            if (motionEvent.getPointerCount() == 2) {
+//                                Log.i(Constants.LOG_TAG,"Two Fingers!");
+                                context.longPressTimer.startTimer();
+                            } else {
+//                                Log.i(Constants.LOG_TAG,"Down but not 2 fingers");
+                                context.longPressTimer.stopTimer();
+                            }
                             break;
                         case MotionEvent.ACTION_POINTER_UP:
-                            Log.i(Constants.LOG_TAG,"ACTION_POINTER_UP");
-                            Intent intent = new Intent(context, DebugActivity.class);
-                            context.startActivity(intent);
+                            context.longPressTimer.stopTimer();
+//                            Log.i(Constants.LOG_TAG,"ACTION_POINTER_UP");
+//                            if (motionEvent.getPointerCount() == 2) {
+//                                Log.i(Constants.LOG_TAG,"Up from 2 Fingers!");
+//                                context.longPressTimer.stopTimer();
+//                            } else {
+//                                Log.i(Constants.LOG_TAG,"Up but not 2 fingers");
+//                                context.longPressTimer.stopTimer();
+//                            }
                             break;
-                        case MotionEvent.ACTION_UP:
-                            Log.i(Constants.LOG_TAG,"ACTION_UP");
-                            break;
+//                        case MotionEvent.ACTION_UP:
+//                            Log.i(Constants.LOG_TAG,"ACTION_UP");
+//                            break;
                     }
                     return true;
                 }
@@ -204,7 +211,7 @@ class StickyGridView extends RecyclerView.ViewHolder
     public boolean onLongClick(View view) {
         if (!isHeader) {
             Log.v(Constants.LOG_TAG, "long-click on grid item");
-            context.openDialogDelete(this.lineItem);
+            context.openDeleteDialog(this.lineItem);
         } else {
             Log.v(Constants.LOG_TAG, "long-click (header) does nothing");
         }

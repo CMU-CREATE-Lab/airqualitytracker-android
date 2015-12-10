@@ -13,15 +13,16 @@ import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity;
 import org.cmucreatelab.tasota.airprototype.classes.RefreshTimer;
+import org.cmucreatelab.tasota.airprototype.classes.TwoFingerLongPressTimer;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
-import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 public class ReadableListActivity extends ActionBarActivity {
 
-    public AlertDialogReadableList dialogDelete;
+    public DeleteDialogReadableList deleteDialog;
+    public DebugDialogReadableList debugDialog;
     public StickyGridFragment stickyGrid;
     private SwipeRefreshLayout swipeRefresh;
     // Keeps track of the activity to know if it was being displayed before the app
@@ -31,16 +32,24 @@ public class ReadableListActivity extends ActionBarActivity {
     public boolean activityIsActive = true;
     // refresh every 5 minutes (...with some caveats regarding active activities)
     private RefreshTimer refreshTimer = new RefreshTimer(this, 300000);
+    final protected TwoFingerLongPressTimer longPressTimer = new TwoFingerLongPressTimer(this,2000);
 
 
-    public void openDialogDelete(final StickyGridAdapter.LineItem lineItem) {
+    public void openDebugDialog() {
+        Log.i(Constants.LOG_TAG, "called openDebugDialog!");
+        debugDialog = new DebugDialogReadableList(this);
+        debugDialog.getAlertDialog().show();
+    }
+
+
+    public void openDeleteDialog(final StickyGridAdapter.LineItem lineItem) {
         if (lineItem.readable == null) {
             Log.e(Constants.LOG_TAG, "Tried deleting null Reading.");
         } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
-            dialogDelete = new AlertDialogReadableList(this, lineItem);
-            dialogDelete.getAlertDialog().show();
+            deleteDialog = new DeleteDialogReadableList(this, lineItem);
+            deleteDialog.getAlertDialog().show();
         }
     }
 
@@ -124,9 +133,9 @@ public class ReadableListActivity extends ActionBarActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.v(Constants.LOG_TAG, "ReadableListActivity onRestoreInstanceState");
-        if (savedInstanceState.getBoolean("dialogDelete")) {
-            int index = savedInstanceState.getInt("dialogDeleteAddressIndex");
-            openDialogDelete(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
+        if (savedInstanceState.getBoolean("deleteDialog")) {
+            int index = savedInstanceState.getInt("deleteDialogAddressIndex");
+            openDeleteDialog(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
         }
     }
 
@@ -134,11 +143,11 @@ public class ReadableListActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (dialogDelete != null && dialogDelete.getAlertDialog().isShowing()) {
-            outState.putBoolean("dialogDelete", true);
-            outState.putInt("dialogDeleteAddressIndex", GlobalHandler.getInstance(getApplicationContext()).
-                    headerReadingsHashMap.adapterList.indexOf(dialogDelete.getLineItemToBeDeleted()));
-            dialogDelete.getAlertDialog().dismiss();
+        if (deleteDialog != null && deleteDialog.getAlertDialog().isShowing()) {
+            outState.putBoolean("deleteDialog", true);
+            outState.putInt("deleteDialogAddressIndex", GlobalHandler.getInstance(getApplicationContext()).
+                    headerReadingsHashMap.adapterList.indexOf(deleteDialog.getLineItemToBeDeleted()));
+            deleteDialog.getAlertDialog().dismiss();
         }
     }
 

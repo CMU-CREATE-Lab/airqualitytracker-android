@@ -15,7 +15,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.Spec
 /**
  * Created by mike on 6/8/15.
  */
-public class AlertDialogReadableList {
+public class DeleteDialogReadableList {
 
     private StickyGridAdapter.LineItem lineItemToBeDeleted;
     private AlertDialog alertDialog;
@@ -61,7 +61,7 @@ public class AlertDialogReadableList {
     }
 
 
-    public AlertDialogReadableList(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
+    public DeleteDialogReadableList(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
         this.lineItemToBeDeleted = lineItem;
         this.alertDialog = (new AlertDialogBuilder(activityContext,this.lineItemToBeDeleted)).create();
     }
