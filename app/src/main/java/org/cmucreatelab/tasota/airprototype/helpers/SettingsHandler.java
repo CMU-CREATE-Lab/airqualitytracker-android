@@ -41,6 +41,15 @@ public class SettingsHandler {
     public long getUserId() {
         return userId;
     }
+    public String getStringifiedBlacklistedDeviceIds() {
+        String list = "";
+        for (int i=0; i<blacklistedDevices.size(); i++) {
+            list += blacklistedDevices.get(i).toString();
+            if (i+1 < blacklistedDevices.size())
+                list += ",";
+        }
+        return list;
+    }
 
 
     // Nobody accesses the constructor
@@ -166,12 +175,7 @@ public class SettingsHandler {
 
     public void addToBlacklistedDevices(Long deviceId) {
         blacklistedDevices.add(deviceId);
-        String list = "";
-        for (int i=0; i<blacklistedDevices.size(); i++) {
-            list += deviceId.toString();
-            if (i+1 < blacklistedDevices.size())
-                list += ",";
-        }
+        String list = getStringifiedBlacklistedDeviceIds();
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString(Constants.SettingsKeys.blacklistedDevices, list);
         editor.apply();
