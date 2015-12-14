@@ -97,10 +97,10 @@ public class ReadableShowActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_settings:
-                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
+//            case R.id.action_settings:
+//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
+//                startActivity(new Intent(this, SettingsActivity.class));
+//                return true;
             case R.id.action_share:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action share selected.");
                 this.shareReading();

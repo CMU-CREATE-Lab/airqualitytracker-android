@@ -56,8 +56,8 @@ public class AboutAirQualityActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
             case android.R.id.home:
                 finish();
                 return true;

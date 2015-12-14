@@ -13,6 +13,8 @@ public final class Constants {
 
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
 
+    public static final String APP_VERSION = "1.6";
+
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
     // TODO settings key-values & default

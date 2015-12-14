@@ -16,6 +16,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_about_speck">AboutSpeckActivity</string>
-    <string name="title_activity_manage_trackers">ManageTrackersActivity</string>
-    <string name="title_activity_debug">DebugActivity</string>
+    <string name="title_activity_manage_trackers">Manage Trackers</string>
+    <string name="title_activity_debug">Debug Menu</string>
 </resources>
