@@ -8,8 +8,8 @@ import android.util.Log;
 
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.classes.Speck;
+import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
@@ -30,7 +30,12 @@ public class DeleteDialogTrackerListItem {
         public AlertDialogBuilder(final ManageTrackersActivity activityContext) {
             super(activityContext);
 
-            this.setMessage("Remove this from your list?");
+            this.setTitle(item.readable.getName());
+            if (item.readable.getReadableType() == Readable.Type.ADDRESS) {
+                this.setMessage("Remove this Address from your list?");
+            } else if (item.readable.getReadableType() == Readable.Type.SPECK) {
+                this.setMessage("Remove this Speck from your list?");
+            }
             this.setNegativeButton("Cancel", null);
             this.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
@@ -68,8 +73,8 @@ public class DeleteDialogTrackerListItem {
 
     public DeleteDialogTrackerListItem(final ManageTrackersActivity activityContext, TrackersAdapter.TrackerListItem item) {
         this.activityContext = activityContext;
-        this.alertDialog = (new AlertDialogBuilder(activityContext)).create();
         this.item = item;
+        this.alertDialog = (new AlertDialogBuilder(activityContext)).create();
     }
 
 }

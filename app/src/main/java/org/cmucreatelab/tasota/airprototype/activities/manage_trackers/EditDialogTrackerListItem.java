@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.EditText;
 
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.*;
+import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
@@ -40,7 +42,12 @@ public class EditDialogTrackerListItem {
 
             this.setView(R.layout.edit_dialog);
 
-            this.setMessage("Edit Tracker");
+            if (item.readable.getReadableType() == Readable.Type.ADDRESS) {
+                this.setTitle("Change Address Name");
+            } else if (item.readable.getReadableType() == Readable.Type.SPECK) {
+                this.setTitle("Change Speck Name");
+            }
+            this.setMessage(item.readable.getName());
             this.setNegativeButton("Cancel", null);
             this.setPositiveButton("Save", listener);
         }
@@ -54,8 +61,8 @@ public class EditDialogTrackerListItem {
 
     public EditDialogTrackerListItem(final ManageTrackersActivity activityContext, TrackersAdapter.TrackerListItem item) {
         this.activityContext = activityContext;
-        this.alertDialog = (new AlertDialogBuilder(activityContext)).create();
         this.item = item;
+        this.alertDialog = (new AlertDialogBuilder(activityContext)).create();
     }
 
 }
