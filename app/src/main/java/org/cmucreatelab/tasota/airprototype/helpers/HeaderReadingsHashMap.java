@@ -7,6 +7,7 @@ import com.android.volley.Response;
 
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -37,6 +38,7 @@ public class HeaderReadingsHashMap {
     public final ArrayList<StickyGridAdapter.LineItem> adapterList = new ArrayList<>();
     // used by tracker manager
     public final ArrayList<TrackersAdapter.TrackerListItem> trackerList = new ArrayList<>();
+    public final ArrayList<ListFeedsAdapter.ListFeedsItem> debugFeedsList = new ArrayList<>();
 
 
     public HeaderReadingsHashMap(GlobalHandler globalHandler) {
@@ -99,6 +101,7 @@ public class HeaderReadingsHashMap {
         int headerCount=0,sectionFirstPosition,position=0;
         adapterList.clear();
         trackerList.clear();
+        debugFeedsList.clear();
 
         // adapterList
         for (String header : headers) {
@@ -130,6 +133,21 @@ public class HeaderReadingsHashMap {
                     }
                     trackerList.add( new TrackersAdapter.TrackerListItem(r) );
                 }
+            }
+        }
+        // debugFeedsList
+        // TODO this doesn't get updated enough (doesn't list all the feeds until you refresh)
+        int index=0;
+        if (globalHandler.settingsHandler.appUsesLocation()) {
+            debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(gpsAddress, index++) );
+            for (Feed feed : gpsAddress.feeds) {
+                debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(gpsAddress, feed) );
+            }
+        }
+        for (SimpleAddress address : addresses) {
+            debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(address, index++) );
+            for (Feed feed : address.feeds) {
+                debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(address, feed) );
             }
         }
     }

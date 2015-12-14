@@ -2,8 +2,11 @@ package org.cmucreatelab.tasota.airprototype.activities.secret_menu;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -11,9 +14,12 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
+import java.util.ArrayList;
+
 public class DebugActivity extends ActionBarActivity {
 
     private ListView listFeedsSecretMenu;
+    private Button buttonRequestFeedsSecretMenu;
     private TextView textSecretMenuUsername;
     private TextView textSecretMenuUserId;
     private TextView textSecretMenuAccessToken;
@@ -54,8 +60,22 @@ public class DebugActivity extends ActionBarActivity {
         textSecretMenuDeviceIdIgnoreList = (TextView)findViewById(R.id.textSecretMenuDeviceIdIgnoreList);
         textSecretMenuAppVersion = (TextView)findViewById(R.id.textSecretMenuAppVersion);
         listFeedsSecretMenu = (ListView)findViewById(R.id.listFeedsSecretMenu);
+        buttonRequestFeedsSecretMenu = (Button)findViewById(R.id.buttonRequestFeedsSecretMenu);
+
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler.headerReadingsHashMap.populateAdapterList();
+        ListFeedsAdapter adapter = new ListFeedsAdapter(this,globalHandler.headerReadingsHashMap.debugFeedsList);
+        listFeedsSecretMenu.setAdapter(adapter);
 
         populate();
+
+        buttonRequestFeedsSecretMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Constants.LOG_TAG, "Clicked!");
+                // TODO click actions
+            }
+        });
     }
 
     @Override
