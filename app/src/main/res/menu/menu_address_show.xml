@@ -2,14 +2,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity">
-
-    <item android:id="@+id/action_share"
-        android:icon="@drawable/ic_share_white_24dp"
-        android:title="@string/action_share"
-        app:showAsAction="always" />
-
-    <item android:id="@+id/action_about_airquality" android:title="@string/action_about_airquality"
-        android:orderInCategory="200" app:showAsAction="never" />
-    <item android:id="@+id/action_about_speck" android:title="@string/action_about_speck"
-        android:orderInCategory="300" app:showAsAction="never" />
 </menu>

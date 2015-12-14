@@ -172,10 +172,10 @@ public class ReadableListActivity extends ActionBarActivity {
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: LOGIN selected.");
                 startActivity(new Intent(this, LoginActivity.class));
                 return true;
-            case R.id.action_refresh:
-                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: REFRESH selected.");
-                GlobalHandler.getInstance(this.getApplicationContext()).updateReadings();
-                return true;
+//            case R.id.action_refresh:
+//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: REFRESH selected.");
+//                GlobalHandler.getInstance(this.getApplicationContext()).updateReadings();
+//                return true;
             case R.id.action_new:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action bar selected.");
                 startActivity(new Intent(this, AddressSearchActivity.class));

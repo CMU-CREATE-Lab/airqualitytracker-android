@@ -93,28 +93,28 @@ public class ReadableShowActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-//            case R.id.action_settings:
-//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
-//                startActivity(new Intent(this, SettingsActivity.class));
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        switch (id) {
+////            case R.id.action_settings:
+////                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
+////                startActivity(new Intent(this, SettingsActivity.class));
+////                return true;
+//            case R.id.action_share:
+//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action share selected.");
+//                this.shareReading();
 //                return true;
-            case R.id.action_share:
-                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action share selected.");
-                this.shareReading();
-                return true;
-            case R.id.action_about_airquality:
-                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about selected.");
-                startActivity(new Intent(this, AboutAirQualityActivity.class));
-                return true;
-            case R.id.action_about_speck:
-                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about speck selected.");
-                startActivity(new Intent(this, AboutSpeckActivity.class));
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//            case R.id.action_about_airquality:
+//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about selected.");
+//                startActivity(new Intent(this, AboutAirQualityActivity.class));
+//                return true;
+//            case R.id.action_about_speck:
+//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about speck selected.");
+//                startActivity(new Intent(this, AboutSpeckActivity.class));
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 }
