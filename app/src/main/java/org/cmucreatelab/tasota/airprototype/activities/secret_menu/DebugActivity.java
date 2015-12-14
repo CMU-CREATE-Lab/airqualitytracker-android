@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
@@ -62,9 +64,10 @@ public class DebugActivity extends ActionBarActivity {
         listFeedsSecretMenu = (ListView)findViewById(R.id.listFeedsSecretMenu);
         buttonRequestFeedsSecretMenu = (Button)findViewById(R.id.buttonRequestFeedsSecretMenu);
 
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         globalHandler.headerReadingsHashMap.populateAdapterList();
         ListFeedsAdapter adapter = new ListFeedsAdapter(this,globalHandler.headerReadingsHashMap.debugFeedsList);
+        globalHandler.listFeedsAdapter = adapter;
         listFeedsSecretMenu.setAdapter(adapter);
 
         populate();
@@ -72,8 +75,13 @@ public class DebugActivity extends ActionBarActivity {
         buttonRequestFeedsSecretMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(Constants.LOG_TAG, "Clicked!");
-                // TODO click actions
+                ArrayList<ListFeedsAdapter.ListFeedsItem> items = globalHandler.headerReadingsHashMap.debugFeedsList;
+                for (ListFeedsAdapter.ListFeedsItem item : items) {
+                    if (!item.isHeader) {
+                        Feed feed = item.feed;
+                        globalHandler.httpRequestHandler.requestChannelReading(feed, feed.getChannels().get(0));
+                    }
+                }
             }
         });
     }

@@ -8,6 +8,7 @@ import com.google.android.gms.location.LocationServices;
 
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
@@ -26,6 +27,7 @@ public class GlobalHandler {
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public StickyGridAdapter gridAdapter;
     public TrackersAdapter trackersAdapter;
+    public ListFeedsAdapter listFeedsAdapter;
 
 
     // Nobody accesses the constructor
@@ -47,6 +49,9 @@ public class GlobalHandler {
     public void notifyGlobalDataSetChanged() {
         if (this.gridAdapter != null) {
             this.gridAdapter.notifyDataSetChanged();
+        }
+        if (this.listFeedsAdapter != null) {
+            this.listFeedsAdapter.notifyDataSetChanged();
         }
     }
 
