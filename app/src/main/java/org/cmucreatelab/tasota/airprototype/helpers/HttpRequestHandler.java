@@ -31,6 +31,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
     private RequestQueue queue;
     private EsdrFeedsHandler esdrFeedsHandler;
     private EsdrAuthHandler esdrAuthHandler;
+    private EsdrSpecksHandler esdrSpecksHandler;
     private static HttpRequestHandler classInstance;
 
 
@@ -40,6 +41,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
         this.queue = Volley.newRequestQueue(globalHandler.appContext);
         this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(globalHandler);
         this.esdrAuthHandler = EsdrAuthHandler.getInstance(globalHandler);
+        this.esdrSpecksHandler = EsdrSpecksHandler.getInstance(globalHandler);
     }
 
 
@@ -87,10 +89,10 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     public void requestSpeckFeeds(String authToken, long userId, Response.Listener<JSONObject> response) {
-        esdrFeedsHandler.requestSpeckFeeds(authToken, userId, response);
+        esdrSpecksHandler.requestSpeckFeeds(authToken, userId, response);
     }
     public void requestSpeckDevices(String authToken, long userId, Response.Listener<JSONObject> response) {
-        esdrFeedsHandler.requestSpeckDevices(authToken, userId, response);
+        esdrSpecksHandler.requestSpeckDevices(authToken, userId, response);
     }
 
 
@@ -122,45 +124,7 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
 
     public void requestChannelsForSpeck(final Speck speck) {
-        int requestMethod;
-        String requestUrl;
-
-        Response.Listener<JSONObject> channelsResponse = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                JSONObject channels;
-                Iterator<String> keys;
-                ArrayList<Channel> listChannels = new ArrayList<>();
-
-                try {
-                    channels = response.getJSONObject("data").getJSONObject("channelBounds").getJSONObject("channels");
-                    keys = channels.keys();
-                    while (keys.hasNext()) {
-                        // Only grab channels that we care about
-                        String channelName = keys.next();
-                        for (String cn : Constants.channelNames) {
-                            if (channelName.equals(cn)) {
-                                // TODO do we check/need-to-check for 24 hours?
-                                // NOTICE: we must also make sure that this specific channel
-                                // was updated in the past 24 hours ("maxTime").
-                                JSONObject channel = channels.getJSONObject(channelName);
-                                listChannels.add(JsonParser.parseChannelFromJson(channelName, speck, channel));
-                                break;
-                            }
-                        }
-                    }
-                    speck.setChannels(listChannels);
-                    speck.requestUpdate(globalHandler);
-                } catch (Exception e) {
-                    Log.e(Constants.LOG_TAG,"failed to request channel for speck apiKeyReadOnly="+speck.getApiKeyReadOnly());
-                }
-            }
-        };
-
-        // generate safe URL
-        requestMethod = Request.Method.GET;
-        requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + speck.getApiKeyReadOnly();
-        sendJsonRequest(requestMethod, requestUrl, null, channelsResponse);
+        esdrSpecksHandler.requestChannelsForSpeck(speck);
     }
 
 
