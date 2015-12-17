@@ -9,18 +9,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.AuthorizedJsonObjectRequest;
-import org.cmucreatelab.tasota.airprototype.classes.Channel;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
-import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.json.JSONObject;
-
-import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 
 /**
  * Created by mike on 5/29/15.
@@ -29,9 +19,6 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
     private GlobalHandler globalHandler;
     private RequestQueue queue;
-    private EsdrFeedsHandler esdrFeedsHandler;
-    private EsdrAuthHandler esdrAuthHandler;
-    private EsdrSpecksHandler esdrSpecksHandler;
     private static HttpRequestHandler classInstance;
 
 
@@ -39,9 +26,6 @@ public class HttpRequestHandler implements Response.ErrorListener {
     private HttpRequestHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.queue = Volley.newRequestQueue(globalHandler.appContext);
-        this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(globalHandler);
-        this.esdrAuthHandler = EsdrAuthHandler.getInstance(globalHandler);
-        this.esdrSpecksHandler = EsdrSpecksHandler.getInstance(globalHandler);
     }
 
 
@@ -83,48 +67,9 @@ public class HttpRequestHandler implements Response.ErrorListener {
     }
 
 
-    public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response) {
-        esdrFeedsHandler.requestFeeds(latd, longd, maxTime, response);
-    }
-
-
-    public void requestSpeckFeeds(String authToken, long userId, Response.Listener<JSONObject> response) {
-        esdrSpecksHandler.requestSpeckFeeds(authToken, userId, response);
-    }
-    public void requestSpeckDevices(String authToken, long userId, Response.Listener<JSONObject> response) {
-        esdrSpecksHandler.requestSpeckDevices(authToken, userId, response);
-    }
-
-
-    public void requestChannelReading(final Feed feed, final Channel channel) {
-        esdrFeedsHandler.requestChannelReading("", feed, channel, 0);
-    }
-
-
-    public void requestAuthorizedChannelReading(String authToken, final Feed feed, final Channel channel) {
-        esdrFeedsHandler.requestChannelReading(authToken, feed, channel,
-                (long) (new Date().getTime() / 1000.0) - Constants.SPECKS_MAX_TIME_RANGE);
-    }
-
-
-    public void requestEsdrToken(String username, String password, Response.Listener<JSONObject> response, Response.ErrorListener error) {
-        esdrAuthHandler.requestEsdrToken(username, password, response, error);
-    }
-
-
-    public void requestEsdrRefresh(String refreshToken) {
-        esdrAuthHandler.requestEsdrRefresh(refreshToken);
-    }
-
-
     public void requestGeocodingFromApi(String input, Response.Listener<JSONObject> response) {
         String requestUrl = "http://autocomplete.wunderground.com/aq?query="+Uri.encode(input)+"&c=US";
         this.sendJsonRequest(Request.Method.GET, requestUrl, null, response);
-    }
-
-
-    public void requestChannelsForSpeck(final Speck speck) {
-        esdrSpecksHandler.requestChannelsForSpeck(speck);
     }
 
 

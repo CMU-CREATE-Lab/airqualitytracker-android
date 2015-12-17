@@ -118,14 +118,14 @@ public class SimpleAddress implements Readable {
                     if (closestFeed != null) {
                         SimpleAddress.this.setClosestFeed(closestFeed);
                         // ASSERT all channels in the list of channels are usable readings
-                        globalHandler.httpRequestHandler.requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
+                        globalHandler.esdrFeedsHandler.requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
                     }
                 } else {
                     Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
                 }
             }
         };
-        globalHandler.httpRequestHandler.requestFeeds(this.latitude, this.longitude, maxTime, response);
+        globalHandler.esdrFeedsHandler.requestFeeds(this.latitude, this.longitude, maxTime, response);
     }
 
 }

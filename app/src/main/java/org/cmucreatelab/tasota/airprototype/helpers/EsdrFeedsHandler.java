@@ -8,6 +8,8 @@ import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by mike on 6/29/15.
  */
@@ -56,7 +58,7 @@ public class EsdrFeedsHandler {
     }
 
 
-    public void requestChannelReading(String authToken, final Feed feed, final Channel channel, final long maxTime) {
+    private void requestChannelReading(String authToken, final Feed feed, final Channel channel, final long maxTime) {
         int requestMethod;
         String requestUrl;
         Response.Listener<JSONObject> response;
@@ -116,6 +118,16 @@ public class EsdrFeedsHandler {
         } else {
             globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
         }
+    }
+
+
+    public void requestChannelReading(final Feed feed, final Channel channel) {
+        requestChannelReading("", feed, channel, 0);
+    }
+
+    public void requestAuthorizedChannelReading(String authToken, final Feed feed, final Channel channel) {
+        requestChannelReading(authToken, feed, channel,
+                (long) (new Date().getTime() / 1000.0) - Constants.SPECKS_MAX_TIME_RANGE);
     }
 
 }

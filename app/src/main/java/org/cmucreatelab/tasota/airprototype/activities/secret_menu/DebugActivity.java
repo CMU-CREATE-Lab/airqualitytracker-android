@@ -78,7 +78,7 @@ public class DebugActivity extends ActionBarActivity {
                 for (ListFeedsAdapter.ListFeedsItem item : items) {
                     if (!item.isHeader) {
                         Feed feed = item.feed;
-                        globalHandler.httpRequestHandler.requestChannelReading(feed, feed.getChannels().get(0));
+                        globalHandler.esdrFeedsHandler.requestChannelReading(feed, feed.getChannels().get(0));
                     }
                 }
             }

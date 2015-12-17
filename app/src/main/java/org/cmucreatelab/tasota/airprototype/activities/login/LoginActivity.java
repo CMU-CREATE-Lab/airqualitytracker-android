@@ -72,7 +72,7 @@ public class LoginActivity extends ActionBarActivity
             this.username = editTextLoginUsername.getText().toString();
             this.password = editTextLoginPassword.getText().toString();
             globalHandler.settingsHandler.userFeedsNeedsUpdated = true;
-            globalHandler.httpRequestHandler.requestEsdrToken(username,password,loginRequest,loginRequest);
+            globalHandler.esdrAuthHandler.requestEsdrToken(username,password,loginRequest,loginRequest);
             this.loggedIn = true;
             display();
         } else {

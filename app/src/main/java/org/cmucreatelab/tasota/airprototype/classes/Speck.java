@@ -84,7 +84,7 @@ public class Speck extends Feed {
     public void requestUpdate(final GlobalHandler globalHandler) {
         if (this.getChannels().size() > 0) {
             // ASSERT all channels in the list of channels are usable readings
-            globalHandler.httpRequestHandler.requestAuthorizedChannelReading(globalHandler.settingsHandler.getAccessToken(), this, this.getChannels().get(0));
+            globalHandler.esdrFeedsHandler.requestAuthorizedChannelReading(globalHandler.settingsHandler.getAccessToken(), this, this.getChannels().get(0));
         } else {
             Log.e(Constants.LOG_TAG, "No channels found from speck id=" + this.getFeed_id());
         }

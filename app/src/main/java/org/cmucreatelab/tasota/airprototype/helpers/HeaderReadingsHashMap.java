@@ -54,7 +54,7 @@ public class HeaderReadingsHashMap {
 //        specks.addAll(dbSpecks);
         for (Speck speck : dbSpecks) {
             addReading(speck);
-            globalHandler.httpRequestHandler.requestChannelsForSpeck(speck);
+            globalHandler.esdrSpecksHandler.requestChannelsForSpeck(speck);
         }
         populateSpecks();
     }
@@ -318,11 +318,11 @@ public class HeaderReadingsHashMap {
                             speck.requestUpdate(globalHandler);
                         }
                     }
-                    globalHandler.httpRequestHandler.requestSpeckDevices(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), devicesResponse);
+                    globalHandler.esdrSpecksHandler.requestSpeckDevices(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), devicesResponse);
                 }
             };
 
-            globalHandler.httpRequestHandler.requestSpeckFeeds(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), feedsResponse);
+            globalHandler.esdrSpecksHandler.requestSpeckFeeds(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), feedsResponse);
         }
         refreshHash();
     }

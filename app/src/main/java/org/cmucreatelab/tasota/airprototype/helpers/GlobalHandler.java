@@ -20,6 +20,9 @@ public class GlobalHandler {
     protected Context appContext;
     // managed global instances
     public HttpRequestHandler httpRequestHandler;
+    public EsdrFeedsHandler esdrFeedsHandler;
+    public EsdrAuthHandler esdrAuthHandler;
+    public EsdrSpecksHandler esdrSpecksHandler;
     public SettingsHandler settingsHandler;
     public ServicesHandler servicesHandler;
     // data structure
@@ -37,6 +40,9 @@ public class GlobalHandler {
         this.settingsHandler = SettingsHandler.getInstance(this);
         this.servicesHandler = ServicesHandler.getInstance(this);
         this.httpRequestHandler = HttpRequestHandler.getInstance(this);
+        this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(this);
+        this.esdrAuthHandler = EsdrAuthHandler.getInstance(this);
+        this.esdrSpecksHandler = EsdrSpecksHandler.getInstance(this);
         // data structures
         this.headerReadingsHashMap = new HeaderReadingsHashMap(this);
         if (Constants.USES_BACKGROUND_SERVICES)
