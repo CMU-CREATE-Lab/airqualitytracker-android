@@ -13,22 +13,11 @@ import org.json.JSONObject;
 public class EsdrAuthHandler {
 
     private GlobalHandler globalHandler;
-    private static EsdrAuthHandler classInstance;
 
 
-    // Nobody accesses the constructor
-    private EsdrAuthHandler(GlobalHandler globalHandler) {
+    // GlobalHandler accesses the constructor
+    protected EsdrAuthHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
-    }
-
-
-    // Only way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized EsdrAuthHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrAuthHandler(globalHandler);
-        }
-        return classInstance;
     }
 
 

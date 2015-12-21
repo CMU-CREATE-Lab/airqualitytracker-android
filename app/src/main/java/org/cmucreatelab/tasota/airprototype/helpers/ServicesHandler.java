@@ -16,25 +16,14 @@ import org.cmucreatelab.tasota.airprototype.services.FetchAddressIntentService;
  */
 public class ServicesHandler {
 
-    private static ServicesHandler classInstance;
     private GlobalHandler globalHandler;
     public GoogleApiClientHandler googleApiClientHandler;
 
 
-    // Nobody accesses the constructor
-    private ServicesHandler(GlobalHandler globalHandler) {
+    // GlobalHandler accesses the constructor
+    protected ServicesHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(globalHandler);
-    }
-
-
-    // Only way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized ServicesHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new ServicesHandler(globalHandler);
-        }
-        return classInstance;
     }
 
 

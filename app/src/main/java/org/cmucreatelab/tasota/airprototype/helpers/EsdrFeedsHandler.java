@@ -7,7 +7,6 @@ import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
-
 import java.util.Date;
 
 /**
@@ -16,22 +15,11 @@ import java.util.Date;
 public class EsdrFeedsHandler {
 
     private GlobalHandler globalHandler;
-    private static EsdrFeedsHandler classInstance;
 
 
-    // Nobody accesses the constructor
-    private EsdrFeedsHandler(GlobalHandler globalHandler) {
+    // GlobalHandler accesses the constructor
+    protected EsdrFeedsHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
-    }
-
-
-    // Only way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized EsdrFeedsHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrFeedsHandler(globalHandler);
-        }
-        return classInstance;
     }
 
 

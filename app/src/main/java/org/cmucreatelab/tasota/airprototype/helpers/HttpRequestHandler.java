@@ -19,23 +19,12 @@ public class HttpRequestHandler implements Response.ErrorListener {
 
     private GlobalHandler globalHandler;
     private RequestQueue queue;
-    private static HttpRequestHandler classInstance;
 
 
-    // Nobody accesses the constructor
-    private HttpRequestHandler(GlobalHandler globalHandler) {
+    // GlobalHandler accesses the constructor
+    protected HttpRequestHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.queue = Volley.newRequestQueue(globalHandler.appContext);
-    }
-
-
-    // Only way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized HttpRequestHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new HttpRequestHandler(globalHandler);
-        }
-        return classInstance;
     }
 
 

@@ -4,16 +4,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by mike on 6/26/15.
  */
 public class SettingsHandler {
-
-    private static SettingsHandler classInstance;
 
     private SharedPreferences sharedPreferences;
     // TODO consider timestamps for last updated user info
@@ -25,7 +21,6 @@ public class SettingsHandler {
     public boolean appUsesLocation() {
         return appUsesLocation;
     }
-
     public String getStringifiedBlacklistedDeviceIds() {
         String list = "";
         for (int i=0; i<blacklistedDevices.size(); i++) {
@@ -40,22 +35,12 @@ public class SettingsHandler {
     }
 
 
-    // Nobody accesses the constructor
-    private SettingsHandler(GlobalHandler globalHandler) {
+    // GlobalHandler accesses the constructor
+    protected SettingsHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(globalHandler.appContext);
         Log.v(Constants.LOG_TAG, "SHAREDPREFERENCES: " + sharedPreferences.getAll().toString());
         this.blacklistedDevices = new ArrayList<>();
-    }
-
-
-    // Only public way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized SettingsHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new SettingsHandler(globalHandler);
-        }
-        return classInstance;
     }
 
 

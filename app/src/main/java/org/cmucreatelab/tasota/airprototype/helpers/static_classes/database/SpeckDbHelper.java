@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.HttpRequestHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
@@ -173,7 +172,6 @@ public class SpeckDbHelper {
             // add to data structure
             speck = new Speck(apiKeyReadOnly,deviceId,exposure,feedId,isMobile,latitude,longitude,name,positionId,productId);
             speck.set_id(id);
-//            GlobalHandler.getInstance(context).httpRequestHandler.requestChannelsForSpeck(speck);
             return speck;
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to read from cursor! cursor.toString()=" + cursor.toString());

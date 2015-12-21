@@ -5,7 +5,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
-
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
@@ -39,15 +38,15 @@ public class GlobalHandler {
     private GlobalHandler(Context ctx) {
         // context and handlers
         this.appContext = ctx;
-        this.settingsHandler = SettingsHandler.getInstance(this);
-        this.esdrLoginHandler = EsdrLoginHandler.getInstance(this);
-        this.positionIdHelper = PositionIdHelper.getInstance(this);
+        this.settingsHandler = new SettingsHandler(this);
+        this.esdrLoginHandler = new EsdrLoginHandler(this);
+        this.positionIdHelper = new PositionIdHelper(this);
         settingsHandler.updateSettings();
-        this.servicesHandler = ServicesHandler.getInstance(this);
-        this.httpRequestHandler = HttpRequestHandler.getInstance(this);
-        this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(this);
-        this.esdrAuthHandler = EsdrAuthHandler.getInstance(this);
-        this.esdrSpecksHandler = EsdrSpecksHandler.getInstance(this);
+        this.servicesHandler = new ServicesHandler(this);
+        this.httpRequestHandler = new HttpRequestHandler(this);
+        this.esdrFeedsHandler = new EsdrFeedsHandler(this);
+        this.esdrAuthHandler = new EsdrAuthHandler(this);
+        this.esdrSpecksHandler = new EsdrSpecksHandler(this);
         // data structures
         this.headerReadingsHashMap = new HeaderReadingsHashMap(this);
         if (Constants.USES_BACKGROUND_SERVICES)

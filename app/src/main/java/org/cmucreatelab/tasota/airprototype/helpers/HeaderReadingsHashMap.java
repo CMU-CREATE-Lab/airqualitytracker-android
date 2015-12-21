@@ -1,10 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.location.Location;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import com.android.volley.Response;
-
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
@@ -51,7 +49,6 @@ public class HeaderReadingsHashMap {
         addresses.addAll(dbAddresses);
         // specks from login info
         ArrayList<Speck> dbSpecks = SpeckDbHelper.fetchSpecksFromDatabase(this.globalHandler.appContext);
-//        specks.addAll(dbSpecks);
         for (Speck speck : dbSpecks) {
             addReading(speck);
             globalHandler.esdrSpecksHandler.requestChannelsForSpeck(speck);

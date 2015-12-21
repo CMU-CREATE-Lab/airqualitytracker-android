@@ -1,16 +1,13 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.util.Log;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
-
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -20,22 +17,11 @@ import java.util.Iterator;
 public class EsdrSpecksHandler {
 
     private GlobalHandler globalHandler;
-    private static EsdrSpecksHandler classInstance;
 
 
-    // Nobody accesses the constructor
-    private EsdrSpecksHandler(GlobalHandler globalHandler) {
+    // GlobalHandler accesses the constructor
+    protected EsdrSpecksHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
-    }
-
-
-    // Only way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized EsdrSpecksHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrSpecksHandler(globalHandler);
-        }
-        return classInstance;
     }
 
 

@@ -1,13 +1,11 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.SharedPreferences;
-
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
-
 import java.util.ArrayList;
 
 /**
@@ -15,24 +13,14 @@ import java.util.ArrayList;
  */
 public class PositionIdHelper {
 
-    private static PositionIdHelper classInstance;
     protected GlobalHandler globalHandler;
     private SharedPreferences sharedPreferences;
 
-    // Nobody accesses the constructor
-    private PositionIdHelper(GlobalHandler globalHandler) {
+
+    // GlobalHandler accesses the constructor
+    protected PositionIdHelper(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.sharedPreferences = globalHandler.settingsHandler.getSharedPreferences();
-    }
-
-
-    // Only public way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized PositionIdHelper getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new PositionIdHelper(globalHandler);
-        }
-        return classInstance;
     }
 
 

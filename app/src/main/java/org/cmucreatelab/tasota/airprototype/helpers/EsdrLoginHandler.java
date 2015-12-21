@@ -1,19 +1,13 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
-import java.util.ArrayList;
 
 /**
  * Created by mike on 12/21/15.
  */
 public class EsdrLoginHandler {
 
-    private static EsdrLoginHandler classInstance;
     protected GlobalHandler globalHandler;
     private SharedPreferences sharedPreferences;
 
@@ -44,20 +38,11 @@ public class EsdrLoginHandler {
         userId = this.sharedPreferences.getLong(Constants.SettingsKeys.userId, (int) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.userId));
     }
 
-    // Nobody accesses the constructor
-    private EsdrLoginHandler(GlobalHandler globalHandler) {
+
+    // GlobalHandler accesses the constructor
+    protected EsdrLoginHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.sharedPreferences = globalHandler.settingsHandler.getSharedPreferences();
-    }
-
-
-    // Only public way to get instance of class (synchronized means thread-safe)
-    // NOT PUBLIC: for public access, use GlobalHandler
-    protected static synchronized EsdrLoginHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrLoginHandler(globalHandler);
-        }
-        return classInstance;
     }
 
 
