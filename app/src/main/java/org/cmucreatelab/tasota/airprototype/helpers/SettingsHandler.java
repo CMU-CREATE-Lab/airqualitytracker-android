@@ -71,35 +71,6 @@ public class SettingsHandler {
     }
 
 
-
-    public int getAddressLastPosition() {
-        int position = this.sharedPreferences.getInt(Constants.SettingsKeys.addressLastPosition, (int) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.addressLastPosition));
-        setAddressLastPosition(position + 1);
-        return position;
-    }
-
-
-    public int getSpeckLastPosition() {
-        int position = this.sharedPreferences.getInt(Constants.SettingsKeys.speckLastPosition, (int) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.speckLastPosition));
-        setSpeckLastPosition(position + 1);
-        return position;
-    }
-
-
-    public void setAddressLastPosition(int position) {
-        SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putInt(Constants.SettingsKeys.addressLastPosition, position);
-        editor.apply();
-    }
-
-
-    public void setSpeckLastPosition(int position) {
-        SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putInt(Constants.SettingsKeys.speckLastPosition, position);
-        editor.apply();
-    }
-
-
     public boolean deviceIsBlacklisted(long deviceId) {
         for (Long id: blacklistedDevices) {
             if (id == deviceId) {

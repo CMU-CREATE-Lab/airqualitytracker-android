@@ -74,28 +74,6 @@ public class HeaderReadingsHashMap {
     }
 
 
-    private void reorderAddressPositions() {
-        int index = 1;
-        for (SimpleAddress address: addresses) {
-            address.setPositionId(index);
-            AddressDbHelper.updateAddressInDatabase(globalHandler.appContext, address);
-            index ++;
-        }
-        globalHandler.settingsHandler.setAddressLastPosition(index);
-    }
-
-
-    private void reorderSpeckPositions() {
-        int index = 1;
-        for (Speck speck: specks) {
-            speck.setPositionId(index);
-            SpeckDbHelper.updateSpeckInDatabase(globalHandler.appContext, speck);
-            index ++;
-        }
-        globalHandler.settingsHandler.setSpeckLastPosition(index);
-    }
-
-
     public void populateAdapterList() {
         // sectionFirstPosition marks the position of the header in each section
         int headerCount=0,sectionFirstPosition,position=0;
@@ -234,8 +212,8 @@ public class HeaderReadingsHashMap {
                 default:
                     Log.e(Constants.LOG_TAG, "Tried to reorder Readables of unknown (matching) Type in HeaderReadingsHashMap ");
             }
-            reorderAddressPositions();
-            reorderSpeckPositions();
+            globalHandler.positionIdHelper.reorderAddressPositions(addresses);
+            globalHandler.positionIdHelper.reorderSpeckPositions(specks);
             // TODO this crashes in the TrackersAdapter code (TrackersAdapter.getItemId) but would be nice (for completeness sake) if it could be called in this method
 //            refreshHash();
         }

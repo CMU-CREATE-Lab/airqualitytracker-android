@@ -48,7 +48,7 @@ public class SpeckDbHelper {
         long newId;
 
         if (speck.getPositionId() <= 0) {
-            speck.setPositionId(GlobalHandler.getInstance(ctx).settingsHandler.getSpeckLastPosition());
+            speck.setPositionId(GlobalHandler.getInstance(ctx).positionIdHelper.getSpeckLastPosition());
         }
 
         mDbHelper = new SpeckSensorSQLiteOpenHelper(ctx);

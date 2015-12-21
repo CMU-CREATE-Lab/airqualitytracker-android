@@ -48,7 +48,7 @@ public class AddressDbHelper {
         long newId;
 
         if (address.getPositionId() <= 0) {
-            address.setPositionId(GlobalHandler.getInstance(ctx).settingsHandler.getAddressLastPosition());
+            address.setPositionId(GlobalHandler.getInstance(ctx).positionIdHelper.getAddressLastPosition());
         }
 
         mDbHelper = new SpeckSensorSQLiteOpenHelper(ctx);
