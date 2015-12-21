@@ -28,7 +28,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -37,13 +36,10 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
 
 /**

@@ -6,11 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
-import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
-import org.cmucreatelab.tasota.airprototype.activities.SettingsActivity;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
@@ -91,30 +87,5 @@ public class ReadableShowActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_address_show, menu);
         return true;
     }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        switch (id) {
-////            case R.id.action_settings:
-////                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
-////                startActivity(new Intent(this, SettingsActivity.class));
-////                return true;
-//            case R.id.action_share:
-//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: action share selected.");
-//                this.shareReading();
-//                return true;
-//            case R.id.action_about_airquality:
-//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about selected.");
-//                startActivity(new Intent(this, AboutAirQualityActivity.class));
-//                return true;
-//            case R.id.action_about_speck:
-//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: about speck selected.");
-//                startActivity(new Intent(this, AboutSpeckActivity.class));
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 }

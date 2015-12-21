@@ -1,30 +1,18 @@
 package org.cmucreatelab.tasota.airprototype.activities.manage_trackers;
 
-import android.database.DataSetObserver;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
-import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
-
-import listviewdragginganimation.Cheeses;
 import listviewdragginganimation.DynamicListView;
-import listviewdragginganimation.StableArrayAdapter;
 
 
 public class ManageTrackersActivity extends ActionBarActivity {
@@ -34,6 +22,7 @@ public class ManageTrackersActivity extends ActionBarActivity {
     private DeleteDialogTrackerListItem deleteDialog;
     private EditDialogTrackerListItem editDialog;
     private CheckBox checkBoxCurrentLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +49,6 @@ public class ManageTrackersActivity extends ActionBarActivity {
         listViewTrackers.setCheeseList(list);
         listViewTrackers.setAdapter(adapter);
         listViewTrackers.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-//        for (final TrackersAdapter.TrackerListItem item: list) {
-//            FrameLayout frameTrackerMove = (FrameLayout) item.view.findViewById(R.id.frameTrackerMove);
-//            frameTrackerMove.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View view, MotionEvent motionEvent) {
-//                    Log.i(Constants.LOG_TAG, "Touched Frame!");
-//                    listViewTrackers.startListMovementFromItem(item);
-//                    return false;
-//                }
-//            });
-//        }
     }
 
     public void showDeleteDialog(TrackersAdapter.TrackerListItem trackerListItem) {

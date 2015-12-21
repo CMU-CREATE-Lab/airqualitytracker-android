@@ -6,20 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
  * Created by mike on 12/10/15.
  */
 public class ListFeedsAdapter extends ArrayAdapter<ListFeedsAdapter.ListFeedsItem> {
+
     public static class ListFeedsItem {
         public boolean isHeader;
         public SimpleAddress address;
@@ -40,16 +37,6 @@ public class ListFeedsAdapter extends ArrayAdapter<ListFeedsAdapter.ListFeedsIte
 
     private DebugActivity context;
 
-//    // header
-//    private TextView textViewListFeedsHeader;
-//    // non-header
-//    private TextView textListFeedsLatitude;
-//    private TextView textListFeedsLongitude;
-//    private TextView textListFeedsFeedId;
-//    private TextView textListFeedsFeedName;
-//    private TextView textListFeedsDistance;
-//    private TextView textListFeedsFeedValue;
-
 
     public ListFeedsAdapter(DebugActivity context, ArrayList<ListFeedsAdapter.ListFeedsItem> values) {
         super(context, R.layout.__secret_menu__debug_activity, values);
@@ -59,7 +46,6 @@ public class ListFeedsAdapter extends ArrayAdapter<ListFeedsAdapter.ListFeedsIte
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final ListFeedsItem item = getItem(position);

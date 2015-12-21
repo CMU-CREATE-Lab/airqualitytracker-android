@@ -1,13 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.activities.manage_trackers;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-
-import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
-import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;

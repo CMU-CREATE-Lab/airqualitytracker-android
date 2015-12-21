@@ -2,8 +2,6 @@ package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.media.audiofx.BassBoost;
-import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.*;
@@ -16,9 +14,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.Spec
  * Created by mike on 6/8/15.
  */
 public class DeleteDialogReadableList {
-
-    private StickyGridAdapter.LineItem lineItemToBeDeleted;
-    private AlertDialog alertDialog;
 
     private class AlertDialogBuilder extends AlertDialog.Builder {
         public AlertDialogBuilder(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
@@ -49,6 +44,9 @@ public class DeleteDialogReadableList {
             });
         }
     }
+
+    private StickyGridAdapter.LineItem lineItemToBeDeleted;
+    private AlertDialog alertDialog;
 
 
     public StickyGridAdapter.LineItem getLineItemToBeDeleted() {

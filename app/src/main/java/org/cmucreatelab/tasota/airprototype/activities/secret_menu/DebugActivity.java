@@ -2,20 +2,15 @@ package org.cmucreatelab.tasota.airprototype.activities.secret_menu;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
 
 public class DebugActivity extends ActionBarActivity {
@@ -48,6 +43,7 @@ public class DebugActivity extends ActionBarActivity {
         textSecretMenuDeviceIdIgnoreList.setText(deviceIdIgnoreLst);
         textSecretMenuAppVersion.setText(Constants.APP_VERSION);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +80,7 @@ public class DebugActivity extends ActionBarActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

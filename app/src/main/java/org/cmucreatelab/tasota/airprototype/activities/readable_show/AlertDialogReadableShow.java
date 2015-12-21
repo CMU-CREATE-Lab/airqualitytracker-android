@@ -9,9 +9,6 @@ import org.cmucreatelab.tasota.airprototype.classes.Feed;
  */
 public class AlertDialogReadableShow {
 
-    private AlertDialog alertDialog;
-    public final Context context;
-
     private class AlertDialogBuilder extends AlertDialog.Builder {
         public AlertDialogBuilder(final Context context, Feed feed) {
             super(context);
@@ -19,6 +16,9 @@ public class AlertDialogReadableShow {
             this.setMessage("Latitude: "+feed.getLatitude()+"\nLongitude: "+feed.getLongitude());
         }
     }
+
+    private AlertDialog alertDialog;
+    public final Context context;
 
 
     public AlertDialog getAlertDialog() {

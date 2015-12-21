@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import org.cmucreatelab.tasota.airprototype.activities.AboutAirQualityActivity;
-import org.cmucreatelab.tasota.airprototype.activities.AboutSpeckActivity;
+import org.cmucreatelab.tasota.airprototype.activities.about.AboutAirQualityActivity;
+import org.cmucreatelab.tasota.airprototype.activities.about.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity;
 import org.cmucreatelab.tasota.airprototype.classes.RefreshTimer;
@@ -164,10 +164,6 @@ public class ReadableListActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-//            case R.id.action_settings:
-//                Log.v(Constants.LOG_TAG, "onOptionsItemSelected: settings selected.");
-//                startActivity(new Intent(this, SettingsActivity.class));
-//                return true;
             case R.id.action_login:
                 Log.v(Constants.LOG_TAG, "onOptionsItemSelected: LOGIN selected.");
                 startActivity(new Intent(this, LoginActivity.class));

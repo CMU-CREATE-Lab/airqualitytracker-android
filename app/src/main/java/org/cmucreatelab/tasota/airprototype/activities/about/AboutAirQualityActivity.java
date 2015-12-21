@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities;
+package org.cmucreatelab.tasota.airprototype.activities.about;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -56,8 +56,6 @@ public class AboutAirQualityActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         switch (id) {
-//            case R.id.action_settings:
-//                return true;
             case android.R.id.home:
                 finish();
                 return true;

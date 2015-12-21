@@ -32,11 +32,6 @@
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:theme="@android:style/Theme.Black" >
-        </activity>
-        <activity
             android:name=".activities.address_search.AddressSearchActivity"
             android:label="@string/title_activity_address_search"
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
@@ -52,11 +47,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AboutAirQualityActivity"
+            android:name=".activities.about.AboutAirQualityActivity"
             android:label="@string/title_activity_about" >
         </activity>
         <activity
-            android:name=".activities.AboutSpeckActivity"
+            android:name=".activities.about.AboutSpeckActivity"
             android:label="@string/title_activity_about_speck" >
         </activity>
         <activity
