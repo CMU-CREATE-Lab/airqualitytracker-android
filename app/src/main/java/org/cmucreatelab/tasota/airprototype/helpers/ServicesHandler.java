@@ -40,7 +40,7 @@ public class ServicesHandler {
 
     protected void initializeBackgroundServices() {
         // only start EsdrRefreshService if the user was logged in
-        if (globalHandler.settingsHandler.isUserLoggedIn()) {
+        if (globalHandler.esdrLoginHandler.isUserLoggedIn()) {
             startEsdrRefreshService();
         } else {
             stopEsdrRefreshService();

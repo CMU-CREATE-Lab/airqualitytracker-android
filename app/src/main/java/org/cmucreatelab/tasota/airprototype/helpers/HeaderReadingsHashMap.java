@@ -268,7 +268,7 @@ public class HeaderReadingsHashMap {
 
     public void populateSpecks() {
 //        specks.clear();
-        if (globalHandler.settingsHandler.isUserLoggedIn()) {
+        if (globalHandler.esdrLoginHandler.isUserLoggedIn()) {
             final Response.Listener<JSONObject> feedsResponse,devicesResponse;
 
             // bad variable ordering is brought to you by: Java
@@ -318,11 +318,11 @@ public class HeaderReadingsHashMap {
                             speck.requestUpdate(globalHandler);
                         }
                     }
-                    globalHandler.esdrSpecksHandler.requestSpeckDevices(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), devicesResponse);
+                    globalHandler.esdrSpecksHandler.requestSpeckDevices(globalHandler.esdrLoginHandler.getAccessToken(), globalHandler.esdrLoginHandler.getUserId(), devicesResponse);
                 }
             };
 
-            globalHandler.esdrSpecksHandler.requestSpeckFeeds(globalHandler.settingsHandler.getAccessToken(), globalHandler.settingsHandler.getUserId(), feedsResponse);
+            globalHandler.esdrSpecksHandler.requestSpeckFeeds(globalHandler.esdrLoginHandler.getAccessToken(), globalHandler.esdrLoginHandler.getUserId(), feedsResponse);
         }
         refreshHash();
     }

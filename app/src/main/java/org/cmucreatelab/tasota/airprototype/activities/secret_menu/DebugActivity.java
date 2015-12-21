@@ -35,10 +35,10 @@ public class DebugActivity extends ActionBarActivity {
         String username, accessToken, refreshToken, deviceIdIgnoreLst, appVersion;
 
         globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        username = globalHandler.settingsHandler.getUsername();
-        long userid = globalHandler.settingsHandler.getUserId();
-        accessToken = globalHandler.settingsHandler.getAccessToken();
-        refreshToken = globalHandler.settingsHandler.getRefreshToken();
+        username = globalHandler.esdrLoginHandler.getUsername();
+        long userid = globalHandler.esdrLoginHandler.getUserId();
+        accessToken = globalHandler.esdrLoginHandler.getAccessToken();
+        refreshToken = globalHandler.esdrLoginHandler.getRefreshToken();
         deviceIdIgnoreLst = globalHandler.settingsHandler.getStringifiedBlacklistedDeviceIds();
 
         textSecretMenuUsername.setText(username);

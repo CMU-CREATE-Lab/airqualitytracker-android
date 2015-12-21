@@ -30,8 +30,8 @@ public class LoginActivity extends ActionBarActivity
             textViewLogoutUsername = (TextView) findViewById(R.id.textViewLogoutUsername);
             if (username.equals("")) {
                 GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-                if (globalHandler.settingsHandler.isUserLoggedIn()) {
-                    textViewLogoutUsername.setText(globalHandler.settingsHandler.getUsername());
+                if (globalHandler.esdrLoginHandler.isUserLoggedIn()) {
+                    textViewLogoutUsername.setText(globalHandler.esdrLoginHandler.getUsername());
                 }
             } else {
                 textViewLogoutUsername.setText(username);
@@ -44,7 +44,7 @@ public class LoginActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loggedIn = GlobalHandler.getInstance(getApplicationContext()).settingsHandler.isUserLoggedIn();
+        loggedIn = GlobalHandler.getInstance(getApplicationContext()).esdrLoginHandler.isUserLoggedIn();
         display();
 
         ActionBar actionBar = getSupportActionBar();
@@ -78,7 +78,7 @@ public class LoginActivity extends ActionBarActivity
         } else {
             globalHandler = GlobalHandler.getInstance(getApplicationContext());
             globalHandler.servicesHandler.stopEsdrRefreshService();
-            globalHandler.settingsHandler.setUserLoggedIn(false);
+            globalHandler.esdrLoginHandler.setUserLoggedIn(false);
             this.loggedIn = false;
             globalHandler.settingsHandler.userFeedsNeedsUpdated = true;
             // clears specks on logout

@@ -33,7 +33,7 @@ public class EsdrRefreshService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        if (intent.hasExtra("startService") && globalHandler != null && globalHandler.settingsHandler != null && globalHandler.settingsHandler.isUserLoggedIn()) {
+        if (intent.hasExtra("startService") && globalHandler != null && globalHandler.settingsHandler != null && globalHandler.esdrLoginHandler.isUserLoggedIn()) {
             Log.d(Constants.LOG_TAG, "onStartCommand (handling intent)");
 
             // clear old alarms
@@ -45,7 +45,7 @@ public class EsdrRefreshService extends Service {
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    String refreshToken = globalHandler.settingsHandler.getRefreshToken();
+                    String refreshToken = globalHandler.esdrLoginHandler.getRefreshToken();
                     globalHandler.esdrAuthHandler.requestEsdrRefresh(refreshToken);
                 }
             };

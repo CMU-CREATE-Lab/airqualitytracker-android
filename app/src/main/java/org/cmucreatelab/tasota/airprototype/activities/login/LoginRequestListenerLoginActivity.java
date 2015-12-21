@@ -24,7 +24,7 @@ public class LoginRequestListenerLoginActivity
     @Override
     public void onErrorResponse(VolleyError error) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(loginActivity.getApplicationContext());
-        globalHandler.settingsHandler.setUserLoggedIn(false);
+        globalHandler.esdrLoginHandler.setUserLoggedIn(false);
         globalHandler.servicesHandler.stopEsdrRefreshService();
 
         loginActivity.loggedIn = false;
@@ -43,8 +43,8 @@ public class LoginRequestListenerLoginActivity
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");
             GlobalHandler globalHandler = GlobalHandler.getInstance(loginActivity.getApplicationContext());
-            globalHandler.settingsHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken);
-            globalHandler.settingsHandler.setUserLoggedIn(true);
+            globalHandler.esdrLoginHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken);
+            globalHandler.esdrLoginHandler.setUserLoggedIn(true);
             globalHandler.servicesHandler.startEsdrRefreshService();
             loginActivity.display();
         } catch (Exception e) {

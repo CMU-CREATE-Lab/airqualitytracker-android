@@ -24,6 +24,8 @@ public class GlobalHandler {
     public EsdrAuthHandler esdrAuthHandler;
     public EsdrSpecksHandler esdrSpecksHandler;
     public SettingsHandler settingsHandler;
+    public EsdrLoginHandler esdrLoginHandler;
+    public PositionIdHelper positionIdHelper;
     public ServicesHandler servicesHandler;
     // data structure
     public HeaderReadingsHashMap headerReadingsHashMap;
@@ -38,6 +40,9 @@ public class GlobalHandler {
         // context and handlers
         this.appContext = ctx;
         this.settingsHandler = SettingsHandler.getInstance(this);
+        this.esdrLoginHandler = EsdrLoginHandler.getInstance(this);
+        this.positionIdHelper = PositionIdHelper.getInstance(this);
+        settingsHandler.updateSettings();
         this.servicesHandler = ServicesHandler.getInstance(this);
         this.httpRequestHandler = HttpRequestHandler.getInstance(this);
         this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(this);
