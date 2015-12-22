@@ -9,25 +9,40 @@ import java.util.ArrayList;
  */
 public class Feed implements Readable {
 
-    private static final Type readableType = Readable.Type.FEED;
-    private boolean hasReadableValue;
+
+    // Readable implementation
+
+
     public void setHasReadableValue(boolean hasReadableValue) {
         this.hasReadableValue = hasReadableValue;
     }
+
+
     public Type getReadableType() {
         return readableType;
     }
+
+
     public boolean hasReadableValue() {
-//        return (channels.size() > 0);
         return this.hasReadableValue;
     }
+
+
     public double getReadableValue() {
         return this.feedValue;
     }
+
+
     public String getName() {
         return name;
     }
 
+
+    // Class Attributes and Constructor(s)
+
+
+    private static final Type readableType = Readable.Type.FEED;
+    private boolean hasReadableValue;
     // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
     protected long feed_id;
     protected String name;
@@ -40,6 +55,21 @@ public class Feed implements Readable {
     protected ArrayList<Channel> channels;
     protected double feedValue;
     protected double lastTime;
+
+
+    public Feed() {
+        this.channels = new ArrayList<>();
+        this.name = "";
+        this.exposure = "";
+    }
+
+
+    // Getters/Setters
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
     public long getProductId() {
         return productId;
     }
@@ -51,9 +81,6 @@ public class Feed implements Readable {
     }
     public void setFeed_id(long feed_id) {
         this.feed_id = feed_id;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     public String getExposure() {
         return exposure;
@@ -98,13 +125,6 @@ public class Feed implements Readable {
     }
     public void setLastTime(double lastTime) {
         this.lastTime = lastTime;
-    }
-
-
-    public Feed() {
-        this.channels = new ArrayList<>();
-        this.name = "";
-        this.exposure = "";
     }
 
 }

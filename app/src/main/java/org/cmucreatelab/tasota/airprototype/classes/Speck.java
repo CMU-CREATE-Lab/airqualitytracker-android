@@ -1,8 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
-import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.Collection;
 
 /**
@@ -10,15 +7,23 @@ import java.util.Collection;
  */
 public class Speck extends Feed {
 
-    private static final Type readableType = Readable.Type.SPECK;
+
+    // Readable implementation
+
+
     public Type getReadableType() {
         return readableType;
     }
 
-    public void setChannels(Collection<Channel> channels) {
-        this.channels.clear();
-        this.channels.addAll(channels);
-    }
+
+    // Class Attributes and Constructor(s)
+
+
+    private static final Type readableType = Readable.Type.SPECK;
+    protected long deviceId;
+    private int positionId;
+    private long _id;
+    private String apiKeyReadOnly;
 
 
     public Speck(Feed feed, long deviceId) {
@@ -49,13 +54,14 @@ public class Speck extends Feed {
         this.productId = productId;
     }
 
-    // TODO add speck device-specific attributes
-    protected long deviceId;
-    private int positionId;
-    private long _id;
-    private String apiKeyReadOnly;
 
-    // getters and setters for device-specific attributes
+    // Getters/Setters
+
+
+    public void setChannels(Collection<Channel> channels) {
+        this.channels.clear();
+        this.channels.addAll(channels);
+    }
     public long getDeviceId() {
         return deviceId;
     }
@@ -79,15 +85,6 @@ public class Speck extends Feed {
     }
     public void setApiKeyReadOnly(String apiKeyReadOnly) {
         this.apiKeyReadOnly = apiKeyReadOnly;
-    }
-
-    public void requestUpdate(final GlobalHandler globalHandler) {
-        if (this.getChannels().size() > 0) {
-            // ASSERT all channels in the list of channels are usable readings
-            globalHandler.esdrFeedsHandler.requestAuthorizedChannelReading(globalHandler.esdrLoginHandler.getAccessToken(), this, this.getChannels().get(0));
-        } else {
-            Log.e(Constants.LOG_TAG, "No channels found from speck id=" + this.getFeed_id());
-        }
     }
 
 }

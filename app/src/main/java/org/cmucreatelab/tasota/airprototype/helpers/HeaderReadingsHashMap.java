@@ -131,7 +131,7 @@ public class HeaderReadingsHashMap {
     public void setGpsAddressLocation(Location location) {
         gpsAddress.setLatitude(location.getLatitude());
         gpsAddress.setLongitude(location.getLongitude());
-        gpsAddress.requestUpdateFeeds(globalHandler);
+        globalHandler.esdrFeedsHandler.requestUpdateFeeds(gpsAddress);
     }
 
 
@@ -219,14 +219,14 @@ public class HeaderReadingsHashMap {
 
     public void updateAddresses() {
         for (SimpleAddress address : this.addresses) {
-            address.requestUpdateFeeds(globalHandler);
+            globalHandler.esdrFeedsHandler.requestUpdateFeeds(address);
         }
     }
 
 
     public void updateSpecks() {
         for (Speck speck : specks) {
-            speck.requestUpdate(globalHandler);
+            globalHandler.esdrFeedsHandler.requestUpdate(speck);
         }
     }
 
@@ -290,7 +290,7 @@ public class HeaderReadingsHashMap {
                         // only add what isnt in the DB already
                         if (findIndexOfSpeckWithDeviceId(speck.getDeviceId()) < 0) {
                             HeaderReadingsHashMap.this.specks.add(speck);
-                            speck.requestUpdate(globalHandler);
+                            globalHandler.esdrFeedsHandler.requestUpdate(speck);
                         }
                     }
                     globalHandler.esdrSpecksHandler.requestSpeckDevices(globalHandler.esdrLoginHandler.getAccessToken(), globalHandler.esdrLoginHandler.getUserId(), devicesResponse);

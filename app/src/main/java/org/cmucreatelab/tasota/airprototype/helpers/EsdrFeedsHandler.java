@@ -5,7 +5,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
 import org.json.JSONObject;
 import java.util.Date;
 
@@ -113,9 +117,47 @@ public class EsdrFeedsHandler {
         requestChannelReading("", feed, channel, 0);
     }
 
+
     public void requestAuthorizedChannelReading(String authToken, final Feed feed, final Channel channel) {
         requestChannelReading(authToken, feed, channel,
                 (long) (new Date().getTime() / 1000.0) - Constants.SPECKS_MAX_TIME_RANGE);
+    }
+
+
+    public void requestUpdateFeeds(final SimpleAddress address) {
+        address.feeds.clear();
+        // the past 24 hours
+        final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
+
+        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Feed closestFeed;
+
+                JsonParser.populateFeedsFromJson(address.feeds, response, maxTime);
+                if (address.feeds.size() > 0) {
+                    closestFeed = MapGeometry.getClosestFeedToAddress(address, address.feeds);
+                    if (closestFeed != null) {
+                        address.setClosestFeed(closestFeed);
+                        // ASSERT all channels in the list of channels are usable readings
+                        requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
+                    }
+                } else {
+                    Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
+                }
+            }
+        };
+        requestFeeds(address.getLatitude(), address.getLongitude(), maxTime, response);
+    }
+
+
+    public void requestUpdate(final Speck speck) {
+        if (speck.getChannels().size() > 0) {
+            // ASSERT all channels in the list of channels are usable readings
+            requestAuthorizedChannelReading(globalHandler.esdrLoginHandler.getAccessToken(), speck, speck.getChannels().get(0));
+        } else {
+            Log.e(Constants.LOG_TAG, "No channels found from speck id=" + speck.getFeed_id());
+        }
     }
 
 }

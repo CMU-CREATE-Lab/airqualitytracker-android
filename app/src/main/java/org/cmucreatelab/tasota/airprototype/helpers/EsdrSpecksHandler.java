@@ -85,7 +85,7 @@ public class EsdrSpecksHandler {
                         }
                     }
                     speck.setChannels(listChannels);
-                    speck.requestUpdate(globalHandler);
+                    globalHandler.esdrFeedsHandler.requestUpdate(speck);
                 } catch (Exception e) {
                     Log.e(Constants.LOG_TAG, "failed to request channel for speck apiKeyReadOnly=" + speck.getApiKeyReadOnly());
                 }
