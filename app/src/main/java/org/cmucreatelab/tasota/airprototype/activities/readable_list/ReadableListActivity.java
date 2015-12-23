@@ -45,7 +45,7 @@ public class ReadableListActivity extends ActionBarActivity {
     public void openDeleteDialog(final StickyGridAdapter.LineItem lineItem) {
         if (lineItem.readable == null) {
             Log.e(Constants.LOG_TAG, "Tried deleting null Reading.");
-        } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsAddress) {
+        } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsReadingHandler.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
             deleteDialog = new DeleteDialogReadableList(this, lineItem);

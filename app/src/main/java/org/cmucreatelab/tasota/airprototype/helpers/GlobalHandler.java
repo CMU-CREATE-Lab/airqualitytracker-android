@@ -27,7 +27,7 @@ public class GlobalHandler {
     public PositionIdHelper positionIdHelper;
     public ServicesHandler servicesHandler;
     // data structure
-    public HeaderReadingsHashMap headerReadingsHashMap;
+    public ReadingsHandler headerReadingsHashMap;
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public StickyGridAdapter gridAdapter;
     public TrackersAdapter trackersAdapter;
@@ -48,9 +48,14 @@ public class GlobalHandler {
         this.esdrAuthHandler = new EsdrAuthHandler(this);
         this.esdrSpecksHandler = new EsdrSpecksHandler(this);
         // data structures
-        this.headerReadingsHashMap = new HeaderReadingsHashMap(this);
+        this.headerReadingsHashMap = new ReadingsHandler(this, true);
         if (Constants.USES_BACKGROUND_SERVICES)
             servicesHandler.initializeBackgroundServices();
+    }
+
+
+    public Context getAppContext() {
+        return appContext;
     }
 
 
@@ -85,7 +90,7 @@ public class GlobalHandler {
             Log.w(Constants.LOG_TAG, "getLastLocation returned null.");
         } else {
             Log.d(Constants.LOG_TAG, "getLastLocation returned: " + lastLocation.toString());
-            this.headerReadingsHashMap.setGpsAddressLocation(lastLocation);
+            this.headerReadingsHashMap.gpsReadingHandler.setGpsAddressLocation(lastLocation);
             this.notifyGlobalDataSetChanged();
             if (Geocoder.isPresent()) {
                 servicesHandler.startFetchAddressIntentService(lastLocation);
