@@ -21,21 +21,11 @@ public class ReadingsHandler extends ReadingsHandlerEditable {
     public GpsReadingHandler gpsReadingHandler;
 
 
-    public ReadingsHandler(GlobalHandler globalHandler, boolean appUsesLocation) {
+    public ReadingsHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.gpsReadingHandler = new GpsReadingHandler(globalHandler);
         // headers
         Collections.addAll(headers, Constants.HEADER_TITLES);
-        // addresses from database
-        ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(this.globalHandler.getAppContext());
-        addresses.addAll(dbAddresses);
-        // specks from login info
-        ArrayList<Speck> dbSpecks = SpeckDbHelper.fetchSpecksFromDatabase(this.globalHandler.getAppContext());
-        for (Speck speck : dbSpecks) {
-            addReading(speck);
-            globalHandler.esdrSpecksHandler.requestChannelsForSpeck(speck);
-        }
-        populateSpecks();
     }
 
 

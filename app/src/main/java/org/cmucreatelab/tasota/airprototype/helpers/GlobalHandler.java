@@ -8,7 +8,13 @@ import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by mike on 6/2/15.
@@ -48,7 +54,17 @@ public class GlobalHandler {
         this.esdrAuthHandler = new EsdrAuthHandler(this);
         this.esdrSpecksHandler = new EsdrSpecksHandler(this);
         // data structures
-        this.headerReadingsHashMap = new ReadingsHandler(this, true);
+        this.headerReadingsHashMap = new ReadingsHandler(this);
+        // load from database
+        ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(ctx);
+        ArrayList<Speck> dbSpecks = SpeckDbHelper.fetchSpecksFromDatabase(ctx);
+        for (SimpleAddress address: dbAddresses) {
+            headerReadingsHashMap.addReading(address);
+        }
+        for (Speck speck: dbSpecks) {
+            headerReadingsHashMap.addReading(speck);
+            esdrSpecksHandler.requestChannelsForSpeck(speck);
+        }
         if (Constants.USES_BACKGROUND_SERVICES)
             servicesHandler.initializeBackgroundServices();
     }
