@@ -42,7 +42,7 @@ public class StickyGridAdapter extends RecyclerView.Adapter<StickyGridView> {
         this.context = context;
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
         globalHandler.gridAdapter = this;
-        lineItemsList = globalHandler.headerReadingsHashMap.adapterList;
+        lineItemsList = globalHandler.readingsHandler.adapterList;
     }
 
 

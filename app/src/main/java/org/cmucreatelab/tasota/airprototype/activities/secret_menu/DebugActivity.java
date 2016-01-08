@@ -60,8 +60,8 @@ public class DebugActivity extends ActionBarActivity {
         buttonRequestFeedsSecretMenu = (Button)findViewById(R.id.buttonRequestFeedsSecretMenu);
 
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        globalHandler.headerReadingsHashMap.populateAdapterList();
-        ListFeedsAdapter adapter = new ListFeedsAdapter(this,globalHandler.headerReadingsHashMap.debugFeedsList);
+        globalHandler.readingsHandler.populateAdapterList();
+        ListFeedsAdapter adapter = new ListFeedsAdapter(this,globalHandler.readingsHandler.debugFeedsList);
         globalHandler.listFeedsAdapter = adapter;
         listFeedsSecretMenu.setAdapter(adapter);
 
@@ -70,7 +70,7 @@ public class DebugActivity extends ActionBarActivity {
         buttonRequestFeedsSecretMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<ListFeedsAdapter.ListFeedsItem> items = globalHandler.headerReadingsHashMap.debugFeedsList;
+                ArrayList<ListFeedsAdapter.ListFeedsItem> items = globalHandler.readingsHandler.debugFeedsList;
                 for (ListFeedsAdapter.ListFeedsItem item : items) {
                     if (!item.isHeader) {
                         Feed feed = item.feed;

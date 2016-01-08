@@ -199,7 +199,7 @@ class StickyGridView extends RecyclerView.ViewHolder
             Log.v(Constants.LOG_TAG, "CLICK HANDLER: " + ((TextView) view.findViewById(R.id.textAddressItemLocationName)).getText());
             Intent intent = new Intent(context, ReadableShowActivity.class);
             intent.putExtra(Constants.AddressList.ADDRESS_INDEX,
-                    GlobalHandler.getInstance(context).headerReadingsHashMap.adapterList.indexOf(this.lineItem));
+                    GlobalHandler.getInstance(context).readingsHandler.adapterList.indexOf(this.lineItem));
             context.startActivity(intent);
         } else {
             Log.v(Constants.LOG_TAG, "CLICK HANDLER (header)");

@@ -93,7 +93,7 @@ public class SettingsHandler {
         } else {
             globalHandler.servicesHandler.googleApiClientHandler.disconnect();
         }
-        globalHandler.headerReadingsHashMap.refreshHash();
+        globalHandler.readingsHandler.refreshHash();
     }
 
 }

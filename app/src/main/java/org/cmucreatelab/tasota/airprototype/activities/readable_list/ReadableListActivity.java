@@ -45,7 +45,7 @@ public class ReadableListActivity extends ActionBarActivity {
     public void openDeleteDialog(final StickyGridAdapter.LineItem lineItem) {
         if (lineItem.readable == null) {
             Log.e(Constants.LOG_TAG, "Tried deleting null Reading.");
-        } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.gpsReadingHandler.gpsAddress) {
+        } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).readingsHandler.gpsReadingHandler.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
             deleteDialog = new DeleteDialogReadableList(this, lineItem);
@@ -87,7 +87,7 @@ public class ReadableListActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         Log.i(Constants.LOG_TAG, "onResume() was called");
-        GlobalHandler.getInstance(this.getApplicationContext()).headerReadingsHashMap.refreshHash();
+        GlobalHandler.getInstance(this.getApplicationContext()).readingsHandler.refreshHash();
         if (!refreshTimer.isStarted)
             refreshTimer.startTimer();
         super.onResume();
@@ -135,7 +135,7 @@ public class ReadableListActivity extends ActionBarActivity {
         Log.v(Constants.LOG_TAG, "ReadableListActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("deleteDialog")) {
             int index = savedInstanceState.getInt("deleteDialogAddressIndex");
-            openDeleteDialog(GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(index));
+            openDeleteDialog(GlobalHandler.getInstance(getApplicationContext()).readingsHandler.adapterList.get(index));
         }
     }
 
@@ -146,7 +146,7 @@ public class ReadableListActivity extends ActionBarActivity {
         if (deleteDialog != null && deleteDialog.getAlertDialog().isShowing()) {
             outState.putBoolean("deleteDialog", true);
             outState.putInt("deleteDialogAddressIndex", GlobalHandler.getInstance(getApplicationContext()).
-                    headerReadingsHashMap.adapterList.indexOf(deleteDialog.getLineItemToBeDeleted()));
+                    readingsHandler.adapterList.indexOf(deleteDialog.getLineItemToBeDeleted()));
             deleteDialog.getAlertDialog().dismiss();
         }
     }

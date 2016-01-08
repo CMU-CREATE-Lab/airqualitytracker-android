@@ -444,7 +444,7 @@ public class DynamicListView extends ListView {
         TrackersAdapter.TrackerListItem item2 = adapter.getItem(indexTwo);
         Log.i(Constants.LOG_TAG, "SWAPPING: " + item1.readable.getName() + " // " + item2.readable.getName());
 //
-//        GlobalHandler.getInstance(getContext()).headerReadingsHashMap.reorderReading(item1.readable, item2.readable);
+//        GlobalHandler.getInstance(getContext()).readingsHandler.reorderReading(item1.readable, item2.readable);
         mLastSwitchedItem = item1;
     }
 
@@ -461,7 +461,7 @@ public class DynamicListView extends ListView {
             TrackersAdapter adapter = (TrackersAdapter) getAdapter();
             TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
             Log.i(Constants.LOG_TAG, "You were moving mobileItem name=" + mobileItem.readable.getName() + " prep to switch with " + mLastSwitchedItem.readable.getName());
-            GlobalHandler.getInstance(getContext()).headerReadingsHashMap.reorderReading(mobileItem.readable, mLastSwitchedItem.readable);
+            GlobalHandler.getInstance(getContext()).readingsHandler.reorderReading(mobileItem.readable, mLastSwitchedItem.readable);
             mLastSwitchedItem = null;
         }
 //        mobileItem.hidden = false;

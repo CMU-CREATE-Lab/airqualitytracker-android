@@ -26,7 +26,7 @@ public class AddressSearchActivity extends ActionBarActivity
         // add to database and data structure
         AddressDbHelper.addAddressToDatabase(this,address);
         GlobalHandler globalHandler = GlobalHandler.getInstance(this);
-        globalHandler.headerReadingsHashMap.addReading(address);
+        globalHandler.readingsHandler.addReading(address);
         globalHandler.updateReadings();
 
         // finish activity

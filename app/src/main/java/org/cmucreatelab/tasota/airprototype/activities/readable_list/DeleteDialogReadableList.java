@@ -25,7 +25,7 @@ public class DeleteDialogReadableList {
             this.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     GlobalHandler globalHandler = GlobalHandler.getInstance(context);
-                    globalHandler.headerReadingsHashMap.removeReading(lineItem.readable);
+                    globalHandler.readingsHandler.removeReading(lineItem.readable);
                     switch (lineItem.readable.getReadableType()) {
                         case SPECK:
                             Speck speck = (Speck)lineItem.readable;

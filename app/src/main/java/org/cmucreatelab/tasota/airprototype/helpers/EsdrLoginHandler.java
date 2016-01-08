@@ -53,7 +53,7 @@ public class EsdrLoginHandler {
         editor.apply();
         this.userLoggedIn = userLoggedIn;
         // repopulates specks on successful login/logout
-        globalHandler.headerReadingsHashMap.populateSpecks();
+        globalHandler.readingsHandler.populateSpecks();
         // also clears the blacklisted devices
         globalHandler.settingsHandler.clearBlacklistedDevices();
     }

@@ -36,7 +36,7 @@ public class DeleteDialogTrackerListItem {
                 public void onClick(DialogInterface dialog, int id) {
                     Log.v(Constants.LOG_TAG, "Clicked 'remove' on DeleteDialogTrackerListItem.");
                     GlobalHandler globalHandler = GlobalHandler.getInstance(activityContext);
-                    globalHandler.headerReadingsHashMap.removeReading(item.readable);
+                    globalHandler.readingsHandler.removeReading(item.readable);
                     switch (item.readable.getReadableType()) {
                         case SPECK:
                             Speck speck = (Speck)item.readable;
@@ -51,7 +51,7 @@ public class DeleteDialogTrackerListItem {
                             break;
                     }
 
-                    ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).headerReadingsHashMap.trackerList;
+                    ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).readingsHandler.trackerList;
                     TrackersAdapter adapter = new TrackersAdapter(activityContext,list);
                     activityContext.listViewTrackers.setCheeseList(list);
                     activityContext.listViewTrackers.setAdapter(adapter);

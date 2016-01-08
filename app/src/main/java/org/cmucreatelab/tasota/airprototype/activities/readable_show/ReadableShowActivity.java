@@ -59,7 +59,7 @@ public class ReadableShowActivity extends ActionBarActivity {
 
         intent = getIntent();
         itemIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
-        this.readable = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.adapterList.get(itemIndex).readable;
+        this.readable = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.adapterList.get(itemIndex).readable;
         switch(readable.getReadableType()) {
             case ADDRESS:
                 break;

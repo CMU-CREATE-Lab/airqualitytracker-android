@@ -13,7 +13,6 @@ import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
-
 import java.util.ArrayList;
 
 /**
@@ -24,16 +23,16 @@ public class GlobalHandler {
     private static GlobalHandler classInstance;
     protected Context appContext;
     // managed global instances
-    public HttpRequestHandler httpRequestHandler;
-    public EsdrFeedsHandler esdrFeedsHandler;
     public EsdrAuthHandler esdrAuthHandler;
-    public EsdrSpecksHandler esdrSpecksHandler;
-    public SettingsHandler settingsHandler;
+    public EsdrFeedsHandler esdrFeedsHandler;
     public EsdrLoginHandler esdrLoginHandler;
+    public EsdrSpecksHandler esdrSpecksHandler;
+    public HttpRequestHandler httpRequestHandler;
     public PositionIdHelper positionIdHelper;
     public ServicesHandler servicesHandler;
+    public SettingsHandler settingsHandler;
     // data structure
-    public ReadingsHandler headerReadingsHashMap;
+    public ReadingsHandler readingsHandler;
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public StickyGridAdapter gridAdapter;
     public TrackersAdapter trackersAdapter;
@@ -54,15 +53,15 @@ public class GlobalHandler {
         this.esdrAuthHandler = new EsdrAuthHandler(this);
         this.esdrSpecksHandler = new EsdrSpecksHandler(this);
         // data structures
-        this.headerReadingsHashMap = new ReadingsHandler(this);
+        this.readingsHandler = new ReadingsHandler(this);
         // load from database
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(ctx);
         ArrayList<Speck> dbSpecks = SpeckDbHelper.fetchSpecksFromDatabase(ctx);
         for (SimpleAddress address: dbAddresses) {
-            headerReadingsHashMap.addReading(address);
+            readingsHandler.addReading(address);
         }
         for (Speck speck: dbSpecks) {
-            headerReadingsHashMap.addReading(speck);
+            readingsHandler.addReading(speck);
             esdrSpecksHandler.requestChannelsForSpeck(speck);
         }
         if (Constants.USES_BACKGROUND_SERVICES)
@@ -88,8 +87,8 @@ public class GlobalHandler {
 
 
     public void updateReadings() {
-        headerReadingsHashMap.updateAddresses();
-        headerReadingsHashMap.updateSpecks();
+        readingsHandler.updateAddresses();
+        readingsHandler.updateSpecks();
         if (settingsHandler.appUsesLocation()) {
             if (servicesHandler.googleApiClientHandler.googleApiClient.isConnected()) {
                 updateLastLocation();
@@ -106,7 +105,7 @@ public class GlobalHandler {
             Log.w(Constants.LOG_TAG, "getLastLocation returned null.");
         } else {
             Log.d(Constants.LOG_TAG, "getLastLocation returned: " + lastLocation.toString());
-            this.headerReadingsHashMap.gpsReadingHandler.setGpsAddressLocation(lastLocation);
+            this.readingsHandler.gpsReadingHandler.setGpsAddressLocation(lastLocation);
             this.notifyGlobalDataSetChanged();
             if (Geocoder.isPresent()) {
                 servicesHandler.startFetchAddressIntentService(lastLocation);
@@ -119,7 +118,7 @@ public class GlobalHandler {
 
     public void updateSettings() {
         this.settingsHandler.updateSettings();
-        headerReadingsHashMap.refreshHash();
+        readingsHandler.refreshHash();
         this.notifyGlobalDataSetChanged();
     }
 

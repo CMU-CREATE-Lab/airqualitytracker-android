@@ -23,9 +23,9 @@ public class EditDialogTrackerListItem {
         public void onClick(DialogInterface dialog, int id) {
             String input = ((EditText)alertDialog.findViewById(R.id.editDialogInputText)).getText().toString();
             Log.v(Constants.LOG_TAG, "Saved string " + input + " on DeleteDialogTrackerListItem.");
-            GlobalHandler.getInstance(activityContext).headerReadingsHashMap.renameReading(item.readable,input);
+            GlobalHandler.getInstance(activityContext).readingsHandler.renameReading(item.readable,input);
 
-            ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).headerReadingsHashMap.trackerList;
+            ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).readingsHandler.trackerList;
             TrackersAdapter adapter = new TrackersAdapter(activityContext,list);
             activityContext.listViewTrackers.setCheeseList(list);
             activityContext.listViewTrackers.setAdapter(adapter);

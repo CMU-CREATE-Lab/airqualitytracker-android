@@ -30,7 +30,7 @@ public class ManageTrackersActivity extends ActionBarActivity {
         setContentView(R.layout.__trackers__manage_trackers);
 
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        ArrayList<TrackersAdapter.TrackerListItem> list = globalHandler.headerReadingsHashMap.trackerList;
+        ArrayList<TrackersAdapter.TrackerListItem> list = globalHandler.readingsHandler.trackerList;
 
         listViewTrackers = (DynamicListView)findViewById(R.id.listViewTrackers);
         checkBoxCurrentLocation = (CheckBox)findViewById(R.id.checkBoxCurrentLocation);
@@ -69,13 +69,13 @@ public class ManageTrackersActivity extends ActionBarActivity {
         Log.v(Constants.LOG_TAG, "ManageTrackersActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("deleteDialog")) {
             int index = savedInstanceState.getInt("deleteDialogReadableIndex");
-            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.trackerList.get(index);
+            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.trackerList.get(index);
             showDeleteDialog(item);
         }
         if (savedInstanceState.getBoolean("editDialog")) {
             String input = savedInstanceState.getString("editDialogString");
             int index = savedInstanceState.getInt("editDialogReadableIndex");
-            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).headerReadingsHashMap.trackerList.get(index);
+            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.trackerList.get(index);
             showEditDialog(item);
             ((EditText)editDialog.getAlertDialog().findViewById(R.id.editDialogInputText)).setText(input);
         }
@@ -90,7 +90,7 @@ public class ManageTrackersActivity extends ActionBarActivity {
         if (deleteDialog != null && deleteDialog.getAlertDialog().isShowing()) {
             outState.putBoolean("deleteDialog", true);
             outState.putInt("deleteDialogReadableIndex", GlobalHandler.getInstance(getApplicationContext()).
-                    headerReadingsHashMap.trackerList.indexOf(deleteDialog.item));
+                    readingsHandler.trackerList.indexOf(deleteDialog.item));
             deleteDialog.getAlertDialog().dismiss();
         }
         if (editDialog != null && editDialog.getAlertDialog().isShowing()) {
@@ -98,7 +98,7 @@ public class ManageTrackersActivity extends ActionBarActivity {
             String input = ((EditText)editDialog.getAlertDialog().findViewById(R.id.editDialogInputText)).getText().toString();
             outState.putString("editDialogString", input);
             outState.putInt("editDialogReadableIndex", GlobalHandler.getInstance(getApplicationContext()).
-                    headerReadingsHashMap.trackerList.indexOf(editDialog.item));
+                    readingsHandler.trackerList.indexOf(editDialog.item));
             editDialog.getAlertDialog().dismiss();
         }
     }
