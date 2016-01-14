@@ -188,4 +188,11 @@ public class JsonParser {
         return result;
     }
 
+
+    // TODO find syntax for data to replace int[]
+    public static int[] parseTiles(JSONObject response, int fromTime, int toTime) {
+        // TODO parse tiles
+        return null;
+    }
+
 }

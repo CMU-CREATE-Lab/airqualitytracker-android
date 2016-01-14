@@ -55,4 +55,11 @@ public class Channel {
         return feed.getFeed_id();
     }
 
+
+    // TODO getters/setters
+    private double nowcastValue;
+    public void requestNowCast() {
+        // TODO grab info from esdr, then process and calculate nowcast and store in attribute
+    }
+
 }
