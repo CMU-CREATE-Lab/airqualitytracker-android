@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -189,10 +190,8 @@ public class JsonParser {
     }
 
 
-    // TODO find syntax for data to replace int[]
-    public static int[] parseTiles(JSONObject response, int fromTime, int toTime) {
-        // TODO parse tiles
-        return null;
+    public static void parseTiles(JSONObject response, long fromTime, long toTime, HashMap<Integer, ArrayList<Double>> result) {
+        // TODO parse tiles into "result"
     }
 
 }

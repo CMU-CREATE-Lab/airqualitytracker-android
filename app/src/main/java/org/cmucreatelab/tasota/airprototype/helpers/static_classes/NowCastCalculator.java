@@ -1,31 +1,30 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by mike on 1/14/16.
  */
 public class NowCastCalculator {
 
 
-    // TODO (swift params) range: Double, max: Double
-    private static double computeWeightFactor() {
+    private static double computeWeightFactor(double range, double max) {
         return 0;
     }
 
 
-    // TODO (swift params) values: [Double], weightFactor: Double
-    private static double summedWeightFactor() {
+    private static double summedWeightFactor(double[] values, double weightFactor) {
         return 0;
     }
 
 
-    // TODO (swift params) hourlyValues: [Double]
-    public static double calculate() {
+    public static double calculate(double[] hourlyValues) {
         return 0;
     }
 
 
-    // TODO (swift params) data: [Int: [Double]], currentTime: Int
-    public static double[] constructArrayFromHash() {
+    public static double[] constructArrayFromHash(HashMap<Integer,ArrayList<Double>> data, long currentTime) {
         return null;
     }
 

@@ -27,6 +27,7 @@ public class GlobalHandler {
     public EsdrFeedsHandler esdrFeedsHandler;
     public EsdrLoginHandler esdrLoginHandler;
     public EsdrSpecksHandler esdrSpecksHandler;
+    public EsdrTilesHandler esdrTilesHandler;
     public HttpRequestHandler httpRequestHandler;
     public PositionIdHelper positionIdHelper;
     public ServicesHandler servicesHandler;
@@ -52,6 +53,7 @@ public class GlobalHandler {
         this.esdrFeedsHandler = new EsdrFeedsHandler(this);
         this.esdrAuthHandler = new EsdrAuthHandler(this);
         this.esdrSpecksHandler = new EsdrSpecksHandler(this);
+        this.esdrTilesHandler = new EsdrTilesHandler(this);
         // data structures
         this.readingsHandler = new ReadingsHandler(this);
         // load from database
