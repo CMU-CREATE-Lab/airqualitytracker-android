@@ -7,7 +7,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
@@ -62,6 +64,13 @@ public class ReadableShowActivity extends ActionBarActivity {
         this.readable = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.adapterList.get(itemIndex).readable;
         switch(readable.getReadableType()) {
             case ADDRESS:
+                // TESTING NOWCAST
+                SimpleAddress address = (SimpleAddress)readable;
+                for (Feed feed: address.feeds) {
+                    if (feed.getChannels().size() > 0) {
+                        feed.getChannels().get(0).requestNowCast(getApplicationContext());
+                    }
+                }
                 break;
             case SPECK:
                 break;

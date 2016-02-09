@@ -204,12 +204,14 @@ public class JsonParser {
             for (i = 0; i < size; i++) {
                 dataPoint = dataArray.getJSONArray(i);
                 time = dataPoint.getInt(0);
-                mean = dataPoint.getDouble(1);
-                count = dataPoint.getDouble(3);
-                values = new ArrayList<>();
-                values.add(mean);
-                values.add(count);
-                result.put(time, values);
+                if (time > fromTime && time <= toTime) {
+                    mean = dataPoint.getDouble(1);
+                    count = dataPoint.getDouble(3);
+                    values = new ArrayList<>();
+                    values.add(mean);
+                    values.add(count);
+                    result.put(time, values);
+                }
             }
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "JSON Format error in parseTiles (missing \"data\" or other field).");
