@@ -76,6 +76,9 @@ public class NowCastCalculator {
         // TODO we use 13 hours since ESDr won't always report the previous hour to us
         Double[] result = new Double[13];
         TimeValue[] tempResult = new TimeValue[13];
+        for (int i=0;i<tempResult.length;i++) {
+            tempResult[i] = new TimeValue();
+        }
         int index,count, firstNonemptyIndex;
         double value, firstNonemptyValue;
 
@@ -84,11 +87,10 @@ public class NowCastCalculator {
             index = (currentTime - keyTime)/3600;
             value = data.get(keyTime).get(0);
             count = (int)Math.floor(data.get(keyTime).get(1));
-            if (tempResult[index] != null && tempResult[index].isSet) {
+            if (tempResult[index].isSet) {
                 tempResult[index].value += value*count;
                 tempResult[index].count += count;
             } else {
-                tempResult[index] = new TimeValue();
                 tempResult[index].isSet = true;
                 tempResult[index].value = value*count;
                 tempResult[index].count = count;
@@ -99,12 +101,7 @@ public class NowCastCalculator {
         firstNonemptyIndex = -1;
         firstNonemptyValue = 0;
         for (int i=0;i<tempResult.length;i++) {
-            // instantiate if still null
-            if (tempResult[i] == null) {
-                tempResult[i] = new TimeValue();
-                tempResult[i].value = 0;
-                tempResult[i].count = 0;
-            } else if (tempResult[i].isSet && tempResult[i].count > 0) {
+            if (tempResult[i].isSet && tempResult[i].count > 0) {
                 firstNonemptyIndex = i;
                 firstNonemptyValue = tempResult[i].value / (double)(tempResult[i].count);
                 break;
