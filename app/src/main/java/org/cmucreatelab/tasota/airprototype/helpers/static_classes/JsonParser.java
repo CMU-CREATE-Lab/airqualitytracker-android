@@ -190,8 +190,30 @@ public class JsonParser {
     }
 
 
-    public static void parseTiles(JSONObject response, long fromTime, long toTime, HashMap<Integer, ArrayList<Double>> result) {
-        // TODO parse tiles into "result"
+    public static void parseTiles(JSONObject response, int fromTime, int toTime, HashMap<Integer, ArrayList<Double>> result) {
+        int i,size;
+        JSONArray dataArray,dataPoint;
+        int time;
+        double mean,count;
+        ArrayList<Double> values;
+
+        // grab all tiles within timestamp range (fromTime..toTime)
+        try {
+            dataArray = response.getJSONObject("data").getJSONArray("data");
+            size = dataArray.length();
+            for (i = 0; i < size; i++) {
+                dataPoint = dataArray.getJSONArray(i);
+                time = dataPoint.getInt(0);
+                mean = dataPoint.getDouble(1);
+                count = dataPoint.getDouble(3);
+                values = new ArrayList<>();
+                values.add(mean);
+                values.add(count);
+                result.put(time, values);
+            }
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "JSON Format error in parseTiles (missing \"data\" or other field).");
+        }
     }
 
 }

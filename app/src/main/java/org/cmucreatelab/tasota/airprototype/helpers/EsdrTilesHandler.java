@@ -54,8 +54,8 @@ public class EsdrTilesHandler {
     }
 
 
-    public void requestTilesFromChannel(final Channel channel, final long timestamp) {
-        final long maxTime,minTime;
+    public void requestTilesFromChannel(final Channel channel, final int timestamp) {
+        final int maxTime,minTime;
         final HashMap<Integer, ArrayList<Double>> firstResponse,secondResponse;
         firstResponse = new HashMap<>();
         secondResponse = new HashMap<>();
@@ -68,7 +68,7 @@ public class EsdrTilesHandler {
         // Level is 2**11 => 2048 seconds
         final int level = 11;
         // our tile offset (calculates most recent tile at the current level)
-        final long offset = (long)(maxTime / (512.0*Math.pow(2.0,level) ));
+        final int offset = (int)(maxTime / (512.0*Math.pow(2.0,level) ));
 
         final Response.Listener<JSONObject> firstHandler,secondHandler;
         secondHandler = new Response.Listener<JSONObject>() {

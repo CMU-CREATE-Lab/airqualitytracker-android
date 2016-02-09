@@ -14,9 +14,9 @@ import java.util.HashMap;
 public class Channel {
 
     public class EsdrTilesResponseHandler {
-        public void onResponse(HashMap<Integer, ArrayList<Double>> result, long timestamp) {
+        public void onResponse(HashMap<Integer, ArrayList<Double>> result, int timestamp) {
             // construct array of values
-            double[] array = NowCastCalculator.constructArrayFromHash(result, timestamp);
+            Double[] array = NowCastCalculator.constructArrayFromHash(result, timestamp);
 
             // find nowcast
             double nowcast = NowCastCalculator.calculate(array);
@@ -77,7 +77,7 @@ public class Channel {
     }
 
     public void requestNowCast(Context ctx) {
-        long timestamp = (long)(new Date().getTime() / 1000.0);
+        int timestamp = (int)(new Date().getTime() / 1000.0);
 
         // request tiles from ESDR
         GlobalHandler.getInstance(ctx).esdrTilesHandler.requestTilesFromChannel(this, timestamp);
