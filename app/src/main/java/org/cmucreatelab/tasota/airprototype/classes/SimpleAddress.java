@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by mike on 6/1/15.
  */
-public class SimpleAddress implements Readable {
+public class SimpleAddress extends AirNowReadable {
 
 
     // Readable implementation
@@ -44,7 +44,6 @@ public class SimpleAddress implements Readable {
     private long _id;
     private String name;
     private String zipcode;
-    private Location location;
     private Feed closestFeed = null;
     public final ArrayList<Feed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
@@ -97,12 +96,6 @@ public class SimpleAddress implements Readable {
     }
     public void setPositionId(int positionId) {
         this.positionId = positionId;
-    }
-    public Location getLocation() {
-        return location;
-    }
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
 }
