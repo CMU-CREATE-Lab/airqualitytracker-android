@@ -8,7 +8,7 @@ import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.EsdrJsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONObject;
@@ -135,7 +135,7 @@ public class EsdrFeedsHandler {
             public void onResponse(JSONObject response) {
                 Feed closestFeed;
 
-                JsonParser.populateFeedsFromJson(address.feeds, response, maxTime);
+                EsdrJsonParser.populateFeedsFromJson(address.feeds, response, maxTime);
                 if (address.feeds.size() > 0) {
                     closestFeed = MapGeometry.getClosestFeedToAddress(address, address.feeds);
                     if (closestFeed != null) {

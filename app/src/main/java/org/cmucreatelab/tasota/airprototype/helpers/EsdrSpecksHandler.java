@@ -6,7 +6,7 @@ import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.EsdrJsonParser;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -79,7 +79,7 @@ public class EsdrSpecksHandler {
                                 // NOTICE: we must also make sure that this specific channel
                                 // was updated in the past 24 hours ("maxTime").
                                 JSONObject channel = channels.getJSONObject(channelName);
-                                listChannels.add(JsonParser.parseChannelFromJson(channelName, speck, channel));
+                                listChannels.add(EsdrJsonParser.parseChannelFromJson(channelName, speck, channel));
                                 break;
                             }
                         }

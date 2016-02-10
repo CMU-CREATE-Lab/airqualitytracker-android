@@ -3,7 +3,7 @@ package org.cmucreatelab.tasota.airprototype.classes;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.WuJsonParser;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class AutocompleteTimer extends Timer {
         @Override
         public void onResponse(JSONObject response) {
             activity.listAdapter.clear();
-            ArrayList<SimpleAddress> results = JsonParser.parseAddressesFromJson(response);
+            ArrayList<SimpleAddress> results = WuJsonParser.parseAddressesFromJson(response);
             for (SimpleAddress address : results) {
                 activity.listAdapter.add(address);
             }

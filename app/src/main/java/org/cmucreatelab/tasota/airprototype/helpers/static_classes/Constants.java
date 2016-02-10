@@ -17,6 +17,13 @@ public final class Constants {
 
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
+    public static final class AppSecrets {
+        // TODO placeholder for actual Client information (don't push to git)
+        public static final String ESDR_CLIENT_ID = "client_id";
+        public static final String ESDR_CLIENT_SECRET = "this should never work";
+        public static final String AIR_NOW_API_KEY = "this-is-your-airnow-key-dont-push";
+    }
+
     // TODO settings key-values & default
     public static final HashMap<String, Object> DEFAULT_SETTINGS = new HashMap(){{
         put(SettingsKeys.appUsesLocation, true);
@@ -69,9 +76,6 @@ public final class Constants {
         public static final String API_URL = "https://esdr.cmucreatelab.org";
         public static final String GRANT_TYPE_TOKEN = "password";
         public static final String GRANT_TYPE_REFRESH = "refresh_token";
-        // TODO placeholder for actual Client information (don't push to git)
-        public static final String CLIENT_ID = "client_id";
-        public static final String CLIENT_SECRET = "this should never work";
     }
 
     public final class MapGeometry {

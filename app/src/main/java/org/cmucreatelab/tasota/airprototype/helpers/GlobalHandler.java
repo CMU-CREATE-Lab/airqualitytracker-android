@@ -23,6 +23,7 @@ public class GlobalHandler {
     private static GlobalHandler classInstance;
     protected Context appContext;
     // managed global instances
+    public AirNowRequestHandler airNowRequestHandler;
     public EsdrAuthHandler esdrAuthHandler;
     public EsdrFeedsHandler esdrFeedsHandler;
     public EsdrLoginHandler esdrLoginHandler;
@@ -50,6 +51,7 @@ public class GlobalHandler {
         settingsHandler.updateSettings();
         this.servicesHandler = new ServicesHandler(this);
         this.httpRequestHandler = new HttpRequestHandler(this);
+        this.airNowRequestHandler = new AirNowRequestHandler(this);
         this.esdrFeedsHandler = new EsdrFeedsHandler(this);
         this.esdrAuthHandler = new EsdrAuthHandler(this);
         this.esdrSpecksHandler = new EsdrSpecksHandler(this);

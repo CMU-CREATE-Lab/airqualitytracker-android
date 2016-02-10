@@ -32,8 +32,8 @@ public class EsdrAuthHandler {
             requestUrl = Constants.Esdr.API_URL + "/oauth/token";
             requestParams = new JSONObject();
             requestParams.put("grant_type", Constants.Esdr.GRANT_TYPE_TOKEN);
-            requestParams.put("client_id", Constants.Esdr.CLIENT_ID);
-            requestParams.put("client_secret", Constants.Esdr.CLIENT_SECRET);
+            requestParams.put("client_id", Constants.AppSecrets.ESDR_CLIENT_ID);
+            requestParams.put("client_secret", Constants.AppSecrets.ESDR_CLIENT_SECRET);
             requestParams.put("username", username);
             requestParams.put("password", password);
             globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
@@ -56,8 +56,8 @@ public class EsdrAuthHandler {
             requestUrl = Constants.Esdr.API_URL + "/oauth/token";
             requestParams = new JSONObject();
             requestParams.put("grant_type", Constants.Esdr.GRANT_TYPE_REFRESH);
-            requestParams.put("client_id", Constants.Esdr.CLIENT_ID);
-            requestParams.put("client_secret", Constants.Esdr.CLIENT_SECRET);
+            requestParams.put("client_id", Constants.AppSecrets.ESDR_CLIENT_ID);
+            requestParams.put("client_secret", Constants.AppSecrets.ESDR_CLIENT_SECRET);
             requestParams.put("refresh_token", refreshToken);
             response = new Response.Listener<JSONObject>() {
                 @Override

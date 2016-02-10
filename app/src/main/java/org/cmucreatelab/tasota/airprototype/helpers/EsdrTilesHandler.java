@@ -5,7 +5,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.EsdrJsonParser;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +77,7 @@ public class EsdrTilesHandler {
                 HashMap<Integer, ArrayList<Double>> result;
 
                 // response handling
-                JsonParser.parseTiles(response, minTime, maxTime, secondResponse);
+                EsdrJsonParser.parseTiles(response, minTime, maxTime, secondResponse);
 
                 // union both responses then call completion handler
                 result = union(firstResponse, secondResponse);
@@ -88,7 +88,7 @@ public class EsdrTilesHandler {
             @Override
             public void onResponse(JSONObject response) {
                 // response handling
-                JsonParser.parseTiles(response, minTime, maxTime, firstResponse);
+                EsdrJsonParser.parseTiles(response, minTime, maxTime, firstResponse);
 
                 // send 2nd request
                 int requestMethod;

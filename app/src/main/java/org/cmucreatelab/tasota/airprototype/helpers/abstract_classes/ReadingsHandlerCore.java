@@ -9,7 +9,7 @@ import org.cmucreatelab.tasota.airprototype.classes.*;
 import org.cmucreatelab.tasota.airprototype.classes.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.EsdrJsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -131,7 +131,7 @@ public abstract class ReadingsHandlerCore {
                 public void onResponse(JSONObject response) {
                     ArrayList<Speck> specks = new ArrayList<>();
                     Log.v(Constants.LOG_TAG, "updateSpecks handling response=" + response.toString());
-                    JsonParser.populateSpecksFromJson(specks, response);
+                    EsdrJsonParser.populateSpecksFromJson(specks, response);
                     // TODO not sure if needed anymore?
                     globalHandler.settingsHandler.userFeedsNeedsUpdated = false;
 
