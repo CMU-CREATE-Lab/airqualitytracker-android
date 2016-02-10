@@ -8,6 +8,7 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.util.ArrayList;
 
 /**
@@ -58,8 +59,8 @@ public class SpeckDbHelper {
         values.put(SpeckContract.COLUMN_EXPOSURE, speck.getExposure());
         values.put(SpeckContract.COLUMN_FEED_ID, speck.getFeed_id());
         values.put(SpeckContract.COLUMN_IS_MOBILE, speck.isMobile());
-        values.put(SpeckContract.COLUMN_LATITUDE, String.valueOf(speck.getLatitude()));
-        values.put(SpeckContract.COLUMN_LONGITUDE, String.valueOf(speck.getLongitude()));
+        values.put(SpeckContract.COLUMN_LATITUDE, String.valueOf(speck.getLocation().latitude));
+        values.put(SpeckContract.COLUMN_LONGITUDE, String.valueOf(speck.getLocation().longitude));
         values.put(SpeckContract.COLUMN_NAME, speck.getName());
         values.put(SpeckContract.COLUMN_POSITION_ID, speck.getPositionId());
         values.put(SpeckContract.COLUMN_PRODUCT_ID, speck.getProductId());
@@ -85,8 +86,8 @@ public class SpeckDbHelper {
             // find values to be updated
             contentValues = new ContentValues();
             contentValues.put(SpeckContract.COLUMN_NAME, speck.getName());
-            contentValues.put(SpeckContract.COLUMN_LATITUDE, speck.getLatitude());
-            contentValues.put(SpeckContract.COLUMN_LONGITUDE, speck.getLongitude());
+            contentValues.put(SpeckContract.COLUMN_LATITUDE, speck.getLocation().latitude);
+            contentValues.put(SpeckContract.COLUMN_LONGITUDE, speck.getLocation().longitude);
             contentValues.put(SpeckContract.COLUMN_POSITION_ID, speck.getPositionId());
             contentValues.put(SpeckContract.COLUMN_DEVICE_ID, speck.getDeviceId());
             contentValues.put(SpeckContract.COLUMN_EXPOSURE, speck.getExposure());
@@ -121,7 +122,7 @@ public class SpeckDbHelper {
         SQLiteDatabase db;
         ContentValues values;
         long newId;
-        Speck speck = new Speck(apiKeyReadOnly,deviceId,exposure,feedId,isMobile,latitude,longitude,name,positionId,productId);
+        Speck speck = new Speck(apiKeyReadOnly,deviceId,exposure,feedId,isMobile,new Location(latitude,longitude),name,positionId,productId);
 
         mDbHelper = new SpeckSensorSQLiteOpenHelper(ctx);
         db = mDbHelper.getWritableDatabase();
@@ -131,8 +132,8 @@ public class SpeckDbHelper {
         values.put(SpeckContract.COLUMN_EXPOSURE, speck.getExposure());
         values.put(SpeckContract.COLUMN_FEED_ID, speck.getFeed_id());
         values.put(SpeckContract.COLUMN_IS_MOBILE, speck.isMobile());
-        values.put(SpeckContract.COLUMN_LATITUDE, String.valueOf(speck.getLatitude()));
-        values.put(SpeckContract.COLUMN_LONGITUDE, String.valueOf(speck.getLongitude()));
+        values.put(SpeckContract.COLUMN_LATITUDE, String.valueOf(speck.getLocation().latitude));
+        values.put(SpeckContract.COLUMN_LONGITUDE, String.valueOf(speck.getLocation().longitude));
         values.put(SpeckContract.COLUMN_NAME, speck.getName());
         values.put(SpeckContract.COLUMN_POSITION_ID, speck.getPositionId());
         values.put(SpeckContract.COLUMN_PRODUCT_ID, speck.getProductId());
@@ -170,7 +171,7 @@ public class SpeckDbHelper {
             Log.v(Constants.LOG_TAG, "Read Speck record _id=" + id);
 
             // add to data structure
-            speck = new Speck(apiKeyReadOnly,deviceId,exposure,feedId,isMobile,latitude,longitude,name,positionId,productId);
+            speck = new Speck(apiKeyReadOnly,deviceId,exposure,feedId,isMobile,new Location(latitude,longitude),name,positionId,productId);
             speck.set_id(id);
             return speck;
         } catch (Exception e) {

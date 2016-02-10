@@ -33,6 +33,8 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
+
 import java.util.ArrayList;
 
 /**
@@ -56,15 +58,15 @@ public class MapGeometry {
 
 
     // calculates distance between two points on a Great Sphere
-    public static double getDistance(double lat1, double long1, double lat2, double long2) {
+    public static double getDistance(Location from, Location to) {
         double result;
         double p1,p2,l1,l2;
 
         // convert units from degrees to radians
-        p1 = lat1 * Math.PI / 180.0;
-        p2 = lat2 * Math.PI / 180.0;
-        l1 = long1 * Math.PI / 180.0;
-        l2 = long2 * Math.PI / 180.0;
+        p1 = from.latitude * Math.PI / 180.0;
+        p2 = to.latitude * Math.PI / 180.0;
+        l1 = from.longitude * Math.PI / 180.0;
+        l2 = to.longitude * Math.PI / 180.0;
         // Taken from the haversine formula: hsin(d/r) = hsine(p2-p1) + cos(p1)*cos(p2)*hsin(l2-l1)
         // where hsin(t) = sin^2(t/2)
         result = haversine(p2-p1) + Math.cos(p2)*Math.cos(p1)*haversine(l2-l1);
@@ -74,8 +76,8 @@ public class MapGeometry {
 
 
     public static double getDistanceFromFeedToAddress(SimpleAddress simpleAddress, Feed feed) {
-        return getDistance(simpleAddress.getLatitude(),simpleAddress.getLongitude(),
-                feed.getLatitude(),feed.getLongitude());
+        return getDistance(simpleAddress.getLocation(),
+                feed.getLocation());
     }
 
 

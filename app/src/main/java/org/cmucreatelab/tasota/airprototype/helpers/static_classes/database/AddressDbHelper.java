@@ -8,6 +8,8 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
+
 import java.util.ArrayList;
 
 /**
@@ -55,8 +57,8 @@ public class AddressDbHelper {
         values = new ContentValues();
         values.put(AddressContract.COLUMN_NAME, address.getName());
         values.put(AddressContract.COLUMN_ZIPCODE, address.getZipcode());
-        values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(address.getLatitude()));
-        values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(address.getLongitude()));
+        values.put(AddressContract.COLUMN_LATITUDE, String.valueOf(address.getLocation().latitude));
+        values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(address.getLocation().longitude));
         values.put(AddressContract.COLUMN_POSITION_ID, address.getPositionId());
         newId = db.insert(AddressContract.TABLE_NAME, "null", values);
 
@@ -81,8 +83,8 @@ public class AddressDbHelper {
             contentValues = new ContentValues();
             contentValues.put(AddressContract.COLUMN_NAME, address.getName());
             contentValues.put(AddressContract.COLUMN_ZIPCODE, address.getZipcode());
-            contentValues.put(AddressContract.COLUMN_LATITUDE, address.getLatitude());
-            contentValues.put(AddressContract.COLUMN_LONGITUDE, address.getLongitude());
+            contentValues.put(AddressContract.COLUMN_LATITUDE, address.getLocation().latitude);
+            contentValues.put(AddressContract.COLUMN_LONGITUDE, address.getLocation().longitude);
             contentValues.put(AddressContract.COLUMN_POSITION_ID, address.getPositionId());
 
             // perform update
@@ -113,7 +115,7 @@ public class AddressDbHelper {
         values.put(AddressContract.COLUMN_LONGITUDE, String.valueOf(longitude));
         values.put(AddressContract.COLUMN_POSITION_ID, positionId);
         newId = db.insert(AddressContract.TABLE_NAME, "null", values);
-        simpleAddress = new SimpleAddress(name,zipcode,latitude,longitude);
+        simpleAddress = new SimpleAddress(name,zipcode,new Location(latitude,longitude));
         simpleAddress.set_id(newId);
         Log.i(Constants.LOG_TAG, "inserted new address _id=" + newId);
 
@@ -138,7 +140,7 @@ public class AddressDbHelper {
             Log.v(Constants.LOG_TAG, "Read address record _id=" + id + " with lat,long=("+latd+","+longd+")");
 
             // add to data structure
-            simpleAddress = new SimpleAddress(name, zipcode, latd, longd);
+            simpleAddress = new SimpleAddress(name, zipcode, new Location(latd, longd));
             simpleAddress.set_id(id);
             simpleAddress.setPositionId(positionId);
             return simpleAddress;

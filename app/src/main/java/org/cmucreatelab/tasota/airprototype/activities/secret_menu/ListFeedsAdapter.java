@@ -56,16 +56,16 @@ public class ListFeedsAdapter extends ArrayAdapter<ListFeedsAdapter.ListFeedsIte
 
             // header title
             TextView textViewListFeedsHeader = (TextView)rowView.findViewById(R.id.textViewListFeedsHeader);
-            textViewListFeedsHeader.setText(String.valueOf(item.index)+" ("+item.address.getLatitude()+","+item.address.getLongitude()+")");
+            textViewListFeedsHeader.setText(String.valueOf(item.index)+" ("+item.address.getLocation().latitude+","+item.address.getLocation().longitude+")");
         } else {
             rowView = inflater.inflate(R.layout.__secret_menu__debug_activity_list_item, parent, false);
 
             // feed lat
             TextView textListFeedsLatitude = (TextView)rowView.findViewById(R.id.textListFeedsLatitude);
-            textListFeedsLatitude.setText(String.valueOf(item.feed.getLatitude()));
+            textListFeedsLatitude.setText(String.valueOf(item.feed.getLocation().latitude));
             // feed long
             TextView textListFeedsLongitude = (TextView)rowView.findViewById(R.id.textListFeedsLongitude);
-            textListFeedsLongitude.setText(String.valueOf(item.feed.getLongitude()));
+            textListFeedsLongitude.setText(String.valueOf(item.feed.getLocation().longitude));
             // feed ID
             TextView textListFeedsFeedId = (TextView)rowView.findViewById(R.id.textListFeedsFeedId);
             textListFeedsFeedId.setText("id="+String.valueOf(item.feed.getFeed_id()));

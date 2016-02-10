@@ -5,6 +5,7 @@ import org.cmucreatelab.tasota.airprototype.classes.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,8 +91,7 @@ public class JsonParser {
             result.setName(name);
             result.setExposure(exposure);
             result.setIsMobile(isMobile);
-            result.setLatitude(latitude);
-            result.setLongitude(longitude);
+            result.setLocation(new Location(latitude, longitude));
             result.setProductId(productId);
 
             listChannels = result.getChannels();
@@ -161,7 +161,7 @@ public class JsonParser {
             longitude = row.getDouble("lon");
             name = row.getString("name");
             zipcode = row.getString("zmw");
-            result = new SimpleAddress(name, zipcode, latitude, longitude);
+            result = new SimpleAddress(name, zipcode, new Location(latitude, longitude));
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to parse Address from JSON.");
             throw e;

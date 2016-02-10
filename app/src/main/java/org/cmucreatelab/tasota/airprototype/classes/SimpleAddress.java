@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype.classes;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.util.ArrayList;
 
 /**
@@ -43,24 +44,23 @@ public class SimpleAddress implements Readable {
     private long _id;
     private String name;
     private String zipcode;
-    private double latitude,longitude;
+    private Location location;
     private Feed closestFeed = null;
     public final ArrayList<Feed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
     private int positionId;
 
 
-    public SimpleAddress(String name, String zipcode, double latitude, double longitude) {
+    public SimpleAddress(String name, String zipcode, Location location) {
         this.name = name;
         this.zipcode = zipcode;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
         this.isCurrentLocation = false;
     }
 
 
-    public SimpleAddress(String name, String zipcode, double latitude, double longitude, boolean isCurrentLocation) {
-        this(name, zipcode, latitude, longitude);
+    public SimpleAddress(String name, String zipcode, Location location, boolean isCurrentLocation) {
+        this(name, zipcode, location);
         this.isCurrentLocation = isCurrentLocation;
     }
 
@@ -80,18 +80,6 @@ public class SimpleAddress implements Readable {
     public void setName(String name) {
         this.name = name;
     }
-    public double getLatitude() {
-        return latitude;
-    }
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-    public double getLongitude() {
-        return longitude;
-    }
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
     public Feed getClosestFeed() {
         return closestFeed;
     }
@@ -109,6 +97,12 @@ public class SimpleAddress implements Readable {
     }
     public void setPositionId(int positionId) {
         this.positionId = positionId;
+    }
+    public Location getLocation() {
+        return location;
+    }
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 }

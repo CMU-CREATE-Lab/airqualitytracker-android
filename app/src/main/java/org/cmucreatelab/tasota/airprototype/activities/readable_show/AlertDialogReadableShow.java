@@ -13,7 +13,7 @@ public class AlertDialogReadableShow {
         public AlertDialogBuilder(final Context context, Feed feed) {
             super(context);
             this.setTitle(feed.getName());
-            this.setMessage("Latitude: "+feed.getLatitude()+"\nLongitude: "+feed.getLongitude());
+            this.setMessage("Latitude: "+feed.getLocation().latitude+"\nLongitude: "+feed.getLocation().longitude);
         }
     }
 

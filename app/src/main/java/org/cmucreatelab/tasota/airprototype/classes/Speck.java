@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.util.Collection;
 
 /**
@@ -31,8 +32,7 @@ public class Speck extends Feed {
         this.name = feed.name;
         this.exposure = feed.exposure;
         this.isMobile = feed.isMobile;
-        this.latitude = feed.latitude;
-        this.longitude = feed.longitude;
+        this.location = feed.location;
         this.productId = feed.productId;
         this.channels = feed.channels;
         this.feedValue = feed.feedValue;
@@ -41,14 +41,13 @@ public class Speck extends Feed {
     }
 
 
-    public Speck(String apiKeyReadOnly, long deviceId, String exposure, long feedId, boolean isMobile, double latitude, double longitude, String name, int positionId, long productId) {
+    public Speck(String apiKeyReadOnly, long deviceId, String exposure, long feedId, boolean isMobile, Location location, String name, int positionId, long productId) {
         this.apiKeyReadOnly = apiKeyReadOnly;
         this.deviceId = deviceId;
         this.exposure = exposure;
         this.feed_id = feedId;
         this.isMobile = isMobile;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
         this.name = name;
         this.positionId = positionId;
         this.productId = productId;

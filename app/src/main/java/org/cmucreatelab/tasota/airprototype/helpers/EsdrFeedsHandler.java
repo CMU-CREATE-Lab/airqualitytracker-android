@@ -10,6 +10,7 @@ import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.JsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONObject;
 import java.util.Date;
 
@@ -27,7 +28,7 @@ public class EsdrFeedsHandler {
     }
 
 
-    public void requestFeeds(double latd, double longd, double maxTime, Response.Listener<JSONObject> response) {
+    public void requestFeeds(Location location, double maxTime, Response.Listener<JSONObject> response) {
         int requestMethod;
         String requestUrl;
         double la1,lo1,la2,lo2;  // given lat, long, create a bounding box and search from that
@@ -37,10 +38,10 @@ public class EsdrFeedsHandler {
         // only request AirNow (11) or ACHD (1)
         requestUrl += "?whereJoin=AND&whereOr=productId=11,productId=1";
         // get bounding box
-        la1 = latd-Constants.MapGeometry.BOUNDBOX_LAT;
-        la2 = latd+Constants.MapGeometry.BOUNDBOX_LONG;
-        lo1 = longd-Constants.MapGeometry.BOUNDBOX_LAT;
-        lo2 = longd+Constants.MapGeometry.BOUNDBOX_LONG;
+        la1 = location.latitude-Constants.MapGeometry.BOUNDBOX_LAT;
+        la2 = location.latitude+Constants.MapGeometry.BOUNDBOX_LONG;
+        lo1 = location.longitude-Constants.MapGeometry.BOUNDBOX_LAT;
+        lo2 = location.longitude+Constants.MapGeometry.BOUNDBOX_LONG;
         // within bounds, within time, and exposure=outdoor
         requestUrl += "&whereAnd=latitude>="+la1+",latitude<="+la2+",longitude>="+lo1+",longitude<="+lo2+",maxTimeSecs>="+maxTime+",exposure=outdoor";
         // only request from ESDR the fields that we care about
@@ -147,7 +148,7 @@ public class EsdrFeedsHandler {
                 }
             }
         };
-        requestFeeds(address.getLatitude(), address.getLongitude(), maxTime, response);
+        requestFeeds(address.getLocation(), maxTime, response);
     }
 
 

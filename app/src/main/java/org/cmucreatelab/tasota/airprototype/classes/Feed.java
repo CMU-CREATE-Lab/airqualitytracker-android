@@ -2,6 +2,8 @@ package org.cmucreatelab.tasota.airprototype.classes;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
+
 import java.util.ArrayList;
 
 /**
@@ -49,8 +51,7 @@ public class Feed implements Readable {
     // (FROM DOCS): an enum and must be one of indoor, outdoor, or virtual
     protected String exposure;
     protected boolean isMobile;
-    protected double latitude;
-    protected double longitude;
+    protected Location location;
     protected long productId;
     protected ArrayList<Channel> channels;
     protected double feedValue;
@@ -94,17 +95,11 @@ public class Feed implements Readable {
     public void setIsMobile(boolean isMobile) {
         this.isMobile = isMobile;
     }
-    public double getLatitude() {
-        return latitude;
+    public Location getLocation() {
+        return location;
     }
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-    public double getLongitude() {
-        return longitude;
-    }
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLocation(Location location) {
+        this.location = location;
     }
     public ArrayList<Channel> getChannels() {
         return channels;

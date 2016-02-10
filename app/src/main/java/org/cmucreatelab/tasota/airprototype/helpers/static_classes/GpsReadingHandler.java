@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
-import android.location.Location;
-
+import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
@@ -16,13 +15,12 @@ public class GpsReadingHandler {
 
     public GpsReadingHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
-        this.gpsAddress = new SimpleAddress("Loading Current Location...", "", 0.0, 0.0, true);
+        this.gpsAddress = new SimpleAddress("Loading Current Location...", "", new Location(0.0, 0.0), true);
     }
 
 
-    public void setGpsAddressLocation(Location location) {
-        gpsAddress.setLatitude(location.getLatitude());
-        gpsAddress.setLongitude(location.getLongitude());
+    public void setGpsAddressLocation(android.location.Location location) {
+        gpsAddress.setLocation( new Location(location.getLatitude(), location.getLongitude()) );
         globalHandler.esdrFeedsHandler.requestUpdateFeeds(gpsAddress);
     }
 
