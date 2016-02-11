@@ -78,6 +78,10 @@ public final class Constants {
         public static final String GRANT_TYPE_REFRESH = "refresh_token";
     }
 
+    public static final class AirNow {
+        public static final String API_URL = "http://www.airnowapi.org";
+    }
+
     public final class MapGeometry {
         // Distance from central point, in kilometers (box dimension will be 2x larger)
         public static final double BOUNDBOX_HEIGHT = 20.0;

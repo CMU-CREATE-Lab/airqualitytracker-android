@@ -31,7 +31,7 @@ public class AirNowRequestHandler implements Response.ErrorListener {
 
         try {
             requestMethod = Request.Method.GET;
-            requestUrl = Constants.Esdr.API_URL + "/aq/observation/latLong/current/?format=application/json&distance=25&latitude="+location.latitude+"&longitude="+location.longitude+"&API_KEY="+Constants.AppSecrets.AIR_NOW_API_KEY;
+            requestUrl = Constants.AirNow.API_URL + "/aq/observation/latLong/current/?format=application/json&distance=25&latitude="+location.latitude+"&longitude="+location.longitude+"&API_KEY="+Constants.AppSecrets.AIR_NOW_API_KEY;
             globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response, this);
         } catch (Exception e) {
             Log.w(Constants.LOG_TAG, "Failed to request AirNow Observation.");
