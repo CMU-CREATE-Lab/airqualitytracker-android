@@ -42,7 +42,7 @@ public class LoginRequestListenerLoginActivity
 
         try {
             timestamp = (long) (new Date().getTime() / 1000.0);
-            expiresAt = response.getLong("expires_at");
+            expiresAt = response.getLong("expires_in");
             userId = response.getLong("userId");
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");

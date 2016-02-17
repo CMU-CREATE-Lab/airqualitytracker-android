@@ -11,6 +11,8 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class DebugActivity extends ActionBarActivity {
@@ -23,21 +25,25 @@ public class DebugActivity extends ActionBarActivity {
     private TextView textSecretMenuRefreshToken;
     private TextView textSecretMenuDeviceIdIgnoreList;
     private TextView textSecretMenuAppVersion;
+    private TextView textSecretMenuExpiresAt;
 
 
     private void populate() {
         GlobalHandler globalHandler;
         String username, accessToken, refreshToken, deviceIdIgnoreLst, appVersion;
+        long userId,expiresAt;
 
         globalHandler = GlobalHandler.getInstance(getApplicationContext());
         username = globalHandler.esdrLoginHandler.getUsername();
-        long userid = globalHandler.esdrLoginHandler.getUserId();
+        userId = globalHandler.esdrLoginHandler.getUserId();
+        expiresAt = globalHandler.esdrLoginHandler.getExpiresAt();
         accessToken = globalHandler.esdrLoginHandler.getAccessToken();
         refreshToken = globalHandler.esdrLoginHandler.getRefreshToken();
         deviceIdIgnoreLst = globalHandler.settingsHandler.getStringifiedBlacklistedDeviceIds();
 
         textSecretMenuUsername.setText(username);
-        textSecretMenuUserId.setText(String.valueOf(userid));
+        textSecretMenuUserId.setText(String.valueOf(userId));
+        textSecretMenuExpiresAt.setText(String.valueOf(expiresAt));
         textSecretMenuAccessToken.setText(accessToken);
         textSecretMenuRefreshToken.setText(refreshToken);
         textSecretMenuDeviceIdIgnoreList.setText(deviceIdIgnoreLst);
@@ -56,6 +62,7 @@ public class DebugActivity extends ActionBarActivity {
         textSecretMenuRefreshToken = (TextView)findViewById(R.id.textSecretMenuRefreshToken);
         textSecretMenuDeviceIdIgnoreList = (TextView)findViewById(R.id.textSecretMenuDeviceIdIgnoreList);
         textSecretMenuAppVersion = (TextView)findViewById(R.id.textSecretMenuAppVersion);
+        textSecretMenuExpiresAt = (TextView)findViewById(R.id.textSecretMenuExpiresAt);
         listFeedsSecretMenu = (ListView)findViewById(R.id.listFeedsSecretMenu);
         buttonRequestFeedsSecretMenu = (Button)findViewById(R.id.buttonRequestFeedsSecretMenu);
 

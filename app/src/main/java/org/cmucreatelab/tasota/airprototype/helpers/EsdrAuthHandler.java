@@ -69,7 +69,7 @@ public class EsdrAuthHandler {
                     Log.v(Constants.LOG_TAG,"requestEsdrRefresh: got response="+response.toString());
                     try {
                         timestamp = (long) (new Date().getTime() / 1000.0);
-                        expiresAt = response.getLong("expires_at");
+                        expiresAt = response.getLong("expires_in");
                         accessToken = response.getString("access_token");
                         refreshToken = response.getString("refresh_token");
                         globalHandler.esdrLoginHandler.updateEsdrTokens(accessToken, refreshToken, timestamp+expiresAt);
