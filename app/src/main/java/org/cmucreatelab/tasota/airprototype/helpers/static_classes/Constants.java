@@ -32,6 +32,7 @@ public final class Constants {
         put(SettingsKeys.accessToken, "");
         put(SettingsKeys.refreshToken, "");
         put(SettingsKeys.userId, -1);
+        put(SettingsKeys.expiresAt, 0);
         put(SettingsKeys.addressLastPosition, 1);
         put(SettingsKeys.speckLastPosition, 1);
         put(SettingsKeys.blacklistedDevices, "");
@@ -55,6 +56,7 @@ public final class Constants {
         public static final String accessToken = "access_token";
         public static final String refreshToken = "refresh_token";
         public static final String userId = "user_id";
+        public static final String expiresAt = "expires_at";
         public static final String addressLastPosition = "address_last_position";
         public static final String speckLastPosition = "speck_last_position";
         public static final String blacklistedDevices = "blacklisted_devices";

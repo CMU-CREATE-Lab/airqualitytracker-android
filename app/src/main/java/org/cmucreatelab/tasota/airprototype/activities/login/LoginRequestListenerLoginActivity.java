@@ -7,6 +7,8 @@ import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by mike on 7/2/15.
  */
@@ -35,15 +37,17 @@ public class LoginRequestListenerLoginActivity
     @Override
     public void onResponse(JSONObject response) {
         String accessToken,refreshToken;
-        long userId;
+        long userId,timestamp,expiresAt;
         Log.v(Constants.LOG_TAG, "requestEsdrToken: got response=" + response.toString());
 
         try {
+            timestamp = (long) (new Date().getTime() / 1000.0);
+            expiresAt = response.getLong("expires_at");
             userId = response.getLong("userId");
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");
             GlobalHandler globalHandler = GlobalHandler.getInstance(loginActivity.getApplicationContext());
-            globalHandler.esdrLoginHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken);
+            globalHandler.esdrLoginHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken, timestamp+expiresAt);
             globalHandler.esdrLoginHandler.setUserLoggedIn(true);
             globalHandler.servicesHandler.startEsdrRefreshService();
             loginActivity.display();

@@ -7,6 +7,8 @@ import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by mike on 6/29/15.
  */
@@ -63,11 +65,14 @@ public class EsdrAuthHandler {
                 @Override
                 public void onResponse(JSONObject response) {
                     String accessToken,refreshToken;
+                    long timestamp,expiresAt;
                     Log.v(Constants.LOG_TAG,"requestEsdrRefresh: got response="+response.toString());
                     try {
+                        timestamp = (long) (new Date().getTime() / 1000.0);
+                        expiresAt = response.getLong("expires_at");
                         accessToken = response.getString("access_token");
                         refreshToken = response.getString("refresh_token");
-                        globalHandler.esdrLoginHandler.updateEsdrTokens(accessToken, refreshToken);
+                        globalHandler.esdrLoginHandler.updateEsdrTokens(accessToken, refreshToken, timestamp+expiresAt);
                     } catch (Exception e) {
                         Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
                         e.printStackTrace();
