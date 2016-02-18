@@ -8,6 +8,7 @@ import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
+import org.cmucreatelab.tasota.airprototype.classes.EsdrAccount;
 import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -35,6 +36,7 @@ public class GlobalHandler {
     public SettingsHandler settingsHandler;
     // data structure
     public ReadingsHandler readingsHandler;
+    public EsdrAccount esdrAccount;
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public StickyGridAdapter gridAdapter;
     public TrackersAdapter trackersAdapter;
@@ -58,6 +60,7 @@ public class GlobalHandler {
         this.esdrTilesHandler = new EsdrTilesHandler(this);
         // data structures
         this.readingsHandler = new ReadingsHandler(this);
+        this.esdrAccount = new EsdrAccount(settingsHandler.getSharedPreferences());
         // load from database
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(ctx);
         ArrayList<Speck> dbSpecks = SpeckDbHelper.fetchSpecksFromDatabase(ctx);

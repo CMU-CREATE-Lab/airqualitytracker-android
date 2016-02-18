@@ -10,36 +10,16 @@ public class EsdrLoginHandler {
 
     protected GlobalHandler globalHandler;
     private SharedPreferences sharedPreferences;
-
-    private String username="",accessToken="",refreshToken="";
-    private long userId,expiresAt;
     private boolean userLoggedIn=false;
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-    public String getAccessToken() {
-        return accessToken;
-    }
-    public String getUsername() {
-        return username;
-    }
+
     public boolean isUserLoggedIn() {
         return userLoggedIn;
     }
-    public long getUserId() {
-        return userId;
-    }
-    public long getExpiresAt() {
-        return expiresAt;
-    }
+
+
     // ASSERT: only called by SettingsHandler to update settings-related attributes
     protected void updateEsdrLoginSettings() {
         userLoggedIn = this.sharedPreferences.getBoolean(Constants.SettingsKeys.userLoggedIn, (Boolean) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.userLoggedIn));
-        username = this.sharedPreferences.getString(Constants.SettingsKeys.username, (String) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.username));
-        accessToken = this.sharedPreferences.getString(Constants.SettingsKeys.accessToken, (String) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.accessToken));
-        refreshToken = this.sharedPreferences.getString(Constants.SettingsKeys.refreshToken, (String) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.refreshToken));
-        userId = this.sharedPreferences.getLong(Constants.SettingsKeys.userId, (int) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.userId));
-        expiresAt = this.sharedPreferences.getLong(Constants.SettingsKeys.expiresAt, (int) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.expiresAt));
     }
 
 
@@ -67,15 +47,11 @@ public class EsdrLoginHandler {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString(Constants.SettingsKeys.username,username);
         editor.putString(Constants.SettingsKeys.accessToken,accessToken);
-        editor.putString(Constants.SettingsKeys.refreshToken,refreshToken);
+        editor.putString(Constants.SettingsKeys.refreshToken, refreshToken);
         editor.putLong(Constants.SettingsKeys.userId, userId);
-        editor.putLong(Constants.SettingsKeys.expiresAt,expiresAt);
+        editor.putLong(Constants.SettingsKeys.expiresAt, expiresAt);
         editor.apply();
-        this.username = username;
-        this.userId = userId;
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-        this.expiresAt = expiresAt;
+        globalHandler.esdrAccount.loadFromUserDefaults(sharedPreferences);
     }
 
 
@@ -85,9 +61,7 @@ public class EsdrLoginHandler {
         editor.putString(Constants.SettingsKeys.refreshToken, refreshToken);
         editor.putLong(Constants.SettingsKeys.expiresAt, expiresAt);
         editor.apply();
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-        this.expiresAt = expiresAt;
+        globalHandler.esdrAccount.loadFromUserDefaults(sharedPreferences);
     }
 
 
@@ -96,7 +70,7 @@ public class EsdrLoginHandler {
         editor.putString(Constants.SettingsKeys.username, (String) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.username));
         editor.putString(Constants.SettingsKeys.accessToken,(String)Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.accessToken));
         editor.putString(Constants.SettingsKeys.refreshToken, (String) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.refreshToken));
-        editor.putString(Constants.SettingsKeys.expiresAt, (String) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.refreshToken));
+        editor.putLong(Constants.SettingsKeys.expiresAt, (long) Constants.DEFAULT_SETTINGS.get(Constants.SettingsKeys.refreshToken));
         editor.apply();
         this.setUserLoggedIn(false);
     }

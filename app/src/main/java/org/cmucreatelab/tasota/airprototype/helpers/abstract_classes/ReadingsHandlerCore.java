@@ -142,11 +142,11 @@ public abstract class ReadingsHandlerCore {
                             globalHandler.esdrFeedsHandler.requestUpdate(speck);
                         }
                     }
-                    globalHandler.esdrSpecksHandler.requestSpeckDevices(globalHandler.esdrLoginHandler.getAccessToken(), globalHandler.esdrLoginHandler.getUserId(), devicesResponse);
+                    globalHandler.esdrSpecksHandler.requestSpeckDevices(globalHandler.esdrAccount.getAccessToken(), globalHandler.esdrAccount.getUserId(), devicesResponse);
                 }
             };
 
-            globalHandler.esdrSpecksHandler.requestSpeckFeeds(globalHandler.esdrLoginHandler.getAccessToken(), globalHandler.esdrLoginHandler.getUserId(), feedsResponse);
+            globalHandler.esdrSpecksHandler.requestSpeckFeeds(globalHandler.esdrAccount.getAccessToken(), globalHandler.esdrAccount.getUserId(), feedsResponse);
         }
         refreshHash();
     }

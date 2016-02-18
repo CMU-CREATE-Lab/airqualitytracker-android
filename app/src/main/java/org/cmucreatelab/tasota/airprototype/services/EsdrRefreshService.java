@@ -45,7 +45,7 @@ public class EsdrRefreshService extends Service {
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    String refreshToken = globalHandler.esdrLoginHandler.getRefreshToken();
+                    String refreshToken = globalHandler.esdrAccount.getRefreshToken();
                     globalHandler.esdrAuthHandler.requestEsdrRefresh(refreshToken);
                 }
             };

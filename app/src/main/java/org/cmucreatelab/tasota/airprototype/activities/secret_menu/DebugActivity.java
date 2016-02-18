@@ -34,11 +34,11 @@ public class DebugActivity extends ActionBarActivity {
         long userId,expiresAt;
 
         globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        username = globalHandler.esdrLoginHandler.getUsername();
-        userId = globalHandler.esdrLoginHandler.getUserId();
-        expiresAt = globalHandler.esdrLoginHandler.getExpiresAt();
-        accessToken = globalHandler.esdrLoginHandler.getAccessToken();
-        refreshToken = globalHandler.esdrLoginHandler.getRefreshToken();
+        username = globalHandler.esdrAccount.getUsername();
+        userId = globalHandler.esdrAccount.getUserId();
+        expiresAt = globalHandler.esdrAccount.getExpiresAt();
+        accessToken = globalHandler.esdrAccount.getAccessToken();
+        refreshToken = globalHandler.esdrAccount.getRefreshToken();
         deviceIdIgnoreLst = globalHandler.settingsHandler.getStringifiedBlacklistedDeviceIds();
 
         textSecretMenuUsername.setText(username);

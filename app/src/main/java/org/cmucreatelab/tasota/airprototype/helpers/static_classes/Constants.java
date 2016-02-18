@@ -31,8 +31,8 @@ public final class Constants {
         put(SettingsKeys.username, "");
         put(SettingsKeys.accessToken, "");
         put(SettingsKeys.refreshToken, "");
-        put(SettingsKeys.userId, -1);
-        put(SettingsKeys.expiresAt, 0);
+        put(SettingsKeys.userId, new Long(-1));
+        put(SettingsKeys.expiresAt, new Long(0));
         put(SettingsKeys.addressLastPosition, 1);
         put(SettingsKeys.speckLastPosition, 1);
         put(SettingsKeys.blacklistedDevices, "");

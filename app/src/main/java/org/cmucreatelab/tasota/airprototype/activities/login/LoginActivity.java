@@ -31,7 +31,7 @@ public class LoginActivity extends ActionBarActivity
             if (username.equals("")) {
                 GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
                 if (globalHandler.esdrLoginHandler.isUserLoggedIn()) {
-                    textViewLogoutUsername.setText(globalHandler.esdrLoginHandler.getUsername());
+                    textViewLogoutUsername.setText(globalHandler.esdrAccount.getUsername());
                 }
             } else {
                 textViewLogoutUsername.setText(username);
