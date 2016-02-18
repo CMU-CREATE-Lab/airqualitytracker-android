@@ -15,6 +15,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by mike on 6/2/15.
@@ -41,6 +42,7 @@ public class GlobalHandler {
     public StickyGridAdapter gridAdapter;
     public TrackersAdapter trackersAdapter;
     public ListFeedsAdapter listFeedsAdapter;
+    public boolean displaySessionExpiredDialog = false;
 
 
     // Nobody accesses the constructor
@@ -94,6 +96,21 @@ public class GlobalHandler {
 
 
     public void updateReadings() {
+        // Tokens: refresh within threshold
+        if (esdrLoginHandler.isUserLoggedIn()) {
+            long timestamp = (long) (new Date().getTime() / 1000.0);
+            long expiresAt = esdrAccount.getExpiresAt();
+            long timeRemaining = expiresAt - timestamp;
+            if (timeRemaining <= 0) {
+                esdrLoginHandler.setUserLoggedIn(false);
+                esdrAccount.clear();
+            } else if (timeRemaining <= Constants.ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH) {
+                String refreshToken = esdrAccount.getRefreshToken();
+                esdrAuthHandler.requestEsdrRefresh(refreshToken);
+            }
+        }
+
+        // Now, perform readings update
         readingsHandler.updateAddresses();
         readingsHandler.updateSpecks();
         if (settingsHandler.appUsesLocation()) {

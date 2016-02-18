@@ -1,13 +1,19 @@
 package org.cmucreatelab.tasota.airprototype.activities.login;
 
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.SessionExpiredDialog;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+
+import java.util.Date;
 
 public class LoginActivity extends ActionBarActivity
         implements View.OnClickListener {
@@ -53,6 +59,23 @@ public class LoginActivity extends ActionBarActivity
             actionBar.setCustomView(R.layout.action_bar);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+
+    @Override
+    protected void onResume() {
+        // Tokens: check & refresh
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        long timestamp = (long) (new Date().getTime() / 1000.0);
+        long expiresAt = globalHandler.esdrAccount.getExpiresAt();
+        String refreshToken = globalHandler.esdrAccount.getRefreshToken();
+        boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
+        if (!updatingTokens) {
+            // Alert
+            SessionExpiredDialog dialog = new SessionExpiredDialog(this);
+            dialog.getAlertDialog().show();
+        }
+        super.onResume();
     }
 
 

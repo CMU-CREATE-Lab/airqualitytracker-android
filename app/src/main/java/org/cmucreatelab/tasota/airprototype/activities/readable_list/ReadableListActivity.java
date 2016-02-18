@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.cmucreatelab.tasota.airprototype.activities.SessionExpiredDialog;
 import org.cmucreatelab.tasota.airprototype.activities.about.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.about.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
@@ -58,6 +60,7 @@ public class ReadableListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__readable_list__activity);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -65,7 +68,14 @@ public class ReadableListActivity extends ActionBarActivity {
             actionBar.setCustomView(R.layout.action_bar);
         }
 
-        GlobalHandler.getInstance(getApplicationContext()).updateReadings();
+        // work-around to get alert dialog to show up after check on app launch
+        if (globalHandler.displaySessionExpiredDialog) {
+            globalHandler.displaySessionExpiredDialog = false;
+            SessionExpiredDialog dialog = new SessionExpiredDialog(this);
+            dialog.getAlertDialog().show();
+        }
+
+        globalHandler.updateReadings();
 
         if (savedInstanceState == null) {
             this.stickyGrid = new StickyGridFragment();

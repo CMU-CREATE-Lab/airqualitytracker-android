@@ -94,4 +94,15 @@ public class EsdrAuthHandler {
         }
     }
 
+
+    public boolean checkAndRefreshEsdrTokens(long expiresAt, long currentTime, String refreshToken) {
+        if (currentTime >= expiresAt) {
+            globalHandler.esdrAccount.clear();
+            globalHandler.esdrLoginHandler.setUserLoggedIn(false);
+            return false;
+        } else {
+            requestEsdrRefresh(refreshToken);
+            return true;
+        }
+    }
 }

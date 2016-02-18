@@ -10,8 +10,12 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
+
+import org.cmucreatelab.tasota.airprototype.activities.SessionExpiredDialog;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+
+import java.util.Date;
 
 public class EsdrRefreshService extends Service {
 
@@ -45,8 +49,15 @@ public class EsdrRefreshService extends Service {
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
+                    // Tokens: check & refresh
+                    GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+                    long timestamp = (long) (new Date().getTime() / 1000.0);
+                    long expiresAt = globalHandler.esdrAccount.getExpiresAt();
                     String refreshToken = globalHandler.esdrAccount.getRefreshToken();
-                    globalHandler.esdrAuthHandler.requestEsdrRefresh(refreshToken);
+                    boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
+                    if (updatingTokens) {
+                        globalHandler.esdrAuthHandler.requestEsdrRefresh(refreshToken);
+                    }
                 }
             };
             this.registerReceiver(broadcastReceiver, new IntentFilter(Constants.EsdrRefreshIntent.ALARM_RECEIVER));

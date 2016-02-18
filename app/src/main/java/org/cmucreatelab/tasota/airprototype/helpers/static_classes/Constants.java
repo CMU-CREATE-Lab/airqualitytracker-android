@@ -49,6 +49,8 @@ public final class Constants {
 
     public static final long SPECKS_MAX_TIME_RANGE = 1800; // 30 minutes
 
+    public static final long ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH = 86400; // 24 hours
+
     public static final class SettingsKeys {
         public static final String appUsesLocation = "app_uses_location";
         public static final String userLoggedIn = "user_logged_in";
