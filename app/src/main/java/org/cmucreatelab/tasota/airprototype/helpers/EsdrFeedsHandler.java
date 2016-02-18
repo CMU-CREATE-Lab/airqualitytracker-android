@@ -114,6 +114,67 @@ public class EsdrFeedsHandler {
     }
 
 
+    private void requestChannelReadingFromApiKey(final Speck feed, final Channel channel, final long maxTime) {
+        String apiKeyReadOnly = feed.getApiKeyReadOnly();
+        final String channelName = channel.getName();
+
+        int requestMethod;
+        String requestUrl;
+        Response.Listener<JSONObject> response;
+
+        requestMethod = Request.Method.GET;
+        requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + apiKeyReadOnly + "/channels/" + channelName + "/most-recent";
+        response = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String resultValue = null;
+                String resultTime = null;
+                try {
+                    // NOTE (from Chris)
+                    // "don't expect mostRecentDataSample to always exist in the response for every channel,
+                    // and don't expect channelBounds.maxTimeSecs to always equal mostRecentDataSample.timeSecs"
+                    resultValue = response.getJSONObject("data")
+                            .getJSONObject("channels")
+                            .getJSONObject(channelName)
+                            .getJSONObject("mostRecentDataSample")
+                            .getString("value");
+                    resultTime = response.getJSONObject("data")
+                            .getJSONObject("channels")
+                            .getJSONObject(channelName)
+                            .getJSONObject("mostRecentDataSample")
+                            .getString("timeSecs");
+                } catch (Exception e) {
+                    Log.w(Constants.LOG_TAG, "Failed to request Channel Readable for " + channelName);
+                    e.printStackTrace();
+                }
+                if (resultValue != null && resultTime != null) {
+                    Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
+                    if (maxTime <= 0) {
+                        feed.setFeedValue(Double.parseDouble(resultValue));
+                        feed.setLastTime(Double.parseDouble(resultTime));
+                    } else {
+                        // TODO there might be a better (more organized) way to verify a channel's maxTime
+                        Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
+                        if (maxTime <= Long.parseLong(resultTime)) {
+                            feed.setHasReadableValue(true);
+                            feed.setFeedValue(Double.parseDouble(resultValue));
+                            feed.setLastTime(Double.parseDouble(resultTime));
+                        } else {
+                            feed.setHasReadableValue(false);
+                            feed.setFeedValue(0);
+                            feed.setLastTime(Double.parseDouble(resultTime));
+                            Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
+                        }
+                    }
+                    globalHandler.notifyGlobalDataSetChanged();
+                }
+            }
+        };
+
+        globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
+    }
+
+
     public void requestChannelReading(final Feed feed, final Channel channel) {
         requestChannelReading("", feed, channel, 0);
     }
@@ -154,8 +215,8 @@ public class EsdrFeedsHandler {
 
     public void requestUpdate(final Speck speck) {
         if (speck.getChannels().size() > 0) {
-            // ASSERT all channels in the list of channels are usable readings
-            requestAuthorizedChannelReading(globalHandler.esdrLoginHandler.getAccessToken(), speck, speck.getChannels().get(0));
+            long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
+            requestChannelReadingFromApiKey(speck,speck.getChannels().get(0),timeRange);
         } else {
             Log.e(Constants.LOG_TAG, "No channels found from speck id=" + speck.getFeed_id());
         }
