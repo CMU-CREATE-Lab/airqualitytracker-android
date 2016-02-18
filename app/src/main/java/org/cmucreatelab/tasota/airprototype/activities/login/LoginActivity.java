@@ -64,16 +64,20 @@ public class LoginActivity extends ActionBarActivity
 
     @Override
     protected void onResume() {
-        // Tokens: check & refresh
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        long timestamp = (long) (new Date().getTime() / 1000.0);
-        long expiresAt = globalHandler.esdrAccount.getExpiresAt();
-        String refreshToken = globalHandler.esdrAccount.getRefreshToken();
-        boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
-        if (!updatingTokens) {
-            // Alert
-            SessionExpiredDialog dialog = new SessionExpiredDialog(this);
-            dialog.getAlertDialog().show();
+        if (loggedIn) {
+            // Tokens: check & refresh
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+            long timestamp = (long) (new Date().getTime() / 1000.0);
+            long expiresAt = globalHandler.esdrAccount.getExpiresAt();
+            String refreshToken = globalHandler.esdrAccount.getRefreshToken();
+            boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
+            if (!updatingTokens) {
+                // Alert
+                SessionExpiredDialog dialog = new SessionExpiredDialog(this);
+                dialog.getAlertDialog().show();
+                loggedIn = false;
+                display();
+            }
         }
         super.onResume();
     }
