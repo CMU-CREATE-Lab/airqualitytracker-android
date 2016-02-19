@@ -54,10 +54,7 @@ public class EsdrRefreshService extends Service {
                     long timestamp = (long) (new Date().getTime() / 1000.0);
                     long expiresAt = globalHandler.esdrAccount.getExpiresAt();
                     String refreshToken = globalHandler.esdrAccount.getRefreshToken();
-                    boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
-                    if (updatingTokens) {
-                        globalHandler.esdrAuthHandler.requestEsdrRefresh(refreshToken);
-                    }
+                    globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
                 }
             };
             this.registerReceiver(broadcastReceiver, new IntentFilter(Constants.EsdrRefreshIntent.ALARM_RECEIVER));

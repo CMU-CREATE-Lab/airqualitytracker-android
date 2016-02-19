@@ -37,17 +37,17 @@ public class LoginRequestListenerLoginActivity
     @Override
     public void onResponse(JSONObject response) {
         String accessToken,refreshToken;
-        long userId,timestamp,expiresAt;
+        long userId,timestamp,expiresIn;
         Log.v(Constants.LOG_TAG, "requestEsdrToken: got response=" + response.toString());
 
         try {
             timestamp = (long) (new Date().getTime() / 1000.0);
-            expiresAt = response.getLong("expires_in");
+            expiresIn = response.getLong("expires_in");
             userId = response.getLong("userId");
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");
             GlobalHandler globalHandler = GlobalHandler.getInstance(loginActivity.getApplicationContext());
-            globalHandler.esdrLoginHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken, timestamp+expiresAt);
+            globalHandler.esdrLoginHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken, timestamp+expiresIn);
             globalHandler.esdrLoginHandler.setUserLoggedIn(true);
             globalHandler.servicesHandler.startEsdrRefreshService();
             loginActivity.display();

@@ -65,14 +65,14 @@ public class EsdrAuthHandler {
                 @Override
                 public void onResponse(JSONObject response) {
                     String accessToken,refreshToken;
-                    long timestamp,expiresAt;
+                    long timestamp,expiresIn;
                     Log.v(Constants.LOG_TAG,"requestEsdrRefresh: got response="+response.toString());
                     try {
                         timestamp = (long) (new Date().getTime() / 1000.0);
-                        expiresAt = response.getLong("expires_in");
+                        expiresIn = response.getLong("expires_in");
                         accessToken = response.getString("access_token");
                         refreshToken = response.getString("refresh_token");
-                        globalHandler.esdrLoginHandler.updateEsdrTokens(accessToken, refreshToken, timestamp+expiresAt);
+                        globalHandler.esdrLoginHandler.updateEsdrTokens(accessToken, refreshToken, timestamp+expiresIn);
                     } catch (Exception e) {
                         Log.w(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
                         e.printStackTrace();
@@ -105,4 +105,5 @@ public class EsdrAuthHandler {
             return true;
         }
     }
+
 }
