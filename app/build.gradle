@@ -8,7 +8,7 @@ android {
         applicationId "org.cmucreatelab.tasota.airprototype"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 18
+        versionCode 20
         versionName "1.8"
     }
     buildTypes {
