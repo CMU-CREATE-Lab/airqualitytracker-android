@@ -88,9 +88,9 @@ public final class Constants {
 
     public final class MapGeometry {
         // Distance from central point, in kilometers (box dimension will be 2x larger)
-        public static final double BOUNDBOX_HEIGHT = 20.0;
+        public static final double BOUNDBOX_HEIGHT = 40.0;
         // Distance from central point, in kilometers (box dimension will be 2x larger)
-        public static final double BOUNDBOX_LENGTH = 20.0;
+        public static final double BOUNDBOX_LENGTH = 40.0;
         // radius of Earth (in kilometers)
         public static final double RADIUS_EARTH = 6371.0;
         // ASSERT these values will be less than 90.0
