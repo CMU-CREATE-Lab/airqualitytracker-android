@@ -64,13 +64,6 @@ public class ReadableShowActivity extends ActionBarActivity {
         this.readable = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.adapterList.get(itemIndex).readable;
         switch(readable.getReadableType()) {
             case ADDRESS:
-//                // TESTING NOWCAST
-//                SimpleAddress address = (SimpleAddress)readable;
-//                for (Feed feed: address.feeds) {
-//                    if (feed.getChannels().size() > 0) {
-//                        feed.getChannels().get(0).requestNowCast(getApplicationContext());
-//                    }
-//                }
                 break;
             case SPECK:
                 break;

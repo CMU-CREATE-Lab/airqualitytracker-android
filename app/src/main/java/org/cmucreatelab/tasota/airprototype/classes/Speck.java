@@ -35,7 +35,6 @@ public class Speck extends Feed {
         this.location = feed.location;
         this.productId = feed.productId;
         this.channels = feed.channels;
-        this.feedValue = feed.feedValue;
         this.lastTime = feed.lastTime;
         this.deviceId = deviceId;
     }

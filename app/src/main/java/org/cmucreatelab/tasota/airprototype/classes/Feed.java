@@ -15,8 +15,8 @@ public class Feed implements Readable {
     // Readable implementation
 
 
-    public void setHasReadableValue(boolean hasReadableValue) {
-        this.hasReadableValue = hasReadableValue;
+    public enum ReadableValueType {
+        INSTANTCAST, NOWCAST, NONE
     }
 
 
@@ -26,12 +26,22 @@ public class Feed implements Readable {
 
 
     public boolean hasReadableValue() {
-        return this.hasReadableValue;
+        return readableValueType != ReadableValueType.NONE;
     }
 
 
     public double getReadableValue() {
-        return this.feedValue;
+        if (hasReadableValue()) {
+            switch (readableValueType) {
+                case INSTANTCAST:
+                    return channels.get(0).getInstantCastValue();
+                case NOWCAST:
+                    return channels.get(0).getNowCastValue();
+                default:
+                    Log.e(Constants.LOG_TAG, "ERROR - Could not detect ReadableValueType");
+            }
+        }
+        return 0;
     }
 
 
@@ -44,7 +54,8 @@ public class Feed implements Readable {
 
 
     private static final Type readableType = Readable.Type.FEED;
-    private boolean hasReadableValue;
+    private ReadableValueType readableValueType;
+//    private boolean hasReadableValue;
     // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
     protected long feed_id;
     protected String name;
@@ -54,7 +65,7 @@ public class Feed implements Readable {
     protected Location location;
     protected long productId;
     protected ArrayList<Channel> channels;
-    protected double feedValue;
+//    protected double feedValue;
     protected double lastTime;
 
 
@@ -62,6 +73,7 @@ public class Feed implements Readable {
         this.channels = new ArrayList<>();
         this.name = "";
         this.exposure = "";
+        this.readableValueType = ReadableValueType.NONE;
     }
 
 
@@ -104,22 +116,17 @@ public class Feed implements Readable {
     public ArrayList<Channel> getChannels() {
         return channels;
     }
-    public double getFeedValue() {
-        return feedValue;
-    }
-    public void setFeedValue(double feedValue) {
-        if (feedValue < 0.0) {
-            this.feedValue = 0.0;
-            Log.w(Constants.LOG_TAG, "received negative feedValue " + feedValue + " to set.");
-        } else {
-            this.feedValue = feedValue;
-        }
-    }
     public double getLastTime() {
         return lastTime;
     }
     public void setLastTime(double lastTime) {
         this.lastTime = lastTime;
+    }
+    public ReadableValueType getReadableValueType() {
+        return readableValueType;
+    }
+    public void setReadableValueType(ReadableValueType readableValueType) {
+        this.readableValueType = readableValueType;
     }
 
 }

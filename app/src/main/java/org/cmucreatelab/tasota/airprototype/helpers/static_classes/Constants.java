@@ -2,6 +2,8 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.Feed;
+
 import java.util.HashMap;
 
 /**
@@ -16,6 +18,9 @@ public final class Constants {
     public static final String APP_VERSION = "1.8";
 
     public static final boolean USES_BACKGROUND_SERVICES = true;
+
+    // This should be either INSTANTCAST or NOWCAST
+    public static final Feed.ReadableValueType DEFAULT_ADDRESS_READABLE_VALUE_TYPE = Feed.ReadableValueType.NOWCAST;
 
     public static final class AppSecrets {
         // TODO placeholder for actual Client information (don't push to git)

@@ -78,7 +78,7 @@ public class ListFeedsAdapter extends ArrayAdapter<ListFeedsAdapter.ListFeedsIte
             textListFeedsDistance.setText(String.valueOf(distance)+" mi");
             // feed value
             TextView textListFeedsFeedValue = (TextView)rowView.findViewById(R.id.textListFeedsFeedValue);
-            textListFeedsFeedValue.setText(String.valueOf(item.feed.getFeedValue()));
+            textListFeedsFeedValue.setText(String.valueOf(item.feed.getReadableValue()));
         }
 
         return rowView;

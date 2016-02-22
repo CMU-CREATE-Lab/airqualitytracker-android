@@ -20,15 +20,16 @@ public class SimpleAddress extends AirNowReadable {
 
 
     public boolean hasReadableValue() {
-        return this.getClosestFeed() != null;
+        Feed feed = getClosestFeed();
+        return (feed != null && feed.hasReadableValue());
     }
 
 
     public double getReadableValue() {
-        if (hasReadableValue())
-            return this.getClosestFeed().getFeedValue();
-        Log.w(Constants.LOG_TAG,"Tried getReadableValue on SimpleAddress with hasReadableValue=false; returning 0");
-        return 0.0;
+        if (hasReadableValue()) {
+            return getClosestFeed().getReadableValue();
+        }
+        return 0;
     }
 
 

@@ -85,18 +85,19 @@ public class EsdrFeedsHandler {
                 if (resultValue != null && resultTime != null) {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     if (maxTime <= 0) {
-                        feed.setFeedValue(Double.parseDouble(resultValue));
+                        feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
+                        channel.setInstantCastValue(Double.parseDouble(resultValue));
                         feed.setLastTime(Double.parseDouble(resultTime));
                     } else {
                         // TODO there might be a better (more organized) way to verify a channel's maxTime
                         Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
                         if (maxTime <= Long.parseLong(resultTime)) {
-                            feed.setHasReadableValue(true);
-                            feed.setFeedValue(Double.parseDouble(resultValue));
+                            feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
+                            channel.setInstantCastValue(Double.parseDouble(resultValue));
                             feed.setLastTime(Double.parseDouble(resultTime));
                         } else {
-                            feed.setHasReadableValue(false);
-                            feed.setFeedValue(0);
+                            feed.setReadableValueType(Feed.ReadableValueType.NONE);
+                            channel.setInstantCastValue(0);
                             feed.setLastTime(Double.parseDouble(resultTime));
                             Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
                         }
@@ -150,18 +151,19 @@ public class EsdrFeedsHandler {
                 if (resultValue != null && resultTime != null) {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     if (maxTime <= 0) {
-                        feed.setFeedValue(Double.parseDouble(resultValue));
+                        feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
+                        channel.setInstantCastValue(Double.parseDouble(resultValue));
                         feed.setLastTime(Double.parseDouble(resultTime));
                     } else {
                         // TODO there might be a better (more organized) way to verify a channel's maxTime
                         Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
                         if (maxTime <= Long.parseLong(resultTime)) {
-                            feed.setHasReadableValue(true);
-                            feed.setFeedValue(Double.parseDouble(resultValue));
+                            feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
+                            channel.setInstantCastValue(Double.parseDouble(resultValue));
                             feed.setLastTime(Double.parseDouble(resultTime));
                         } else {
-                            feed.setHasReadableValue(false);
-                            feed.setFeedValue(0);
+                            feed.setReadableValueType(Feed.ReadableValueType.NONE);
+                            channel.setInstantCastValue(0);
                             feed.setLastTime(Double.parseDouble(resultTime));
                             Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
                         }
@@ -176,7 +178,11 @@ public class EsdrFeedsHandler {
 
 
     public void requestChannelReading(final Feed feed, final Channel channel) {
-        requestChannelReading("", feed, channel, 0);
+        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+            requestChannelReading("", feed, channel, 0);
+        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+            channel.requestNowCast(globalHandler.appContext);
+        }
     }
 
 
@@ -201,8 +207,14 @@ public class EsdrFeedsHandler {
                     closestFeed = MapGeometry.getClosestFeedToAddress(address, address.feeds);
                     if (closestFeed != null) {
                         address.setClosestFeed(closestFeed);
-                        // ASSERT all channels in the list of channels are usable readings
-                        requestChannelReading(closestFeed, closestFeed.getChannels().get(0));
+
+                        // Responsible for calculating the value to be displayed
+                        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+                            closestFeed.getChannels().get(0).requestNowCast(globalHandler.appContext);
+                        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+                            // ASSERT all channels in the list of channels are usable readings
+                            requestChannelReading("", closestFeed, closestFeed.getChannels().get(0), (long)maxTime);
+                        }
                     }
                 } else {
                     Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");

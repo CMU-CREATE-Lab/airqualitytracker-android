@@ -17,14 +17,15 @@ import java.util.HashMap;
 public class Channel {
 
     public class EsdrTilesResponseHandler {
-        public void onResponse(HashMap<Integer, ArrayList<Double>> result, int timestamp) {
+        public void onResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
             // construct array of values
             Double[] array = NowCastCalculator.constructArrayFromHash(result, timestamp);
 
             // find nowcast
             double nowcast = NowCastCalculator.calculate(array);
-            Log.i(Constants.LOG_TAG, "nowcast for " + Channel.this.getName() + " is " + nowcast);
             Channel.this.nowCastValue = nowcast;
+            Channel.this.feed.setReadableValueType(Feed.ReadableValueType.NOWCAST);
+            GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
         }
     }
 
@@ -34,6 +35,7 @@ public class Channel {
     private double maxTimeSecs;
     private double minValue;
     private double maxValue;
+    private double instantCastValue;
     private double nowCastValue;
     public final EsdrTilesResponseHandler responseHandler = new EsdrTilesResponseHandler();
 
@@ -78,6 +80,15 @@ public class Channel {
     }
     public double getNowCastValue() {
         return nowCastValue;
+    }
+    public void setNowCastValue(double nowCastValue) {
+        this.nowCastValue = nowCastValue;
+    }
+    public double getInstantCastValue() {
+        return instantCastValue;
+    }
+    public void setInstantCastValue(double instantCastValue) {
+        this.instantCastValue = instantCastValue;
     }
 
     public void requestNowCast(Context ctx) {

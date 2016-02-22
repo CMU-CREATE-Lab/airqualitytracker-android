@@ -58,8 +58,8 @@ public class NowCastCalculator {
         List<Double> values = Arrays.asList(hourlyValues);
 
         // find min/max of list
-        max = Collections.min(values);
-        min = Collections.max(values);
+        max = Collections.max(values);
+        min = Collections.min(values);
         range = max - min;
         // compute the weight factor
         weightFactor = computeWeightFactor(range, max);
