@@ -7,24 +7,44 @@ import android.util.Log;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.GpsReadingHandler;
 import org.cmucreatelab.tasota.airprototype.services.AddressResultReceiver;
 import org.cmucreatelab.tasota.airprototype.services.EsdrRefreshService;
 import org.cmucreatelab.tasota.airprototype.services.FetchAddressIntentService;
+
+import java.util.Collections;
 
 /**
  * Created by mike on 7/1/15.
  */
 public class ServicesHandler {
 
+
+    // Singleton Implementation
+
+
     private GlobalHandler globalHandler;
-    public GoogleApiClientHandler googleApiClientHandler;
+    private static ServicesHandler classInstance;
 
+    // Only public way to get instance of class (synchronized means thread-safe)
+    public static synchronized ServicesHandler getInstance(GlobalHandler globalHandler) {
+        if (classInstance == null) {
+            classInstance = new ServicesHandler(globalHandler);
+        }
+        return classInstance;
+    }
 
-    // GlobalHandler accesses the constructor
-    protected ServicesHandler(GlobalHandler globalHandler) {
+    // Nobody accesses the constructor
+    private ServicesHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(globalHandler);
     }
+
+
+    // Handler attributes and methods
+
+
+    public GoogleApiClientHandler googleApiClientHandler;
 
 
     protected void initializeBackgroundServices() {

@@ -49,19 +49,19 @@ public class GlobalHandler {
     private GlobalHandler(Context ctx) {
         // context and handlers
         this.appContext = ctx;
-        this.settingsHandler = new SettingsHandler(this);
-        this.esdrLoginHandler = new EsdrLoginHandler(this);
-        this.positionIdHelper = new PositionIdHelper(this);
+        this.settingsHandler = SettingsHandler.getInstance(this);
+        this.esdrLoginHandler = EsdrLoginHandler.getInstance(this);
+        this.positionIdHelper = PositionIdHelper.getInstance(this);
         settingsHandler.updateSettings();
-        this.servicesHandler = new ServicesHandler(this);
-        this.httpRequestHandler = new HttpRequestHandler(this);
-        this.airNowRequestHandler = new AirNowRequestHandler(this);
-        this.esdrFeedsHandler = new EsdrFeedsHandler(this);
-        this.esdrAuthHandler = new EsdrAuthHandler(this);
-        this.esdrSpecksHandler = new EsdrSpecksHandler(this);
-        this.esdrTilesHandler = new EsdrTilesHandler(this);
+        this.servicesHandler = ServicesHandler.getInstance(this);
+        this.httpRequestHandler = HttpRequestHandler.getInstance(this);
+        this.airNowRequestHandler = AirNowRequestHandler.getInstance(this);
+        this.esdrFeedsHandler = EsdrFeedsHandler.getInstance(this);
+        this.esdrAuthHandler = EsdrAuthHandler.getInstance(this);
+        this.esdrSpecksHandler = EsdrSpecksHandler.getInstance(this);
+        this.esdrTilesHandler = EsdrTilesHandler.getInstance(this);
         // data structures
-        this.readingsHandler = new ReadingsHandler(this);
+        this.readingsHandler = ReadingsHandler.getInstance(this);
         this.esdrAccount = new EsdrAccount(settingsHandler.getSharedPreferences());
         // load from database
         ArrayList<SimpleAddress> dbAddresses = AddressDbHelper.fetchAddressesFromDatabase(ctx);

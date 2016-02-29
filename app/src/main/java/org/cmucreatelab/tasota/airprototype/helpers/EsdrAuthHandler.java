@@ -14,13 +14,28 @@ import java.util.Date;
  */
 public class EsdrAuthHandler {
 
+
+    // Singleton Implementation
+
+
     private GlobalHandler globalHandler;
+    private static EsdrAuthHandler classInstance;
 
+    // Only public way to get instance of class (synchronized means thread-safe)
+    public static synchronized EsdrAuthHandler getInstance(GlobalHandler globalHandler) {
+        if (classInstance == null) {
+            classInstance = new EsdrAuthHandler(globalHandler);
+        }
+        return classInstance;
+    }
 
-    // GlobalHandler accesses the constructor
-    protected EsdrAuthHandler(GlobalHandler globalHandler) {
+    // Nobody accesses the constructor
+    private EsdrAuthHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
     }
+
+
+    // Handler attributes and methods
 
 
     public void requestEsdrToken(String username, String password, Response.Listener<JSONObject> response, Response.ErrorListener error) {

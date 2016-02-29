@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
+import android.content.Context;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -17,13 +18,28 @@ import java.util.ArrayList;
  */
 public class AirNowRequestHandler implements Response.ErrorListener {
 
+
+    // Singleton Implementation
+
+
     private GlobalHandler globalHandler;
+    private static AirNowRequestHandler classInstance;
 
+    // Only public way to get instance of class (synchronized means thread-safe)
+    public static synchronized AirNowRequestHandler getInstance(GlobalHandler globalHandler) {
+        if (classInstance == null) {
+            classInstance = new AirNowRequestHandler(globalHandler);
+        }
+        return classInstance;
+    }
 
-    // GlobalHandler accesses the constructor
-    protected AirNowRequestHandler(GlobalHandler globalHandler) {
+    // Nobody accesses the constructor
+    private AirNowRequestHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
     }
+
+
+    // Handler attributes and methods
 
 
     public void requestAirNowObservation(final AirNowReadable readable) {

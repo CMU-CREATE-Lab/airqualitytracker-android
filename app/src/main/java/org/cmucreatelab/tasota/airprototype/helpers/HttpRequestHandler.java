@@ -19,15 +19,32 @@ import org.json.JSONObject;
  */
 public class HttpRequestHandler implements Response.ErrorListener {
 
+
+    // Singleton Implementation
+
+
     private GlobalHandler globalHandler;
-    private RequestQueue queue;
+    private static HttpRequestHandler classInstance;
 
+    // Only public way to get instance of class (synchronized means thread-safe)
+    public static synchronized HttpRequestHandler getInstance(GlobalHandler globalHandler) {
+        if (classInstance == null) {
+            classInstance = new HttpRequestHandler(globalHandler);
+        }
+        return classInstance;
+    }
 
-    // GlobalHandler accesses the constructor
-    protected HttpRequestHandler(GlobalHandler globalHandler) {
+    // Nobody accesses the constructor
+    private HttpRequestHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.queue = Volley.newRequestQueue(globalHandler.appContext);
     }
+
+
+    // Handler attributes and methods
+
+
+    private RequestQueue queue;
 
 
     // helper method which assumes that you want to use this instance as the default ErrorListener

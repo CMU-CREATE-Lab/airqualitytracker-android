@@ -4,18 +4,47 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.GpsReadingHandler;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by mike on 6/26/15.
  */
 public class SettingsHandler {
 
+
+    // Singleton Implementation
+
+
+    protected GlobalHandler globalHandler;
+    private static SettingsHandler classInstance;
+
+    // Only public way to get instance of class (synchronized means thread-safe)
+    public static synchronized SettingsHandler getInstance(GlobalHandler globalHandler) {
+        if (classInstance == null) {
+            classInstance = new SettingsHandler(globalHandler);
+        }
+        return classInstance;
+    }
+
+    // Nobody accesses the constructor
+    private SettingsHandler(GlobalHandler globalHandler) {
+        this.globalHandler = globalHandler;
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(globalHandler.appContext);
+        Log.v(Constants.LOG_TAG, "SHAREDPREFERENCES: " + sharedPreferences.getAll().toString());
+        this.blacklistedDevices = new ArrayList<>();
+    }
+
+
+    // Handler attributes and methods
+
+
     private SharedPreferences sharedPreferences;
     // TODO consider timestamps for last updated user info
     private boolean appUsesLocation=true;
     protected ArrayList<Long> blacklistedDevices;
-    protected GlobalHandler globalHandler;
     // run-time only flag to determine if we want to pull info from ESDR
     public boolean userFeedsNeedsUpdated=true;
     public boolean appUsesLocation() {
@@ -32,15 +61,6 @@ public class SettingsHandler {
     }
     public SharedPreferences getSharedPreferences() {
         return sharedPreferences;
-    }
-
-
-    // GlobalHandler accesses the constructor
-    protected SettingsHandler(GlobalHandler globalHandler) {
-        this.globalHandler = globalHandler;
-        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(globalHandler.appContext);
-        Log.v(Constants.LOG_TAG, "SHAREDPREFERENCES: " + sharedPreferences.getAll().toString());
-        this.blacklistedDevices = new ArrayList<>();
     }
 
 
