@@ -2,7 +2,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 import android.util.Log;
 
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONArray;
 import org.json.JSONException;

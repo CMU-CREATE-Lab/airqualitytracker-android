@@ -3,8 +3,10 @@ package org.cmucreatelab.tasota.airprototype.activities.manage_trackers;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.classes.*;
-import org.cmucreatelab.tasota.airprototype.classes.Readable;
+
+import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;

@@ -1,8 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.helpers;
 
 import android.content.SharedPreferences;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.classes.Speck;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;

@@ -5,7 +5,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
-import org.cmucreatelab.tasota.airprototype.classes.AirNowReadable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AirNowJsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;

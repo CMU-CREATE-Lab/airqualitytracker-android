@@ -3,7 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import org.cmucreatelab.tasota.airprototype.classes.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Channel;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.EsdrJsonParser;
 import org.json.JSONObject;

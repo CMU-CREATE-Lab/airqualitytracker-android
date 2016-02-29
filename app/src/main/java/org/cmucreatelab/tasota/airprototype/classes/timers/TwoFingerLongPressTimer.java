@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.classes;
+package org.cmucreatelab.tasota.airprototype.classes.timers;
 
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
 

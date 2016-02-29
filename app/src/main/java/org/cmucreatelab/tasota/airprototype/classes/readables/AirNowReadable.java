@@ -1,5 +1,6 @@
-package org.cmucreatelab.tasota.airprototype.classes;
+package org.cmucreatelab.tasota.airprototype.classes.readables;
 
+import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.util.ArrayList;
 import java.util.Collection;

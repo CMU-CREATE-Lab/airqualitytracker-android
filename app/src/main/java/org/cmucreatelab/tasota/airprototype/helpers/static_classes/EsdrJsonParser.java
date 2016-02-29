@@ -1,9 +1,9 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.classes.Channel;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
-import org.cmucreatelab.tasota.airprototype.classes.Speck;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONArray;
 import org.json.JSONObject;

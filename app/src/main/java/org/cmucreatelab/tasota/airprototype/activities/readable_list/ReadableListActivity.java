@@ -14,8 +14,8 @@ import org.cmucreatelab.tasota.airprototype.activities.about.AboutAirQualityActi
 import org.cmucreatelab.tasota.airprototype.activities.about.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity;
-import org.cmucreatelab.tasota.airprototype.classes.RefreshTimer;
-import org.cmucreatelab.tasota.airprototype.classes.TwoFingerLongPressTimer;
+import org.cmucreatelab.tasota.airprototype.classes.timers.RefreshTimer;
+import org.cmucreatelab.tasota.airprototype.classes.timers.TwoFingerLongPressTimer;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.R;

@@ -1,8 +1,10 @@
 package org.cmucreatelab.tasota.airprototype.helpers.abstract_classes;
 
 import android.util.Log;
-import org.cmucreatelab.tasota.airprototype.classes.*;
-import org.cmucreatelab.tasota.airprototype.classes.Readable;
+
+import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
@@ -13,7 +15,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.Spec
 public abstract class ReadingsHandlerEditable extends ReadingsHandlerCore {
 
 
-    public void removeReading(org.cmucreatelab.tasota.airprototype.classes.Readable readable) {
+    public void removeReading(Readable readable) {
         Readable.Type type = readable.getReadableType();
         switch(type) {
             case ADDRESS:

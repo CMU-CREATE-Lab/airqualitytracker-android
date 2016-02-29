@@ -1,7 +1,8 @@
-package org.cmucreatelab.tasota.airprototype.classes;
+package org.cmucreatelab.tasota.airprototype.classes.timers;
 
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.WuJsonParser;
 import org.json.JSONObject;

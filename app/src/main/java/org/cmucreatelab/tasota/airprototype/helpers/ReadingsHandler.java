@@ -3,13 +3,13 @@ package org.cmucreatelab.tasota.airprototype.helpers;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
-import org.cmucreatelab.tasota.airprototype.classes.*;
-import org.cmucreatelab.tasota.airprototype.classes.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.abstract_classes.ReadingsHandlerEditable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.GpsReadingHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -38,7 +38,7 @@ public class ReadingsHandler extends ReadingsHandlerEditable {
 
         // adapterList
         for (String header : headers) {
-            ArrayList<org.cmucreatelab.tasota.airprototype.classes.Readable> items = new ArrayList<>();
+            ArrayList<Readable> items = new ArrayList<>();
             items.addAll((ArrayList<Readable>)hashMap.get(header));
             // TODO had to add Null pointer check
             if (globalHandler.settingsHandler.appUsesLocation() && header == Constants.HEADER_TITLES[1]) {

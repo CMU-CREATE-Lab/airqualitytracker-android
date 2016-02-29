@@ -9,8 +9,8 @@ import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersA
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.EsdrAccount;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
-import org.cmucreatelab.tasota.airprototype.classes.Speck;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.AddressDbHelper;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.database.SpeckDbHelper;

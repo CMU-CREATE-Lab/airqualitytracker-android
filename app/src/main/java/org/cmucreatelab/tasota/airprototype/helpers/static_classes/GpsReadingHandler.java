@@ -1,7 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
-import org.cmucreatelab.tasota.airprototype.classes.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
 
 /**

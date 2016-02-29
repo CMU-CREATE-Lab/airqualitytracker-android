@@ -2,7 +2,7 @@ package org.cmucreatelab.tasota.airprototype.activities.readable_show;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
-import org.cmucreatelab.tasota.airprototype.classes.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 
 /**
  * Created by mike on 6/8/15.
