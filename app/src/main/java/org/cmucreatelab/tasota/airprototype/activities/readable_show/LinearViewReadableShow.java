@@ -12,7 +12,7 @@ import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 /**
  * Created by mike on 6/18/15.
@@ -48,7 +48,7 @@ public class LinearViewReadableShow {
     private void addressView(final SimpleAddress address) {
         int aqi,index;
 
-        aqi = (int) Converter.microgramsToAqi(address.getReadableValue());
+        aqi = (int) AqiConverter.microgramsToAqi(address.getReadableValue());
         this.textShowAddressAqiValue.setText(String.valueOf(aqi));
         index = Constants.AqiReading.getIndexFromReading(aqi);
         if (index < 0) {

@@ -2,8 +2,7 @@ package org.cmucreatelab.tasota.airprototype.classes.timers;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
-import org.cmucreatelab.tasota.airprototype.classes.timers.Timer;
-import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**

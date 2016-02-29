@@ -14,9 +14,9 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableSho
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
-import org.cmucreatelab.tasota.airprototype.helpers.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Converter;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 /**
  * Class is based on example code from SuperSLiM's github repo: https://github.com/TonicArtos/SuperSLiM
@@ -83,7 +83,7 @@ class StickyGridView extends RecyclerView.ViewHolder
             cellViews.textCurrentLocation.setVisibility(View.VISIBLE);
         }
 
-        aqi = Converter.microgramsToAqi(simpleAddress.getClosestFeed().getReadableValue());
+        aqi = AqiConverter.microgramsToAqi(simpleAddress.getClosestFeed().getReadableValue());
         cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
         index = Constants.AqiReading.getIndexFromReading(aqi);
         if (index >= 0) {
