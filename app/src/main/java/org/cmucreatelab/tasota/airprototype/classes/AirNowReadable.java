@@ -2,6 +2,9 @@ package org.cmucreatelab.tasota.airprototype.classes;
 
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by mike on 2/10/16.
@@ -34,13 +37,26 @@ public abstract class AirNowReadable implements Readable {
     }
 
 
+    // TODO multiple values sharing same timestamp
     public AirNowObservation getMostRecentAirNowObservation() {
-        return airNowObservations.get(0);
+        if (airNowObservations.size() > 0) {
+            return airNowObservations.get(0);
+        }
+        return null;
     }
 
 
-    public void sortAirNowObservations() {
-        // TODO sort list from newest to oldest; should call when adding new objects to list
+    public void appendAndSort(Collection<AirNowObservation> values) {
+        class AirNowDateComparator implements Comparator<AirNowObservation> {
+
+            @Override
+            public int compare(AirNowObservation a, AirNowObservation b) {
+                return a.getObservedDatetime().compareTo(b.getObservedDatetime());
+            }
+        }
+
+        airNowObservations.addAll(values);
+        Collections.sort(airNowObservations, new AirNowDateComparator());
     }
 
 }

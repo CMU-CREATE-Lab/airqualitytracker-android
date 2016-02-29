@@ -6,10 +6,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.cmucreatelab.tasota.airprototype.classes.AuthorizedJsonObjectRequest;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -42,6 +44,17 @@ public class HttpRequestHandler implements Response.ErrorListener {
             Log.v(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
         }
         this.queue.add(jsonRequest);
+    }
+
+
+    public void sendJsonArrayRequest(int requestMethod, String requestUrl, JSONArray requestParams, Response.Listener<JSONArray> response, Response.ErrorListener error) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(requestMethod, requestUrl, requestParams, response, error);
+        if (requestParams != null) {
+            Log.v(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl + ", params=" + requestParams.toString());
+        } else {
+            Log.v(Constants.LOG_TAG, "sending JSON request with requestUrl=" + requestUrl);
+        }
+        this.queue.add(jsonArrayRequest);
     }
 
 

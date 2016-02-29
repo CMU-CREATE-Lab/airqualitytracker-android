@@ -8,38 +8,49 @@ import java.util.Date;
  */
 public class AirNowObservation {
 
-//    public static String[] fields = {
-//            "DateObserved",
-//            "HourObserved",
-//            "LocalTimeZone",
-//            "ReportingArea",
-//            "StateCode",
-//            "Latitude",
-//            "Longitude",
-//            "ParameterName",
-//            "AQI",
-//            "Category", // Number, Name
-//            ""
-//    };
-//    // kk is HH without leading zeroes
-//    // "year-date-month hour zone"
-//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM kk Z");
-//    String input="";
-//    try {
-//        this.datetimeObserved = dateFormat.parse(input);
-//    } catch (Exception e) {
-//        throw e;
-//    }
-
-//    private String dateObserved;
-//    private String hourObserved;
-//    private String localTimeZone;
     private Date observedDatetime;
     private String reportingArea;
     private String stateCode;
     private Location location; // Latitude, Longitude
     private String parameterName; // we want PM2.5
     private double aqi;
+
+    public Date getObservedDatetime() {
+        return observedDatetime;
+    }
+    public void setObservedDatetime(Date observedDatetime) {
+        this.observedDatetime = observedDatetime;
+    }
+    public String getReportingArea() {
+        return reportingArea;
+    }
+    public void setReportingArea(String reportingArea) {
+        this.reportingArea = reportingArea;
+    }
+    public String getStateCode() {
+        return stateCode;
+    }
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+    public Location getLocation() {
+        return location;
+    }
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    public String getParameterName() {
+        return parameterName;
+    }
+    public void setParameterName(String parameterName) {
+        this.parameterName = parameterName;
+    }
+    public double getAqi() {
+        return aqi;
+    }
+    public void setAqi(double aqi) {
+        this.aqi = aqi;
+    }
 
 
     public AirNowObservation(Date observedDatetime, String reportingArea, String stateCode, Location location, String parameterName, double aqi) {
