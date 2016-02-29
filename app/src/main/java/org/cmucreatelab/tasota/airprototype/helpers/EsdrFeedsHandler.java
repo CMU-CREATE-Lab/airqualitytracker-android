@@ -51,14 +51,14 @@ public class EsdrFeedsHandler {
     }
 
 
-    private void requestChannelReading(String authToken, final Feed feed, final Channel channel, final long maxTime) {
+    // ASSERT: cannot pass both authToken and feedApiKey (if so, authToken takes priority)
+    private void requestChannelReading(String authToken, String feedApiKey, final Feed feed, final Channel channel, final long maxTime) {
         int requestMethod;
         String requestUrl;
         Response.Listener<JSONObject> response;
         final String channelName = channel.getName();
 
         requestMethod = Request.Method.GET;
-        requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channelName + "/most-recent";
         response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -107,88 +107,25 @@ public class EsdrFeedsHandler {
             }
         };
 
-        if (authToken.equals("")) {
+        if (authToken != null) {
+            requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channelName + "/most-recent";
+            globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
+        } else if (feedApiKey != null) {
+            requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + feedApiKey + "/channels/" + channelName + "/most-recent";
             globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
         } else {
-            globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
+            requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channelName + "/most-recent";
+            globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
         }
-    }
-
-
-    private void requestChannelReadingFromApiKey(final Speck feed, final Channel channel, final long maxTime) {
-        String apiKeyReadOnly = feed.getApiKeyReadOnly();
-        final String channelName = channel.getName();
-
-        int requestMethod;
-        String requestUrl;
-        Response.Listener<JSONObject> response;
-
-        requestMethod = Request.Method.GET;
-        requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + apiKeyReadOnly + "/channels/" + channelName + "/most-recent";
-        response = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                String resultValue = null;
-                String resultTime = null;
-                try {
-                    // NOTE (from Chris)
-                    // "don't expect mostRecentDataSample to always exist in the response for every channel,
-                    // and don't expect channelBounds.maxTimeSecs to always equal mostRecentDataSample.timeSecs"
-                    resultValue = response.getJSONObject("data")
-                            .getJSONObject("channels")
-                            .getJSONObject(channelName)
-                            .getJSONObject("mostRecentDataSample")
-                            .getString("value");
-                    resultTime = response.getJSONObject("data")
-                            .getJSONObject("channels")
-                            .getJSONObject(channelName)
-                            .getJSONObject("mostRecentDataSample")
-                            .getString("timeSecs");
-                } catch (Exception e) {
-                    Log.w(Constants.LOG_TAG, "Failed to request Channel Readable for " + channelName);
-                    e.printStackTrace();
-                }
-                if (resultValue != null && resultTime != null) {
-                    Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
-                    if (maxTime <= 0) {
-                        feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
-                        channel.setInstantCastValue(Double.parseDouble(resultValue));
-                        feed.setLastTime(Double.parseDouble(resultTime));
-                    } else {
-                        // TODO there might be a better (more organized) way to verify a channel's maxTime
-                        Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
-                        if (maxTime <= Long.parseLong(resultTime)) {
-                            feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
-                            channel.setInstantCastValue(Double.parseDouble(resultValue));
-                            feed.setLastTime(Double.parseDouble(resultTime));
-                        } else {
-                            feed.setReadableValueType(Feed.ReadableValueType.NONE);
-                            channel.setInstantCastValue(0);
-                            feed.setLastTime(Double.parseDouble(resultTime));
-                            Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
-                        }
-                    }
-                    globalHandler.notifyGlobalDataSetChanged();
-                }
-            }
-        };
-
-        globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
     }
 
 
     public void requestChannelReading(final Feed feed, final Channel channel) {
         if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
-            requestChannelReading("", feed, channel, 0);
+            requestChannelReading(null, null, feed, channel, 0);
         } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
             channel.requestNowCast(globalHandler.appContext);
         }
-    }
-
-
-    public void requestAuthorizedChannelReading(String authToken, final Feed feed, final Channel channel) {
-        requestChannelReading(authToken, feed, channel,
-                (long) (new Date().getTime() / 1000.0) - Constants.SPECKS_MAX_TIME_RANGE);
     }
 
 
@@ -213,7 +150,7 @@ public class EsdrFeedsHandler {
                             closestFeed.getChannels().get(0).requestNowCast(globalHandler.appContext);
                         } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
                             // ASSERT all channels in the list of channels are usable readings
-                            requestChannelReading("", closestFeed, closestFeed.getChannels().get(0), (long)maxTime);
+                            requestChannelReading(null, null, closestFeed, closestFeed.getChannels().get(0), (long)maxTime);
                         }
                     }
                 } else {
@@ -228,7 +165,7 @@ public class EsdrFeedsHandler {
     public void requestUpdate(final Speck speck) {
         if (speck.getChannels().size() > 0) {
             long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
-            requestChannelReadingFromApiKey(speck,speck.getChannels().get(0),timeRange);
+            requestChannelReading(null, speck.getApiKeyReadOnly(), speck, speck.getChannels().get(0), timeRange);
         } else {
             Log.e(Constants.LOG_TAG, "No channels found from speck id=" + speck.getFeed_id());
         }
