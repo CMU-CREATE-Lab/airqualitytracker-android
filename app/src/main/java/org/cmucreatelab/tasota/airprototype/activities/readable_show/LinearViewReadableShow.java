@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_show;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -127,6 +129,7 @@ public class LinearViewReadableShow {
             @Override
             public void onClick(View view) {
                 Log.i(Constants.LOG_TAG, "clicked buttonAqiExplanation");
+                context.startActivity(new Intent(context, AqiExplanationActivity.class));
             }
         });
 
@@ -134,6 +137,7 @@ public class LinearViewReadableShow {
             @Override
             public void onClick(View view) {
                 Log.i(Constants.LOG_TAG, "clicked buttonAirNow");
+                context.startActivity(new Intent(context, AirNowActivity.class));
             }
         });
     }

@@ -18,4 +18,6 @@
     <string name="title_activity_about_speck">AboutSpeckActivity</string>
     <string name="title_activity_manage_trackers">Manage Trackers</string>
     <string name="title_activity_debug">Debug Menu</string>
+    <string name="title_activity_aqi_explanation">AQI Explanation</string>
+    <string name="title_activity_airnow">AirNow</string>
 </resources>

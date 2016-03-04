@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="org.cmucreatelab.tasota.airprototype.activities.readable_show.AqiExplanationActivity"
+    android:id="@+id/layoutAqiExplanation">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To calculate AQI, we pull the sensor&apos;s PM2.5 readings from the past 12 hours and apply the EPA NowCast formula. This is a weighted average that gives more recent readings higher weight than older ones. Finally, we convert to AQI from a piecewise linear function (defined by the EPA)."
+        android:id="@+id/textView28"
+        android:textColor="#555"
+        android:textSize="14dp"
+        android:layout_below="@+id/textView30"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This number comes from a federal air monitoring station. The SpeckSensor app pulls its data from the Allegheny County Health Department (ACHD) and federal AirNow sensors. We choose the feed that is closest in distance for the given city or address."
+        android:id="@+id/textView30"
+        android:textColor="#555"
+        android:textSize="14dp"
+        android:layout_below="@+id/textView31"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Where does the reported number come from?"
+        android:id="@+id/textView31"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

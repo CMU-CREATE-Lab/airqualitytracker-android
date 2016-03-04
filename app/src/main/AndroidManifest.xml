@@ -65,6 +65,16 @@
             android:label="@string/title_activity_debug"
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>
+        <activity
+            android:name=".activities.readable_show.AqiExplanationActivity"
+            android:label="@string/title_activity_aqi_explanation"
+            android:parentActivityName=".activities.readable_list.ReadableListActivity" >
+        </activity>
+        <activity
+            android:name=".activities.readable_show.AirNowActivity"
+            android:label="@string/title_activity_airnow"
+            android:parentActivityName=".activities.readable_list.ReadableListActivity" >
+        </activity>
     </application>
 
 </manifest>
