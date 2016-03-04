@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 public class LinearViewReadableShow {
 
     private Readable readable;
-    private TextView textShowAddressName;
+//    private TextView textShowAddressName;
     private TextView textShowAddressAqiValue;
     private TextView textShowAddressAqiRange;
     private TextView textShowAddressAqiTitle;
@@ -29,6 +30,8 @@ public class LinearViewReadableShow {
     private RelativeLayout layoutShowAddress;
     private FrameLayout frameClosestFeed;
     private TextView textViewClosestFeedName;
+    private Button buttonAqiExplanation;
+    private Button buttonAirNow;
     final private ReadableShowActivity context;
     private AlertDialogReadableShow alertDialogHelper;
 
@@ -42,6 +45,10 @@ public class LinearViewReadableShow {
         textShowAddressAqiDescription.setText(Constants.DefaultReading.DEFAULT_DESCRIPTION);
         layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.DefaultReading.DEFAULT_COLOR_BACKGROUND));
         this.frameClosestFeed.setVisibility(View.INVISIBLE);
+
+        // hide buttons
+        buttonAirNow.setVisibility(View.INVISIBLE);
+        buttonAqiExplanation.setVisibility(View.INVISIBLE);
     }
 
 
@@ -89,6 +96,10 @@ public class LinearViewReadableShow {
             layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_MICROGRAMS_PER_CUBIC_METER);
             this.frameClosestFeed.setVisibility(View.INVISIBLE);
+
+            // hide buttons
+            buttonAirNow.setVisibility(View.INVISIBLE);
+            buttonAqiExplanation.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -96,7 +107,6 @@ public class LinearViewReadableShow {
     public LinearViewReadableShow(ReadableShowActivity activity, Readable readable) {
         this.context = activity;
         this.readable = readable;
-        this.textShowAddressName = (TextView)activity.findViewById(R.id.textShowAddressName);
         this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);
         this.textShowAddressAqiRange = (TextView)activity.findViewById(R.id.textShowAddressAqiRange);
         this.textShowAddressAqiTitle = (TextView)activity.findViewById(R.id.textShowAddressAqiTitle);
@@ -105,15 +115,32 @@ public class LinearViewReadableShow {
         this.layoutShowAddress = (RelativeLayout)activity.findViewById(R.id.layoutShowAddress);
         this.frameClosestFeed = (FrameLayout)activity.findViewById(R.id.frameClosestFeed);
         this.textViewClosestFeedName = (TextView)activity.findViewById(R.id.textViewClosestFeedName);
+        this.buttonAqiExplanation = (Button)activity.findViewById(R.id.buttonAqiExplanation);
+        this.buttonAirNow = (Button)activity.findViewById(R.id.buttonAirNow);
 
         // use custom fonts
         Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
         textShowAddressAqiValue.setTypeface(fontAqi);
+
+        // click listeners
+        buttonAqiExplanation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Constants.LOG_TAG, "clicked buttonAqiExplanation");
+            }
+        });
+
+        buttonAirNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Constants.LOG_TAG, "clicked buttonAirNow");
+            }
+        });
     }
 
 
     public void populateLinearView() {
-        this.textShowAddressName.setText(readable.getName());
+//        this.textShowAddressName.setText(readable.getName());
 
         if (readable.hasReadableValue()) {
             double readableValue = readable.getReadableValue();

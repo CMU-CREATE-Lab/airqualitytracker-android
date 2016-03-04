@@ -26,22 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Pittsburgh, PA"
-                    android:id="@+id/textShowAddressName"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="24dp"
-                    android:textColor="#000" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:id="@+id/frameClosestFeed">
 
@@ -106,6 +90,19 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_weight="10" >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Where does this number come from?"
+                    android:id="@+id/buttonAqiExplanation"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_weight="10" />
 
             <FrameLayout
@@ -151,6 +148,19 @@
                     android:textColor="#000"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="10" >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="check with AirNow"
+                    android:id="@+id/buttonAirNow"
+                    android:layout_gravity="center" />
             </FrameLayout>
 
             <FrameLayout
