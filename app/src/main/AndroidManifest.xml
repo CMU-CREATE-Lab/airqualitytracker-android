@@ -68,12 +68,12 @@
         <activity
             android:name=".activities.readable_show.AqiExplanationActivity"
             android:label="@string/title_activity_aqi_explanation"
-            android:parentActivityName=".activities.readable_list.ReadableListActivity" >
+            android:parentActivityName=".activities.readable_show.ReadableShowActivity" >
         </activity>
         <activity
             android:name=".activities.readable_show.AirNowActivity"
             android:label="@string/title_activity_airnow"
-            android:parentActivityName=".activities.readable_list.ReadableListActivity" >
+            android:parentActivityName=".activities.readable_show.ReadableShowActivity" >
         </activity>
     </application>
 

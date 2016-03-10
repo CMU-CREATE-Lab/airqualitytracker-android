@@ -15,6 +15,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 public class ReadableShowActivity extends ActionBarActivity {
 
     private Readable readable;
+    private int itemIndex;
 
 
     protected void shareReading() {
@@ -53,13 +54,22 @@ public class ReadableShowActivity extends ActionBarActivity {
         Intent intent;
         int itemIndex;
         ActionBar actionBar;
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__readable_show__activity);
 
         intent = getIntent();
         itemIndex = intent.getIntExtra(Constants.AddressList.ADDRESS_INDEX, -1);
-        this.readable = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.adapterList.get(itemIndex).readable;
+
+        // if we don't have an Intent, grab from what it's supposed to be
+        if (itemIndex >= 0) {
+            globalHandler.readableShowItemIndex = itemIndex;
+        } else {
+            itemIndex = globalHandler.readableShowItemIndex;
+        }
+
+        this.readable = globalHandler.readingsHandler.adapterList.get(itemIndex).readable;
         switch(readable.getReadableType()) {
             case ADDRESS:
                 break;

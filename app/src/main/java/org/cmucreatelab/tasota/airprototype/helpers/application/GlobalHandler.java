@@ -50,6 +50,8 @@ public class GlobalHandler {
     public TrackersAdapter trackersAdapter;
     public ListFeedsAdapter listFeedsAdapter;
     public boolean displaySessionExpiredDialog = false;
+    // use this to store the item's index; useful when navigating "Up" without an Intent
+    public int readableShowItemIndex = -1;
 
 
     // Nobody accesses the constructor
