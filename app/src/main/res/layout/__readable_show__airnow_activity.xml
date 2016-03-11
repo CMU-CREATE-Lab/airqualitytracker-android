@@ -19,7 +19,8 @@
         android:layout_alignParentEnd="true"
         android:textColor="#000"
         android:textStyle="bold"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,12 +30,12 @@
         android:textColor="#000"
         android:textStyle="bold"
         android:textSize="18dp"
+        android:layout_below="@+id/listViewAirNow"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView26"
-        android:layout_alignRight="@+id/textView26"
-        android:layout_alignEnd="@+id/textView26"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,6 +49,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:id="@+id/listViewAirNow"
+        android:layout_below="@+id/textView26"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
