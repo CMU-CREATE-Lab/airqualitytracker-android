@@ -9,9 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
+import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
@@ -20,7 +22,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
  */
 public class LinearViewReadableShow {
 
-    private Readable readable;
+    private Readable reading;
     private TextView textShowAddressAqiValue;
     private TextView textShowAddressAqiRange;
     private TextView textShowAddressAqiTitle;
@@ -70,7 +72,7 @@ public class LinearViewReadableShow {
     private void speckView(Speck speck) {
         int index;
 
-        this.textShowAddressAqiValue.setText(String.valueOf((long)speck.getReadableValue()));
+        this.textShowAddressAqiValue.setText(String.valueOf((long) speck.getReadableValue()));
         index = Constants.SpeckReading.getIndexFromReading((long)speck.getReadableValue());
         if (index < 0) {
             this.defaultView();
@@ -89,9 +91,9 @@ public class LinearViewReadableShow {
     }
 
 
-    public LinearViewReadableShow(ReadableShowActivity activity, Readable readable) {
+    public LinearViewReadableShow(ReadableShowActivity activity, Readable reading) {
         this.context = activity;
-        this.readable = readable;
+        this.reading = reading;
         this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);
         this.textShowAddressAqiRange = (TextView)activity.findViewById(R.id.textShowAddressAqiRange);
         this.textShowAddressAqiTitle = (TextView)activity.findViewById(R.id.textShowAddressAqiTitle);
@@ -109,22 +111,29 @@ public class LinearViewReadableShow {
             @Override
             public void onClick(View view) {
                 Log.i(Constants.LOG_TAG, "clicked frameAqiButton");
-                context.startActivity(new Intent(context, AqiExplanationActivity.class));
+                // TODO sending Readable via GlobalHandler but should be handled through the activities
+                Readable readable = context.getReading();
+                if (readable instanceof AirNowReadable) {
+                    GlobalHandler.getInstance(context).readableShowToAirNow = (AirNowReadable)readable;
+                    context.startActivity(new Intent(context, AqiExplanationActivity.class));
+                } else {
+                    Log.e(Constants.LOG_TAG, "ERROR - reading is not an instance of AirNowReadable");
+                }
             }
         });
     }
 
 
     public void populateLinearView() {
-//        this.textShowAddressName.setText(readable.getName());
+//        this.textShowAddressName.setText(reading.getName());
 
-        if (readable.hasReadableValue()) {
-            double readableValue = readable.getReadableValue();
+        if (reading.hasReadableValue()) {
+            double readableValue = reading.getReadableValue();
 
-            if (readable.getReadableType() == Readable.Type.ADDRESS) {
-                addressView((SimpleAddress)readable);
-            } else if (readable.getReadableType() == Readable.Type.SPECK) {
-                speckView((Speck)readable);
+            if (reading.getReadableType() == Readable.Type.ADDRESS) {
+                addressView((SimpleAddress) reading);
+            } else if (reading.getReadableType() == Readable.Type.SPECK) {
+                speckView((Speck) reading);
             } else {
                 Log.w(Constants.LOG_TAG, "Tried to populate LinearView in AddressShow with unimplemented Readable object.");
                 defaultView();

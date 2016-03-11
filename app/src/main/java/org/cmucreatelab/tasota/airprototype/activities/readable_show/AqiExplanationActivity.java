@@ -8,11 +8,14 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
+import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 public class AqiExplanationActivity extends ActionBarActivity {
 
     private Button buttonAirNow;
+    private AirNowReadable reading;
 
 
     @Override
@@ -21,6 +24,7 @@ public class AqiExplanationActivity extends ActionBarActivity {
         setContentView(R.layout.__readable_show__aqi_explanation_activity);
 
         this.buttonAirNow = (Button)findViewById(R.id.buttonAirNow);
+        this.reading = GlobalHandler.getInstance(getApplicationContext()).readableShowToAirNow;
 
         buttonAirNow.setOnClickListener(new View.OnClickListener() {
             @Override

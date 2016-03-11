@@ -14,8 +14,13 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 public class ReadableShowActivity extends ActionBarActivity {
 
-    private Readable readable;
+    private Readable reading;
     private int itemIndex;
+
+
+    protected Readable getReading() {
+        return reading;
+    }
 
 
     protected void shareReading() {
@@ -23,13 +28,13 @@ public class ReadableShowActivity extends ActionBarActivity {
         Intent sendIntent = new Intent();
 
         try {
-            switch(readable.getReadableType()) {
+            switch(reading.getReadableType()) {
                 case SPECK:
-                    long micrograms = (long)readable.getReadableValue();
+                    long micrograms = (long) reading.getReadableValue();
                     label = Constants.SpeckReading.titles[Constants.SpeckReading.getIndexFromReading(micrograms)];
                     break;
                 case ADDRESS:
-                    double aqi = (long) (100 * AqiConverter.microgramsToAqi(readable.getReadableValue())) / 100.0;
+                    double aqi = (long) (100 * AqiConverter.microgramsToAqi(reading.getReadableValue())) / 100.0;
                     label = Constants.AqiReading.titles[Constants.AqiReading.getIndexFromReading(aqi)];
                     break;
                 default:
@@ -69,8 +74,8 @@ public class ReadableShowActivity extends ActionBarActivity {
             itemIndex = globalHandler.readableShowItemIndex;
         }
 
-        this.readable = globalHandler.readingsHandler.adapterList.get(itemIndex).readable;
-        switch(readable.getReadableType()) {
+        this.reading = globalHandler.readingsHandler.adapterList.get(itemIndex).readable;
+        switch(reading.getReadableType()) {
             case ADDRESS:
                 break;
             case SPECK:
@@ -83,11 +88,11 @@ public class ReadableShowActivity extends ActionBarActivity {
 
         actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(readable.getName());
+            actionBar.setTitle(reading.getName());
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        new LinearViewReadableShow(this,readable).populateLinearView();
+        new LinearViewReadableShow(this, reading).populateLinearView();
     }
 
 
