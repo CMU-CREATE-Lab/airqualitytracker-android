@@ -9,6 +9,16 @@ import java.util.Date;
 public class AirNowObservation {
 
     private Date observedDatetime;
+
+    public String getReadableDate() {
+        return readableDate;
+    }
+
+    public void setReadableDate(String readableDate) {
+        this.readableDate = readableDate;
+    }
+
+    private String readableDate;
     private String reportingArea;
     private String stateCode;
     private Location location; // Latitude, Longitude
@@ -53,8 +63,9 @@ public class AirNowObservation {
     }
 
 
-    public AirNowObservation(Date observedDatetime, String reportingArea, String stateCode, Location location, String parameterName, double aqi) {
+    public AirNowObservation(Date observedDatetime, String readableDate, String reportingArea, String stateCode, Location location, String parameterName, double aqi) {
         this.observedDatetime = observedDatetime;
+        this.readableDate = readableDate;
         this.reportingArea = reportingArea;
         this.stateCode = stateCode;
         this.location = location;

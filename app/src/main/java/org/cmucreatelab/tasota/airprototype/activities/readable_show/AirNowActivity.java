@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
@@ -14,6 +15,10 @@ import java.util.ArrayList;
 public class AirNowActivity extends ActionBarActivity {
 
     private AirNowReadable reading;
+    public final ArrayList<AirNowAdapter.AirNowItem> airNowItemsList = new ArrayList<>();
+    public AirNowAdapter airNowAdapter;
+
+    private ListView listViewAirNow;
 
 
     @Override
@@ -29,7 +34,12 @@ public class AirNowActivity extends ActionBarActivity {
             reading.requestAirNow(this);
         }
 
-        // TODO list adapter stuff
+        // array adapter stuff
+        this.listViewAirNow = (ListView)findViewById(R.id.listViewAirNow);
+        airNowAdapter = new AirNowAdapter(this,airNowItemsList);
+        listViewAirNow.setAdapter(airNowAdapter);
+
+        clearAndUpdateList(observations);
     }
 
 
@@ -38,6 +48,20 @@ public class AirNowActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_address_show_airnow, menu);
         return true;
+    }
+
+
+    public void clearAndUpdateList(ArrayList<AirNowObservation> observations) {
+        airNowItemsList.clear();
+        if (observations.size() > 0) {
+            airNowItemsList.add(new AirNowAdapter.AirNowItem("observed at "+observations.get(0).getReadableDate(), 0));
+            for (AirNowObservation observation : observations) {
+                airNowItemsList.add(new AirNowAdapter.AirNowItem(observation));
+            }
+        } else {
+            airNowItemsList.add(new AirNowAdapter.AirNowItem("No AirNow observations", 0));
+        }
+        airNowAdapter.notifyDataSetChanged();
     }
 
 }

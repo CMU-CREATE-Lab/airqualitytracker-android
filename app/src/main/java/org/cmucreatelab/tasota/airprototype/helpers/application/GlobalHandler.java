@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.readable_show.AirNowAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.EsdrAccount;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
@@ -103,7 +104,6 @@ public class GlobalHandler {
         if (this.listFeedsAdapter != null) {
             this.listFeedsAdapter.notifyDataSetChanged();
         }
-        // TODO add airNowMenu
     }
 
 

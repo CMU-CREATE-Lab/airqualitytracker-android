@@ -4,14 +4,11 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.AirNowJsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONArray;
-import java.util.ArrayList;
 
 /**
  * Created by mike on 2/10/16.
@@ -42,18 +39,9 @@ public class AirNowRequestHandler implements Response.ErrorListener {
     // Handler attributes and methods
 
 
-    public void requestAirNowObservation(final AirNowReadable readable) {
+    public void requestAirNowObservation(final AirNowReadable readable, Response.Listener<JSONArray> response) {
         int requestMethod;
         String requestUrl;
-
-        Response.Listener<JSONArray> response = new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                ArrayList<AirNowObservation> results = AirNowJsonParser.parseObservationsFromJson(response);
-                readable.appendAndSort(results);
-                globalHandler.notifyGlobalDataSetChanged();
-            }
-        };
 
         try {
             requestMethod = Request.Method.GET;

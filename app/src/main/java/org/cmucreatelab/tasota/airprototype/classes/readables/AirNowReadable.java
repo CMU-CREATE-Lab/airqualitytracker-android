@@ -1,9 +1,12 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
-import android.content.Context;
+import com.android.volley.Response;
+import org.cmucreatelab.tasota.airprototype.activities.readable_show.AirNowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.AirNowJsonParser;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
+import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -57,8 +60,17 @@ public abstract class AirNowReadable implements Readable {
     }
 
 
-    public void requestAirNow(Context context) {
-        GlobalHandler.getInstance(context).airNowRequestHandler.requestAirNowObservation(this);
+    public void requestAirNow(final AirNowActivity context) {
+        Response.Listener<JSONArray> response = new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<AirNowObservation> results = AirNowJsonParser.parseObservationsFromJson(response);
+                appendAndSort(results);
+                context.clearAndUpdateList(getMostRecentAirNowObservations());
+            }
+        };
+
+        GlobalHandler.getInstance(context).airNowRequestHandler.requestAirNowObservation(this, response);
     }
 
 

@@ -42,6 +42,7 @@ public class AirNowJsonParser {
 
             // intermediate objects
             String formattedString = dateObserved + " " + hourObserved + " " + localTimeZone;
+            String readableDate = hourObserved+":00 "+localTimeZone;
             try {
                 DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd kk z");
                 observedDatetime = dateFormatter.parse(formattedString);
@@ -52,7 +53,7 @@ public class AirNowJsonParser {
             location = new Location(latitude, longitude);
 
             // return instance
-            observation = new AirNowObservation(observedDatetime, reportingArea, stateCode, location, parameterName, aqi);
+            observation = new AirNowObservation(observedDatetime, readableDate, reportingArea, stateCode, location, parameterName, aqi);
             return observation;
         } catch (JSONException e) {
             throw e;
