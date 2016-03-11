@@ -34,6 +34,7 @@ public class LinearViewReadableShow {
     private TextView textViewClosestFeedName;
     private Button buttonAqiExplanation;
     private Button buttonAirNow;
+    private FrameLayout frameAqiButton;
     final private ReadableShowActivity context;
     private AlertDialogReadableShow alertDialogHelper;
 
@@ -51,6 +52,7 @@ public class LinearViewReadableShow {
         // hide buttons
         buttonAirNow.setVisibility(View.INVISIBLE);
         buttonAqiExplanation.setVisibility(View.INVISIBLE);
+        frameAqiButton.setVisibility(View.INVISIBLE);
     }
 
 
@@ -102,6 +104,7 @@ public class LinearViewReadableShow {
             // hide buttons
             buttonAirNow.setVisibility(View.INVISIBLE);
             buttonAqiExplanation.setVisibility(View.INVISIBLE);
+            frameAqiButton.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -119,6 +122,7 @@ public class LinearViewReadableShow {
         this.textViewClosestFeedName = (TextView)activity.findViewById(R.id.textViewClosestFeedName);
         this.buttonAqiExplanation = (Button)activity.findViewById(R.id.buttonAqiExplanation);
         this.buttonAirNow = (Button)activity.findViewById(R.id.buttonAirNow);
+        this.frameAqiButton = (FrameLayout)activity.findViewById(R.id.frameAqiButton);
 
         // use custom fonts
         Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
@@ -138,6 +142,14 @@ public class LinearViewReadableShow {
             public void onClick(View view) {
                 Log.i(Constants.LOG_TAG, "clicked buttonAirNow");
                 context.startActivity(new Intent(context, AirNowActivity.class));
+            }
+        });
+
+        frameAqiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Constants.LOG_TAG, "clicked frameAqiButton");
+                context.startActivity(new Intent(context, AqiExplanationActivity.class));
             }
         });
     }
