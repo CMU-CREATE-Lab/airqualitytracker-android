@@ -73,7 +73,7 @@
         <activity
             android:name=".activities.readable_show.AirNowActivity"
             android:label="@string/title_activity_airnow"
-            android:parentActivityName=".activities.readable_show.ReadableShowActivity" >
+            android:parentActivityName=".activities.readable_show.AqiExplanationActivity" >
         </activity>
     </application>
 
