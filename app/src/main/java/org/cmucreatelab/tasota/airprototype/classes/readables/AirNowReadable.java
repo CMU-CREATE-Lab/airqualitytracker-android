@@ -1,11 +1,14 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
+import android.content.Context;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
+import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * Created by mike on 2/10/16.
@@ -38,12 +41,24 @@ public abstract class AirNowReadable implements Readable {
     }
 
 
-    // TODO multiple values sharing same timestamp
-    public AirNowObservation getMostRecentAirNowObservation() {
+    public ArrayList<AirNowObservation> getMostRecentAirNowObservations() {
+        ArrayList<AirNowObservation> values = new ArrayList<>();
+
         if (airNowObservations.size() > 0) {
-            return airNowObservations.get(0);
+            Date date = airNowObservations.get(0).getObservedDatetime();
+            for (AirNowObservation observation: airNowObservations) {
+                if (observation.getObservedDatetime().compareTo(date) == 0) {
+                    values.add(observation);
+                }
+            }
         }
-        return null;
+
+        return values;
+    }
+
+
+    public void requestAirNow(Context context) {
+        GlobalHandler.getInstance(context).airNowRequestHandler.requestAirNowObservation(this);
     }
 
 

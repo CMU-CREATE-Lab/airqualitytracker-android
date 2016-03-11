@@ -10,7 +10,6 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridA
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.EsdrAccount;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.system.ServicesHandler;
@@ -104,6 +103,7 @@ public class GlobalHandler {
         if (this.listFeedsAdapter != null) {
             this.listFeedsAdapter.notifyDataSetChanged();
         }
+        // TODO add airNowMenu
     }
 
 

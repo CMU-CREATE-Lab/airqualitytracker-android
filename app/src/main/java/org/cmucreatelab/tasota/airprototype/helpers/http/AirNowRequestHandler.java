@@ -51,6 +51,7 @@ public class AirNowRequestHandler implements Response.ErrorListener {
             public void onResponse(JSONArray response) {
                 ArrayList<AirNowObservation> results = AirNowJsonParser.parseObservationsFromJson(response);
                 readable.appendAndSort(results);
+                globalHandler.notifyGlobalDataSetChanged();
             }
         };
 
