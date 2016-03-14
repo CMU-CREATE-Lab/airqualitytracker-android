@@ -15,8 +15,8 @@ import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 public class AddressResultReceiver extends ResultReceiver {
 
     GlobalHandler globalHandler;
-    // TODO placeholder to avoid errors. Implement later
-    public static Parcelable.Creator CREATOR;
+//    // TODO placeholder to avoid errors. Implement later
+//    public static Parcelable.Creator CREATOR;
 
 
     public AddressResultReceiver(Handler handler, GlobalHandler globalHandler) {

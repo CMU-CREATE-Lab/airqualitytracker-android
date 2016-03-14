@@ -15,7 +15,7 @@ public final class Constants {
 
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
 
-    public static final String APP_VERSION = "2.1";
+    public static final String APP_VERSION = "2.2";
 
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
