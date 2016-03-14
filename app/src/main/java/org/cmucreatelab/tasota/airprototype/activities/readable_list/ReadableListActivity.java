@@ -82,21 +82,21 @@ public class ReadableListActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.readable_list_refresher, stickyGrid, Constants.StickyGrid.GRID_TAG)
                     .commit();
-            swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.readable_list_refresher);
-            swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    GlobalHandler.getInstance(getApplicationContext()).updateReadings();
-                    swipeRefresh.setRefreshing(false);
-                }
-            });
         }
+
+        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.readable_list_refresher);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                GlobalHandler.getInstance(getApplicationContext()).updateReadings();
+                swipeRefresh.setRefreshing(false);
+            }
+        });
     }
 
 
     @Override
     protected void onResume() {
-        Log.i(Constants.LOG_TAG, "onResume() was called");
         GlobalHandler.getInstance(this.getApplicationContext()).readingsHandler.refreshHash();
         if (!refreshTimer.isStarted)
             refreshTimer.startTimer();
@@ -106,7 +106,6 @@ public class ReadableListActivity extends ActionBarActivity {
 
     @Override
     protected void onStop() {
-        Log.i(Constants.LOG_TAG, "onStop() was called");
         if (activityIsActive)
             refreshTimer.stopTimer();
         super.onStop();
