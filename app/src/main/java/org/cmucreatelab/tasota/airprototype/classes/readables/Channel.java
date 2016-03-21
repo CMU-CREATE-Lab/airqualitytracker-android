@@ -12,6 +12,35 @@ import java.util.HashMap;
  */
 public class Channel {
 
+    // class attributes
+    private String name;
+    private Feed feed;
+    private double minTimeSecs;
+    private double maxTimeSecs;
+    private double minValue;
+    private double maxValue;
+    private double instantCastValue;
+    private double nowCastValue;
+    public final EsdrTilesResponseHandler responseHandler = new EsdrTilesResponseHandler();
+    // getters/setters
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public Feed getFeed() { return feed; }
+    public void setFeed(Feed feed) { this.feed = feed; }
+    public double getMinTimeSecs() { return minTimeSecs; }
+    public void setMinTimeSecs(double minTimeSecs) { this.minTimeSecs = minTimeSecs; }
+    public double getMaxTimeSecs() { return maxTimeSecs; }
+    public void setMaxTimeSecs(double maxTimeSecs) { this.maxTimeSecs = maxTimeSecs; }
+    public double getMinValue() { return minValue; }
+    public void setMinValue(double minValue) { this.minValue = minValue; }
+    public double getMaxValue() { return maxValue; }
+    public void setMaxValue(double maxValue) { this.maxValue = maxValue; }
+    public double getInstantCastValue() { return instantCastValue; }
+    public void setInstantCastValue(double instantCastValue) { this.instantCastValue = instantCastValue; }
+    public double getNowCastValue() { return nowCastValue; }
+    public void setNowCastValue(double nowCastValue) { this.nowCastValue = nowCastValue; }
+
+
     public class EsdrTilesResponseHandler {
         public void onResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
             // construct array of values
@@ -25,67 +54,6 @@ public class Channel {
         }
     }
 
-    private String name;
-    private Feed feed;
-    private double minTimeSecs;
-    private double maxTimeSecs;
-    private double minValue;
-    private double maxValue;
-    private double instantCastValue;
-    private double nowCastValue;
-    public final EsdrTilesResponseHandler responseHandler = new EsdrTilesResponseHandler();
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public double getMinTimeSecs() {
-        return minTimeSecs;
-    }
-    public void setMinTimeSecs(double minTimeSecs) {
-        this.minTimeSecs = minTimeSecs;
-    }
-    public double getMaxTimeSecs() {
-        return maxTimeSecs;
-    }
-    public void setMaxTimeSecs(double maxTimeSecs) {
-        this.maxTimeSecs = maxTimeSecs;
-    }
-    public double getMinValue() {
-        return minValue;
-    }
-    public void setMinValue(double minValue) {
-        this.minValue = minValue;
-    }
-    public double getMaxValue() {
-        return maxValue;
-    }
-    public void setMaxValue(double maxValue) {
-        this.maxValue = maxValue;
-    }
-    public Feed getFeed() {
-        return feed;
-    }
-    public void setFeed(Feed feed) {
-        this.feed = feed;
-    }
-    public long getFeed_id() {
-        return feed.getFeed_id();
-    }
-    public double getNowCastValue() {
-        return nowCastValue;
-    }
-    public void setNowCastValue(double nowCastValue) {
-        this.nowCastValue = nowCastValue;
-    }
-    public double getInstantCastValue() {
-        return instantCastValue;
-    }
-    public void setInstantCastValue(double instantCastValue) {
-        this.instantCastValue = instantCastValue;
-    }
 
     public void requestNowCast(Context ctx) {
         int timestamp = (int)(new Date().getTime() / 1000.0);

@@ -18,30 +18,18 @@ import java.util.Date;
  */
 public abstract class AirNowReadable implements Readable {
 
-
-    // Readable implementation (as abstract methods)
-
+    // class attributes
+    protected Location location;
+    final protected ArrayList<AirNowObservation> airNowObservations = new ArrayList<>(); // ASSERT: list is sorted from newest to oldest
+    // getters/setters
+    public Location getLocation() { return location; }
+    public void setLocation(Location location) { this.location = location; }
+    public ArrayList<AirNowObservation> getAirNowObservations() { return airNowObservations; }
+    // abstract methods (Readable)
     public abstract Type getReadableType();
     public abstract String getName();
     public abstract boolean hasReadableValue();
     public abstract double getReadableValue();
-
-
-    // attributes/methods for AirNow-related calculations
-
-    protected Location location;
-    // ASSERT: list is sorted from newest to oldest
-    final protected ArrayList<AirNowObservation> airNowObservations = new ArrayList<>();
-
-    public Location getLocation() {
-        return location;
-    }
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-    public ArrayList<AirNowObservation> getAirNowObservations() {
-        return airNowObservations;
-    }
 
 
     public ArrayList<AirNowObservation> getMostRecentAirNowObservations() {
@@ -76,7 +64,6 @@ public abstract class AirNowReadable implements Readable {
 
     public void appendAndSort(Collection<AirNowObservation> values) {
         class AirNowDateComparator implements Comparator<AirNowObservation> {
-
             @Override
             public int compare(AirNowObservation a, AirNowObservation b) {
                 return a.getObservedDatetime().compareTo(b.getObservedDatetime());

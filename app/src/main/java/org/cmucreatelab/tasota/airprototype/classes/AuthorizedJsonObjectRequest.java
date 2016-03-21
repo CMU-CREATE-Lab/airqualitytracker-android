@@ -12,9 +12,11 @@ import java.util.Map;
  */
 public class AuthorizedJsonObjectRequest extends JsonObjectRequest {
 
+    // class attributes
     private final String authToken; // must be instantiated
 
 
+    // class constructor
     public AuthorizedJsonObjectRequest(String authToken, int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, listener, errorListener);
         this.authToken = authToken;

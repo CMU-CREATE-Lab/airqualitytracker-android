@@ -7,9 +7,11 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableLis
  */
 public class TwoFingerLongPressTimer extends Timer {
 
+    // class attributes
     private ReadableListActivity activity;
 
 
+    // class constructor
     public TwoFingerLongPressTimer(ReadableListActivity activity, int timerInterval) {
         super(timerInterval);
         this.activity = activity;

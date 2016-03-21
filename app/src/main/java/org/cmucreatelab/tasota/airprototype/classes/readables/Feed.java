@@ -11,13 +11,55 @@ import java.util.ArrayList;
  */
 public class Feed implements Readable {
 
-
-    // Readable implementation
+    // class attributes
+    // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
+    private ReadableValueType readableValueType;
+    protected long feed_id;
+    protected String name;
+    protected String exposure; // (FROM DOCS): an enum and must be one of indoor, outdoor, or virtual
+    protected boolean isMobile;
+    protected Location location;
+    protected long productId;
+    protected ArrayList<Channel> channels;
+    protected double lastTime;
+    // getters/setters
+    public long getFeed_id() { return feed_id; }
+    public void setFeed_id(long feed_id) { this.feed_id = feed_id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getExposure() { return exposure; }
+    public void setExposure(String exposure) { this.exposure = exposure; }
+    public boolean isMobile() { return isMobile; }
+    public void setIsMobile(boolean isMobile) { this.isMobile = isMobile; }
+    public Location getLocation() { return location; }
+    public void setLocation(Location location) { this.location = location; }
+    public long getProductId() { return productId; }
+    public void setProductId(long productId) { this.productId = productId; }
+    public ArrayList<Channel> getChannels() { return channels; }
+    public double getLastTime() { return lastTime; }
+    public void setLastTime(double lastTime) { this.lastTime = lastTime; }
+    public ReadableValueType getReadableValueType() { return readableValueType; }
+    public void setReadableValueType(ReadableValueType readableValueType) { this.readableValueType = readableValueType; }
 
 
     public enum ReadableValueType {
         INSTANTCAST, NOWCAST, NONE
     }
+
+
+    // class constructor
+    public Feed() {
+        this.channels = new ArrayList<>();
+        this.name = "";
+        this.exposure = "";
+        this.readableValueType = ReadableValueType.NONE;
+    }
+
+
+    // Readable implementation
+
+
+    private static final Type readableType = Readable.Type.FEED;
 
 
     public Type getReadableType() {
@@ -42,91 +84,6 @@ public class Feed implements Readable {
             }
         }
         return 0;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-
-    // Class Attributes and Constructor(s)
-
-
-    private static final Type readableType = Readable.Type.FEED;
-    private ReadableValueType readableValueType;
-//    private boolean hasReadableValue;
-    // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
-    protected long feed_id;
-    protected String name;
-    // (FROM DOCS): an enum and must be one of indoor, outdoor, or virtual
-    protected String exposure;
-    protected boolean isMobile;
-    protected Location location;
-    protected long productId;
-    protected ArrayList<Channel> channels;
-//    protected double feedValue;
-    protected double lastTime;
-
-
-    public Feed() {
-        this.channels = new ArrayList<>();
-        this.name = "";
-        this.exposure = "";
-        this.readableValueType = ReadableValueType.NONE;
-    }
-
-
-    // Getters/Setters
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public long getProductId() {
-        return productId;
-    }
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
-    public long getFeed_id() {
-        return feed_id;
-    }
-    public void setFeed_id(long feed_id) {
-        this.feed_id = feed_id;
-    }
-    public String getExposure() {
-        return exposure;
-    }
-    public void setExposure(String exposure) {
-        this.exposure = exposure;
-    }
-    public boolean isMobile() {
-        return isMobile;
-    }
-    public void setIsMobile(boolean isMobile) {
-        this.isMobile = isMobile;
-    }
-    public Location getLocation() {
-        return location;
-    }
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-    public ArrayList<Channel> getChannels() {
-        return channels;
-    }
-    public double getLastTime() {
-        return lastTime;
-    }
-    public void setLastTime(double lastTime) {
-        this.lastTime = lastTime;
-    }
-    public ReadableValueType getReadableValueType() {
-        return readableValueType;
-    }
-    public void setReadableValueType(ReadableValueType readableValueType) {
-        this.readableValueType = readableValueType;
     }
 
 }

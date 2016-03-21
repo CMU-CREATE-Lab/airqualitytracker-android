@@ -9,25 +9,24 @@ import java.util.Collection;
  */
 public class Speck extends Feed {
 
-
-    // Readable implementation
-
-
-    public Type getReadableType() {
-        return readableType;
-    }
-
-
-    // Class Attributes and Constructor(s)
-
-
-    private static final Type readableType = Readable.Type.SPECK;
+    // class attributes
     protected long deviceId;
     private int positionId;
     private long _id;
     private String apiKeyReadOnly;
+    // getters/setters
+    public void setChannels(Collection<Channel> channels) { this.channels.clear(); this.channels.addAll(channels); }
+    public long getDeviceId() { return deviceId; }
+    public void setDeviceId(long deviceId) { this.deviceId = deviceId; }
+    public int getPositionId() { return positionId; }
+    public void setPositionId(int positionId) { this.positionId = positionId; }
+    public long get_id() { return _id; }
+    public void set_id(long _id) { this._id = _id; }
+    public String getApiKeyReadOnly() { return apiKeyReadOnly; }
+    public void setApiKeyReadOnly(String apiKeyReadOnly) { this.apiKeyReadOnly = apiKeyReadOnly; }
 
 
+    // class constructor
     public Speck(Feed feed, long deviceId) {
         this.feed_id = feed.feed_id;
         this.name = feed.name;
@@ -41,6 +40,7 @@ public class Speck extends Feed {
     }
 
 
+    // class constructor
     public Speck(String apiKeyReadOnly, long deviceId, String exposure, long feedId, boolean isMobile, Location location, String name, int positionId, long productId) {
         this.apiKeyReadOnly = apiKeyReadOnly;
         this.deviceId = deviceId;
@@ -54,36 +54,14 @@ public class Speck extends Feed {
     }
 
 
-    // Getters/Setters
+    // Readable implementation
 
 
-    public void setChannels(Collection<Channel> channels) {
-        this.channels.clear();
-        this.channels.addAll(channels);
-    }
-    public long getDeviceId() {
-        return deviceId;
-    }
-    public void setDeviceId(long deviceId) {
-        this.deviceId = deviceId;
-    }
-    public int getPositionId() {
-        return positionId;
-    }
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
-    }
-    public long get_id() {
-        return _id;
-    }
-    public void set_id(long _id) {
-        this._id = _id;
-    }
-    public String getApiKeyReadOnly() {
-        return apiKeyReadOnly;
-    }
-    public void setApiKeyReadOnly(String apiKeyReadOnly) {
-        this.apiKeyReadOnly = apiKeyReadOnly;
+    private static final Type readableType = Readable.Type.SPECK;
+
+
+    public Type getReadableType() {
+        return readableType;
     }
 
 }

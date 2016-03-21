@@ -104,7 +104,7 @@ public class EsdrTilesHandler {
                 int requestMethod;
                 String requestUrl;
                 requestMethod = Request.Method.GET;
-                requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channel.getName() + "/tiles/" + level + "." + (offset-1);
+                requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed().getFeed_id() + "/channels/" + channel.getName() + "/tiles/" + level + "." + (offset-1);
                 globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, secondHandler);
             }
         };
@@ -112,7 +112,7 @@ public class EsdrTilesHandler {
         int requestMethod;
         String requestUrl;
         requestMethod = Request.Method.GET;
-        requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channel.getName() + "/tiles/" + level + "." + offset;
+        requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed().getFeed_id() + "/channels/" + channel.getName() + "/tiles/" + level + "." + offset;
         globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, firstHandler);
     }
 

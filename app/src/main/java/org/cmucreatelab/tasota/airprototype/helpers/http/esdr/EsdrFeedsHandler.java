@@ -124,13 +124,13 @@ public class EsdrFeedsHandler {
         };
 
         if (authToken != null) {
-            requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channelName + "/most-recent";
+            requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed().getFeed_id() + "/channels/" + channelName + "/most-recent";
             globalHandler.httpRequestHandler.sendAuthorizedJsonRequest(authToken, requestMethod, requestUrl, null, response);
         } else if (feedApiKey != null) {
             requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + feedApiKey + "/channels/" + channelName + "/most-recent";
             globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
         } else {
-            requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channelName + "/most-recent";
+            requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed().getFeed_id() + "/channels/" + channelName + "/most-recent";
             globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, response);
         }
     }

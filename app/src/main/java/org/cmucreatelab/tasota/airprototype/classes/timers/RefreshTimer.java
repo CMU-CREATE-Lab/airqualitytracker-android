@@ -10,10 +10,12 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
  */
 public class RefreshTimer extends Timer {
 
+    // class attributes
     private ReadableListActivity activity;
     public boolean isStarted = false;
 
 
+    // class constructor
     public RefreshTimer(ReadableListActivity activity, int timerInterval) {
         super(timerInterval);
         this.activity = activity;

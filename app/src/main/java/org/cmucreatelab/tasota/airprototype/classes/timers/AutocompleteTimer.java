@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class AutocompleteTimer extends Timer {
 
+    // class attributes
     private AddressSearchActivity activity;
     final Response.Listener<JSONObject> completionHandler = new Response.Listener<JSONObject>() {
         @Override
@@ -26,6 +27,7 @@ public class AutocompleteTimer extends Timer {
     };
 
 
+    // class constructor
     public AutocompleteTimer(AddressSearchActivity activity, int timerInterval) {
         super(timerInterval);
         this.activity = activity;
