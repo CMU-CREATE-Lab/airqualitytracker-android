@@ -2,10 +2,8 @@ package org.cmucreatelab.tasota.airprototype.helpers.system;
 
 import android.app.Application;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.Date;
 
 /**

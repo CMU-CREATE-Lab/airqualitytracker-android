@@ -64,12 +64,6 @@ public class EsdrTilesHandler {
     }
 
 
-    // TODO see how this is handled in Javaland?
-    private String formatSafeJson(JSONObject json) {
-        return null;
-    }
-
-
     public void requestTilesFromChannel(final Channel channel, final int timestamp) {
         final int maxTime,minTime;
         final HashMap<Integer, ArrayList<Double>> firstResponse,secondResponse;
@@ -121,4 +115,5 @@ public class EsdrTilesHandler {
         requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed_id() + "/channels/" + channel.getName() + "/tiles/" + level + "." + offset;
         globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, firstHandler);
     }
+
 }

@@ -3,9 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
 
 /**

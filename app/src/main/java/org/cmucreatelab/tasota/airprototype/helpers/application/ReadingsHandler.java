@@ -8,7 +8,6 @@ import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.system.services.gps.GpsReadingHandler;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

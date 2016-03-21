@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.os.ResultReceiver;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 

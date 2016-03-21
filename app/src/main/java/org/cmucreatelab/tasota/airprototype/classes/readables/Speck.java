@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
-
 import java.lang.*;
 import java.util.Collection;
 

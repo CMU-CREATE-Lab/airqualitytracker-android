@@ -21,12 +21,6 @@ public class AuthorizedJsonObjectRequest extends JsonObjectRequest {
     }
 
 
-    public AuthorizedJsonObjectRequest(String authToken, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        super(url, jsonRequest, listener, errorListener);
-        this.authToken = authToken;
-    }
-
-
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         // ASSERT authToken is not null

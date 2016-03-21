@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers.application;
 
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;

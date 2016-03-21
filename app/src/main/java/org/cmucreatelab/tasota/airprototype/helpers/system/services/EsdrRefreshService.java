@@ -10,10 +10,8 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
-
 import java.util.Date;
 
 public class EsdrRefreshService extends Service {
@@ -37,8 +35,6 @@ public class EsdrRefreshService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         if (intent.hasExtra("startService") && globalHandler != null && globalHandler.settingsHandler != null && globalHandler.esdrLoginHandler.isUserLoggedIn()) {
-            Log.d(Constants.LOG_TAG, "onStartCommand (handling intent)");
-
             // clear old alarms
             if (timerStarted) {
                 destroyAlarm();

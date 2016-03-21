@@ -6,7 +6,6 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
@@ -17,13 +16,12 @@ public class GoogleApiClientHandler
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
 
-    private boolean clientConnected;
+
+    // Singleton Implementation
+
+
     private static GoogleApiClientHandler classInstance;
-    public GoogleApiClient googleApiClient;
     protected GlobalHandler globalHandler;
-    public boolean isClientConnected() {
-        return this.clientConnected;
-    }
 
 
     // Nobody accesses the constructor
@@ -46,6 +44,18 @@ public class GoogleApiClientHandler
     }
 
 
+    // Handler attributes and methods
+
+
+    private boolean clientConnected;
+    public GoogleApiClient googleApiClient;
+
+
+    public boolean isClientConnected() {
+        return this.clientConnected;
+    }
+
+
     public void connect() {
         Log.i(Constants.LOG_TAG, "connecting googleApiClient...");
         googleApiClient.connect();
@@ -56,6 +66,9 @@ public class GoogleApiClientHandler
         Log.i(Constants.LOG_TAG, "discconnecting googleApiClient");
         googleApiClient.disconnect();
     }
+
+
+    // Override Methods
 
 
     @Override

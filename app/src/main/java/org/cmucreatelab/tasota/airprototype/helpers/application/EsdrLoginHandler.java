@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers.application;
 
 import android.content.SharedPreferences;
-
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**

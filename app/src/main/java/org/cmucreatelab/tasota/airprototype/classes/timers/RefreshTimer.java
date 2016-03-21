@@ -26,6 +26,7 @@ public class RefreshTimer extends Timer {
         isStarted = false;
     }
 
+
     @Override
     public void startTimer() {
         super.startTimer();

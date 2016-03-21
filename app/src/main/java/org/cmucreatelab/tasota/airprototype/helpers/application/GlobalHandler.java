@@ -7,7 +7,6 @@ import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
-import org.cmucreatelab.tasota.airprototype.activities.readable_show.AirNowAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.EsdrAccount;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
@@ -31,30 +30,21 @@ import java.util.Date;
  */
 public class GlobalHandler {
 
+
+    // Singleton Implementation
+
+
     private static GlobalHandler classInstance;
     public Context appContext;
-    // managed global instances
-    public AirNowRequestHandler airNowRequestHandler;
-    public EsdrAuthHandler esdrAuthHandler;
-    public EsdrFeedsHandler esdrFeedsHandler;
-    public EsdrLoginHandler esdrLoginHandler;
-    public EsdrSpecksHandler esdrSpecksHandler;
-    public EsdrTilesHandler esdrTilesHandler;
-    public HttpRequestHandler httpRequestHandler;
-    public PositionIdHelper positionIdHelper;
-    public ServicesHandler servicesHandler;
-    public SettingsHandler settingsHandler;
-    // data structure
-    public ReadingsHandler readingsHandler;
-    public EsdrAccount esdrAccount;
-    // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
-    public StickyGridAdapter gridAdapter;
-    public TrackersAdapter trackersAdapter;
-    public ListFeedsAdapter listFeedsAdapter;
-    public boolean displaySessionExpiredDialog = false;
-    // use this to store the item's index; useful when navigating "Up" without an Intent
-    public int readableShowItemIndex = -1;
-    public AirNowReadable readableShowToAirNow;
+
+
+    // Only public way to get instance of class (synchronized means thread-safe)
+    public static synchronized GlobalHandler getInstance(Context ctx) {
+        if (classInstance == null) {
+            classInstance = new GlobalHandler(ctx);
+        }
+        return classInstance;
+    }
 
 
     // Nobody accesses the constructor
@@ -88,6 +78,34 @@ public class GlobalHandler {
         if (Constants.USES_BACKGROUND_SERVICES)
             servicesHandler.initializeBackgroundServices();
     }
+
+
+    // Handler attributes and methods
+
+
+    // managed global instances
+    public AirNowRequestHandler airNowRequestHandler;
+    public EsdrAuthHandler esdrAuthHandler;
+    public EsdrFeedsHandler esdrFeedsHandler;
+    public EsdrLoginHandler esdrLoginHandler;
+    public EsdrSpecksHandler esdrSpecksHandler;
+    public EsdrTilesHandler esdrTilesHandler;
+    public HttpRequestHandler httpRequestHandler;
+    public PositionIdHelper positionIdHelper;
+    public ServicesHandler servicesHandler;
+    public SettingsHandler settingsHandler;
+    // data structure
+    public ReadingsHandler readingsHandler;
+    public EsdrAccount esdrAccount;
+    // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
+    public StickyGridAdapter gridAdapter;
+    public TrackersAdapter trackersAdapter;
+    public ListFeedsAdapter listFeedsAdapter;
+    public boolean displaySessionExpiredDialog = false;
+    // use this to store the item's index; useful when navigating "Up" without an Intent
+    public int readableShowItemIndex = -1;
+    public AirNowReadable readableShowToAirNow;
+
 
 
     public Context getAppContext() {
@@ -156,15 +174,6 @@ public class GlobalHandler {
         this.settingsHandler.updateSettings();
         readingsHandler.refreshHash();
         this.notifyGlobalDataSetChanged();
-    }
-
-
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized GlobalHandler getInstance(Context ctx) {
-        if (classInstance == null) {
-            classInstance = new GlobalHandler(ctx);
-        }
-        return classInstance;
     }
 
 }
