@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.readable_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.tonicartos.superslim.LayoutManager;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**

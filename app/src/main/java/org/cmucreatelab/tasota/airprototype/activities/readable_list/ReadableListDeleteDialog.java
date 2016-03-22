@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
@@ -15,7 +16,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.system.database.SpeckDbHelpe
 /**
  * Created by mike on 6/8/15.
  */
-public class DeleteDialogReadableList {
+public class ReadableListDeleteDialog {
 
     private class AlertDialogBuilder extends AlertDialog.Builder {
         public AlertDialogBuilder(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
@@ -61,7 +62,7 @@ public class DeleteDialogReadableList {
     }
 
 
-    public DeleteDialogReadableList(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
+    public ReadableListDeleteDialog(final ReadableListActivity activityContext, final StickyGridAdapter.LineItem lineItem) {
         this.lineItemToBeDeleted = lineItem;
         this.alertDialog = (new AlertDialogBuilder(activityContext,this.lineItemToBeDeleted)).create();
     }

@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.readable_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.tonicartos.superslim.GridSLM;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;

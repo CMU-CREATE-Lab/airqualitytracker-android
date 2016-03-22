@@ -8,7 +8,7 @@ import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuAct
 /**
  * Created by mike on 6/8/15.
  */
-public class DebugDialogReadableList {
+public class ReadableListDebugDialog {
 
     private class AlertDialogBuilder extends AlertDialog.Builder {
         public AlertDialogBuilder(final ReadableListActivity activityContext) {
@@ -35,7 +35,7 @@ public class DebugDialogReadableList {
     }
 
 
-    public DebugDialogReadableList(final ReadableListActivity activityContext) {
+    public ReadableListDebugDialog(final ReadableListActivity activityContext) {
         this.activity = activityContext;
         this.alertDialog = (new AlertDialogBuilder(activityContext)).create();
     }

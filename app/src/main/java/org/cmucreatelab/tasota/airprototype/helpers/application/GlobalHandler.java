@@ -6,7 +6,7 @@ import android.location.Location;
 import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers.ManageTrackersAdapter;
-import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.EsdrAccount;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;

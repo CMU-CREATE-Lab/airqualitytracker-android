@@ -4,7 +4,7 @@ import android.util.Log;
 import com.android.volley.Response;
 
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers.ManageTrackersAdapter;
-import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;

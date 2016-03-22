@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.readable_list;
+package org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
@@ -134,33 +135,17 @@ class StickyGridView extends RecyclerView.ViewHolder
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     int action = motionEvent.getActionMasked();
                     switch (action) {
-//                        case MotionEvent.ACTION_DOWN:
-//                            Log.i(Constants.LOG_TAG,"ACTION_DOWN");
-//                            break;
                         case MotionEvent.ACTION_POINTER_DOWN:
                             Log.i(Constants.LOG_TAG,"ACTION_POINTER_DOWN");
                             if (motionEvent.getPointerCount() == 2) {
-//                                Log.i(Constants.LOG_TAG,"Two Fingers!");
                                 context.longPressTimer.startTimer();
                             } else {
-//                                Log.i(Constants.LOG_TAG,"Down but not 2 fingers");
                                 context.longPressTimer.stopTimer();
                             }
                             break;
                         case MotionEvent.ACTION_POINTER_UP:
                             context.longPressTimer.stopTimer();
-//                            Log.i(Constants.LOG_TAG,"ACTION_POINTER_UP");
-//                            if (motionEvent.getPointerCount() == 2) {
-//                                Log.i(Constants.LOG_TAG,"Up from 2 Fingers!");
-//                                context.longPressTimer.stopTimer();
-//                            } else {
-//                                Log.i(Constants.LOG_TAG,"Up but not 2 fingers");
-//                                context.longPressTimer.stopTimer();
-//                            }
                             break;
-//                        case MotionEvent.ACTION_UP:
-//                            Log.i(Constants.LOG_TAG,"ACTION_UP");
-//                            break;
                     }
                     return true;
                 }

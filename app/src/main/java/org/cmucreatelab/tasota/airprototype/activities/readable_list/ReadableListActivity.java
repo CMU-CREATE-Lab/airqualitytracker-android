@@ -1,19 +1,16 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import org.cmucreatelab.tasota.airprototype.activities.options_menu.login.LoginSessionExpiredDialog;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.about_air_quality.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.about_speck.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers.ManageTrackersActivity;
+import org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.timers.RefreshTimer;
 import org.cmucreatelab.tasota.airprototype.classes.timers.TwoFingerLongPressTimer;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -23,10 +20,9 @@ import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 
 public class ReadableListActivity extends ActionBarActivity {
 
-    public DeleteDialogReadableList deleteDialog;
-    public DebugDialogReadableList debugDialog;
-    public StickyGridFragment stickyGrid;
-    private SwipeRefreshLayout swipeRefresh;
+    public ReadableListDeleteDialog deleteDialog;
+    public ReadableListDebugDialog debugDialog;
+    private ReadableListUIElements uiElements;
     // Keeps track of the activity to know if it was being displayed before the app
     // gets thrown into the background. There is no Event in android to check for
     // when the app returns to the foreground (ios: applicationDidBecomeActive) so
@@ -34,12 +30,12 @@ public class ReadableListActivity extends ActionBarActivity {
     public boolean activityIsActive = true;
     // refresh every 5 minutes (...with some caveats regarding active activities)
     private RefreshTimer refreshTimer = new RefreshTimer(this, 300000);
-    final protected TwoFingerLongPressTimer longPressTimer = new TwoFingerLongPressTimer(this,2000);
+    final public TwoFingerLongPressTimer longPressTimer = new TwoFingerLongPressTimer(this,2000);
 
 
     public void openDebugDialog() {
         Log.i(Constants.LOG_TAG, "called openDebugDialog!");
-        debugDialog = new DebugDialogReadableList(this);
+        debugDialog = new ReadableListDebugDialog(this);
         debugDialog.getAlertDialog().show();
     }
 
@@ -50,7 +46,7 @@ public class ReadableListActivity extends ActionBarActivity {
         } else if (lineItem.readable == GlobalHandler.getInstance(this.getApplicationContext()).readingsHandler.gpsReadingHandler.gpsAddress) {
             Log.w(Constants.LOG_TAG, "Tried deleting hardcoded Address (gpsAddress).");
         } else {
-            deleteDialog = new DeleteDialogReadableList(this, lineItem);
+            deleteDialog = new ReadableListDeleteDialog(this, lineItem);
             deleteDialog.getAlertDialog().show();
         }
     }
@@ -60,38 +56,9 @@ public class ReadableListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__readable_list__activity);
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            actionBar.setCustomView(R.layout.action_bar);
-        }
-
-        // work-around to get alert dialog to show up after check on app launch
-        if (globalHandler.displaySessionExpiredDialog) {
-            globalHandler.displaySessionExpiredDialog = false;
-            LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(this);
-            dialog.getAlertDialog().show();
-        }
-
-        globalHandler.updateReadings();
-
-        if (savedInstanceState == null) {
-            this.stickyGrid = new StickyGridFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.readable_list_refresher, stickyGrid, Constants.StickyGrid.GRID_TAG)
-                    .commit();
-        }
-
-        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.readable_list_refresher);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                GlobalHandler.getInstance(getApplicationContext()).updateReadings();
-                swipeRefresh.setRefreshing(false);
-            }
-        });
+        uiElements = new ReadableListUIElements(this);
+        uiElements.populate(savedInstanceState);
     }
 
 
