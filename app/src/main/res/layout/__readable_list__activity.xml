@@ -5,7 +5,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
-    tools:context="org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity"
+    tools:activity="org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity"
     android:background="#222">
 
     <android.support.v4.widget.SwipeRefreshLayout

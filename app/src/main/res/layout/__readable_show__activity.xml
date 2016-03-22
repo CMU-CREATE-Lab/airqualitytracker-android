@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity"
+    tools:activity="org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity"
     android:id="@+id/layoutShowAddress"
     android:background="#666">
 

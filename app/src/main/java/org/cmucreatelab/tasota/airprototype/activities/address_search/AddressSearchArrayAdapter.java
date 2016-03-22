@@ -14,22 +14,22 @@ import java.util.ArrayList;
 /**
  * Created by mike on 6/25/15.
  */
-public class ArrayAdapterAddressSearch extends ArrayAdapter<SimpleAddress>
+public class AddressSearchArrayAdapter extends ArrayAdapter<SimpleAddress>
         implements AdapterView.OnItemClickListener {
 
-    private final AddressSearchActivity context;
+    private final AddressSearchActivity activity;
 
 
     private void setupListView() {
-        ListView listView = (ListView)context.findViewById(R.id.listViewAddressSearch);
+        ListView listView = (ListView) activity.findViewById(R.id.listViewAddressSearch);
         listView.setAdapter(this);
         listView.setOnItemClickListener(this);
     }
 
 
-    public ArrayAdapterAddressSearch(AddressSearchActivity context) {
-        super(context, R.layout.__address_search__item, new ArrayList<SimpleAddress>());
-        this.context = context;
+    public AddressSearchArrayAdapter(AddressSearchActivity activity) {
+        super(activity, R.layout.__address_search__item, new ArrayList<SimpleAddress>());
+        this.activity = activity;
         setupListView();
     }
 
@@ -39,12 +39,12 @@ public class ArrayAdapterAddressSearch extends ArrayAdapter<SimpleAddress>
         LinearLayout linearLayout;
         SimpleAddress address;
 
-        linearLayout= new LinearLayout(this.context);
+        linearLayout= new LinearLayout(this.activity);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         address = this.getItem(position);
         if (address.getName() != null) {
-            TextView textView = new TextView(this.context);
+            TextView textView = new TextView(this.activity);
             textView.setText(address.getName());
             textView.setTextSize(24);
             linearLayout.addView(textView);
@@ -57,7 +57,7 @@ public class ArrayAdapterAddressSearch extends ArrayAdapter<SimpleAddress>
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         SimpleAddress address = this.getItem(i);
-        context.returnAddress(address);
+        activity.returnAddress(address);
     }
 
 }

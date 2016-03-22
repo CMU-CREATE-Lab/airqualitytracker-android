@@ -18,10 +18,10 @@ public class AutocompleteTimer extends Timer {
     final Response.Listener<JSONObject> completionHandler = new Response.Listener<JSONObject>() {
         @Override
         public void onResponse(JSONObject response) {
-            activity.listAdapter.clear();
+            activity.clearAdapter();
             ArrayList<SimpleAddress> results = WuJsonParser.parseAddressesFromJson(response);
             for (SimpleAddress address : results) {
-                activity.listAdapter.add(address);
+                activity.addAddressToAdapter(address);
             }
         }
     };
@@ -37,7 +37,7 @@ public class AutocompleteTimer extends Timer {
     @Override
     public void timerExpires() {
         GlobalHandler globalhandler = GlobalHandler.getInstance(activity.getApplicationContext());
-        globalhandler.httpRequestHandler.requestGeocodingFromApi(activity.searchText.toString(), completionHandler);
+        globalhandler.httpRequestHandler.requestGeocodingFromApi(activity.getTextFromWatcher(), completionHandler);
     }
 
 }
