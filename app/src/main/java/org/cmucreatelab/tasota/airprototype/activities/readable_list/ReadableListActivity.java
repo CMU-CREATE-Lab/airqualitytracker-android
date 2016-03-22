@@ -10,8 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.cmucreatelab.tasota.airprototype.activities.SessionExpiredDialog;
-import org.cmucreatelab.tasota.airprototype.activities.about.AboutAirQualityActivity;
-import org.cmucreatelab.tasota.airprototype.activities.about.AboutSpeckActivity;
+import org.cmucreatelab.tasota.airprototype.activities.about.air_quality.AboutAirQualityActivity;
+import org.cmucreatelab.tasota.airprototype.activities.about.speck.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity;
 import org.cmucreatelab.tasota.airprototype.classes.timers.RefreshTimer;

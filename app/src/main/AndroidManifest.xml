@@ -48,11 +48,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.about.AboutAirQualityActivity"
+            android:name=".activities.about.air_quality.AboutAirQualityActivity"
             android:label="@string/title_activity_about" >
         </activity>
         <activity
-            android:name=".activities.about.AboutSpeckActivity"
+            android:name=".activities.about.speck.AboutSpeckActivity"
             android:label="@string/title_activity_about_speck" >
         </activity>
         <activity
