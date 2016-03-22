@@ -70,7 +70,7 @@ public class DynamicListView extends ListView {
     private final int MOVE_DURATION = 150;
     private final int LINE_THICKNESS = 15;
 
-    public ArrayList<ManageTrackersAdapter.TrackerListItem> mCheeseList;
+    public ArrayList<ManageTrackersAdapter.TrackerListItem> mList;
 
     private int mLastEventY = -1;
 
@@ -388,7 +388,7 @@ public class DynamicListView extends ListView {
                 return;
             }
 
-            swapElements(mCheeseList, originalItem, getPositionForView(switchView));
+            swapElements(mList, originalItem, getPositionForView(switchView));
 
 //            ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
             ManageTrackersAdapter.TrackerListItem switchItem = adapter.getItem(getPositionForView(switchView));
@@ -597,8 +597,8 @@ public class DynamicListView extends ListView {
         return false;
     }
 
-    public void setCheeseList(ArrayList<ManageTrackersAdapter.TrackerListItem> cheeseList) {
-        mCheeseList = cheeseList;
+    public void setList(ArrayList<ManageTrackersAdapter.TrackerListItem> list) {
+        mList = list;
     }
 
     /**

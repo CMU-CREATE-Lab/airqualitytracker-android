@@ -42,7 +42,7 @@ public class ManageTrackersUIElements {
         checkBoxCurrentLocation.setChecked(globalHandler.settingsHandler.appUsesLocation());
 
         ManageTrackersAdapter adapter = new ManageTrackersAdapter(activity,list);
-        listViewTrackers.setCheeseList(list);
+        listViewTrackers.setList(list);
         listViewTrackers.setAdapter(adapter);
         listViewTrackers.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }

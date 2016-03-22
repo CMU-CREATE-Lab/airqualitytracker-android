@@ -27,7 +27,7 @@ public class ManageTrackersEditDialog {
 
             ArrayList<ManageTrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).readingsHandler.trackerList;
             ManageTrackersAdapter adapter = new ManageTrackersAdapter(activityContext,list);
-            activityContext.uiElements.listViewTrackers.setCheeseList(list);
+            activityContext.uiElements.listViewTrackers.setList(list);
             activityContext.uiElements.listViewTrackers.setAdapter(adapter);
         }
     };
