@@ -39,7 +39,7 @@ public class SecretMenuListFeedsAdapter extends ArrayAdapter<SecretMenuListFeeds
 
 
     public SecretMenuListFeedsAdapter(SecretMenuActivity context, ArrayList<SecretMenuListFeedsAdapter.ListFeedsItem> values) {
-        super(context, R.layout.__secret_menu__debug_activity, values);
+        super(context, R.layout.__secret_menu__activity, values);
         this.context = context;
     }
 
@@ -52,13 +52,13 @@ public class SecretMenuListFeedsAdapter extends ArrayAdapter<SecretMenuListFeeds
         View rowView;
 
         if (item.isHeader) {
-            rowView = inflater.inflate(R.layout.__secret_menu__debug_activity_list_header, parent, false);
+            rowView = inflater.inflate(R.layout.__secret_menu__list_header, parent, false);
 
             // header title
             TextView textViewListFeedsHeader = (TextView)rowView.findViewById(R.id.textViewListFeedsHeader);
             textViewListFeedsHeader.setText(String.valueOf(item.index)+" ("+item.address.getLocation().latitude+","+item.address.getLocation().longitude+")");
         } else {
-            rowView = inflater.inflate(R.layout.__secret_menu__debug_activity_list_item, parent, false);
+            rowView = inflater.inflate(R.layout.__secret_menu__list_item, parent, false);
 
             // feed lat
             TextView textListFeedsLatitude = (TextView)rowView.findViewById(R.id.textListFeedsLatitude);

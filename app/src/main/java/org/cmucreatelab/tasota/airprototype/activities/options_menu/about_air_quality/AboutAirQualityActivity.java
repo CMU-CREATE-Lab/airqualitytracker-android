@@ -15,7 +15,7 @@ public class AboutAirQualityActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.__about__airquality);
+        setContentView(R.layout.__options_menu____about_air_quality__activity);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

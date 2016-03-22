@@ -17,7 +17,7 @@ public class AqiExplanationActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.__readable_show__aqi_explanation_activity);
+        setContentView(R.layout.__readable_show____aqi_explanation__activity);
 
         this.reading = GlobalHandler.getInstance(getApplicationContext()).readableShowToAirNow;
         buttonClickListener = new AqiExplanationButtonClickListener(this);

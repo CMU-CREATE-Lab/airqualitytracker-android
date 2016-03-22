@@ -44,7 +44,7 @@ public class ManageTrackersAdapter extends ArrayAdapter<ManageTrackersAdapter.Tr
 
 
     public ManageTrackersAdapter(ManageTrackersActivity context, ArrayList<ManageTrackersAdapter.TrackerListItem> values) {
-        super(context, R.layout.__trackers__manage_trackers_table_item, values);
+        super(context, R.layout.__options_menu____manage_trackers__table_item, values);
         this.context = context;
         for (int i = 0; i < values.size(); ++i) {
             mIdMap.put(values.get(i), i);
@@ -60,12 +60,12 @@ public class ManageTrackersAdapter extends ArrayAdapter<ManageTrackersAdapter.Tr
         View rowView;
 
         if (item.isHeader) {
-            rowView = inflater.inflate(R.layout.__trackers__manage_trackers_table_header, parent, false);
+            rowView = inflater.inflate(R.layout.__options_menu____manage_trackers__table_header, parent, false);
 
             TextView textViewTrackerHeader = (TextView)rowView.findViewById(R.id.textViewTrackerHeader);
             textViewTrackerHeader.setText(item.name);
         } else {
-            rowView = inflater.inflate(R.layout.__trackers__manage_trackers_table_item, parent, false);
+            rowView = inflater.inflate(R.layout.__options_menu____manage_trackers__table_item, parent, false);
 
             TextView textViewReadingName = (TextView)rowView.findViewById(R.id.textViewReadingName);
             textViewReadingName.setText(item.readable.getName());

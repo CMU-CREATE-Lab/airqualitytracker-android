@@ -14,7 +14,7 @@ public class SecretMenuActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.__secret_menu__debug_activity);
+        setContentView(R.layout.__secret_menu__activity);
 
         buttonClickerListener = new SecretMenuButtonClickerListener(this);
         uiElements = new SecretMenuUIElements(this);

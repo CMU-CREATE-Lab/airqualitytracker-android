@@ -22,7 +22,7 @@ public class AirNowActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.__readable_show__airnow_activity);
+        setContentView(R.layout.__readable_show____air_now__activity);
 
         this.reading = GlobalHandler.getInstance(getApplicationContext()).readableShowToAirNow;
 

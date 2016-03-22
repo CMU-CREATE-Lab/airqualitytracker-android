@@ -39,7 +39,7 @@ public class AirNowAdapter extends ArrayAdapter<AirNowAdapter.AirNowItem> {
 
 
     public AirNowAdapter(AirNowActivity context, ArrayList<AirNowItem> values) {
-        super(context, R.layout.__readable_show__airnow_activity, values);
+        super(context, R.layout.__readable_show____air_now__activity, values);
         this.context = context;
     }
 
@@ -52,13 +52,13 @@ public class AirNowAdapter extends ArrayAdapter<AirNowAdapter.AirNowItem> {
         View rowView;
 
         if (item.isHeader) {
-            rowView = inflater.inflate(R.layout.__readable_show__airnow_activity_list_header, parent, false);
+            rowView = inflater.inflate(R.layout.__readable_show____air_now__list_header, parent, false);
 
             // header title
             TextView textViewAirNowListHeader = (TextView)rowView.findViewById(R.id.textViewAirNowListHeader);
             textViewAirNowListHeader.setText(item.title);
         } else {
-            rowView = inflater.inflate(R.layout.__readable_show__airnow_activity_list_item, parent, false);
+            rowView = inflater.inflate(R.layout.__readable_show____air_now__list_item, parent, false);
 
             double aqi = item.observation.getAqi();
             int index = Constants.AqiReading.getIndexFromReading(aqi);

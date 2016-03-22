@@ -36,12 +36,12 @@ public class LoginUIElements {
 
     protected void display() {
         if (!activity.loggedIn) {
-            activity.setContentView(R.layout.__login__login_activity);
+            activity.setContentView(R.layout.__options_menu____login__login_activity);
             editTextLoginUsername = (EditText) activity.findViewById(R.id.editTextLoginUsername);
             editTextLoginPassword = (EditText) activity.findViewById(R.id.editTextLoginPassword);
             activity.findViewById(R.id.buttonLogin).setOnClickListener(activity.clickListener);
         } else {
-            activity.setContentView(R.layout.__login__logout_activity);
+            activity.setContentView(R.layout.__options_menu____login__logout_activity);
             textViewLogoutUsername = (TextView) activity.findViewById(R.id.textViewLogoutUsername);
             if (activity.username.equals("")) {
                 GlobalHandler globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());

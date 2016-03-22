@@ -32,7 +32,7 @@ public class ManageTrackersActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.__trackers__manage_trackers);
+        setContentView(R.layout.__options_menu____manage_trackers__activity);
 
         uiElements = new ManageTrackersUIElements(this);
         uiElements.populate();
