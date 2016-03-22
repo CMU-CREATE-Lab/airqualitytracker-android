@@ -56,7 +56,6 @@ public class ReadingsHandler extends ReadingsHandlerEditable {
         for (String header : headers) {
             ArrayList<Readable> items = new ArrayList<>();
             items.addAll((ArrayList<Readable>)hashMap.get(header));
-            // TODO had to add Null pointer check
             if (globalHandler.settingsHandler.appUsesLocation() && header == Constants.HEADER_TITLES[1]) {
                 items.add(0,gpsReadingHandler.gpsAddress);
             }
@@ -87,9 +86,7 @@ public class ReadingsHandler extends ReadingsHandlerEditable {
             }
         }
         // debugFeedsList
-        // TODO this doesn't get updated enough (doesn't list all the feeds until you refresh)
         int index=0;
-        // TODO had to add Null pointer check
         if (gpsReadingHandler != null && globalHandler.settingsHandler.appUsesLocation()) {
             debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(gpsReadingHandler.gpsAddress, index++) );
             for (Feed feed : gpsReadingHandler.gpsAddress.feeds) {

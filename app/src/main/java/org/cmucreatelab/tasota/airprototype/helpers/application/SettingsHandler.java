@@ -42,8 +42,6 @@ public class SettingsHandler {
     // TODO consider timestamps for last updated user info
     private boolean appUsesLocation=true;
     public ArrayList<Long> blacklistedDevices;
-    // run-time only flag to determine if we want to pull info from ESDR
-    public boolean userFeedsNeedsUpdated=true;
     public boolean appUsesLocation() {
         return appUsesLocation;
     }

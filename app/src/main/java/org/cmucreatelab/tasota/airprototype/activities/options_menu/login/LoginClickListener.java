@@ -24,7 +24,6 @@ public class LoginClickListener implements View.OnClickListener {
             globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());
             activity.username = activity.uiElements.editTextLoginUsername.getText().toString();
             activity.password = activity.uiElements.editTextLoginPassword.getText().toString();
-            globalHandler.settingsHandler.userFeedsNeedsUpdated = true;
             globalHandler.esdrAuthHandler.requestEsdrToken(activity.username,activity.password,activity.loginRequest,activity.loginRequest);
             activity.loggedIn = true;
             activity.uiElements.display();
@@ -33,7 +32,6 @@ public class LoginClickListener implements View.OnClickListener {
             globalHandler.servicesHandler.stopEsdrRefreshService();
             globalHandler.esdrLoginHandler.setUserLoggedIn(false);
             activity.loggedIn = false;
-            globalHandler.settingsHandler.userFeedsNeedsUpdated = true;
             // clears specks on logout
             globalHandler.readingsHandler.clearSpecks();
             globalHandler.readingsHandler.populateSpecks();

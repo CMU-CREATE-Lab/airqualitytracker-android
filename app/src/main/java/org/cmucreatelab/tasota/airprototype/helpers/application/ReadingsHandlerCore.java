@@ -133,8 +133,6 @@ public abstract class ReadingsHandlerCore {
                     ArrayList<Speck> specks = new ArrayList<>();
                     Log.v(Constants.LOG_TAG, "updateSpecks handling response=" + response.toString());
                     EsdrJsonParser.populateSpecksFromJson(specks, response);
-                    // TODO not sure if needed anymore?
-                    globalHandler.settingsHandler.userFeedsNeedsUpdated = false;
 
                     for (Speck speck : specks) {
                         // only add what isnt in the DB already

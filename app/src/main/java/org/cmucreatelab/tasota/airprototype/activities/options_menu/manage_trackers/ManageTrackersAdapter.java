@@ -110,7 +110,6 @@ public class ManageTrackersAdapter extends ArrayAdapter<ManageTrackersAdapter.Tr
     }
 
 
-    // TODO helper to unhide all views
     public void unhideAllListItems() {
         for (TrackerListItem item: mIdMap.keySet()) {
             item.hidden = false;
@@ -127,7 +126,6 @@ public class ManageTrackersAdapter extends ArrayAdapter<ManageTrackersAdapter.Tr
     }
 
 
-    // TODO check how this method works
     @Override
     public long getItemId(int position) {
         if (position < 0 || position >= mIdMap.size()) {

@@ -50,7 +50,10 @@ public class EsdrLoginHandler {
     public void setUserLoggedIn(boolean userLoggedIn) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putBoolean(Constants.SettingsKeys.userLoggedIn,userLoggedIn);
-        // TODO commit() vs. apply() ?
+        // from Android Docs (commit v. apply):
+        // If you don't care about the return value and
+        // you're using this from your application's
+        // main thread, consider using apply() instead.
         editor.apply();
         this.userLoggedIn = userLoggedIn;
         // repopulates specks on successful login/logout
@@ -67,6 +70,7 @@ public class EsdrLoginHandler {
         editor.putString(Constants.SettingsKeys.refreshToken, refreshToken);
         editor.putLong(Constants.SettingsKeys.userId, userId);
         editor.putLong(Constants.SettingsKeys.expiresAt, expiresAt);
+        // see above comment concerning commit() vs. apply()
         editor.apply();
         globalHandler.esdrAccount.loadFromUserDefaults(sharedPreferences);
     }
@@ -77,6 +81,7 @@ public class EsdrLoginHandler {
         editor.putString(Constants.SettingsKeys.accessToken, accessToken);
         editor.putString(Constants.SettingsKeys.refreshToken, refreshToken);
         editor.putLong(Constants.SettingsKeys.expiresAt, expiresAt);
+        // see above comment concerning commit() vs. apply()
         editor.apply();
         globalHandler.esdrAccount.loadFromUserDefaults(sharedPreferences);
     }

@@ -97,14 +97,6 @@ public class ReadableListActivity extends ActionBarActivity {
     }
 
 
-    // TODO this might not be used; just added this to be more thorough
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
-        activityIsActive = false;
-        super.startActivityForResult(intent, requestCode, options);
-    }
-
-
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

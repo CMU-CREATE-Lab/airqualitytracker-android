@@ -10,45 +10,11 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 public class ReadableShowActivity extends ActionBarActivity {
 
     protected Readable reading;
-    private int itemIndex;
     protected ReadableShowFrameClickListener frameClickListener;
-
-
-    // TODO deprecated method; delete later
-    protected void shareReading() {
-        String message, label;
-        Intent sendIntent = new Intent();
-
-        try {
-            switch(reading.getReadableType()) {
-                case SPECK:
-                    long micrograms = (long) reading.getReadableValue();
-                    label = Constants.SpeckReading.titles[Constants.SpeckReading.getIndexFromReading(micrograms)];
-                    break;
-                case ADDRESS:
-                    double aqi = (long) (100 * AqiConverter.microgramsToAqi(reading.getReadableValue())) / 100.0;
-                    label = Constants.AqiReading.titles[Constants.AqiReading.getIndexFromReading(aqi)];
-                    break;
-                default:
-                    Log.e(Constants.LOG_TAG,"shareReading could not find Readable type.");
-                    return;
-            }
-            message = "My air quality is " + label + ". Learn more at https://www.specksensor.com/";
-
-            Log.d(Constants.LOG_TAG, "Sharing string: ''" + message + "''");
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, message);
-            sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent, "Share Air Quality Index"));
-        } catch (Exception e) {
-            Log.e(Constants.LOG_TAG,"Received error while trying to share station's AQI on ReadableShowActivity.");
-        }
-    }
 
 
     @Override

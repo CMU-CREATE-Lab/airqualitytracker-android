@@ -43,7 +43,6 @@ public class ManageTrackersActivity extends ActionBarActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        // TODO restore objects
         Log.v(Constants.LOG_TAG, "ManageTrackersActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("deleteDialog")) {
             int index = savedInstanceState.getInt("deleteDialogReadableIndex");
@@ -64,7 +63,6 @@ public class ManageTrackersActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // TODO save objects
         if (deleteDialog != null && deleteDialog.getAlertDialog().isShowing()) {
             outState.putBoolean("deleteDialog", true);
             outState.putInt("deleteDialogReadableIndex", GlobalHandler.getInstance(getApplicationContext()).
