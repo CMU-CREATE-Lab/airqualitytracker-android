@@ -1,10 +1,9 @@
-package org.cmucreatelab.tasota.airprototype.activities.readable_show;
+package org.cmucreatelab.tasota.airprototype.activities.readable_show.air_now;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
@@ -15,10 +14,9 @@ import java.util.ArrayList;
 public class AirNowActivity extends ActionBarActivity {
 
     private AirNowReadable reading;
-    public final ArrayList<AirNowAdapter.AirNowItem> airNowItemsList = new ArrayList<>();
-    public AirNowAdapter airNowAdapter;
-
-    private ListView listViewAirNow;
+    protected final ArrayList<AirNowAdapter.AirNowItem> airNowItemsList = new ArrayList<>();
+    protected AirNowAdapter airNowAdapter;
+    private AirNowUIElements uiElements;
 
 
     @Override
@@ -34,10 +32,9 @@ public class AirNowActivity extends ActionBarActivity {
             reading.requestAirNow(this);
         }
 
-        // array adapter stuff
-        this.listViewAirNow = (ListView)findViewById(R.id.listViewAirNow);
         airNowAdapter = new AirNowAdapter(this,airNowItemsList);
-        listViewAirNow.setAdapter(airNowAdapter);
+        uiElements = new AirNowUIElements(this);
+        uiElements.populate();
 
         clearAndUpdateList(observations);
     }

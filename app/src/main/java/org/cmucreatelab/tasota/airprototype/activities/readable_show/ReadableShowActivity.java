@@ -14,15 +14,12 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 public class ReadableShowActivity extends ActionBarActivity {
 
-    private Readable reading;
+    protected Readable reading;
     private int itemIndex;
+    protected ReadableShowFrameClickListener frameClickListener;
 
 
-    protected Readable getReading() {
-        return reading;
-    }
-
-
+    // TODO deprecated method; delete later
     protected void shareReading() {
         String message, label;
         Intent sendIntent = new Intent();
@@ -92,7 +89,8 @@ public class ReadableShowActivity extends ActionBarActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        new LinearViewReadableShow(this, reading).populateLinearView();
+        frameClickListener = new ReadableShowFrameClickListener(this);
+        new ReadableShowUIElements(this, reading).populate();
     }
 
 

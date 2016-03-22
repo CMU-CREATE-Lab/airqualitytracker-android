@@ -1,6 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_show;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -9,18 +8,16 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
-import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 /**
  * Created by mike on 6/18/15.
  */
-public class LinearViewReadableShow {
+public class ReadableShowUIElements {
 
     private Readable reading;
     private TextView textShowAddressAqiValue;
@@ -31,13 +28,49 @@ public class LinearViewReadableShow {
     private RelativeLayout layoutShowAddress;
     private FrameLayout frameAqiButton;
     private TextView textViewReadingName;
-    final private ReadableShowActivity context;
-    // TODO no longer used; delete along with classes
-    private AlertDialogReadableShow alertDialogHelper;
+    final private ReadableShowActivity activity;
+
+
+    public ReadableShowUIElements(ReadableShowActivity activity, Readable reading) {
+        this.activity = activity;
+        this.reading = reading;
+        this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);
+        this.textShowAddressAqiRange = (TextView)activity.findViewById(R.id.textShowAddressAqiRange);
+        this.textShowAddressAqiTitle = (TextView)activity.findViewById(R.id.textShowAddressAqiTitle);
+        this.textShowAddressAqiDescription = (TextView)activity.findViewById(R.id.textShowAddressAqiDescription);
+        this.textShowAddressAqiLabel = (TextView)activity.findViewById(R.id.textShowAddressAqiLabel);
+        this.layoutShowAddress = (RelativeLayout)activity.findViewById(R.id.layoutShowAddress);
+        this.frameAqiButton = (FrameLayout)activity.findViewById(R.id.frameAqiButton);
+        this.textViewReadingName = (TextView)activity.findViewById(R.id.textViewReadingName);
+
+        // use custom fonts
+        Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
+        textShowAddressAqiValue.setTypeface(fontAqi);
+
+        frameAqiButton.setOnClickListener(activity.frameClickListener);
+    }
+
+
+    public void populate() {
+        if (reading.hasReadableValue()) {
+            double readableValue = reading.getReadableValue();
+
+            if (reading.getReadableType() == Readable.Type.ADDRESS) {
+                addressView((SimpleAddress) reading);
+            } else if (reading.getReadableType() == Readable.Type.SPECK) {
+                speckView((Speck) reading);
+            } else {
+                Log.w(Constants.LOG_TAG, "Tried to populate LinearView in AddressShow with unimplemented Readable object.");
+                defaultView();
+            }
+        } else {
+            defaultView();
+        }
+    }
 
 
     private void defaultView() {
-        Log.w(Constants.LOG_TAG, "warning: using default populateLinearView");
+        Log.w(Constants.LOG_TAG, "warning: using default populate");
         this.textShowAddressAqiValue.setText("");
         textShowAddressAqiRange.setText("");
         textShowAddressAqiLabel.setVisibility(View.INVISIBLE);
@@ -87,59 +120,6 @@ public class LinearViewReadableShow {
 
             // hide buttons
             frameAqiButton.setVisibility(View.INVISIBLE);
-        }
-    }
-
-
-    public LinearViewReadableShow(ReadableShowActivity activity, Readable reading) {
-        this.context = activity;
-        this.reading = reading;
-        this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);
-        this.textShowAddressAqiRange = (TextView)activity.findViewById(R.id.textShowAddressAqiRange);
-        this.textShowAddressAqiTitle = (TextView)activity.findViewById(R.id.textShowAddressAqiTitle);
-        this.textShowAddressAqiDescription = (TextView)activity.findViewById(R.id.textShowAddressAqiDescription);
-        this.textShowAddressAqiLabel = (TextView)activity.findViewById(R.id.textShowAddressAqiLabel);
-        this.layoutShowAddress = (RelativeLayout)activity.findViewById(R.id.layoutShowAddress);
-        this.frameAqiButton = (FrameLayout)activity.findViewById(R.id.frameAqiButton);
-        this.textViewReadingName = (TextView)activity.findViewById(R.id.textViewReadingName);
-
-        // use custom fonts
-        Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
-        textShowAddressAqiValue.setTypeface(fontAqi);
-
-        frameAqiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(Constants.LOG_TAG, "clicked frameAqiButton");
-                // TODO sending Readable via GlobalHandler but should be handled through the activities
-                Readable readable = context.getReading();
-                if (readable instanceof AirNowReadable) {
-                    GlobalHandler.getInstance(context).readableShowToAirNow = (AirNowReadable)readable;
-                    context.startActivity(new Intent(context, AqiExplanationActivity.class));
-                } else {
-                    Log.e(Constants.LOG_TAG, "ERROR - reading is not an instance of AirNowReadable");
-                }
-            }
-        });
-    }
-
-
-    public void populateLinearView() {
-//        this.textShowAddressName.setText(reading.getName());
-
-        if (reading.hasReadableValue()) {
-            double readableValue = reading.getReadableValue();
-
-            if (reading.getReadableType() == Readable.Type.ADDRESS) {
-                addressView((SimpleAddress) reading);
-            } else if (reading.getReadableType() == Readable.Type.SPECK) {
-                speckView((Speck) reading);
-            } else {
-                Log.w(Constants.LOG_TAG, "Tried to populate LinearView in AddressShow with unimplemented Readable object.");
-                defaultView();
-            }
-        } else {
-            defaultView();
         }
     }
 

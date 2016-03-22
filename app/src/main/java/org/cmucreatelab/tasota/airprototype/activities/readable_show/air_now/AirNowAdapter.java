@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.readable_show;
+package org.cmucreatelab.tasota.airprototype.activities.readable_show.air_now;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
 
 /**

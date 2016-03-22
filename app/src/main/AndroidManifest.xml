@@ -66,14 +66,14 @@
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>
         <activity
-            android:name=".activities.readable_show.AqiExplanationActivity"
+            android:name=".activities.readable_show.aqi_explanation.AqiExplanationActivity"
             android:label="@string/title_activity_aqi_explanation"
             android:parentActivityName=".activities.readable_show.ReadableShowActivity" >
         </activity>
         <activity
-            android:name=".activities.readable_show.AirNowActivity"
+            android:name=".activities.readable_show.air_now.AirNowActivity"
             android:label="@string/title_activity_airnow"
-            android:parentActivityName=".activities.readable_show.AqiExplanationActivity" >
+            android:parentActivityName=".activities.readable_show.aqi_explanation.AqiExplanationActivity" >
         </activity>
     </application>
 

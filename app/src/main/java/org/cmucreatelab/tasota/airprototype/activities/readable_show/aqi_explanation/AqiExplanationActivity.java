@@ -1,21 +1,17 @@
-package org.cmucreatelab.tasota.airprototype.activities.readable_show;
+package org.cmucreatelab.tasota.airprototype.activities.readable_show.aqi_explanation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 public class AqiExplanationActivity extends ActionBarActivity {
 
-    private Button buttonAirNow;
     private AirNowReadable reading;
+    protected AqiExplanationButtonClickListener buttonClickListener;
+    private AqiExplanationUIElements uiElements;
 
 
     @Override
@@ -23,16 +19,10 @@ public class AqiExplanationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__readable_show__aqi_explanation_activity);
 
-        this.buttonAirNow = (Button)findViewById(R.id.buttonAirNow);
         this.reading = GlobalHandler.getInstance(getApplicationContext()).readableShowToAirNow;
-
-        buttonAirNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(Constants.LOG_TAG, "clicked buttonAirNow");
-                startActivity(new Intent(getApplicationContext(), AirNowActivity.class));
-            }
-        });
+        buttonClickListener = new AqiExplanationButtonClickListener(this);
+        uiElements = new AqiExplanationUIElements(this);
+        uiElements.populate();
     }
 
 
