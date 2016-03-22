@@ -1,22 +1,21 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_show.air_now;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
-public class AirNowActivity extends ActionBarActivity {
+public class AirNowActivity extends BaseActivity<AirNowUIElements> {
 
     private AirNowReadable reading;
     protected final ArrayList<AirNowAdapter.AirNowItem> airNowItemsList = new ArrayList<>();
     protected AirNowAdapter airNowAdapter;
-    private AirNowUIElements uiElements;
 
 
     @Override

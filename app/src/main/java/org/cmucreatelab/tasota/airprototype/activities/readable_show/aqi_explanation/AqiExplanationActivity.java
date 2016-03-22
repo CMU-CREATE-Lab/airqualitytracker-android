@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 
-public class AqiExplanationActivity extends ActionBarActivity {
+public class AqiExplanationActivity extends BaseActivity<AqiExplanationUIElements> {
 
     private AirNowReadable reading;
     protected AqiExplanationButtonClickListener buttonClickListener;
-    private AqiExplanationUIElements uiElements;
 
 
     @Override

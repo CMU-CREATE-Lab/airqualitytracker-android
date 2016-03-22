@@ -1,15 +1,13 @@
 package org.cmucreatelab.tasota.airprototype.activities.options_menu.about_speck;
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 
-public class AboutSpeckActivity extends ActionBarActivity {
-
-    private AboutSpeckUIElements uiElements;
+public class AboutSpeckActivity extends BaseActivity<AboutSpeckUIElements> {
 
 
     @Override

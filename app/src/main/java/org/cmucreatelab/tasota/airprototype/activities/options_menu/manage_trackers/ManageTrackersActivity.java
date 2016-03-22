@@ -1,20 +1,20 @@
 package org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.EditText;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 
-public class ManageTrackersActivity extends ActionBarActivity {
+public class ManageTrackersActivity extends BaseActivity<ManageTrackersUIElements> {
 
+    protected ManageTrackersUIElements uiElements;
     private ManageTrackersDeleteDialog deleteDialog;
     private ManageTrackersEditDialog editDialog;
-    protected ManageTrackersUIElements uiElements;
 
 
     public void showDeleteDialog(ManageTrackersAdapter.TrackerListItem trackerListItem) {

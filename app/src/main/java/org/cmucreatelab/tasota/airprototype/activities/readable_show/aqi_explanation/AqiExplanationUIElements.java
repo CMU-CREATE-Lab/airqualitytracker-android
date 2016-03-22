@@ -2,19 +2,17 @@ package org.cmucreatelab.tasota.airprototype.activities.readable_show.aqi_explan
 
 import android.widget.Button;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 
 /**
  * Created by mike on 3/22/16.
  */
-public class AqiExplanationUIElements {
+public class AqiExplanationUIElements extends UIElements<AqiExplanationActivity> {
 
-    private AqiExplanationActivity activity;
     private Button buttonAirNow;
 
 
-    public AqiExplanationUIElements(AqiExplanationActivity activity) {
-        this.activity = activity;
-    }
+    public AqiExplanationUIElements(AqiExplanationActivity activity) { super(activity); }
 
 
     public void populate() {

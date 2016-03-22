@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
@@ -13,16 +14,13 @@ import listviewdragginganimation.DynamicListView;
 /**
  * Created by mike on 3/22/16.
  */
-public class ManageTrackersUIElements {
+public class ManageTrackersUIElements extends UIElements<ManageTrackersActivity> {
 
-    private ManageTrackersActivity activity;
     protected DynamicListView listViewTrackers;
     private CheckBox checkBoxCurrentLocation;
 
 
-    public ManageTrackersUIElements(ManageTrackersActivity activity) {
-        this.activity = activity;
-    }
+    public ManageTrackersUIElements(ManageTrackersActivity activity) { super(activity); }
 
 
     public void populate() {

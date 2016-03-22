@@ -1,11 +1,11 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.about_air_quality.AboutAirQualityActivity;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.about_speck.AboutSpeckActivity;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.login.LoginActivity;
@@ -18,11 +18,10 @@ import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSea
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 
-public class ReadableListActivity extends ActionBarActivity {
+public class ReadableListActivity extends BaseActivity<ReadableListUIElements> {
 
     public ReadableListDeleteDialog deleteDialog;
     public ReadableListDebugDialog debugDialog;
-    private ReadableListUIElements uiElements;
     // Keeps track of the activity to know if it was being displayed before the app
     // gets thrown into the background. There is no Event in android to check for
     // when the app returns to the foreground (ios: applicationDidBecomeActive) so
@@ -58,7 +57,10 @@ public class ReadableListActivity extends ActionBarActivity {
         setContentView(R.layout.__readable_list__activity);
 
         uiElements = new ReadableListUIElements(this);
-        uiElements.populate(savedInstanceState);
+        uiElements.populate();
+        if (savedInstanceState == null) {
+            uiElements.constructStickyGrid();
+        }
     }
 
 

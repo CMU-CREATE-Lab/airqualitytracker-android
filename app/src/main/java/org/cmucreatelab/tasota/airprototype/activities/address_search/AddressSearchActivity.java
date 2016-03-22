@@ -1,17 +1,16 @@
 package org.cmucreatelab.tasota.airprototype.activities.address_search;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.system.database.AddressDbHelper;
 
-public class AddressSearchActivity extends ActionBarActivity {
+public class AddressSearchActivity extends BaseActivity<AddressSearchUIElements> {
 
     protected AddressSearchArrayAdapter listAdapter;
     protected AddressSearchTextWatcher textWatcher;
-    private AddressSearchUIElements uiElements;
 
 
     // helper for AutocompleteTimer

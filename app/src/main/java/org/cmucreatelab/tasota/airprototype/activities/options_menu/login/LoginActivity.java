@@ -1,12 +1,11 @@
 package org.cmucreatelab.tasota.airprototype.activities.options_menu.login;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import java.util.Date;
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends BaseActivity<LoginUIElements> {
 
     protected LoginUIElements uiElements;
     protected final LoginClickListener clickListener = new LoginClickListener(this);

@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -17,7 +18,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 /**
  * Created by mike on 6/18/15.
  */
-public class ReadableShowUIElements {
+public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
     private Readable reading;
     private TextView textShowAddressAqiValue;
@@ -28,11 +29,10 @@ public class ReadableShowUIElements {
     private RelativeLayout layoutShowAddress;
     private FrameLayout frameAqiButton;
     private TextView textViewReadingName;
-    final private ReadableShowActivity activity;
 
 
     public ReadableShowUIElements(ReadableShowActivity activity, Readable reading) {
-        this.activity = activity;
+        super(activity);
         this.reading = reading;
         this.textShowAddressAqiValue = (TextView)activity.findViewById(R.id.textShowAddressAqiValue);
         this.textShowAddressAqiRange = (TextView)activity.findViewById(R.id.textShowAddressAqiRange);

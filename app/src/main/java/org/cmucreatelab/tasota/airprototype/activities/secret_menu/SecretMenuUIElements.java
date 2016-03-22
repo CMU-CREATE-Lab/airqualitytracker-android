@@ -4,15 +4,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 3/22/16.
  */
-public class SecretMenuUIElements {
+public class SecretMenuUIElements extends UIElements<SecretMenuActivity> {
 
-    private SecretMenuActivity activity;
     private ListView listFeedsSecretMenu;
     private Button buttonRequestFeedsSecretMenu;
     private TextView textSecretMenuUsername;
@@ -24,9 +24,7 @@ public class SecretMenuUIElements {
     private TextView textSecretMenuExpiresAt;
 
 
-    public SecretMenuUIElements(SecretMenuActivity activity) {
-        this.activity = activity;
-    }
+    public SecretMenuUIElements(SecretMenuActivity activity) { super(activity); }
 
 
     public void populate() {

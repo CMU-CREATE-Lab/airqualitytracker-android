@@ -3,15 +3,15 @@ package org.cmucreatelab.tasota.airprototype.activities.readable_show;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 
-public class ReadableShowActivity extends ActionBarActivity {
+public class ReadableShowActivity extends BaseActivity<ReadableShowUIElements> {
 
     protected Readable reading;
     protected ReadableShowFrameClickListener frameClickListener;

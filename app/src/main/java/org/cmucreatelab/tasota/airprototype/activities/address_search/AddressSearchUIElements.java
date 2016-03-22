@@ -3,18 +3,15 @@ package org.cmucreatelab.tasota.airprototype.activities.address_search;
 import android.support.v7.app.ActionBar;
 import android.widget.EditText;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 
 /**
  * Created by mike on 3/22/16.
  */
-public class AddressSearchUIElements {
-
-    private AddressSearchActivity activity;
+public class AddressSearchUIElements extends UIElements<AddressSearchActivity> {
 
 
-    public AddressSearchUIElements(AddressSearchActivity activity) {
-        this.activity = activity;
-    }
+    public AddressSearchUIElements(AddressSearchActivity activity) { super(activity); }
 
 
     public void populate() {

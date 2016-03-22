@@ -1,13 +1,12 @@
 package org.cmucreatelab.tasota.airprototype.activities.secret_menu;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 
-public class SecretMenuActivity extends ActionBarActivity {
+public class SecretMenuActivity extends BaseActivity<SecretMenuUIElements> {
 
-    private SecretMenuUIElements uiElements;
     protected SecretMenuButtonClickerListener buttonClickerListener;
 
 

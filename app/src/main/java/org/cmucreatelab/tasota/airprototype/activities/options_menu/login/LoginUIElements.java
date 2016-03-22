@@ -4,21 +4,19 @@ import android.support.v7.app.ActionBar;
 import android.widget.EditText;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 
 /**
  * Created by mike on 3/22/16.
  */
-public class LoginUIElements {
+public class LoginUIElements extends UIElements<LoginActivity> {
 
-    private LoginActivity activity;
     protected EditText editTextLoginUsername,editTextLoginPassword;
     protected TextView textViewLogoutUsername;
 
 
-    public LoginUIElements(LoginActivity activity) {
-        this.activity = activity;
-    }
+    public LoginUIElements(LoginActivity activity) { super(activity); }
 
 
     public void populate() {
