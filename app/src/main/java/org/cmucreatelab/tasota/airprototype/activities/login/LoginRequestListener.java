@@ -6,19 +6,18 @@ import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.json.JSONObject;
-
 import java.util.Date;
 
 /**
  * Created by mike on 7/2/15.
  */
-public class LoginRequestListenerLoginActivity
+public class LoginRequestListener
         implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     private LoginActivity loginActivity;
 
 
-    protected LoginRequestListenerLoginActivity(LoginActivity loginActivity) {
+    protected LoginRequestListener(LoginActivity loginActivity) {
         this.loginActivity = loginActivity;
     }
 
@@ -30,7 +29,7 @@ public class LoginRequestListenerLoginActivity
         globalHandler.servicesHandler.stopEsdrRefreshService();
 
         loginActivity.loggedIn = false;
-        loginActivity.display();
+        loginActivity.uiElements.display();
     }
 
 
@@ -50,7 +49,7 @@ public class LoginRequestListenerLoginActivity
             globalHandler.esdrLoginHandler.updateEsdrAccount(loginActivity.username, userId, accessToken, refreshToken, timestamp+expiresIn);
             globalHandler.esdrLoginHandler.setUserLoggedIn(true);
             globalHandler.servicesHandler.startEsdrRefreshService();
-            loginActivity.display();
+            loginActivity.uiElements.display();
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "Failed to parse ESDR refresh tokens from JSON=" + response.toString());
             e.printStackTrace();
