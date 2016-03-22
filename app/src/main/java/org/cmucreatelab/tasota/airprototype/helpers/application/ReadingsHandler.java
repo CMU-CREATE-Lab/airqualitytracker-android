@@ -1,6 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers.application;
 
-import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers.ManageTrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;

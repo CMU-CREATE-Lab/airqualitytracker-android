@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.login;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * Created by mike on 2/18/16.
  */
-public class SessionExpiredDialog {
+public class LoginSessionExpiredDialog {
 
     private AlertDialog alertDialog;
 
@@ -24,7 +24,7 @@ public class SessionExpiredDialog {
     }
 
 
-    public SessionExpiredDialog(final AppCompatActivity activity) {
+    public LoginSessionExpiredDialog(final AppCompatActivity activity) {
         this.alertDialog = (new AlertDialogBuilder(activity)).create();
     }
 

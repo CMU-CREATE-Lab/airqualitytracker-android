@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.about.air_quality;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.about_air_quality;
 
 import android.text.Html;
 import android.text.method.LinkMovementMethod;

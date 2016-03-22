@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.login;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.login;
 
 import android.view.View;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;

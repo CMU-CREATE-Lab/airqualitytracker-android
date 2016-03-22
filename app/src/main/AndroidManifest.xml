@@ -38,9 +38,9 @@
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>
         <activity
-            android:name=".activities.login.LoginActivity"
+            android:name=".activities.options_menu.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".activities.login.LoginActivity" >
+            android:parentActivityName=".activities.options_menu.login.LoginActivity" >
             <intent-filter>
                 <action android:name="org.cmucreatelab.tasota.airprototype" />
 
@@ -48,15 +48,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.about.air_quality.AboutAirQualityActivity"
+            android:name=".activities.options_menu.about_air_quality.AboutAirQualityActivity"
             android:label="@string/title_activity_about" >
         </activity>
         <activity
-            android:name=".activities.about.speck.AboutSpeckActivity"
+            android:name=".activities.options_menu.about_speck.AboutSpeckActivity"
             android:label="@string/title_activity_about_speck" >
         </activity>
         <activity
-            android:name=".activities.manage_trackers.ManageTrackersActivity"
+            android:name=".activities.options_menu.manage_trackers.ManageTrackersActivity"
             android:label="@string/title_activity_manage_trackers"
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>

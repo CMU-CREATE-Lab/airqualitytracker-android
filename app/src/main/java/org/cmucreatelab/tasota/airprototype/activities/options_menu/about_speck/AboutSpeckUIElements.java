@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.about.speck;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.about_speck;
 
 import android.text.Html;
 import android.text.method.LinkMovementMethod;

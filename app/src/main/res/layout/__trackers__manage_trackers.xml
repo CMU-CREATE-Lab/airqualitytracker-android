@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:activity="org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity"
+    tools:activity="org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers.ManageTrackersActivity"
     android:background="#585858">
 
     <RelativeLayout

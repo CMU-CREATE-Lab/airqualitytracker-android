@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.about.air_quality;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.about_air_quality;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;

@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.login;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.login;
 
 import android.support.v7.app.ActionBar;
 import android.widget.EditText;

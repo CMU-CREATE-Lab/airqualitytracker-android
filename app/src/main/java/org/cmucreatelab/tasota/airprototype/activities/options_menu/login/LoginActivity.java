@@ -1,8 +1,8 @@
-package org.cmucreatelab.tasota.airprototype.activities.login;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.login;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import org.cmucreatelab.tasota.airprototype.activities.SessionExpiredDialog;
+
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import java.util.Date;
 
@@ -34,7 +34,7 @@ public class LoginActivity extends ActionBarActivity {
             boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
             if (!updatingTokens) {
                 // Alert
-                SessionExpiredDialog dialog = new SessionExpiredDialog(this);
+                LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(this);
                 dialog.getAlertDialog().show();
                 loggedIn = false;
                 uiElements.display();

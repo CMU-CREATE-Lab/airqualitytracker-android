@@ -9,11 +9,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.cmucreatelab.tasota.airprototype.activities.SessionExpiredDialog;
-import org.cmucreatelab.tasota.airprototype.activities.about.air_quality.AboutAirQualityActivity;
-import org.cmucreatelab.tasota.airprototype.activities.about.speck.AboutSpeckActivity;
-import org.cmucreatelab.tasota.airprototype.activities.login.LoginActivity;
-import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersActivity;
+import org.cmucreatelab.tasota.airprototype.activities.options_menu.login.LoginSessionExpiredDialog;
+import org.cmucreatelab.tasota.airprototype.activities.options_menu.about_air_quality.AboutAirQualityActivity;
+import org.cmucreatelab.tasota.airprototype.activities.options_menu.about_speck.AboutSpeckActivity;
+import org.cmucreatelab.tasota.airprototype.activities.options_menu.login.LoginActivity;
+import org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers.ManageTrackersActivity;
 import org.cmucreatelab.tasota.airprototype.classes.timers.RefreshTimer;
 import org.cmucreatelab.tasota.airprototype.classes.timers.TwoFingerLongPressTimer;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -71,7 +71,7 @@ public class ReadableListActivity extends ActionBarActivity {
         // work-around to get alert dialog to show up after check on app launch
         if (globalHandler.displaySessionExpiredDialog) {
             globalHandler.displaySessionExpiredDialog = false;
-            SessionExpiredDialog dialog = new SessionExpiredDialog(this);
+            LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(this);
             dialog.getAlertDialog().show();
         }
 

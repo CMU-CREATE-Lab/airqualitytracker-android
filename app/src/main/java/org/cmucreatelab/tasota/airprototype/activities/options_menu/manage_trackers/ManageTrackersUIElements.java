@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.activities.manage_trackers;
+package org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers;
 
 import android.util.Log;
 import android.view.View;
