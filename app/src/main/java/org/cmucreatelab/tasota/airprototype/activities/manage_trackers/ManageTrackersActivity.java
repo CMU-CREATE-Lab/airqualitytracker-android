@@ -4,24 +4,29 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import java.util.ArrayList;
-import listviewdragginganimation.DynamicListView;
 
 
 public class ManageTrackersActivity extends ActionBarActivity {
 
-    protected DynamicListView listViewTrackers;
+    private ManageTrackersDeleteDialog deleteDialog;
+    private ManageTrackersEditDialog editDialog;
+    protected ManageTrackersUIElements uiElements;
 
-    private DeleteDialogTrackerListItem deleteDialog;
-    private EditDialogTrackerListItem editDialog;
-    private CheckBox checkBoxCurrentLocation;
+
+    public void showDeleteDialog(ManageTrackersAdapter.TrackerListItem trackerListItem) {
+        deleteDialog = new ManageTrackersDeleteDialog(this, trackerListItem);
+        deleteDialog.getAlertDialog().show();
+    }
+
+
+    public void showEditDialog(ManageTrackersAdapter.TrackerListItem trackerListItem) {
+        editDialog = new ManageTrackersEditDialog(this, trackerListItem);
+        editDialog.getAlertDialog().show();
+    }
 
 
     @Override
@@ -29,37 +34,10 @@ public class ManageTrackersActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.__trackers__manage_trackers);
 
-        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        ArrayList<TrackersAdapter.TrackerListItem> list = globalHandler.readingsHandler.trackerList;
-
-        listViewTrackers = (DynamicListView)findViewById(R.id.listViewTrackers);
-        checkBoxCurrentLocation = (CheckBox)findViewById(R.id.checkBoxCurrentLocation);
-
-        checkBoxCurrentLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isChecked = checkBoxCurrentLocation.isChecked();
-                Log.i(Constants.LOG_TAG, "Clicked checkbox: now set to " + isChecked);
-                globalHandler.settingsHandler.setAppUsesLocation(isChecked);
-            }
-        });
-        checkBoxCurrentLocation.setChecked(globalHandler.settingsHandler.appUsesLocation());
-
-        TrackersAdapter adapter = new TrackersAdapter(this,list);
-        listViewTrackers.setCheeseList(list);
-        listViewTrackers.setAdapter(adapter);
-        listViewTrackers.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        uiElements = new ManageTrackersUIElements(this);
+        uiElements.populate();
     }
 
-    public void showDeleteDialog(TrackersAdapter.TrackerListItem trackerListItem) {
-        deleteDialog = new DeleteDialogTrackerListItem(this, trackerListItem);
-        deleteDialog.getAlertDialog().show();
-    }
-
-    public void showEditDialog(TrackersAdapter.TrackerListItem trackerListItem) {
-        editDialog = new EditDialogTrackerListItem(this, trackerListItem);
-        editDialog.getAlertDialog().show();
-    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -69,13 +47,13 @@ public class ManageTrackersActivity extends ActionBarActivity {
         Log.v(Constants.LOG_TAG, "ManageTrackersActivity onRestoreInstanceState");
         if (savedInstanceState.getBoolean("deleteDialog")) {
             int index = savedInstanceState.getInt("deleteDialogReadableIndex");
-            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.trackerList.get(index);
+            ManageTrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.trackerList.get(index);
             showDeleteDialog(item);
         }
         if (savedInstanceState.getBoolean("editDialog")) {
             String input = savedInstanceState.getString("editDialogString");
             int index = savedInstanceState.getInt("editDialogReadableIndex");
-            TrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.trackerList.get(index);
+            ManageTrackersAdapter.TrackerListItem item = GlobalHandler.getInstance(getApplicationContext()).readingsHandler.trackerList.get(index);
             showEditDialog(item);
             ((EditText)editDialog.getAlertDialog().findViewById(R.id.editDialogInputText)).setText(input);
         }

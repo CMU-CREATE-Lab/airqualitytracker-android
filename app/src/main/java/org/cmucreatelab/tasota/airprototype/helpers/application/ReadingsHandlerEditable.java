@@ -74,7 +74,7 @@ public abstract class ReadingsHandlerEditable extends ReadingsHandlerCore {
             }
             globalHandler.positionIdHelper.reorderAddressPositions(addresses);
             globalHandler.positionIdHelper.reorderSpeckPositions(specks);
-            // TODO this crashes in the TrackersAdapter code (TrackersAdapter.getItemId) but would be nice (for completeness sake) if it could be called in this method
+            // TODO this crashes in the ManageTrackersAdapter code (ManageTrackersAdapter.getItemId) but would be nice (for completeness sake) if it could be called in this method
 //            refreshHash();
         }
     }

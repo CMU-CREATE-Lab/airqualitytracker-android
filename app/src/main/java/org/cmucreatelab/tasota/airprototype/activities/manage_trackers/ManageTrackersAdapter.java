@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by mike on 11/16/15.
  */
-public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListItem> {
+public class ManageTrackersAdapter extends ArrayAdapter<ManageTrackersAdapter.TrackerListItem> {
 
     public static class TrackerListItem {
         public boolean isHeader;
@@ -40,10 +40,10 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
 
     private final ManageTrackersActivity context;
     final int INVALID_ID = -1;
-    HashMap<TrackersAdapter.TrackerListItem, Integer> mIdMap = new HashMap<TrackersAdapter.TrackerListItem, Integer>();
+    HashMap<ManageTrackersAdapter.TrackerListItem, Integer> mIdMap = new HashMap<ManageTrackersAdapter.TrackerListItem, Integer>();
 
 
-    public TrackersAdapter(ManageTrackersActivity context, ArrayList<TrackersAdapter.TrackerListItem> values) {
+    public ManageTrackersAdapter(ManageTrackersActivity context, ArrayList<ManageTrackersAdapter.TrackerListItem> values) {
         super(context, R.layout.__trackers__manage_trackers_table_item, values);
         this.context = context;
         for (int i = 0; i < values.size(); ++i) {
@@ -76,7 +76,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     Log.i(Constants.LOG_TAG, "Touched Frame!");
                     // this is why we need context to be specific to ManageTrackersActivity
-                    context.listViewTrackers.startListMovementFromItem(item);
+                    context.uiElements.listViewTrackers.startListMovementFromItem(item);
                     return false;
                 }
             });
@@ -118,7 +118,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
     }
 
 
-    public TrackersAdapter(ManageTrackersActivity context, int textViewResourceId, List<TrackersAdapter.TrackerListItem> objects) {
+    public ManageTrackersAdapter(ManageTrackersActivity context, int textViewResourceId, List<ManageTrackersAdapter.TrackerListItem> objects) {
         super(context, textViewResourceId, objects);
         this.context = context;
         for (int i = 0; i < objects.size(); ++i) {
@@ -133,7 +133,7 @@ public class TrackersAdapter extends ArrayAdapter<TrackersAdapter.TrackerListIte
         if (position < 0 || position >= mIdMap.size()) {
             return INVALID_ID;
         }
-        TrackersAdapter.TrackerListItem item = getItem(position);
+        ManageTrackersAdapter.TrackerListItem item = getItem(position);
         return mIdMap.get(item);
     }
 

@@ -37,7 +37,8 @@ import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
+
+import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class DynamicListView extends ListView {
     private final int MOVE_DURATION = 150;
     private final int LINE_THICKNESS = 15;
 
-    public ArrayList<TrackersAdapter.TrackerListItem> mCheeseList;
+    public ArrayList<ManageTrackersAdapter.TrackerListItem> mCheeseList;
 
     private int mLastEventY = -1;
 
@@ -140,7 +141,7 @@ public class DynamicListView extends ListView {
 
                     View selectedView = getChildAt(itemNum);
 //                    mMobileItemId = getAdapter().getItemId(position);
-                    TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+                    ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
                     if (adapter.getItem(position).isHeader) {
                         Log.i(Constants.LOG_TAG,"Tried to long click HEADER");
                         return false;
@@ -157,12 +158,12 @@ public class DynamicListView extends ListView {
                 }
             };
 
-    public void startListMovementFromItem(TrackersAdapter.TrackerListItem mobileItem) {
+    public void startListMovementFromItem(ManageTrackersAdapter.TrackerListItem mobileItem) {
         if (mTouchIsBusy) {
             return;
         }
         mTouchIsBusy = true;
-        TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+        ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
         int position = adapter.getPosition(mobileItem);
         // offset is important (otherwise it will select the wrong item)
         View selectedView = getChildAt(position - getFirstVisiblePosition());
@@ -235,7 +236,7 @@ public class DynamicListView extends ListView {
      */
     private void updateNeighborViewsForID(long itemID) {
         int position = getPositionForID(itemID);
-        TrackersAdapter adapter = ((TrackersAdapter)getAdapter());
+        ManageTrackersAdapter adapter = ((ManageTrackersAdapter)getAdapter());
         mAboveItemId = adapter.getItemId(position - 1);
         mBelowItemId = adapter.getItemId(position + 1);
     }
@@ -243,7 +244,7 @@ public class DynamicListView extends ListView {
     /** Retrieves the view in the list corresponding to itemID */
     public View getViewForID (long itemID) {
         int firstVisiblePosition = getFirstVisiblePosition();
-        TrackersAdapter adapter = ((TrackersAdapter)getAdapter());
+        ManageTrackersAdapter adapter = ((ManageTrackersAdapter)getAdapter());
         for(int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
             int position = firstVisiblePosition + i;
@@ -360,7 +361,7 @@ public class DynamicListView extends ListView {
         // isn't doing invisible properly for the moving element
         if (isBelow || isAbove) {
 
-            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+            ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
             final long switchItemID;
             View switchView;
             if (isBelow) {
@@ -389,9 +390,9 @@ public class DynamicListView extends ListView {
 
             swapElements(mCheeseList, originalItem, getPositionForView(switchView));
 
-//            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
-            TrackersAdapter.TrackerListItem switchItem = adapter.getItem(getPositionForView(switchView));
-            TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(originalItem);
+//            ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
+            ManageTrackersAdapter.TrackerListItem switchItem = adapter.getItem(getPositionForView(switchView));
+            ManageTrackersAdapter.TrackerListItem mobileItem = adapter.getItem(originalItem);
             adapter.notifyDataSetChanged();
 //            ((BaseAdapter) getAdapter()).notifyDataSetChanged();
 
@@ -431,7 +432,7 @@ public class DynamicListView extends ListView {
         }
     }
 
-    private TrackersAdapter.TrackerListItem mLastSwitchedItem;
+    private ManageTrackersAdapter.TrackerListItem mLastSwitchedItem;
 
     private void swapElements(ArrayList arrayList, int indexOne, int indexTwo) {
         Object temp = arrayList.get(indexOne);
@@ -439,9 +440,9 @@ public class DynamicListView extends ListView {
         arrayList.set(indexTwo, temp);
 
         // notify the swapping to higher-ups
-        TrackersAdapter adapter = (TrackersAdapter) getAdapter();
-        TrackersAdapter.TrackerListItem item1 = adapter.getItem(indexOne);
-        TrackersAdapter.TrackerListItem item2 = adapter.getItem(indexTwo);
+        ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
+        ManageTrackersAdapter.TrackerListItem item1 = adapter.getItem(indexOne);
+        ManageTrackersAdapter.TrackerListItem item2 = adapter.getItem(indexTwo);
         Log.i(Constants.LOG_TAG, "SWAPPING: " + item1.readable.getName() + " // " + item2.readable.getName());
 //
 //        GlobalHandler.getInstance(getContext()).readingsHandler.reorderReading(item1.readable, item2.readable);
@@ -458,8 +459,8 @@ public class DynamicListView extends ListView {
 
         // NEW
         if (mLastSwitchedItem != null) {
-            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
-            TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
+            ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
+            ManageTrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
             Log.i(Constants.LOG_TAG, "You were moving mobileItem name=" + mobileItem.readable.getName() + " prep to switch with " + mLastSwitchedItem.readable.getName());
             GlobalHandler.getInstance(getContext()).readingsHandler.reorderReading(mobileItem.readable, mLastSwitchedItem.readable);
             mLastSwitchedItem = null;
@@ -502,11 +503,11 @@ public class DynamicListView extends ListView {
                     mAboveItemId = INVALID_ID;
                     mMobileItemId = INVALID_ID;
                     mBelowItemId = INVALID_ID;
-                    TrackersAdapter adapter = (TrackersAdapter) getAdapter();
+                    ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
                     adapter.unhideAllListItems();
                     adapter.notifyDataSetChanged();
-//                    TrackersAdapter adapter = (TrackersAdapter) getAdapter();
-//                    TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
+//                    ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
+//                    ManageTrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
 //                    mobileItem.hidden = false;
 //                    adapter.notifyDataSetChanged();
 //                    mobileView.setVisibility(VISIBLE);
@@ -531,8 +532,8 @@ public class DynamicListView extends ListView {
             mAboveItemId = INVALID_ID;
             mMobileItemId = INVALID_ID;
             mBelowItemId = INVALID_ID;
-            TrackersAdapter adapter = (TrackersAdapter) getAdapter();
-            TrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
+            ManageTrackersAdapter adapter = (ManageTrackersAdapter) getAdapter();
+            ManageTrackersAdapter.TrackerListItem mobileItem = adapter.getItem(getPositionForView(mobileView));
             mobileItem.hidden = false;
             adapter.notifyDataSetChanged();
 //            mobileView.setVisibility(VISIBLE);
@@ -596,7 +597,7 @@ public class DynamicListView extends ListView {
         return false;
     }
 
-    public void setCheeseList(ArrayList<TrackersAdapter.TrackerListItem> cheeseList) {
+    public void setCheeseList(ArrayList<ManageTrackersAdapter.TrackerListItem> cheeseList) {
         mCheeseList = cheeseList;
     }
 

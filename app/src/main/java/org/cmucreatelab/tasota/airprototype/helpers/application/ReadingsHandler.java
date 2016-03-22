@@ -1,6 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers.application;
 
-import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
@@ -78,11 +78,11 @@ public class ReadingsHandler extends ReadingsHandlerEditable {
             ArrayList<Readable> items = (ArrayList<Readable>)hashMap.get(header);
             // only display headers with non-empty contents
             if (items.size() > 0) {
-                trackerList.add( new TrackersAdapter.TrackerListItem(header) );
+                trackerList.add( new ManageTrackersAdapter.TrackerListItem(header) );
 
                 // grid cells
                 for (Readable r : items) {
-                    trackerList.add( new TrackersAdapter.TrackerListItem(r) );
+                    trackerList.add( new ManageTrackersAdapter.TrackerListItem(r) );
                 }
             }
         }

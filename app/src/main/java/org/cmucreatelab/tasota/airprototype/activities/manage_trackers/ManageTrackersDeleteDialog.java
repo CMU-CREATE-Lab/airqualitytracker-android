@@ -17,11 +17,11 @@ import java.util.ArrayList;
 /**
  * Created by mike on 6/8/15.
  */
-public class DeleteDialogTrackerListItem {
+public class ManageTrackersDeleteDialog {
 
     private AlertDialog alertDialog;
     public final ManageTrackersActivity activityContext;
-    public TrackersAdapter.TrackerListItem item;
+    public ManageTrackersAdapter.TrackerListItem item;
 
     private class AlertDialogBuilder extends AlertDialog.Builder {
         public AlertDialogBuilder(final ManageTrackersActivity activityContext) {
@@ -36,7 +36,7 @@ public class DeleteDialogTrackerListItem {
             this.setNegativeButton("Cancel", null);
             this.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    Log.v(Constants.LOG_TAG, "Clicked 'remove' on DeleteDialogTrackerListItem.");
+                    Log.v(Constants.LOG_TAG, "Clicked 'remove' on ManageTrackersDeleteDialog.");
                     GlobalHandler globalHandler = GlobalHandler.getInstance(activityContext);
                     globalHandler.readingsHandler.removeReading(item.readable);
                     switch (item.readable.getReadableType()) {
@@ -53,10 +53,10 @@ public class DeleteDialogTrackerListItem {
                             break;
                     }
 
-                    ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).readingsHandler.trackerList;
-                    TrackersAdapter adapter = new TrackersAdapter(activityContext,list);
-                    activityContext.listViewTrackers.setCheeseList(list);
-                    activityContext.listViewTrackers.setAdapter(adapter);
+                    ArrayList<ManageTrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).readingsHandler.trackerList;
+                    ManageTrackersAdapter adapter = new ManageTrackersAdapter(activityContext,list);
+                    activityContext.uiElements.listViewTrackers.setCheeseList(list);
+                    activityContext.uiElements.listViewTrackers.setAdapter(adapter);
                 }
             });
         }
@@ -68,7 +68,7 @@ public class DeleteDialogTrackerListItem {
     }
 
 
-    public DeleteDialogTrackerListItem(final ManageTrackersActivity activityContext, TrackersAdapter.TrackerListItem item) {
+    public ManageTrackersDeleteDialog(final ManageTrackersActivity activityContext, ManageTrackersAdapter.TrackerListItem item) {
         this.activityContext = activityContext;
         this.item = item;
         this.alertDialog = (new AlertDialogBuilder(activityContext)).create();

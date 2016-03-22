@@ -13,22 +13,22 @@ import java.util.ArrayList;
 /**
  * Created by mike on 6/8/15.
  */
-public class EditDialogTrackerListItem {
+public class ManageTrackersEditDialog {
 
     private AlertDialog alertDialog;
     public final ManageTrackersActivity activityContext;
-    public TrackersAdapter.TrackerListItem item;
+    public ManageTrackersAdapter.TrackerListItem item;
 
     private DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int id) {
             String input = ((EditText)alertDialog.findViewById(R.id.editDialogInputText)).getText().toString();
-            Log.v(Constants.LOG_TAG, "Saved string " + input + " on DeleteDialogTrackerListItem.");
+            Log.v(Constants.LOG_TAG, "Saved string " + input + " on ManageTrackersDeleteDialog.");
             GlobalHandler.getInstance(activityContext).readingsHandler.renameReading(item.readable,input);
 
-            ArrayList<TrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).readingsHandler.trackerList;
-            TrackersAdapter adapter = new TrackersAdapter(activityContext,list);
-            activityContext.listViewTrackers.setCheeseList(list);
-            activityContext.listViewTrackers.setAdapter(adapter);
+            ArrayList<ManageTrackersAdapter.TrackerListItem> list = GlobalHandler.getInstance(activityContext).readingsHandler.trackerList;
+            ManageTrackersAdapter adapter = new ManageTrackersAdapter(activityContext,list);
+            activityContext.uiElements.listViewTrackers.setCheeseList(list);
+            activityContext.uiElements.listViewTrackers.setAdapter(adapter);
         }
     };
 
@@ -55,7 +55,7 @@ public class EditDialogTrackerListItem {
     }
 
 
-    public EditDialogTrackerListItem(final ManageTrackersActivity activityContext, TrackersAdapter.TrackerListItem item) {
+    public ManageTrackersEditDialog(final ManageTrackersActivity activityContext, ManageTrackersAdapter.TrackerListItem item) {
         this.activityContext = activityContext;
         this.item = item;
         this.alertDialog = (new AlertDialogBuilder(activityContext)).create();

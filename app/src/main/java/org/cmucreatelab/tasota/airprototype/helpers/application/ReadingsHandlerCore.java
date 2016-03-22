@@ -2,7 +2,8 @@ package org.cmucreatelab.tasota.airprototype.helpers.application;
 
 import android.util.Log;
 import com.android.volley.Response;
-import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
+
+import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.ManageTrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
@@ -32,7 +33,7 @@ public abstract class ReadingsHandlerCore {
     // this is the data structure used by StickyGridAdapter
     public final ArrayList<StickyGridAdapter.LineItem> adapterList = new ArrayList<>();
     // used by tracker manager
-    public final ArrayList<TrackersAdapter.TrackerListItem> trackerList = new ArrayList<>();
+    public final ArrayList<ManageTrackersAdapter.TrackerListItem> trackerList = new ArrayList<>();
     public final ArrayList<SecretMenuListFeedsAdapter.ListFeedsItem> debugFeedsList = new ArrayList<>();
 
 
