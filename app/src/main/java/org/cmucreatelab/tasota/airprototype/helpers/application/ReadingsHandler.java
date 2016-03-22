@@ -2,7 +2,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.application;
 
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
-import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
@@ -91,15 +91,15 @@ public class ReadingsHandler extends ReadingsHandlerEditable {
         int index=0;
         // TODO had to add Null pointer check
         if (gpsReadingHandler != null && globalHandler.settingsHandler.appUsesLocation()) {
-            debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(gpsReadingHandler.gpsAddress, index++) );
+            debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(gpsReadingHandler.gpsAddress, index++) );
             for (Feed feed : gpsReadingHandler.gpsAddress.feeds) {
-                debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(gpsReadingHandler.gpsAddress, feed) );
+                debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(gpsReadingHandler.gpsAddress, feed) );
             }
         }
         for (SimpleAddress address : addresses) {
-            debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(address, index++) );
+            debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(address, index++) );
             for (Feed feed : address.feeds) {
-                debugFeedsList.add( new ListFeedsAdapter.ListFeedsItem(address, feed) );
+                debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(address, feed) );
             }
         }
     }

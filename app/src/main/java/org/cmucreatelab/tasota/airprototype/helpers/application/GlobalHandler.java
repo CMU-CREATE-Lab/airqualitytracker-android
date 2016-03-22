@@ -7,7 +7,7 @@ import android.util.Log;
 import com.google.android.gms.location.LocationServices;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
-import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.EsdrAccount;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirNowReadable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
@@ -100,7 +100,7 @@ public class GlobalHandler {
     // Keep track of ALL your array adapters for notifyGlobalDataSetChanged()
     public StickyGridAdapter gridAdapter;
     public TrackersAdapter trackersAdapter;
-    public ListFeedsAdapter listFeedsAdapter;
+    public SecretMenuListFeedsAdapter secretMenuListFeedsAdapter;
     public boolean displaySessionExpiredDialog = false;
     // use this to store the item's index; useful when navigating "Up" without an Intent
     public int readableShowItemIndex = -1;
@@ -119,8 +119,8 @@ public class GlobalHandler {
         if (this.gridAdapter != null) {
             this.gridAdapter.notifyDataSetChanged();
         }
-        if (this.listFeedsAdapter != null) {
-            this.listFeedsAdapter.notifyDataSetChanged();
+        if (this.secretMenuListFeedsAdapter != null) {
+            this.secretMenuListFeedsAdapter.notifyDataSetChanged();
         }
     }
 

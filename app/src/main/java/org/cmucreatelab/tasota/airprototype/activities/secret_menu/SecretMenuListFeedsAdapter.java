@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by mike on 12/10/15.
  */
-public class ListFeedsAdapter extends ArrayAdapter<ListFeedsAdapter.ListFeedsItem> {
+public class SecretMenuListFeedsAdapter extends ArrayAdapter<SecretMenuListFeedsAdapter.ListFeedsItem> {
 
     public static class ListFeedsItem {
         public boolean isHeader;
@@ -35,10 +35,10 @@ public class ListFeedsAdapter extends ArrayAdapter<ListFeedsAdapter.ListFeedsIte
         }
     }
 
-    private DebugActivity context;
+    private SecretMenuActivity context;
 
 
-    public ListFeedsAdapter(DebugActivity context, ArrayList<ListFeedsAdapter.ListFeedsItem> values) {
+    public SecretMenuListFeedsAdapter(SecretMenuActivity context, ArrayList<SecretMenuListFeedsAdapter.ListFeedsItem> values) {
         super(context, R.layout.__secret_menu__debug_activity, values);
         this.context = context;
     }

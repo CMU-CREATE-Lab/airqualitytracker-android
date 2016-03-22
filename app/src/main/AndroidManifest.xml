@@ -61,7 +61,7 @@
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>
         <activity
-            android:name=".activities.secret_menu.DebugActivity"
+            android:name=".activities.secret_menu.SecretMenuActivity"
             android:label="@string/title_activity_debug"
             android:parentActivityName=".activities.readable_list.ReadableListActivity" >
         </activity>

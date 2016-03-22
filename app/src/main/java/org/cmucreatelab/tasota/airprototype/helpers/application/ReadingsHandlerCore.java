@@ -4,7 +4,7 @@ import android.util.Log;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.manage_trackers.TrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.StickyGridAdapter;
-import org.cmucreatelab.tasota.airprototype.activities.secret_menu.ListFeedsAdapter;
+import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -33,7 +33,7 @@ public abstract class ReadingsHandlerCore {
     public final ArrayList<StickyGridAdapter.LineItem> adapterList = new ArrayList<>();
     // used by tracker manager
     public final ArrayList<TrackersAdapter.TrackerListItem> trackerList = new ArrayList<>();
-    public final ArrayList<ListFeedsAdapter.ListFeedsItem> debugFeedsList = new ArrayList<>();
+    public final ArrayList<SecretMenuListFeedsAdapter.ListFeedsItem> debugFeedsList = new ArrayList<>();
 
 
     // helper function to determine if a speck with deviceId exists in specks list
