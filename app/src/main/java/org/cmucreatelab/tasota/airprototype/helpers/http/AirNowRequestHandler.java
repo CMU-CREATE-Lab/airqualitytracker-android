@@ -15,28 +15,12 @@ import org.json.JSONArray;
  */
 public class AirNowRequestHandler implements Response.ErrorListener {
 
-
-    // Singleton Implementation
-
-
     private GlobalHandler globalHandler;
-    private static AirNowRequestHandler classInstance;
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized AirNowRequestHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new AirNowRequestHandler(globalHandler);
-        }
-        return classInstance;
-    }
 
-    // Nobody accesses the constructor
-    private AirNowRequestHandler(GlobalHandler globalHandler) {
+    public AirNowRequestHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
     }
-
-
-    // Handler attributes and methods
 
 
     public void requestAirNowObservation(final AirNowReadable readable, Response.Listener<JSONArray> response) {

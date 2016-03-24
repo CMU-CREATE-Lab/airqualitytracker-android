@@ -18,32 +18,14 @@ import org.cmucreatelab.tasota.airprototype.helpers.system.services.gps.GoogleAp
  */
 public class ServicesHandler {
 
-
-    // Singleton Implementation
-
-
     private GlobalHandler globalHandler;
-    private static ServicesHandler classInstance;
+    public GoogleApiClientHandler googleApiClientHandler;
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized ServicesHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new ServicesHandler(globalHandler);
-        }
-        return classInstance;
-    }
 
-    // Nobody accesses the constructor
-    private ServicesHandler(GlobalHandler globalHandler) {
+    public ServicesHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.googleApiClientHandler = GoogleApiClientHandler.getInstance(globalHandler);
     }
-
-
-    // Handler attributes and methods
-
-
-    public GoogleApiClientHandler googleApiClientHandler;
 
 
     public void initializeBackgroundServices() {

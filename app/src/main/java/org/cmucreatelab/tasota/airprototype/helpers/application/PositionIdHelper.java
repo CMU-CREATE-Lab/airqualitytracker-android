@@ -13,32 +13,14 @@ import java.util.ArrayList;
  */
 public class PositionIdHelper {
 
-
-    // Singleton Implementation
-
-
     private GlobalHandler globalHandler;
-    private static PositionIdHelper classInstance;
+    private SharedPreferences sharedPreferences;
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized PositionIdHelper getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new PositionIdHelper(globalHandler);
-        }
-        return classInstance;
-    }
 
-    // Nobody accesses the constructor
-    private PositionIdHelper(GlobalHandler globalHandler) {
+    public PositionIdHelper(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.sharedPreferences = globalHandler.settingsHandler.getSharedPreferences();
     }
-
-
-    // Handler attributes and methods
-
-
-    private SharedPreferences sharedPreferences;
 
 
     private void setAddressLastPosition(int position) {

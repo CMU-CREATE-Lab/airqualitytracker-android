@@ -18,28 +18,13 @@ import java.util.Set;
  */
 public class EsdrTilesHandler {
 
-
-    // Singleton Implementation
-
-
     private GlobalHandler globalHandler;
-    private static EsdrTilesHandler classInstance;
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized EsdrTilesHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrTilesHandler(globalHandler);
-        }
-        return classInstance;
-    }
 
     // Nobody accesses the constructor
-    private EsdrTilesHandler(GlobalHandler globalHandler) {
+    public EsdrTilesHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
     }
-
-
-    // Handler attributes and methods
 
 
     // ASSERT: a and b will never share keys (timestamps)

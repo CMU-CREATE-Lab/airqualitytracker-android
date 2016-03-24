@@ -11,23 +11,17 @@ import java.util.ArrayList;
  */
 public class SettingsHandler {
 
-
-    // Singleton Implementation
-
-
     protected GlobalHandler globalHandler;
-    private static SettingsHandler classInstance;
+    private SharedPreferences sharedPreferences;
+    // TODO consider timestamps for last updated user info
+    private boolean appUsesLocation=true;
+    public ArrayList<Long> blacklistedDevices;
+    // public getters
+    public boolean appUsesLocation() { return appUsesLocation; }
+    public SharedPreferences getSharedPreferences() { return sharedPreferences; }
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized SettingsHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new SettingsHandler(globalHandler);
-        }
-        return classInstance;
-    }
 
-    // Nobody accesses the constructor
-    private SettingsHandler(GlobalHandler globalHandler) {
+    public SettingsHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(globalHandler.appContext);
         Log.v(Constants.LOG_TAG, "SHAREDPREFERENCES: " + sharedPreferences.getAll().toString());
@@ -35,16 +29,6 @@ public class SettingsHandler {
     }
 
 
-    // Handler attributes and methods
-
-
-    private SharedPreferences sharedPreferences;
-    // TODO consider timestamps for last updated user info
-    private boolean appUsesLocation=true;
-    public ArrayList<Long> blacklistedDevices;
-    public boolean appUsesLocation() {
-        return appUsesLocation;
-    }
     public String getStringifiedBlacklistedDeviceIds() {
         String list = "";
         for (int i=0; i<blacklistedDevices.size(); i++) {
@@ -53,9 +37,6 @@ public class SettingsHandler {
                 list += ",";
         }
         return list;
-    }
-    public SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
     }
 
 
@@ -68,16 +49,6 @@ public class SettingsHandler {
             if (deviceId != "")
                 blacklistedDevices.add(Long.parseLong(deviceId));
         }
-    }
-
-
-    public boolean deviceIsBlacklisted(long deviceId) {
-        for (Long id: blacklistedDevices) {
-            if (id == deviceId) {
-                return true;
-            }
-        }
-        return false;
     }
 
 

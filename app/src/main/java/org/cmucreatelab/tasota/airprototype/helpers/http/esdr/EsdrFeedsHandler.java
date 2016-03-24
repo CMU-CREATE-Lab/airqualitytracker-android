@@ -20,28 +20,12 @@ import java.util.Date;
  */
 public class EsdrFeedsHandler {
 
-
-    // Singleton Implementation
-
-
     private GlobalHandler globalHandler;
-    private static EsdrFeedsHandler classInstance;
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized EsdrFeedsHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrFeedsHandler(globalHandler);
-        }
-        return classInstance;
-    }
 
-    // Nobody accesses the constructor
-    private EsdrFeedsHandler(GlobalHandler globalHandler) {
+    public EsdrFeedsHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
     }
-
-
-    // Handler attributes and methods
 
 
     public void requestFeeds(Location location, double maxTime, Response.Listener<JSONObject> response) {

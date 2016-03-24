@@ -8,36 +8,15 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
  */
 public class EsdrLoginHandler {
 
-
-    // Singleton Implementation
-
-
     private GlobalHandler globalHandler;
-    private static EsdrLoginHandler classInstance;
-
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized EsdrLoginHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrLoginHandler(globalHandler);
-        }
-        return classInstance;
-    }
-
-    // Nobody accesses the constructor
-    private EsdrLoginHandler(GlobalHandler globalHandler) {
-        this.globalHandler = globalHandler;
-        this.sharedPreferences = globalHandler.settingsHandler.getSharedPreferences();
-    }
-
-
-    // Handler attributes and methods
-
-
     private SharedPreferences sharedPreferences;
     private boolean userLoggedIn=false;
+    public boolean isUserLoggedIn() { return userLoggedIn; }
 
-    public boolean isUserLoggedIn() {
-        return userLoggedIn;
+
+    public EsdrLoginHandler(GlobalHandler globalHandler) {
+        this.globalHandler = globalHandler;
+        this.sharedPreferences = globalHandler.settingsHandler.getSharedPreferences();
     }
 
 

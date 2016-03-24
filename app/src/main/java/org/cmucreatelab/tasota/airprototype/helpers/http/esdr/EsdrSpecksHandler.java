@@ -17,28 +17,12 @@ import java.util.Iterator;
  */
 public class EsdrSpecksHandler {
 
-
-    // Singleton Implementation
-
-
     private GlobalHandler globalHandler;
-    private static EsdrSpecksHandler classInstance;
 
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized EsdrSpecksHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new EsdrSpecksHandler(globalHandler);
-        }
-        return classInstance;
-    }
 
-    // Nobody accesses the constructor
-    private EsdrSpecksHandler(GlobalHandler globalHandler) {
+    public EsdrSpecksHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
     }
-
-
-    // Handler attributes and methods
 
 
     public void requestSpeckFeeds(String authToken, long userId, Response.Listener<JSONObject> response) {

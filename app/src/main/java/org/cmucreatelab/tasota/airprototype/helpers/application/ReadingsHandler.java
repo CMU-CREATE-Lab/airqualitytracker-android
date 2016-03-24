@@ -16,33 +16,15 @@ import java.util.Collections;
  */
 public class ReadingsHandler extends ReadingsHandlerEditable {
 
+    public GpsReadingHandler gpsReadingHandler;
 
-    // Singleton Implementation
 
-
-    private static ReadingsHandler classInstance;
-
-    // Only public way to get instance of class (synchronized means thread-safe)
-    public static synchronized ReadingsHandler getInstance(GlobalHandler globalHandler) {
-        if (classInstance == null) {
-            classInstance = new ReadingsHandler(globalHandler);
-        }
-        return classInstance;
-    }
-
-    // Nobody accesses the constructor
-    private ReadingsHandler(GlobalHandler globalHandler) {
+    public ReadingsHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         this.gpsReadingHandler = new GpsReadingHandler(globalHandler);
         // headers
         Collections.addAll(headers, Constants.HEADER_TITLES);
     }
-
-
-    // Handler attributes and methods
-
-
-    public GpsReadingHandler gpsReadingHandler;
 
 
     public void populateAdapterList() {
