@@ -82,8 +82,18 @@ public class EsdrJsonParser {
             name = row.get("name").toString();
             exposure = row.get("exposure").toString();
             isMobile = row.get("isMobile").toString().equals("1");
-            latitude = Double.parseDouble(row.get("latitude").toString());
-            longitude = Double.parseDouble(row.get("longitude").toString());
+            try {
+                latitude = Double.parseDouble(row.get("latitude").toString());
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Error parsing latitude; will use 0 instead.");
+                latitude = 0;
+            }
+            try {
+                longitude = Double.parseDouble(row.get("longitude").toString());
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Error parsing longitude; will use 0 instead.");
+                longitude = 0;
+            }
             productId = Long.parseLong(row.get("productId").toString());
 
             result.setFeed_id(feed_id);
