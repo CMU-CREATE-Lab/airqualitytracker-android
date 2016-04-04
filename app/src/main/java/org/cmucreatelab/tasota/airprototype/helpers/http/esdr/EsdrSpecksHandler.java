@@ -28,7 +28,8 @@ public class EsdrSpecksHandler {
     public void requestSpeckFeeds(String authToken, long userId, Response.Listener<JSONObject> response) {
         int requestMethod = Request.Method.GET;
         // TODO only request fields that we want?
-        String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?whereAnd=userId="+userId+",productId=9";
+        // NOTE: we order by "modified" date so most recently active speck feeds (with device) are added first (thanks, chris!)
+        String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds?whereAnd=userId="+userId+",productId=9&orderBy=-modified";
         String listDevices = "";
 
         for (Long id: globalHandler.settingsHandler.blacklistedDevices) {
