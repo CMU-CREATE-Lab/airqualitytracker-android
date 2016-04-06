@@ -17,6 +17,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.activities.address_search.AddressSearchActivity;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.ManualOverrides;
 
 public class ReadableListActivity extends BaseActivity<ReadableListUIElements> {
 
@@ -60,6 +61,11 @@ public class ReadableListActivity extends BaseActivity<ReadableListUIElements> {
         uiElements.populate();
         if (savedInstanceState == null) {
             uiElements.constructStickyGrid();
+        }
+
+        // manually sets login info for ESDR
+        if (Constants.ManualOverrides.MANUAL_ESDR_LOGIN) {
+            ManualOverrides.loginEsdr(GlobalHandler.getInstance(getApplicationContext()));
         }
     }
 

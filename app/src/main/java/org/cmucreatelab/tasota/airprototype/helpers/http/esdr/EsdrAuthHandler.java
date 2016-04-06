@@ -51,6 +51,11 @@ public class EsdrAuthHandler {
         JSONObject requestParams;
         String requestUrl;
 
+        if (!Constants.REFRESHES_ESDR_TOKEN) {
+            Log.w(Constants.LOG_TAG, "requested ESDR refresh but REFRESHES_ESDR_TOKEN is not set.");
+            return;
+        }
+
         try {
             // (Volley) adds "Content-Type:application/json" to header by default when using JsonObjectRequest
             requestMethod = Request.Method.POST;

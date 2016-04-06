@@ -56,6 +56,18 @@ public final class Constants {
 
     public static final long ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH = 86400; // 24 hours
 
+    // controls whether or not the code will perform esdr token refresh requests
+    public static final boolean REFRESHES_ESDR_TOKEN = true;
+
+    public static final class ManualOverrides {
+        // strongly encouraged to also set REFRESHES_ESDR_TOKEN = false when using this option
+        public static final boolean MANUAL_ESDR_LOGIN = false;
+        public static final String username = "";
+        public static final String accessToken = "";
+        public static final String refreshToken = "";
+        public static final long userId = 0;
+    }
+
     public static final class SettingsKeys {
         public static final String appUsesLocation = "app_uses_location";
         public static final String userLoggedIn = "user_logged_in";
