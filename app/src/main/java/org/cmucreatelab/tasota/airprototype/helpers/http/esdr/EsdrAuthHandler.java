@@ -46,6 +46,20 @@ public class EsdrAuthHandler {
 
 
     public void requestEsdrRefresh(final String refreshToken) {
+        Response.ErrorListener error = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(Constants.LOG_TAG, "Volley received error from refreshToken=" + refreshToken);
+                globalHandler.esdrAccount.setExpiresAt(0);
+                globalHandler.servicesHandler.stopEsdrRefreshService();
+            }
+        };
+
+        requestEsdrRefresh(refreshToken,error);
+    }
+
+
+    public void requestEsdrRefresh(final String refreshToken, Response.ErrorListener error) {
         Response.Listener<JSONObject> response;
         int requestMethod;
         JSONObject requestParams;
@@ -83,14 +97,6 @@ public class EsdrAuthHandler {
                     }
                 }
             };
-            Response.ErrorListener error = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e(Constants.LOG_TAG, "Volley received error from refreshToken=" + refreshToken);
-                    globalHandler.esdrLoginHandler.removeEsdrAccount();
-                    globalHandler.servicesHandler.stopEsdrRefreshService();
-                }
-            };
             globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, requestParams, response, error);
         } catch (Exception e) {
             Log.w(Constants.LOG_TAG, "Failed to refresh ESDR Token for refresh_token=" + refreshToken);
@@ -99,15 +105,14 @@ public class EsdrAuthHandler {
     }
 
 
-    public boolean checkAndRefreshEsdrTokens(long expiresAt, long currentTime, String refreshToken) {
-        if (currentTime >= expiresAt) {
-            globalHandler.esdrAccount.clear();
-            globalHandler.esdrLoginHandler.setUserLoggedIn(false);
-            return false;
-        } else {
-            requestEsdrRefresh(refreshToken);
+    // Alert the user that their account has been logged out and will be prompted to re-enter username/password
+    public boolean alertLogout() {
+        if (globalHandler.esdrLoginHandler.isUserLoggedIn() && globalHandler.esdrAccount.getExpiresAt() >= 0) {
+            globalHandler.esdrLoginHandler.removeEsdrAccount();
+            globalHandler.servicesHandler.stopEsdrRefreshService();
             return true;
         }
+        return false;
     }
 
 }

@@ -17,15 +17,8 @@ public class ApplicationHandler extends Application {
         super.onCreate();
         Log.v(Constants.LOG_TAG, "==== Application Launches! ====");
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        if (globalHandler.esdrLoginHandler.isUserLoggedIn()) {
-            // Tokens: check & refresh
-            long timestamp = (long) (new Date().getTime() / 1000.0);
-            long expiresAt = globalHandler.esdrAccount.getExpiresAt();
-            String refreshToken = globalHandler.esdrAccount.getRefreshToken();
-            boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
-            if (!updatingTokens) {
-                globalHandler.displaySessionExpiredDialog = true;
-            }
+        if (globalHandler.esdrAuthHandler.alertLogout()) {
+            globalHandler.displaySessionExpiredDialog = true;
         }
     }
 

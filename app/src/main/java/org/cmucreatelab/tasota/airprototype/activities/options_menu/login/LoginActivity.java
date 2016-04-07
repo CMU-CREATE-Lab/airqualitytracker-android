@@ -27,11 +27,7 @@ public class LoginActivity extends BaseActivity<LoginUIElements> {
         if (loggedIn) {
             // Tokens: check & refresh
             GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-            long timestamp = (long) (new Date().getTime() / 1000.0);
-            long expiresAt = globalHandler.esdrAccount.getExpiresAt();
-            String refreshToken = globalHandler.esdrAccount.getRefreshToken();
-            boolean updatingTokens = globalHandler.esdrAuthHandler.checkAndRefreshEsdrTokens(expiresAt, timestamp, refreshToken);
-            if (!updatingTokens) {
+            if (globalHandler.esdrAuthHandler.alertLogout()) {
                 // Alert
                 LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(this);
                 dialog.getAlertDialog().show();

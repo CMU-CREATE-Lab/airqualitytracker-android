@@ -2,6 +2,9 @@ package org.cmucreatelab.tasota.airprototype.activities.readable_list;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.login.LoginSessionExpiredDialog;
@@ -22,7 +25,7 @@ public class ReadableListUIElements extends UIElements<ReadableListActivity> {
 
 
     public void populate() {
-        GlobalHandler globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());
 
         ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null) {
@@ -35,6 +38,20 @@ public class ReadableListUIElements extends UIElements<ReadableListActivity> {
             globalHandler.displaySessionExpiredDialog = false;
             LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(activity);
             dialog.getAlertDialog().show();
+        } else if (globalHandler.esdrLoginHandler.isUserLoggedIn()) {
+            final String refreshToken = globalHandler.esdrAccount.getRefreshToken();
+            // custom error handler; this way we can display the Session timeout dialog as soon as it fails
+            Response.ErrorListener error = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(Constants.LOG_TAG, "Volley (inside ReadableList) received error from refreshToken=" + refreshToken);
+                    globalHandler.esdrLoginHandler.removeEsdrAccount();
+                    globalHandler.servicesHandler.stopEsdrRefreshService();
+                    LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(activity);
+                    dialog.getAlertDialog().show();
+                }
+            };
+            globalHandler.esdrAuthHandler.requestEsdrRefresh(refreshToken,error);
         }
 
         globalHandler.updateReadings();
