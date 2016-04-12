@@ -50,7 +50,7 @@ public class EsdrAuthHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(Constants.LOG_TAG, "Volley received error from refreshToken=" + refreshToken);
-                globalHandler.esdrAccount.setExpiresAt(0);
+                globalHandler.esdrLoginHandler.updateEsdrTokens("", "", 0);
                 globalHandler.servicesHandler.stopEsdrRefreshService();
             }
         };
@@ -107,7 +107,7 @@ public class EsdrAuthHandler {
 
     // Alert the user that their account has been logged out and will be prompted to re-enter username/password
     public boolean alertLogout() {
-        if (globalHandler.esdrLoginHandler.isUserLoggedIn() && globalHandler.esdrAccount.getExpiresAt() >= 0) {
+        if (globalHandler.esdrLoginHandler.isUserLoggedIn() && globalHandler.esdrAccount.getExpiresAt() <= 0) {
             globalHandler.esdrLoginHandler.removeEsdrAccount();
             globalHandler.servicesHandler.stopEsdrRefreshService();
             return true;

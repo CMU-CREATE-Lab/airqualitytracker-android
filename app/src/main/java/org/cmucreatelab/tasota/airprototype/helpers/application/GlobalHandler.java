@@ -131,10 +131,7 @@ public class GlobalHandler {
             long timestamp = (long) (new Date().getTime() / 1000.0);
             long expiresAt = esdrAccount.getExpiresAt();
             long timeRemaining = expiresAt - timestamp;
-            if (timeRemaining <= 0) {
-                esdrLoginHandler.setUserLoggedIn(false);
-                esdrAccount.clear();
-            } else if (timeRemaining <= Constants.ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH) {
+            if (timeRemaining <= Constants.ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH) {
                 String refreshToken = esdrAccount.getRefreshToken();
                 esdrAuthHandler.requestEsdrRefresh(refreshToken);
             }

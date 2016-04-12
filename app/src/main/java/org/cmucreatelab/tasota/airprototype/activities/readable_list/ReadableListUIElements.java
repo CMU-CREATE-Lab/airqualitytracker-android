@@ -34,26 +34,10 @@ public class ReadableListUIElements extends UIElements<ReadableListActivity> {
         }
 
         // work-around to get alert dialog to show up after check on app launch
-        if (globalHandler.displaySessionExpiredDialog) {
-            globalHandler.displaySessionExpiredDialog = false;
+        if (globalHandler.esdrAuthHandler.alertLogout()) {
             LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(activity);
             dialog.getAlertDialog().show();
-        } else if (globalHandler.esdrLoginHandler.isUserLoggedIn()) {
-            final String refreshToken = globalHandler.esdrAccount.getRefreshToken();
-            // custom error handler; this way we can display the Session timeout dialog as soon as it fails
-            Response.ErrorListener error = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e(Constants.LOG_TAG, "Volley (inside ReadableList) received error from refreshToken=" + refreshToken);
-                    globalHandler.esdrLoginHandler.removeEsdrAccount();
-                    globalHandler.servicesHandler.stopEsdrRefreshService();
-                    LoginSessionExpiredDialog dialog = new LoginSessionExpiredDialog(activity);
-                    dialog.getAlertDialog().show();
-                }
-            };
-            globalHandler.esdrAuthHandler.requestEsdrRefresh(refreshToken,error);
         }
-
         globalHandler.updateReadings();
 
         swipeRefresh = (SwipeRefreshLayout)activity.findViewById(R.id.readable_list_refresher);

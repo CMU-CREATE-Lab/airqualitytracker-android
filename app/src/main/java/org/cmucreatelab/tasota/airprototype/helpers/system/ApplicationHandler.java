@@ -18,7 +18,8 @@ public class ApplicationHandler extends Application {
         Log.v(Constants.LOG_TAG, "==== Application Launches! ====");
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         if (globalHandler.esdrAuthHandler.alertLogout()) {
-            globalHandler.displaySessionExpiredDialog = true;
+            globalHandler.esdrLoginHandler.updateEsdrTokens("","",0);
+            globalHandler.servicesHandler.stopEsdrRefreshService();
         }
     }
 
