@@ -10,6 +10,9 @@ android {
         targetSdkVersion 23
         versionCode 23
         versionName "2.3"
+
+        // specify AndroidJUnitRunner as the default instrumentation runner in your project
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
