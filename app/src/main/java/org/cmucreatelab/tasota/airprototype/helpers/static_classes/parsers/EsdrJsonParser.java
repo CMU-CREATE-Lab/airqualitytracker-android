@@ -1,6 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers;
 
 import android.util.Log;
+import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
+import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -186,6 +188,32 @@ public class EsdrJsonParser {
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "JSON Format error in parseTiles (missing \"data\" or other field).");
         }
+    }
+
+
+    public static DailyFeedTracker parseDailyFeedTracker(Feed feed, JSONObject entry) {
+        DailyFeedTracker result = new DailyFeedTracker(feed);
+        ArrayList<DayFeedValue> values = result.getValues();
+
+        try {
+            JSONArray jsonValues = entry.getJSONArray("data");
+            int size = jsonValues.length();
+            for (int i=0; i<size; i++) {
+                JSONArray row = jsonValues.getJSONArray(i);
+
+                // TODO parse daily entries (make sure values are in the right order too)
+                long time = row.getLong(0);
+                double mean = row.getDouble(1);
+                double median = row.getDouble(2);
+                double max = row.getDouble(3);
+
+                values.add( new DayFeedValue(time,mean,median,max) );
+            }
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "JSON Format error in parseDailyFeedTracker: " + e.getLocalizedMessage());
+        }
+
+        return result;
     }
 
 }

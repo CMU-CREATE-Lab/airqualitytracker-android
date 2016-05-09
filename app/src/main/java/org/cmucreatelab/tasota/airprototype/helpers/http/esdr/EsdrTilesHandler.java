@@ -4,6 +4,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.EsdrJsonParser;
@@ -99,6 +100,18 @@ public class EsdrTilesHandler {
         requestMethod = Request.Method.GET;
         requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/" + channel.getFeed().getFeed_id() + "/channels/" + channel.getName() + "/tiles/" + level + "." + offset;
         globalHandler.httpRequestHandler.sendJsonRequest(requestMethod, requestUrl, null, firstHandler);
+    }
+
+
+    public void requestFeedAverages(Feed feed, Response.Listener<JSONObject> response) {
+        // TODO given a Feed, construct the ESDR request to grab average values over a channel
+        // TODO time range (1 year up till now)
+
+        int requestMethod = Request.Method.GET;
+        String requestUrl = "";
+        JSONObject requestParams = new JSONObject();
+
+        globalHandler.httpRequestHandler.sendJsonRequest(requestMethod,requestUrl,requestParams,response);
     }
 
 }
