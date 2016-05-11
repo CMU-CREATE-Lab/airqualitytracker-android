@@ -11,6 +11,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONObject;
 import java.lang.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by mike on 6/1/15.
@@ -25,7 +26,6 @@ public class SimpleAddress extends AirNowReadable {
     public final ArrayList<Feed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
     private int positionId;
-    // TODO dailyFeedTracker when closestFeed exists
     private DailyFeedTracker dailyFeedTracker;
     // getters/setters
     public long get_id() { return _id; }
@@ -67,15 +67,17 @@ public class SimpleAddress extends AirNowReadable {
             // TODO call method inside Activity to denote request is finished
             return;
         }
+        final long to = new Date().getTime() / 1000;
+        final long from = to - (long)(86400 * 365);
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                SimpleAddress.this.dailyFeedTracker = EsdrJsonParser.parseDailyFeedTracker(closestFeed,response);
+                SimpleAddress.this.dailyFeedTracker = EsdrJsonParser.parseDailyFeedTracker(closestFeed, from, to, response);
             }
         };
 
-        GlobalHandler.getInstance(activity.getApplicationContext()).esdrTilesHandler.requestFeedAverages(closestFeed, response);
+        GlobalHandler.getInstance(activity.getApplicationContext()).esdrTilesHandler.requestFeedAverages(closestFeed, from, to, response);
     }
 
 

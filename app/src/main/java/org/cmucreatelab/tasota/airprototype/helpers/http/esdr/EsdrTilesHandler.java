@@ -103,12 +103,16 @@ public class EsdrTilesHandler {
     }
 
 
-    public void requestFeedAverages(Feed feed, Response.Listener<JSONObject> response) {
-        // TODO given a Feed, construct the ESDR request to grab average values over a channel
-        // TODO time range (1 year up till now)
-
+    public void requestFeedAverages(Feed feed, long from, long to, Response.Listener<JSONObject> response) {
         int requestMethod = Request.Method.GET;
-        String requestUrl = "";
+        String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/"
+                + feed.getFeed_id() + "/channels/"
+                + feed.getChannels().get(0).getName()+"_daily_mean,"
+                + feed.getChannels().get(0).getName()+"_daily_median,"
+                + feed.getChannels().get(0).getName()+"_daily_max"
+                + "/export?format=json"
+                + "&from="+from
+                + "&to="+to;
         JSONObject requestParams = new JSONObject();
 
         globalHandler.httpRequestHandler.sendJsonRequest(requestMethod,requestUrl,requestParams,response);

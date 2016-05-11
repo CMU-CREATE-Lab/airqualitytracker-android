@@ -191,8 +191,8 @@ public class EsdrJsonParser {
     }
 
 
-    public static DailyFeedTracker parseDailyFeedTracker(Feed feed, JSONObject entry) {
-        DailyFeedTracker result = new DailyFeedTracker(feed);
+    public static DailyFeedTracker parseDailyFeedTracker(Feed feed, long from, long to, JSONObject entry) {
+        DailyFeedTracker result = new DailyFeedTracker(feed, from, to);
         ArrayList<DayFeedValue> values = result.getValues();
 
         try {
@@ -201,7 +201,7 @@ public class EsdrJsonParser {
             for (int i=0; i<size; i++) {
                 JSONArray row = jsonValues.getJSONArray(i);
 
-                // TODO parse daily entries (make sure values are in the right order too)
+                // ASSERT: request was done in the order: mean, median, max
                 long time = row.getLong(0);
                 double mean = row.getDouble(1);
                 double median = row.getDouble(2);
