@@ -75,6 +75,11 @@
             android:label="@string/title_activity_airnow"
             android:parentActivityName=".activities.readable_show.aqi_explanation.AqiExplanationActivity" >
         </activity>
+        <activity
+            android:name=".activities.readable_show.daily_tracker.DailyTrackerActivity"
+            android:label="@string/title_activity_daily_tracker"
+            android:parentActivityName=".activities.readable_show.ReadableShowActivity" >
+        </activity>
     </application>
 
 </manifest>

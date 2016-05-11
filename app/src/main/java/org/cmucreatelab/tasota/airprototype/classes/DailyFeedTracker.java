@@ -1,6 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.classes;
 
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
+
 import java.util.ArrayList;
 
 /**
@@ -21,6 +23,19 @@ public class DailyFeedTracker {
         this.feed = feed;
         this.from = from;
         this.to = to;
+    }
+
+
+    public int getDirtyDaysCount() {
+        int size = 0;
+
+        for (DayFeedValue feedValue : values) {
+            if (AqiConverter.microgramsToAqi(feedValue.getDirtyDaysValue()) > 50) {
+                size++;
+            }
+        }
+
+        return size;
     }
 
 }

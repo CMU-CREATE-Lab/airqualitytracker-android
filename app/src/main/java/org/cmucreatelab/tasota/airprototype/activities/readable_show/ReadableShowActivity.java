@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.TextView;
+
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
@@ -15,6 +17,12 @@ public class ReadableShowActivity extends BaseActivity<ReadableShowUIElements> {
 
     protected Readable reading;
     protected ReadableShowFrameClickListener frameClickListener;
+
+
+    public void setDirtyDaysText(String text) {
+        TextView textViewDirtyDays = (TextView) findViewById(R.id.textViewDirtyDays);
+        textViewDirtyDays.setText(text);
+    }
 
 
     @Override

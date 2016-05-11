@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 import android.util.Log;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
+import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -57,14 +58,17 @@ public class SimpleAddress extends AirNowReadable {
     }
 
 
-    // TODO replace with specific activity which will call this upon request
-    public void requestDailyFeedTracker(BaseActivity activity) {
+    public void requestDailyFeedTracker(final ReadableShowActivity activity) {
         if (closestFeed == null) {
             Log.e(Constants.LOG_TAG, "requestDailyFeedTracker failed (closestFeed is null)");
             return;
         }
         if (dailyFeedTracker != null) {
-            // TODO call method inside Activity to denote request is finished
+            // TODO check that this tracker is at least within the last 24 hours (otherwise it needs updated)
+            int numberDirtyDays = dailyFeedTracker.getDirtyDaysCount();
+            String text = String.valueOf(numberDirtyDays) + ((numberDirtyDays == 1) ? " dirty day " : " dirty days ")
+                    + "in the past year";
+            activity.setDirtyDaysText(text);
             return;
         }
         final long to = new Date().getTime() / 1000;
@@ -74,6 +78,10 @@ public class SimpleAddress extends AirNowReadable {
             @Override
             public void onResponse(JSONObject response) {
                 SimpleAddress.this.dailyFeedTracker = EsdrJsonParser.parseDailyFeedTracker(closestFeed, from, to, response);
+                int numberDirtyDays = dailyFeedTracker.getDirtyDaysCount();
+                String text = String.valueOf(numberDirtyDays) + ((numberDirtyDays == 1) ? " dirty day " : " dirty days ")
+                        + "in the past year";
+                activity.setDirtyDaysText(text);
             }
         };
 

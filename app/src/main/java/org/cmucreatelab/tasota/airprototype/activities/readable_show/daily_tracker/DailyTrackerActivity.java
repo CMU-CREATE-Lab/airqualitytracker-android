@@ -1,0 +1,21 @@
+package org.cmucreatelab.tasota.airprototype.activities.readable_show.daily_tracker;
+
+import android.os.Bundle;
+import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
+
+/**
+ * Created by mike on 5/11/16.
+ */
+public class DailyTrackerActivity extends BaseActivity<DailyTrackerUIElements> {
+
+    public SimpleAddress address;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.__readable_show____daily_tracker__activity);
+    }
+
+}

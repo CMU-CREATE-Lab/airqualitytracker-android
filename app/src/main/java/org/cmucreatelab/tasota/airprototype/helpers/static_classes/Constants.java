@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.R;
+import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 
 import java.util.HashMap;
@@ -58,6 +59,9 @@ public final class Constants {
 
     // controls whether or not the code will perform esdr token refresh requests
     public static final boolean REFRESHES_ESDR_TOKEN = true;
+
+    // determines what value we want to iterate over to determine number of dirty days
+    public static final DayFeedValue.DirtyDaysValueType DIRTY_DAYS_VALUE_TYPE = DayFeedValue.DirtyDaysValueType.MEAN;
 
     public static final class ManualOverrides {
         // strongly encouraged to also set REFRESHES_ESDR_TOKEN = false when using this option
