@@ -27,6 +27,8 @@ public class SimpleAddress extends AirNowReadable {
     public final ArrayList<Feed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
     private int positionId;
+
+
     private DailyFeedTracker dailyFeedTracker;
     // getters/setters
     public long get_id() { return _id; }
@@ -40,6 +42,7 @@ public class SimpleAddress extends AirNowReadable {
     public boolean isCurrentLocation() { return isCurrentLocation; }
     public int getPositionId() { return positionId; }
     public void setPositionId(int positionId) { this.positionId = positionId; }
+    public DailyFeedTracker getDailyFeedTracker() { return dailyFeedTracker; }
 
 
     // class constructor

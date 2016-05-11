@@ -8,7 +8,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
  */
 public class DayFeedValue {
 
-    public enum DirtyDaysValueType {
+    public enum DaysValueType {
         MEAN, MEDIAN, MAX;
     }
 
@@ -32,8 +32,8 @@ public class DayFeedValue {
     }
 
 
-    public double getDirtyDaysValue() {
-        switch (Constants.DIRTY_DAYS_VALUE_TYPE) {
+    public double getCount(DaysValueType type) {
+        switch (type) {
             case MEAN:
                 return mean;
             case MEDIAN:

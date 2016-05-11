@@ -61,7 +61,7 @@ public final class Constants {
     public static final boolean REFRESHES_ESDR_TOKEN = true;
 
     // determines what value we want to iterate over to determine number of dirty days
-    public static final DayFeedValue.DirtyDaysValueType DIRTY_DAYS_VALUE_TYPE = DayFeedValue.DirtyDaysValueType.MEAN;
+    public static final DayFeedValue.DaysValueType DIRTY_DAYS_VALUE_TYPE = DayFeedValue.DaysValueType.MEAN;
 
     public static final class ManualOverrides {
         // strongly encouraged to also set REFRESHES_ESDR_TOKEN = false when using this option

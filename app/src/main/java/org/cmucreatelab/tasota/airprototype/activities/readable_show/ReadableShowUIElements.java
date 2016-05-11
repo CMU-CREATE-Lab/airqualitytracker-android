@@ -28,6 +28,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
     private TextView textShowAddressAqiLabel;
     private RelativeLayout layoutShowAddress;
     private FrameLayout frameAqiButton;
+    private FrameLayout frameDailyTrackerButton;
     private TextView textViewReadingName;
 
 
@@ -41,6 +42,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
         this.textShowAddressAqiLabel = (TextView)activity.findViewById(R.id.textShowAddressAqiLabel);
         this.layoutShowAddress = (RelativeLayout)activity.findViewById(R.id.layoutShowAddress);
         this.frameAqiButton = (FrameLayout)activity.findViewById(R.id.frameAqiButton);
+        this.frameDailyTrackerButton = (FrameLayout)activity.findViewById(R.id.frameDailyTracker);
         this.textViewReadingName = (TextView)activity.findViewById(R.id.textViewReadingName);
 
         // use custom fonts
@@ -48,6 +50,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
         textShowAddressAqiValue.setTypeface(fontAqi);
 
         frameAqiButton.setOnClickListener(activity.frameClickListener);
+        frameDailyTrackerButton.setOnClickListener(activity.frameDailyTrackerListener);
     }
 
 

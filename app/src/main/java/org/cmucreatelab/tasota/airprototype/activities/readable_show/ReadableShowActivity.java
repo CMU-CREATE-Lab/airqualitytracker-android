@@ -17,6 +17,7 @@ public class ReadableShowActivity extends BaseActivity<ReadableShowUIElements> {
 
     protected Readable reading;
     protected ReadableShowFrameClickListener frameClickListener;
+    protected ReadableShowTrackerFrameClickListener frameDailyTrackerListener;
 
 
     public void setDirtyDaysText(String text) {
@@ -64,6 +65,7 @@ public class ReadableShowActivity extends BaseActivity<ReadableShowUIElements> {
         }
 
         frameClickListener = new ReadableShowFrameClickListener(this);
+        frameDailyTrackerListener = new ReadableShowTrackerFrameClickListener(this);
         new ReadableShowUIElements(this, reading).populate();
     }
 
