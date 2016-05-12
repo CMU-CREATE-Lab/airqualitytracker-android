@@ -13,6 +13,7 @@ public class DailyTrackerActivity extends BaseActivity<DailyTrackerUIElements> {
 
     public SimpleAddress address;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
