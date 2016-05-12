@@ -132,12 +132,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1" >
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="match_parent"
-                            android:id="@+id/imageView8"
-                            android:src="@drawable/ic_near_me_black_24dp"
-                            android:layout_gravity="center" />
                     </FrameLayout>
 
                     <RelativeLayout
