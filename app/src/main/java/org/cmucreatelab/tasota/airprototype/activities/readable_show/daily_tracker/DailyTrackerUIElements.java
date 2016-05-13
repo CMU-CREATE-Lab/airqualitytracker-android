@@ -6,7 +6,6 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> implements AdapterView.OnItemSelectedListener {
 
     // ui elements
-    private TextView textViewMean,textViewMedian,textViewMax;
     private WebView webView;
     private DayFeedValue.DaysValueType displayType = DayFeedValue.DaysValueType.MEAN;
     private DailyFeedTracker tracker;
@@ -33,6 +31,7 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
     private String constructColorsList() {
         String result = "";
         ArrayList<DayFeedValue> values = tracker.getValues();
+        Log.v(Constants.LOG_TAG,String.format("sampling %d points",values.size()));
 
         for (DayFeedValue value : values) {
             double reading = value.getCount(displayType);
@@ -49,15 +48,8 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
 
     public void populate() {
         this.tracker = activity.address.getDailyFeedTracker();
-
-        this.textViewMean = (TextView)activity.findViewById(R.id.textViewMean);
-        this.textViewMedian = (TextView)activity.findViewById(R.id.textViewMedian);
-        this.textViewMax = (TextView)activity.findViewById(R.id.textViewMax);
+        
         this.webView = (WebView)activity.findViewById(R.id.webView);
-        this.textViewMean.setText("Mean: " + tracker.getDaysCount(DayFeedValue.DaysValueType.MEAN));
-        this.textViewMedian.setText("Median: " + tracker.getDaysCount(DayFeedValue.DaysValueType.MEDIAN));
-        this.textViewMax.setText("Max: " + tracker.getDaysCount(DayFeedValue.DaysValueType.MAX));
-
         Spinner spinner = (Spinner) activity.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.trackers_spinner,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

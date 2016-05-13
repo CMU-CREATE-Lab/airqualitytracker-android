@@ -26,4 +26,5 @@
         <item>Median</item>
         <item>Max</item>
     </string-array>
+    <string name="trakckers_dirty_days_description">Daily values are calculated from the 24-hour average of a given air station. This value is given in Air Quality Index (AQI) based off of PM 2.5 readings from the station. A day is considered dirty provided that its daily value exceeds 50 AQI.</string>
 </resources>
