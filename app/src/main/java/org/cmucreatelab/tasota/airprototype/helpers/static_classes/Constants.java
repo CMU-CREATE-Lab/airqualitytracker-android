@@ -4,7 +4,6 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
-
 import java.util.HashMap;
 
 /**
@@ -55,7 +54,10 @@ public final class Constants {
 
     public static final long SPECKS_MAX_TIME_RANGE = 1800; // 30 minutes
 
-    public static final long ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH = 86400; // 24 hours
+    public static final long TWENTY_FOUR_HOURS = 86400;
+
+    public static final long ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH = TWENTY_FOUR_HOURS;
+
 
     // controls whether or not the code will perform esdr token refresh requests
     public static final boolean REFRESHES_ESDR_TOKEN = true;

@@ -33,10 +33,23 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
         ArrayList<DayFeedValue> values = tracker.getValues();
         Log.v(Constants.LOG_TAG,String.format("sampling %d points",values.size()));
 
-        for (DayFeedValue value : values) {
-            double reading = value.getCount(displayType);
-            int index = Constants.AqiReading.getIndexFromReading(AqiConverter.microgramsToAqi(reading));
-            result += Constants.AqiReading.aqiColors[index].replaceAll("#","");
+        int day,index=0;
+        long startTime = tracker.getStartTime();
+        for (day=0;day<364;day++) {
+            startTime += Constants.TWENTY_FOUR_HOURS;
+
+            // only check for values we still have
+            if (index<values.size()) {
+                DayFeedValue value = values.get(index);
+                // add color value if value was in the past day
+                if (value.getTime() <= startTime) {
+                    index++;
+                    double reading = value.getCount(displayType);
+                    int colorIndex = Constants.AqiReading.getIndexFromReading(AqiConverter.microgramsToAqi(reading));
+                    result += Constants.AqiReading.aqiColors[colorIndex].replaceAll("#", "");
+                }
+            }
+            // next value (even if empty day, then just an empty string)
             result += ",";
         }
         result = result.substring(0,result.length()-2);
@@ -48,7 +61,7 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
 
     public void populate() {
         this.tracker = activity.address.getDailyFeedTracker();
-        
+
         this.webView = (WebView)activity.findViewById(R.id.webView);
         Spinner spinner = (Spinner) activity.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.trackers_spinner,android.R.layout.simple_spinner_item);

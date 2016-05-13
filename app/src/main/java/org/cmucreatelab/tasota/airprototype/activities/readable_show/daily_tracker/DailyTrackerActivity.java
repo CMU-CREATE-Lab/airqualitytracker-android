@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.activities.readable_show.daily_tracker;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
@@ -22,6 +23,12 @@ public class DailyTrackerActivity extends BaseActivity<DailyTrackerUIElements> {
         address = (SimpleAddress) globalHandler.readingsHandler.adapterList.get(globalHandler.readableShowItemIndex).readable;
 
         new DailyTrackerUIElements(this).populate();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Trends: "+address.getName());
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 }

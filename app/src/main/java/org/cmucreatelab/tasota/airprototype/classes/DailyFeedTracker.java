@@ -25,6 +25,10 @@ public class DailyFeedTracker {
         this.to = to;
     }
 
+    public long getStartTime() {
+        return from;
+    }
+
 
     public int getDirtyDaysCount() {
         return getDaysCount(Constants.DIRTY_DAYS_VALUE_TYPE);

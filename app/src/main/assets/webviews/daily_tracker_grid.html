@@ -25,43 +25,43 @@ width:100%;
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-<td></td><td></td><td></td><td></td><td></td>
+<td></td><td></td><td></td><td></td>
 </tr>
 <tr>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-<td></td><td></td><td></td><td></td><td></td>
+<td></td><td></td><td></td><td></td>
 </tr>
 <tr>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-<td></td><td></td><td></td><td></td><td></td>
+<td></td><td></td><td></td><td></td>
 </tr>
 <tr>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-<td></td><td></td><td></td><td></td><td></td>
+<td></td><td></td><td></td><td></td>
 </tr>
 <tr>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-<td></td><td></td><td></td><td></td><td></td>
+<td></td><td></td><td></td><td></td>
 </tr>
 <tr>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-<td></td><td></td><td></td><td></td><td></td>
+<td></td><td></td><td></td><td></td>
 </tr>
 <tr>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-<td></td><td></td><td></td><td></td><td></td>
+<td></td><td></td><td></td><td></td>
 </tr>
 </table>
 </body>
@@ -79,12 +79,12 @@ $.urlParam = function(name){
 // Do NOT use # symbol in your hex color (example: dd6622, NOT #dd6622)
 var args = $.urlParam("table-colors");
 colors = args.split(",");
-size = (colors.length > 365) ? 365 : colors.length;
+size = (colors.length > 364) ? 364 : colors.length;
 for (i=0;i<size;i++) {
 	// // populates horizontally
 	// $("td")[i].style.backgroundColor = "#"+colors[i].split("%22").join("");
 	// populates vertically
-	$("td")[(i%7)*53+Math.floor(i/7)].style.backgroundColor = "#"+colors[i].split("%22").join("");
+	$("td")[(i%7)*52+Math.floor(i/7)].style.backgroundColor = "#"+colors[i].split("%22").join("");
 }
 </script>
 
