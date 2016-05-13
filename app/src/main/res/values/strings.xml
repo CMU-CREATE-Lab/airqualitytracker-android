@@ -21,4 +21,9 @@
     <string name="title_activity_aqi_explanation">AQI Explanation</string>
     <string name="title_activity_airnow">AirNow</string>
     <string name="title_activity_daily_tracker">Trends Over Time</string>
+    <string-array name="trackers_spinner">
+        <item>Mean</item>
+        <item>Median</item>
+        <item>Max</item>
+    </string-array>
 </resources>
