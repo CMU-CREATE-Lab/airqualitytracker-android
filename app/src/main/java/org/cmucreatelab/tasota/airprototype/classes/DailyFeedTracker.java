@@ -17,16 +17,13 @@ public class DailyFeedTracker {
     // getters/setters
     public Feed getFeed() { return feed; }
     public ArrayList<DayFeedValue> getValues() { return values; }
+    public long getStartTime() { return from; }
 
 
     public DailyFeedTracker(Feed feed, long from, long to) {
         this.feed = feed;
         this.from = from;
         this.to = to;
-    }
-
-    public long getStartTime() {
-        return from;
     }
 
 

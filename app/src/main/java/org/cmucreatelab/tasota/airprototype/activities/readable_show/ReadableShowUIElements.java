@@ -83,6 +83,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
         // hide buttons
         frameAqiButton.setVisibility(View.INVISIBLE);
+        frameDailyTrackerButton.setVisibility(View.INVISIBLE);
     }
 
 
@@ -125,6 +126,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
             // hide buttons
             frameAqiButton.setVisibility(View.INVISIBLE);
+            frameDailyTrackerButton.setVisibility(View.INVISIBLE);
         }
     }
 

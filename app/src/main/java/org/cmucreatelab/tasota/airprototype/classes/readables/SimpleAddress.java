@@ -2,7 +2,6 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import android.util.Log;
 import com.android.volley.Response;
-import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
@@ -62,20 +61,22 @@ public class SimpleAddress extends AirNowReadable {
 
 
     public void requestDailyFeedTracker(final ReadableShowActivity activity) {
+        final long to = new Date().getTime() / 1000;
+        final long from = to - (long)(86400 * 365);
         if (closestFeed == null) {
             Log.e(Constants.LOG_TAG, "requestDailyFeedTracker failed (closestFeed is null)");
             return;
         }
         if (dailyFeedTracker != null) {
-            // TODO check that this tracker is at least within the last 24 hours (otherwise it needs updated)
-            int numberDirtyDays = dailyFeedTracker.getDirtyDaysCount();
-            String text = String.valueOf(numberDirtyDays) + ((numberDirtyDays == 1) ? " dirty day " : " dirty days ")
-                    + "in the past year";
-            activity.setDirtyDaysText(text);
-            return;
+            // check that this tracker is at least within the last 24 hours (otherwise it needs updated)
+            if (to - dailyFeedTracker.getStartTime() <= Constants.TWENTY_FOUR_HOURS) {
+                int numberDirtyDays = dailyFeedTracker.getDirtyDaysCount();
+                String text = String.valueOf(numberDirtyDays) + ((numberDirtyDays == 1) ? " dirty day " : " dirty days ")
+                        + "in the past year";
+                activity.feedTrackerResponse(text);
+                return;
+            }
         }
-        final long to = new Date().getTime() / 1000;
-        final long from = to - (long)(86400 * 365);
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
@@ -84,7 +85,7 @@ public class SimpleAddress extends AirNowReadable {
                 int numberDirtyDays = dailyFeedTracker.getDirtyDaysCount();
                 String text = String.valueOf(numberDirtyDays) + ((numberDirtyDays == 1) ? " dirty day " : " dirty days ")
                         + "in the past year";
-                activity.setDirtyDaysText(text);
+                activity.feedTrackerResponse(text);
             }
         };
 

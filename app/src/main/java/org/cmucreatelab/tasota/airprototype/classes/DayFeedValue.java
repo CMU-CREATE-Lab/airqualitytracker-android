@@ -41,7 +41,7 @@ public class DayFeedValue {
             case MAX:
                 return max;
             default:
-                Log.e(Constants.LOG_TAG,"DIRTY_DAYS_VALUE_TYPE Undefined enum type");
+                Log.e(Constants.LOG_TAG,"Undefined enum type");
                 return 0;
         }
     }

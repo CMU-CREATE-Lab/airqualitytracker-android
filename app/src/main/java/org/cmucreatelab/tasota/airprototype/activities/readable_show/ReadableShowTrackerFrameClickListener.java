@@ -10,6 +10,7 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_show.daily_track
 public class ReadableShowTrackerFrameClickListener implements View.OnClickListener {
 
     private ReadableShowActivity activity;
+    public boolean isEnabled = false;
 
 
     public ReadableShowTrackerFrameClickListener(ReadableShowActivity activity) {
@@ -19,7 +20,8 @@ public class ReadableShowTrackerFrameClickListener implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        activity.startActivity(new Intent(activity, DailyTrackerActivity.class));
+        if (isEnabled)
+            activity.startActivity(new Intent(activity, DailyTrackerActivity.class));
     }
 
 }
