@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "22.0.1"
 
     defaultConfig {
@@ -22,9 +22,12 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':volley')
-    compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.google.android.gms:play-services-location:7.5.0'
-    compile 'com.android.support:support-v4:22.1.1'
+    compile group: 'com.android.support', name: 'appcompat-v7', version: '23.+'
+    compile group: 'com.android.support', name: 'support-v4', version: '23.+'
+    // for aspect ratios on views
+    compile group: 'com.android.support', name: 'percent', version: '23.+'
+
     // for StickGridHeaders
     compile 'com.tonicartos:superslim:0.4.+'
 }
