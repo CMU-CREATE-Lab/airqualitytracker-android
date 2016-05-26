@@ -1,5 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,6 +57,10 @@ public class NowCastCalculator {
     public static double calculate(Double[] hourlyValues) {
         double max,min,range,weightFactor,numerator,denominator;
         List<Double> values = Arrays.asList(hourlyValues);
+        if (values.size() == 0) {
+            Log.w(Constants.LOG_TAG, "tried NowCastCalculator.calculate with an empty array; returning 0");
+            return 0;
+        }
 
         // find min/max of list
         max = Collections.max(values);
