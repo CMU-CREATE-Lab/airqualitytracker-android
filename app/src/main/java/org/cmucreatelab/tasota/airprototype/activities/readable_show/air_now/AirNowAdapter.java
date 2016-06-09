@@ -12,7 +12,6 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
 /**

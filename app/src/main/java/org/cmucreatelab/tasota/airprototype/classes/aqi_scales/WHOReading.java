@@ -9,11 +9,11 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 public class WHOReading {
 
     // static class attributes
-    public static final String[] colors = {
+    private static final String[] colors = {
             "#a3ba5c", "#e9b642", "#e98c37",
             "#e24f36"
     };
-    public static final String[] titles = {
+    private static final String[] titles = {
             "Good", "Moderate", "Elevated", "High"
     };
     // ranges measured in ug/m^3

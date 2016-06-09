@@ -27,11 +27,11 @@ public class SpeckReading extends Scalable {
             "This would trigger a health warning of emergency conditions. The entire " +
                     "population is more likely to be affected."
     };
-    public static final String[] normalColors = {
+    private static final String[] normalColors = {
             "#1a9850", "#91cf60", "#d9ef8b",
             "#FEE08B", "#FC8D59", "#D73027"
     };
-    public static final String[] titles = {
+    private static final String[] titles = {
             "Good", "Moderate", "Slightly Elevated",
             "Elevated", "High", "Very High"
     };
