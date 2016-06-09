@@ -90,7 +90,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
 
     private void addressView(final SimpleAddress address) {
-        int aqi,index;
+        int aqi;
         double micrograms;
 
         micrograms = address.getReadableValue();
@@ -113,10 +113,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
 
     private void speckView(Speck speck) {
-//        int index;
-
         this.textShowAddressAqiValue.setText(String.valueOf((long) speck.getReadableValue()));
-//        index = Constants.SpeckReading.getIndexFromReading((long)speck.getReadableValue());
         SpeckReading speckReading = new SpeckReading(speck.getReadableValue());
         if (speckReading.withinRange()) {
             textShowAddressAqiRange.setText(speckReading.getRangeFromIndex() + " Micrograms");

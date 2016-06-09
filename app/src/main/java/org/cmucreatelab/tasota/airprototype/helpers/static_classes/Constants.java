@@ -62,6 +62,9 @@ public final class Constants {
     // determines what value we want to iterate over to determine number of dirty days
     public static final DayFeedValue.DaysValueType DIRTY_DAYS_VALUE_TYPE = DayFeedValue.DaysValueType.MEAN;
 
+    // any day exceeding this AQI value is defined as dirty
+    public static final int DIRTY_DAYS_AQI_THRESHOLD = 50;
+
     public static final class ManualOverrides {
         // strongly encouraged to also set REFRESHES_ESDR_TOKEN = false when using this option
         public static final boolean MANUAL_ESDR_LOGIN = false;

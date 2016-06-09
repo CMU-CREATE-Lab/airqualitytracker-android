@@ -49,7 +49,7 @@ public class WHOReading {
                 return i;
             }
         }
-        return -1;
+        return ranges.length;
     }
 
 

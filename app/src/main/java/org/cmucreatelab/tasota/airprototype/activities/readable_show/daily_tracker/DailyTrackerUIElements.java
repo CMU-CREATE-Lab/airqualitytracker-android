@@ -11,6 +11,8 @@ import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.Scalable;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.WHOReading;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
@@ -22,6 +24,8 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
     // ui elements
     private WebView webView;
     private DayFeedValue.DaysValueType displayType = DayFeedValue.DaysValueType.MEAN;
+    // TODO toggle value
+    private Scalable.ScaleType scaleType = Scalable.ScaleType.EPA_AQI;
     private DailyFeedTracker tracker;
 
 
@@ -45,7 +49,16 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
                 if (value.getTime() <= startTime) {
                     index++;
                     double reading = value.getCount(displayType);
-                    result += new AQIReading(reading).getColor().replaceAll("#", "");
+                    switch(scaleType) {
+                        case EPA_AQI:
+                            result += new AQIReading(reading).getColor().replaceAll("#", "");
+                            break;
+                        case WHO:
+                            result += new WHOReading(reading).getColor().replaceAll("#", "");
+                            break;
+                        default:
+                            Log.e(Constants.LOG_TAG,"Unrecognized ScaleType for Daily Tracker colors list.");
+                    }
                 }
             }
             // next value (even if empty day, then just an empty string)

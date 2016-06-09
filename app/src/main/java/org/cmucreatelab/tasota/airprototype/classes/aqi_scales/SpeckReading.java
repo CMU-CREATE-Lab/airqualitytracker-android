@@ -70,7 +70,7 @@ public class SpeckReading extends Scalable {
                 return i;
             }
         }
-        return -1;
+        return ranges.length;
     }
 
 

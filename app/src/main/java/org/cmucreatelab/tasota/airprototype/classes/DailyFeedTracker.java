@@ -36,7 +36,7 @@ public class DailyFeedTracker {
         int size = 0;
 
         for (DayFeedValue feedValue : values) {
-            if (AqiConverter.microgramsToAqi(feedValue.getCount(type)) > 50) {
+            if (AqiConverter.microgramsToAqi(feedValue.getCount(type)) > Constants.DIRTY_DAYS_AQI_THRESHOLD) {
                 size++;
             }
         }

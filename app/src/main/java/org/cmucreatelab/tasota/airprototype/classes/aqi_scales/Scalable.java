@@ -5,6 +5,10 @@ package org.cmucreatelab.tasota.airprototype.classes.aqi_scales;
  */
 public abstract class Scalable {
 
+    public enum ScaleType {
+        EPA_AQI, SPECK, WHO
+    }
+
     public abstract boolean withinRange();
 
     public abstract int getIndexFromReading(double reading);
