@@ -9,7 +9,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 public class DayFeedValue {
 
     public enum DaysValueType {
-        MEAN, MEDIAN, MAX;
+        MEAN, MEDIAN, MAX
     }
 
     // class attributes

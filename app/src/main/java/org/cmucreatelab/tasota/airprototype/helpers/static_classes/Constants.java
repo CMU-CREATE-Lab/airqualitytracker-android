@@ -50,14 +50,13 @@ public final class Constants {
             "particle_concentration"
     };
 
-    public static final long READINGS_MAX_TIME_RANGE = 86400; // 24 hours
+    public static final long TWENTY_FOUR_HOURS = 86400;
+
+    public static final long READINGS_MAX_TIME_RANGE = TWENTY_FOUR_HOURS;
 
     public static final long SPECKS_MAX_TIME_RANGE = 1800; // 30 minutes
 
-    public static final long TWENTY_FOUR_HOURS = 86400;
-
     public static final long ESDR_TOKEN_TIME_TO_UPDATE_ON_REFRESH = TWENTY_FOUR_HOURS;
-
 
     // controls whether or not the code will perform esdr token refresh requests
     public static final boolean REFRESHES_ESDR_TOKEN = true;
@@ -139,7 +138,7 @@ public final class Constants {
     public final class EsdrRefreshIntent {
         public static final String RECEIVER = APP_PACKAGE_NAME + ".esdrrefreshintent.receiver";
         public static final String ALARM_RECEIVER = RECEIVER + ".alarmmanager";
-        public static final long ALARM_INTERVAL_MILLISECONDS = 86400000; // 24 hours
+        public static final long ALARM_INTERVAL_MILLISECONDS = TWENTY_FOUR_HOURS * 1000;
     }
 
     public final class AddressList {
@@ -165,6 +164,7 @@ public final class Constants {
         public static final String DEFAULT_DESCRIPTION = "The current AQI for this region is unavailable.";
     }
 
+    // TODO delete me (new Scalable abstractions)
     public static final class SpeckReading {
         // TODO replace with speck descriptions?
         public static final String[] descriptions = {
@@ -222,6 +222,7 @@ public final class Constants {
         }
     }
 
+    // TODO delete me (new Scalable abstractions)
     public static final class AqiReading {
         public static final String[] descriptions = {
                 "Air quality is considered satisfactory, and air pollution poses little or no risk.",
