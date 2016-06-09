@@ -10,6 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
@@ -61,7 +63,6 @@ public class AirNowAdapter extends ArrayAdapter<AirNowAdapter.AirNowItem> {
             rowView = inflater.inflate(R.layout.__readable_show____air_now__list_item, parent, false);
 
             double aqi = item.observation.getAqi();
-            int index = Constants.AqiReading.getIndexFromReading(aqi);
 
             // AQI
             TextView textViewAqi = (TextView)rowView.findViewById(R.id.textViewAqi);
@@ -73,7 +74,7 @@ public class AirNowAdapter extends ArrayAdapter<AirNowAdapter.AirNowItem> {
 
             // AQI Color
             FrameLayout frameColored = (FrameLayout)rowView.findViewById(R.id.frameColored);
-            frameColored.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[index]));
+            frameColored.setBackgroundColor(Color.parseColor(new AQIReading(AqiConverter.aqiToMicrograms(aqi)).getColor()));
         }
 
         return rowView;

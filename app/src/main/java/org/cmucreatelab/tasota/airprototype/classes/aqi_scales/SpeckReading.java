@@ -9,6 +9,24 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 public class SpeckReading extends Scalable {
 
     // static class attributes
+    // TODO descriptions for Speck
+    private static final String[] descriptions = {
+            "Air quality is considered satisfactory, and air pollution poses little or no risk.",
+            "Air quality is acceptable; however, for some pollutants there may be a moderate " +
+                    "health concern for a very small number of people. For example, people " +
+                    "who are unusually sensitive to ozone may experience respiratory symptoms.",
+            "Although general public is not likely to be affected at this AQI range, people " +
+                    "with lung disease, older adults and children are at a greater risk from " +
+                    "exposure to ozone, whereas persons with heart and lung disease, older " +
+                    "adults and children are at greater risk from the presence of particles " +
+                    "in the air.",
+            "Everyone may begin to experience some adverse health effects, and members of the " +
+                    "sensitive groups may experience more serious effects.",
+            "This would trigger a health alert signifying that everyone may experience more " +
+                    "serious health effects.",
+            "This would trigger a health warning of emergency conditions. The entire " +
+                    "population is more likely to be affected."
+    };
     public static final String[] normalColors = {
             "#1a9850", "#91cf60", "#d9ef8b",
             "#FEE08B", "#FC8D59", "#D73027"
@@ -28,11 +46,17 @@ public class SpeckReading extends Scalable {
     // getters
     public String getColor() { return normalColors[this.index]; }
     public String getTitle() { return titles[this.index]; }
+    public String getDescription() { return descriptions[this.index]; }
 
 
     public SpeckReading(double reading) {
         this.reading = reading;
         this.index = getIndexFromReading(this.reading);
+    }
+
+
+    public boolean withinRange() {
+        return (index >= 0);
     }
 
 
@@ -50,7 +74,7 @@ public class SpeckReading extends Scalable {
     }
 
 
-    public String getRangeFromIndex(int index) {
+    public String getRangeFromIndex() {
         String result;
         if (index < 0) {
             Log.e(Constants.LOG_TAG, "getRangeFromIndex received index < 0.");

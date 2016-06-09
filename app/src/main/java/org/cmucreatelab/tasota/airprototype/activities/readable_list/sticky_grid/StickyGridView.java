@@ -12,6 +12,8 @@ import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -53,7 +55,6 @@ class StickyGridView extends RecyclerView.ViewHolder
 
     private void bindSpeck(Speck speck, CellViews cellViews) {
         int label;
-        int index;
 
         cellViews.textAddressItemLocationName.setText(speck.getName());
         cellViews.textAddressAqiLabel.setVisibility(View.VISIBLE);
@@ -61,20 +62,13 @@ class StickyGridView extends RecyclerView.ViewHolder
 
         label = (int)speck.getReadableValue();
         cellViews.textAddressItemLocationValue.setText(String.valueOf(label));
-        index = Constants.SpeckReading.getIndexFromReading(label);
-        if (index >= 0) {
-            try {
-                cellViews.background.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
-            } catch (Exception e) {
-                Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.SpeckReading.normalColors[index]);
-            }
-        }
+        SpeckReading speckReading = new SpeckReading(label);
+        cellViews.background.setBackgroundColor(Color.parseColor(speckReading.getColor()));
     }
 
 
     private void bindAddress(SimpleAddress simpleAddress, CellViews cellViews) {
-        double aqi;
-        int index;
+        double aqi,micrograms;
 
         cellViews.textAddressItemLocationName.setText(simpleAddress.getName());
         cellViews.textAddressAqiLabel.setVisibility(View.VISIBLE);
@@ -84,16 +78,11 @@ class StickyGridView extends RecyclerView.ViewHolder
             cellViews.textCurrentLocation.setVisibility(View.VISIBLE);
         }
 
-        aqi = AqiConverter.microgramsToAqi(simpleAddress.getClosestFeed().getReadableValue());
+        micrograms = simpleAddress.getClosestFeed().getReadableValue();
+        aqi = AqiConverter.microgramsToAqi(micrograms);
         cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
-        index = Constants.AqiReading.getIndexFromReading(aqi);
-        if (index >= 0) {
-            try {
-                cellViews.background.setBackgroundColor(Color.parseColor(Constants.AqiReading.aqiColors[index]));
-            } catch (Exception e) {
-                Log.w(Constants.LOG_TAG, "Failed to parse color " + Constants.AqiReading.aqiColors[index]);
-            }
-        }
+        AQIReading aqiReading = new AQIReading(micrograms);
+        cellViews.background.setBackgroundColor(Color.parseColor(aqiReading.getColor()));
     }
 
 

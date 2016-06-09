@@ -10,7 +10,7 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
@@ -45,8 +45,7 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
                 if (value.getTime() <= startTime) {
                     index++;
                     double reading = value.getCount(displayType);
-                    int colorIndex = Constants.AqiReading.getIndexFromReading(AqiConverter.microgramsToAqi(reading));
-                    result += Constants.AqiReading.aqiColors[colorIndex].replaceAll("#", "");
+                    result += new AQIReading(reading).getColor().replaceAll("#", "");
                 }
             }
             // next value (even if empty day, then just an empty string)

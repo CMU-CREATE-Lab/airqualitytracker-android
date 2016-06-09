@@ -65,6 +65,11 @@ public class AQIReading extends Scalable {
     }
 
 
+    public boolean withinRange() {
+        return (index >= 0);
+    }
+
+
     public int getIndexFromReading(double reading) {
         if (reading < 0) {
             return -1;
@@ -79,7 +84,7 @@ public class AQIReading extends Scalable {
     }
 
 
-    public String getRangeFromIndex(int index) {
+    public String getRangeFromIndex() {
         String result;
         if (index < 0) {
             Log.e(Constants.LOG_TAG, "getRangeFromIndex received index < 0.");

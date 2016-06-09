@@ -5,9 +5,11 @@ package org.cmucreatelab.tasota.airprototype.classes.aqi_scales;
  */
 public abstract class Scalable {
 
+    public abstract boolean withinRange();
+
     public abstract int getIndexFromReading(double reading);
 
-    public abstract String getRangeFromIndex(int index);
+    public abstract String getRangeFromIndex();
 
     public abstract String getColor();
 

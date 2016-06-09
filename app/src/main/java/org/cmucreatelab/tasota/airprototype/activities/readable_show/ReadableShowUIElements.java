@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.UIElements;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
+import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -89,44 +91,45 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
     private void addressView(final SimpleAddress address) {
         int aqi,index;
+        double micrograms;
 
-        aqi = (int) AqiConverter.microgramsToAqi(address.getReadableValue());
+        micrograms = address.getReadableValue();
+        aqi = (int) AqiConverter.microgramsToAqi(micrograms);
         this.textShowAddressAqiValue.setText(String.valueOf(aqi));
-        index = Constants.AqiReading.getIndexFromReading(aqi);
-        if (index < 0) {
-            this.defaultView();
-        } else {
-            textShowAddressAqiRange.setText(Constants.AqiReading.getRangeFromIndex(index) + " AQI");
-            textShowAddressAqiTitle.setText(Constants.AqiReading.titles[index]);
-            textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
-            layoutShowAddress.setBackgroundResource(Constants.AqiReading.aqiDrawableGradients[index]);
+        AQIReading aqiReading = new AQIReading(micrograms);
+        if (aqiReading.withinRange()) {
+            textShowAddressAqiRange.setText(aqiReading.getRangeFromIndex() + " AQI");
+            textShowAddressAqiTitle.setText(aqiReading.getTitle());
+            textShowAddressAqiDescription.setText(aqiReading.getDescription());
+            layoutShowAddress.setBackgroundResource(aqiReading.getDrawableGradient());
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_AQI);
             this.textViewReadingName.setText(address.getClosestFeed().getName());
             // request Tracker
             address.requestDailyFeedTracker(activity);
+        } else {
+            this.defaultView();
         }
     }
 
 
     private void speckView(Speck speck) {
-        int index;
+//        int index;
 
         this.textShowAddressAqiValue.setText(String.valueOf((long) speck.getReadableValue()));
-        index = Constants.SpeckReading.getIndexFromReading((long)speck.getReadableValue());
-        if (index < 0) {
-            this.defaultView();
-        } else {
-            textShowAddressAqiRange.setText(Constants.SpeckReading.getRangeFromIndex(index) + " Micrograms");
-            textShowAddressAqiTitle.setText(Constants.SpeckReading.titles[index]);
-            // TODO descriptions for speck
-//                    textShowAddressAqiDescription.setText(Constants.SpeckReading.descriptions[ugIndex]);
-            textShowAddressAqiDescription.setText(Constants.AqiReading.descriptions[index]);
-            layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.SpeckReading.normalColors[index]));
+//        index = Constants.SpeckReading.getIndexFromReading((long)speck.getReadableValue());
+        SpeckReading speckReading = new SpeckReading(speck.getReadableValue());
+        if (speckReading.withinRange()) {
+            textShowAddressAqiRange.setText(speckReading.getRangeFromIndex() + " Micrograms");
+            textShowAddressAqiTitle.setText(speckReading.getTitle());
+            textShowAddressAqiDescription.setText(speckReading.getDescription());
+            layoutShowAddress.setBackgroundColor(Color.parseColor(speckReading.getColor()));
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_MICROGRAMS_PER_CUBIC_METER);
 
             // hide buttons
             frameAqiButton.setVisibility(View.INVISIBLE);
             frameDailyTrackerButton.setVisibility(View.INVISIBLE);
+        } else {
+            this.defaultView();
         }
     }
 
