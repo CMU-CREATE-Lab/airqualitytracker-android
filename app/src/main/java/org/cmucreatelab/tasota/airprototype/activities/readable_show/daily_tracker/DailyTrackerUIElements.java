@@ -26,7 +26,7 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
     private DailyFeedTracker tracker;
     private Spinner spinner1,spinner2;
     // display attributes
-    private DayFeedValue.DaysValueType displayType = DayFeedValue.DaysValueType.MEAN;
+    private DayFeedValue.DaysValueType displayType = DayFeedValue.DaysValueType.MAX;
     private Scalable.ScaleType scaleType = Scalable.ScaleType.EPA_AQI;
 
 
