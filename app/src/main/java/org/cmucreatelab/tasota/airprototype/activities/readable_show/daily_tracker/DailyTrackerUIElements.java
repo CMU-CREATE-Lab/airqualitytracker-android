@@ -23,10 +23,11 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
 
     // ui elements
     private WebView webView;
-    private DayFeedValue.DaysValueType displayType = DayFeedValue.DaysValueType.MEAN;
-    // TODO toggle value
-    private Scalable.ScaleType scaleType = Scalable.ScaleType.EPA_AQI;
     private DailyFeedTracker tracker;
+    private Spinner spinner1,spinner2;
+    // display attributes
+    private DayFeedValue.DaysValueType displayType = DayFeedValue.DaysValueType.MEAN;
+    private Scalable.ScaleType scaleType = Scalable.ScaleType.EPA_AQI;
 
 
     public DailyTrackerUIElements(DailyTrackerActivity activity) { super(activity); }
@@ -75,11 +76,20 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
         this.tracker = activity.address.getDailyFeedTracker();
 
         this.webView = (WebView)activity.findViewById(R.id.webView);
-        Spinner spinner = (Spinner) activity.findViewById(R.id.spinner);
+
+        // spinner 1
+        spinner1 = (Spinner) activity.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.trackers_spinner,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        spinner1.setAdapter(adapter);
+        spinner1.setOnItemSelectedListener(this);
+
+        // spinner 2
+        spinner2 = (Spinner) activity.findViewById(R.id.spinner2);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(activity, R.array.trackers_spinner_scale,android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(adapter2);
+        spinner2.setOnItemSelectedListener(this);
     }
 
 
@@ -96,6 +106,12 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
                 break;
             case "Max":
                 displayType = DayFeedValue.DaysValueType.MAX;
+                break;
+            case "EPA AQI":
+                scaleType = Scalable.ScaleType.EPA_AQI;
+                break;
+            case "WHO":
+                scaleType = Scalable.ScaleType.WHO;
                 break;
             default:
                 Log.e(Constants.LOG_TAG,"Failed to grab selected; defaulting to dirty days.");
