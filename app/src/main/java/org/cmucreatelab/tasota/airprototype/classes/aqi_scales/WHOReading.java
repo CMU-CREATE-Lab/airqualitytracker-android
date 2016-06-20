@@ -1,6 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.classes.aqi_scales;
 
 import android.util.Log;
+
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
@@ -11,14 +13,14 @@ public class WHOReading {
     // static class attributes
     private static final String[] colors = {
             "#a3ba5c", "#e9b642", "#e98c37",
-            "#e24f36"
+            "#e24f36", "#b54382", "#b22651"
     };
     private static final String[] titles = {
-            "Good", "Moderate", "Elevated", "High"
+            "Good", "Moderate", "Elevated", "High", "Very High", "Hazardous"
     };
     // ranges measured in ug/m^3
     private static final double[] ranges = {
-            10.1, 25.5, 50.5
+            10.1, 25.5, 50.5, 149.5, 249.5
     };
     // class attributes
     private final double reading;
@@ -59,11 +61,11 @@ public class WHOReading {
             Log.e(Constants.LOG_TAG, "getRangeFromIndex received index < 0.");
             result = "";
         } else if (index == 0) {
-            result = "0-" + ranges[0];
-        } else if (index == 3) {
-            result = ranges[2] + "+";
+            result = "0-" + AqiConverter.microgramsToAqi(ranges[0]);
+        } else if (index == ranges.length) {
+            result = AqiConverter.microgramsToAqi(ranges[ranges.length-1]) + "+";
         } else {
-            result = ranges[index-1] + "-" + ranges[index];
+            result = AqiConverter.microgramsToAqi(ranges[index-1]) + "-" + AqiConverter.microgramsToAqi(ranges[index]);
         }
         return result;
     }

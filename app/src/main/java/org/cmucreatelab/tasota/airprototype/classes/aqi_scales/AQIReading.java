@@ -91,8 +91,8 @@ public class AQIReading extends Scalable {
             result = "";
         } else if (index == 0) {
             result = "0-" + ranges[0];
-        } else if (index == 5) {
-            result = ranges[4] + "+";
+        } else if (index == ranges.length) {
+            result = ranges[ranges.length-1] + "+";
         } else {
             result = ranges[index-1] + "-" + ranges[index];
         }
