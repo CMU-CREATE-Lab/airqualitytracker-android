@@ -32,7 +32,7 @@ public class EsdrJsonParser {
                 JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
                 Feed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, maxTime);
                 // only consider non-null feeds with at least 1 channel
-                if (feed != null && feed.getChannels().size() > 0) {
+                if (feed != null && feed.getPmChannels().size() > 0) {
                     feeds.add(feed);
                 }
             }
@@ -54,7 +54,7 @@ public class EsdrJsonParser {
                 JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
                 Feed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, 0);
                 // only consider non-null feeds with at least 1 channel
-                if (feed != null && feed.getChannels().size() > 0) {
+                if (feed != null && feed.getPmChannels().size() > 0) {
                     deviceId = jsonFeed.getLong("deviceId");
                     Speck speck = new Speck(feed, deviceId);
                     speck.setApiKeyReadOnly(jsonFeed.get("apiKeyReadOnly").toString());
@@ -75,7 +75,7 @@ public class EsdrJsonParser {
         boolean isMobile;
         double latitude,longitude;
         long productId;
-        ArrayList<Channel> listChannels;
+        final ArrayList<Channel> listChannels;
         JSONObject channels;
         Iterator<String> keys;
 
@@ -110,6 +110,8 @@ public class EsdrJsonParser {
                 channels = row.getJSONObject("channelBounds").getJSONObject("channels");
                 keys = channels.keys();
                 while (keys.hasNext()) {
+                    // TODO grab all channels, separate later in the class
+                    // TODO still check for maxTime
                     // Only grab channels that we care about
                     String channelName = keys.next();
                     for (String cn : Constants.channelNames) {

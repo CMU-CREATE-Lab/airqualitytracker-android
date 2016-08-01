@@ -25,7 +25,7 @@ public class SecretMenuButtonClickerListener implements View.OnClickListener {
         for (SecretMenuListFeedsAdapter.ListFeedsItem item : items) {
             if (!item.isHeader) {
                 Feed feed = item.feed;
-                globalHandler.esdrFeedsHandler.requestChannelReading(feed, feed.getChannels().get(0));
+                globalHandler.esdrFeedsHandler.requestChannelReading(feed, feed.getPmChannels().get(0));
             }
         }
     }

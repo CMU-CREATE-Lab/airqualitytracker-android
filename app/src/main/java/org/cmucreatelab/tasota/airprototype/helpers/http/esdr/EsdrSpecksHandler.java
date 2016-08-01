@@ -72,6 +72,8 @@ public class EsdrSpecksHandler {
                     channels = response.getJSONObject("data").getJSONObject("channelBounds").getJSONObject("channels");
                     keys = channels.keys();
                     while (keys.hasNext()) {
+                        // TODO grab all channels, separate later in the class
+                        // TODO still check for maxTime
                         // Only grab channels that we care about
                         String channelName = keys.next();
                         for (String cn : Constants.channelNames) {

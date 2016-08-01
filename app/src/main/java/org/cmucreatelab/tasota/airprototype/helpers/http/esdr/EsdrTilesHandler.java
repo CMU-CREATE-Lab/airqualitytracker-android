@@ -107,9 +107,9 @@ public class EsdrTilesHandler {
         int requestMethod = Request.Method.GET;
         String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/"
                 + feed.getFeed_id() + "/channels/"
-                + feed.getChannels().get(0).getName()+"_daily_mean,"
-                + feed.getChannels().get(0).getName()+"_daily_median,"
-                + feed.getChannels().get(0).getName()+"_daily_max"
+                + feed.getPmChannels().get(0).getName()+"_daily_mean,"
+                + feed.getPmChannels().get(0).getName()+"_daily_median,"
+                + feed.getPmChannels().get(0).getName()+"_daily_max"
                 + "/export?format=json"
                 + "&from="+from
                 + "&to="+to;

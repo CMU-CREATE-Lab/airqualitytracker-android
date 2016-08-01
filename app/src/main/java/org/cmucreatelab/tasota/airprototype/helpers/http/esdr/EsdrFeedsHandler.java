@@ -147,10 +147,10 @@ public class EsdrFeedsHandler {
 
                         // Responsible for calculating the value to be displayed
                         if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
-                            closestFeed.getChannels().get(0).requestNowCast(globalHandler.appContext);
+                            closestFeed.getPmChannels().get(0).requestNowCast(globalHandler.appContext);
                         } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
                             // ASSERT all channels in the list of channels are usable readings
-                            requestChannelReading(null, null, closestFeed, closestFeed.getChannels().get(0), (long)maxTime);
+                            requestChannelReading(null, null, closestFeed, closestFeed.getPmChannels().get(0), (long)maxTime);
                         }
                     }
                 } else {
@@ -163,9 +163,9 @@ public class EsdrFeedsHandler {
 
 
     public void requestUpdate(final Speck speck) {
-        if (speck.getChannels().size() > 0) {
+        if (speck.getPmChannels().size() > 0) {
             long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
-            requestChannelReading(null, speck.getApiKeyReadOnly(), speck, speck.getChannels().get(0), timeRange);
+            requestChannelReading(null, speck.getApiKeyReadOnly(), speck, speck.getPmChannels().get(0), timeRange);
         } else {
             Log.e(Constants.LOG_TAG, "No channels found from speck id=" + speck.getFeed_id());
         }
