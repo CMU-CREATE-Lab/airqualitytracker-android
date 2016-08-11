@@ -74,6 +74,24 @@ public class Feed implements Readable {
     }
 
 
+    public ArrayList<Channel> getOzoneChannels() {
+        ArrayList<Channel> result = new ArrayList<>();
+        String channelName;
+
+        for (Channel channel : this.channels) {
+            channelName = channel.getName();
+            for (String cn : Constants.channelNamesOzone) {
+                if (channelName.equals(cn)) {
+                    result.add(channel);
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
+
     // Readable implementation
 
 

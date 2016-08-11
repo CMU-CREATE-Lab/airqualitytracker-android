@@ -48,6 +48,12 @@ public final class Constants {
             "particle_concentration"
     };
 
+    // ozone channel names
+    public static final String[] channelNamesOzone = {
+            "Ozone", "OZONE", "OZONE2_PPM",
+            "Ozone_O3", "OZONE_PPM"
+    };
+
     public static final long TWENTY_FOUR_HOURS = 86400;
 
     public static final long READINGS_MAX_TIME_RANGE = TWENTY_FOUR_HOURS;
