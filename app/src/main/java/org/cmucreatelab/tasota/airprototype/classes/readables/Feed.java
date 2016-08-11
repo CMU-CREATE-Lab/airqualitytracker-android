@@ -62,7 +62,7 @@ public class Feed implements Readable {
 
         for (Channel channel : this.channels) {
             channelName = channel.getName();
-            for (String cn : Constants.channelNames) {
+            for (String cn : Constants.channelNamesPm) {
                 if (channelName.equals(cn)) {
                     result.add(channel);
                     break;

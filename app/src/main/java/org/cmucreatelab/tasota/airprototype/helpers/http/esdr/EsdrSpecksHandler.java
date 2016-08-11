@@ -76,7 +76,7 @@ public class EsdrSpecksHandler {
                         // TODO still check for maxTime
                         // Only grab channels that we care about
                         String channelName = keys.next();
-                        for (String cn : Constants.channelNames) {
+                        for (String cn : Constants.channelNamesPm) {
                             if (channelName.equals(cn)) {
                                 // TODO do we check/need-to-check for 24 hours?
                                 // NOTICE: we must also make sure that this specific channel

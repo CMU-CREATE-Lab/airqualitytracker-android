@@ -5,7 +5,7 @@ import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
+
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.system.services.gps.AddressResultReceiver;
@@ -42,10 +42,10 @@ public class ServicesHandler {
     public void startLocationService() {
         if (googleApiClientHandler.isClientConnected()) {
             LocationRequest locationRequest = new LocationRequest();
-            locationRequest.setInterval(Constants.Location.LOCATION_REQUEST_INTERVAL);
-            locationRequest.setFastestInterval(Constants.Location.LOCATION_REQUEST_FASTEST_INTERVAL);
+            locationRequest.setInterval(Constants.LocationServices.LOCATION_REQUEST_INTERVAL);
+            locationRequest.setFastestInterval(Constants.LocationServices.LOCATION_REQUEST_FASTEST_INTERVAL);
             locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-            LocationServices.FusedLocationApi.requestLocationUpdates(
+            com.google.android.gms.location.LocationServices.FusedLocationApi.requestLocationUpdates(
                     googleApiClientHandler.googleApiClient, locationRequest, googleApiClientHandler);
         } else {
             Log.e(Constants.LOG_TAG, "googleApiClientHandler client is not connected.");
@@ -55,7 +55,7 @@ public class ServicesHandler {
 
     // stop periodic location updates
     public void stopLocationService() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClientHandler.googleApiClient, googleApiClientHandler);
+        com.google.android.gms.location.LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClientHandler.googleApiClient, googleApiClientHandler);
     }
 
 

@@ -115,7 +115,7 @@ public class DailyTrackerUIElements extends UIElements<DailyTrackerActivity> imp
                 break;
             default:
                 Log.e(Constants.LOG_TAG,"Failed to grab selected; defaulting to dirty days.");
-                displayType = Constants.DIRTY_DAYS_VALUE_TYPE;
+                displayType = Constants.DirtyDays.DIRTY_DAYS_VALUE_TYPE;
         }
 
         String colorsList = constructColorsList();

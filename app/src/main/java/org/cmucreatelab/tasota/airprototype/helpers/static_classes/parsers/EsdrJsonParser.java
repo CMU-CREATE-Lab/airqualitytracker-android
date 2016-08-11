@@ -114,7 +114,7 @@ public class EsdrJsonParser {
                     // TODO still check for maxTime
                     // Only grab channels that we care about
                     String channelName = keys.next();
-                    for (String cn : Constants.channelNames) {
+                    for (String cn : Constants.channelNamesPm) {
                         if (channelName.equals(cn)) {
                             // NOTICE: we must also make sure that this specific channel
                             // was updated in the past 24 hours ("maxTime").

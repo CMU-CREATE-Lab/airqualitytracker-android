@@ -28,7 +28,7 @@ public class DailyFeedTracker {
 
 
     public int getDirtyDaysCount() {
-        return getDaysCount(Constants.DIRTY_DAYS_VALUE_TYPE);
+        return getDaysCount(Constants.DirtyDays.DIRTY_DAYS_VALUE_TYPE);
     }
 
 
@@ -36,7 +36,7 @@ public class DailyFeedTracker {
         int size = 0;
 
         for (DayFeedValue feedValue : values) {
-            if (AqiConverter.microgramsToAqi(feedValue.getCount(type)) > Constants.DIRTY_DAYS_AQI_THRESHOLD) {
+            if (AqiConverter.microgramsToAqi(feedValue.getCount(type)) > Constants.DirtyDays.DIRTY_DAYS_AQI_THRESHOLD) {
                 size++;
             }
         }
