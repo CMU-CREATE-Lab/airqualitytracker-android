@@ -112,9 +112,9 @@ public class Feed implements Readable {
         if (hasReadableValue()) {
             switch (readableValueType) {
                 case INSTANTCAST:
-                    return channels.get(0).getInstantCastValue();
+                    return getPmChannels().get(0).getInstantCastValue();
                 case NOWCAST:
-                    return channels.get(0).getNowCastValue();
+                    return getPmChannels().get(0).getNowCastValue();
                 default:
                     Log.e(Constants.LOG_TAG, "ERROR - Could not detect ReadableValueType");
             }
