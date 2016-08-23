@@ -3,7 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.http.esdr;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -77,7 +77,7 @@ public class EsdrTilesHandler {
 
                 // union both responses then call completion handler
                 result = union(firstResponse, secondResponse);
-                channel.responseHandler.onResponse(globalHandler.appContext, result, timestamp);
+                channel.onEsdrTilesResponse(globalHandler.appContext, result, timestamp);
             }
         };
         firstHandler = new Response.Listener<JSONObject>() {

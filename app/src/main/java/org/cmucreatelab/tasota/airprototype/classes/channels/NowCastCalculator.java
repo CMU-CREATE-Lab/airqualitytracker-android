@@ -1,6 +1,7 @@
-package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
+package org.cmucreatelab.tasota.airprototype.classes.channels;
 
 import android.util.Log;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,6 +12,20 @@ import java.util.List;
  * Created by mike on 1/14/16.
  */
 public class NowCastCalculator {
+
+    private int hours;
+    private ConstantType constantType;
+
+    enum ConstantType {
+        RATIO, PIECEWISE
+    }
+
+
+    public NowCastCalculator(int hours, ConstantType constantType) {
+        this.hours = hours;
+        this.constantType = constantType;
+    }
+
 
     private static class TimeValue {
         boolean isSet = false;
@@ -25,17 +40,17 @@ public class NowCastCalculator {
     }
 
 
-    private static double computeWeightFactor(double range, double max) {
+    private double computeWeightFactor(double range, double max) {
         double result;
         result = 1.0 - range/max;
-        if (result < 0.5) {
+        if (this.constantType == ConstantType.PIECEWISE && result < 0.5) {
             result = 0.5;
         }
         return result;
     }
 
 
-    private static double summedWeightFactor(Double[] values, double weightFactor) {
+    private double summedWeightFactor(Double[] values, double weightFactor) {
         double result = 0;
         for (int i=0; i<values.length;i++) {
             result += values[i] * Math.pow(weightFactor, i);
@@ -45,7 +60,7 @@ public class NowCastCalculator {
 
 
     // ASSERT: treated like above method but with an array of 1's
-    private static double summedWeightFactor(double weightFactor) {
+    private double summedWeightFactor(double weightFactor) {
         double result = 0;
         for (int i=0; i<12;i++) {
             result += Math.pow(weightFactor, i);
@@ -54,40 +69,17 @@ public class NowCastCalculator {
     }
 
 
-    public static double calculate(Double[] hourlyValues) {
-        double max,min,range,weightFactor,numerator,denominator;
-        List<Double> values = Arrays.asList(hourlyValues);
-        if (values.size() == 0) {
-            Log.w(Constants.LOG_TAG, "tried NowCastCalculator.calculate with an empty array; returning 0");
-            return 0;
-        }
-
-        // find min/max of list
-        max = Collections.max(values);
-        min = Collections.min(values);
-        range = max - min;
-        // compute the weight factor
-        weightFactor = computeWeightFactor(range, max);
-        // sum the products of concentrations and weight factors
-        numerator = summedWeightFactor(hourlyValues, weightFactor);
-        // sum of weight factors raised to the power
-        denominator = summedWeightFactor(weightFactor);
-        // resulting value for NowCast
-        return numerator/denominator;
-    }
-
-
-    public static Double[] constructArrayFromHash(HashMap<Integer,ArrayList<Double>> data, int currentTime) {
-        // TODO we use 13 hours since ESDr won't always report the previous hour to us
-        Double[] result = new Double[13];
-        TimeValue[] tempResult = new TimeValue[13];
+    private Double[] constructArrayFromHash(HashMap<Integer,ArrayList<Double>> data, int currentTime) {
+        // TODO we use N+1 hours since ESDr won't always report the previous hour to us
+        Double[] result = new Double[this.hours+1];
+        TimeValue[] tempResult = new TimeValue[this.hours+1];
         for (int i=0;i<tempResult.length;i++) {
             tempResult[i] = new TimeValue();
         }
         int index,count, firstNonemptyIndex;
         double value, firstNonemptyValue;
 
-        // bucket data into averaged 12-hour array
+        // bucket data into averaged hourly array
         for (Integer keyTime: data.keySet()) {
             index = (currentTime - keyTime)/3600;
             value = data.get(keyTime).get(0);
@@ -138,13 +130,37 @@ public class NowCastCalculator {
             }
         }
 
-        // TODO we convert array of size 13 to an array of size 12 (see above comment about esdr)
-        Double[] modResult = new Double[12];
+        // TODO we convert array of size N+1 to an array of size N (see above comment about esdr)
+        Double[] modResult = new Double[this.hours];
         for (int i=1;i<result.length;i++) {
             modResult[i-1] = result[i];
         }
 
         return modResult;
+    }
+
+
+    public double calculate(HashMap<Integer,ArrayList<Double>> data, int currentTime) {
+        Double[] hourlyValues = constructArrayFromHash(data,currentTime);
+        double max,min,range,weightFactor,numerator,denominator;
+        List<Double> values = Arrays.asList(hourlyValues);
+        if (values.size() == 0) {
+            Log.w(Constants.LOG_TAG, "tried NowCastCalculator.calculate with an empty array; returning 0");
+            return 0;
+        }
+
+        // find min/max of list
+        max = Collections.max(values);
+        min = Collections.min(values);
+        range = max - min;
+        // compute the weight factor
+        weightFactor = computeWeightFactor(range, max);
+        // sum the products of concentrations and weight factors
+        numerator = summedWeightFactor(hourlyValues, weightFactor);
+        // sum of weight factors raised to the power
+        denominator = summedWeightFactor(weightFactor);
+        // resulting value for NowCast
+        return numerator/denominator;
     }
 
 }

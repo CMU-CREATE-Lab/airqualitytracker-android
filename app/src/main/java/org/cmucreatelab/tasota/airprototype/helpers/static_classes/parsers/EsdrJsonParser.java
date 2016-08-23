@@ -3,7 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;

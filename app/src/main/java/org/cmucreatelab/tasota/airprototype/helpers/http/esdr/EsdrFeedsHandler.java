@@ -3,7 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.http.esdr;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
