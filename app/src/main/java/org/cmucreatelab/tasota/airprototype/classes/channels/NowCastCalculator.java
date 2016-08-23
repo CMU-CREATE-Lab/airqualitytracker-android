@@ -14,16 +14,16 @@ import java.util.List;
 public class NowCastCalculator {
 
     private int hours;
-    private ConstantType constantType;
+    private WeightType weightType;
 
-    enum ConstantType {
+    enum WeightType {
         RATIO, PIECEWISE
     }
 
 
-    public NowCastCalculator(int hours, ConstantType constantType) {
+    public NowCastCalculator(int hours, WeightType weightType) {
         this.hours = hours;
-        this.constantType = constantType;
+        this.weightType = weightType;
     }
 
 
@@ -43,7 +43,7 @@ public class NowCastCalculator {
     private double computeWeightFactor(double range, double max) {
         double result;
         result = 1.0 - range/max;
-        if (this.constantType == ConstantType.PIECEWISE && result < 0.5) {
+        if (this.weightType == WeightType.PIECEWISE && result < 0.5) {
             result = 0.5;
         }
         return result;

@@ -50,6 +50,7 @@ public class EsdrTilesHandler {
     }
 
 
+    // TODO needs split into calls for PM25/OZONE
     public void requestTilesFromChannel(final Channel channel, final int timestamp) {
         final int maxTime,minTime;
         final HashMap<Integer, ArrayList<Double>> firstResponse,secondResponse;

@@ -21,7 +21,9 @@ public class Channel {
     protected double maxValue;
     protected double instantCastValue;
     protected double nowCastValue;
-//    public final EsdrTilesResponseHandler responseHandler = new EsdrTilesResponseHandler();
+    public Type channelType = Type.OTHER;
+    /** Set calculator for PM2.5 by default (12-hour averaging, with piecewise weight factor) */
+    protected NowCastCalculator nowCastCalculator = new NowCastCalculator(12, NowCastCalculator.WeightType.PIECEWISE);
     // getters/setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -40,21 +42,9 @@ public class Channel {
     public double getNowCastValue() { return nowCastValue; }
     public void setNowCastValue(double nowCastValue) { this.nowCastValue = nowCastValue; }
 
-
-//    public class EsdrTilesResponseHandler {
-//        public void onResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
-//            // construct array of values
-//            Double[] array = NowCastCalculator.constructArrayFromHash(result, timestamp);
-//
-//            // find nowcast
-//            double nowcast = NowCastCalculator.calculate(array);
-//            Channel.this.nowCastValue = nowcast;
-//            Channel.this.feed.setReadableValueType(Feed.ReadableValueType.NOWCAST);
-//            GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
-//        }
-//    }
-
-    protected NowCastCalculator nowCastCalculator = new NowCastCalculator(12, NowCastCalculator.ConstantType.PIECEWISE);
+    enum Type {
+        PM25, OZONE, OTHER
+    }
 
 
     public void onEsdrTilesResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
