@@ -4,6 +4,7 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
@@ -148,6 +149,9 @@ public class EsdrJsonParser {
             } else if (Arrays.asList(Constants.channelNamesOzone).contains(channelName)) {
                 c = new OzoneChannel();
                 Log.i(Constants.LOG_TAG,"new OzoneChannel \""+channelName+"\"");
+            } else if (Arrays.asList(Constants.channelNamesHumidity).contains(channelName)) {
+                c = new HumidityChannel();
+                Log.i(Constants.LOG_TAG,"new HumidityChannel \""+channelName+"\"");
             }
             name = channelName;
             minTimeSecs = Double.parseDouble(entry.get("minTimeSecs").toString());

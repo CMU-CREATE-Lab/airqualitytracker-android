@@ -1,8 +1,11 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -52,6 +55,24 @@ public class Speck extends Feed {
         this.name = name;
         this.positionId = positionId;
         this.productId = productId;
+    }
+
+
+    public ArrayList<Channel> getHumidityChannels() {
+        ArrayList<Channel> result = new ArrayList<>();
+
+        for (Channel channel : this.channels) {
+            if (channel.getClass() == HumidityChannel.class) {
+                result.add(channel);
+            }
+        }
+
+        return result;
+    }
+
+
+    public double getHumidityValue() {
+        return getHumidityChannels().get(0).getInstantCastValue();
     }
 
 

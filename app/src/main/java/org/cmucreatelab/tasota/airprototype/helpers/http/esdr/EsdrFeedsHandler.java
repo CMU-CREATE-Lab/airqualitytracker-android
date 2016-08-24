@@ -120,6 +120,7 @@ public class EsdrFeedsHandler {
     }
 
 
+    // TODO we want to specify our requests (in particular, for 1-hour OZONE or HUMIDITY)
     public void requestChannelReading(final Feed feed, final Channel channel) {
         if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
             requestChannelReading(null, null, feed, channel, 0);

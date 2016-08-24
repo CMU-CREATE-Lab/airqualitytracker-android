@@ -72,20 +72,10 @@ public class EsdrSpecksHandler {
                     channels = response.getJSONObject("data").getJSONObject("channelBounds").getJSONObject("channels");
                     keys = channels.keys();
                     while (keys.hasNext()) {
-                        // TODO grab all channels, separate later in the class
-                        // TODO still check for maxTime
                         // Only grab channels that we care about
                         String channelName = keys.next();
-                        for (String cn : Constants.channelNamesPm) {
-                            if (channelName.equals(cn)) {
-                                // TODO do we check/need-to-check for 24 hours?
-                                // NOTICE: we must also make sure that this specific channel
-                                // was updated in the past 24 hours ("maxTime").
-                                JSONObject channel = channels.getJSONObject(channelName);
-                                listChannels.add(EsdrJsonParser.parseChannelFromJson(channelName, speck, channel));
-                                break;
-                            }
-                        }
+                        JSONObject channel = channels.getJSONObject(channelName);
+                        listChannels.add(EsdrJsonParser.parseChannelFromJson(channelName, speck, channel));
                     }
                     speck.setChannels(listChannels);
                     globalHandler.esdrFeedsHandler.requestUpdate(speck);

@@ -45,6 +45,11 @@ public final class Constants {
             "Ozone_O3", "OZONE_PPM"
     };
 
+    // humidity channel names (speck only for now)
+    public static final String[] channelNamesHumidity = {
+            "humidity"
+    };
+
     // number of seconds in a 24-hour period
     public static final long TWENTY_FOUR_HOURS = 86400;
 
