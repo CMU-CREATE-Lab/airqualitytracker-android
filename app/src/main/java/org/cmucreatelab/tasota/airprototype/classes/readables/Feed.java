@@ -2,6 +2,8 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
@@ -59,15 +61,10 @@ public class Feed implements Readable {
 
     public ArrayList<Channel> getPmChannels() {
         ArrayList<Channel> result = new ArrayList<>();
-        String channelName;
 
         for (Channel channel : this.channels) {
-            channelName = channel.getName();
-            for (String cn : Constants.channelNamesPm) {
-                if (channelName.equals(cn)) {
-                    result.add(channel);
-                    break;
-                }
+            if (channel.getClass() == Pm25Channel.class) {
+                result.add(channel);
             }
         }
 
@@ -77,15 +74,10 @@ public class Feed implements Readable {
 
     public ArrayList<Channel> getOzoneChannels() {
         ArrayList<Channel> result = new ArrayList<>();
-        String channelName;
 
         for (Channel channel : this.channels) {
-            channelName = channel.getName();
-            for (String cn : Constants.channelNamesOzone) {
-                if (channelName.equals(cn)) {
-                    result.add(channel);
-                    break;
-                }
+            if (channel.getClass() == OzoneChannel.class) {
+                result.add(channel);
             }
         }
 

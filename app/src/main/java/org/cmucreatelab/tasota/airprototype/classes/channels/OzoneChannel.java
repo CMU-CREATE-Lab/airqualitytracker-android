@@ -12,7 +12,6 @@ import java.util.HashMap;
  */
 public class OzoneChannel extends Channel {
 
-    public Type channelType = Type.OZONE;
     protected NowCastCalculator nowCastCalculator = new NowCastCalculator(8, NowCastCalculator.WeightType.RATIO);
 
 

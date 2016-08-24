@@ -12,8 +12,6 @@ import java.util.HashMap;
  */
 public class Pm25Channel extends Channel {
 
-    public Type channelType = Type.PM25;
-
 
     public void onEsdrTilesResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
         // find nowcast

@@ -21,7 +21,6 @@ public class Channel {
     protected double maxValue;
     protected double instantCastValue;
     protected double nowCastValue;
-    public Type channelType = Type.OTHER;
     /** Set calculator for PM2.5 by default (12-hour averaging, with piecewise weight factor) */
     protected NowCastCalculator nowCastCalculator = new NowCastCalculator(12, NowCastCalculator.WeightType.PIECEWISE);
     // getters/setters
@@ -41,10 +40,6 @@ public class Channel {
     public void setInstantCastValue(double instantCastValue) { this.instantCastValue = instantCastValue; }
     public double getNowCastValue() { return nowCastValue; }
     public void setNowCastValue(double nowCastValue) { this.nowCastValue = nowCastValue; }
-
-    enum Type {
-        PM25, OZONE, OTHER
-    }
 
 
     public void onEsdrTilesResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {

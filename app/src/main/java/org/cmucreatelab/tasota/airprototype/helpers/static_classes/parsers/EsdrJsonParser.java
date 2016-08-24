@@ -4,6 +4,8 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.classes.DayFeedValue;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -11,6 +13,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -140,10 +143,19 @@ public class EsdrJsonParser {
     // Helper function to create an object from a channel's JSON
     public static Channel parseChannelFromJson(String channelName, Feed feed, JSONObject entry) {
         Channel c = new Channel();
+        Log.i(Constants.LOG_TAG,"new Channel \""+channelName+"\"");
         String name;
         double minTimeSecs,maxTimeSecs,minValue,maxValue;
 
         try {
+            // check for known channel types
+            if (Arrays.asList(Constants.channelNamesPm).contains(channelName)) {
+                c = new Pm25Channel();
+                Log.i(Constants.LOG_TAG,"new Pm25Channel \""+channelName+"\"");
+            } else if (Arrays.asList(Constants.channelNamesOzone).contains(channelName)) {
+                c = new OzoneChannel();
+                Log.i(Constants.LOG_TAG,"new OzoneChannel \""+channelName+"\"");
+            }
             name = channelName;
             minTimeSecs = Double.parseDouble(entry.get("minTimeSecs").toString());
             maxTimeSecs = Double.parseDouble(entry.get("maxTimeSecs").toString());
