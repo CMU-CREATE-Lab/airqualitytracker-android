@@ -113,20 +113,13 @@ public class EsdrJsonParser {
                 channels = row.getJSONObject("channelBounds").getJSONObject("channels");
                 keys = channels.keys();
                 while (keys.hasNext()) {
-                    // TODO grab all channels, separate later in the class
-                    // TODO still check for maxTime
-                    // Only grab channels that we care about
                     String channelName = keys.next();
-                    for (String cn : Constants.channelNamesPm) {
-                        if (channelName.equals(cn)) {
-                            // NOTICE: we must also make sure that this specific channel
-                            // was updated in the past 24 hours ("maxTime").
-                            JSONObject channel = channels.getJSONObject(channelName);
-                            if (channel.getDouble("maxTimeSecs") >= maxTime) {
-                                listChannels.add(EsdrJsonParser.parseChannelFromJson(channelName, result, channel));
-                                break;
-                            }
-                        }
+                    // NOTICE: we must also make sure that this specific channel
+                    // was updated in the past 24 hours ("maxTime").
+                    JSONObject channel = channels.getJSONObject(channelName);
+                    if (channel.getDouble("maxTimeSecs") >= maxTime) {
+                        listChannels.add(EsdrJsonParser.parseChannelFromJson(channelName, result, channel));
+                        break;
                     }
                 }
             } catch (Exception e) {

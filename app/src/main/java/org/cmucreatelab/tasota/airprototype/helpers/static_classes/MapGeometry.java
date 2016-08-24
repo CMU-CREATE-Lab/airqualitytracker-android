@@ -80,11 +80,15 @@ public class MapGeometry {
     }
 
 
+    // TODO this is really the "getClosestFeedWithPm" method
     public static Feed getClosestFeedToAddress(SimpleAddress simpleAddress, ArrayList<Feed> feeds) {
         Feed closestFeed = null;
         double distance = 0.0;
 
         for (Feed feed : feeds) {
+            if (feed.getPmChannels().size() == 0) {
+                continue;
+            }
             if (closestFeed == null) {
                 distance = getDistanceFromFeedToAddress(simpleAddress,feed);
                 closestFeed = feed;
