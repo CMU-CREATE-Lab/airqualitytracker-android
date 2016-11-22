@@ -42,10 +42,20 @@ public class NowCastCalculator {
 
     private double computeWeightFactor(double range, double max) {
         double result;
-        result = 1.0 - range/max;
+
+        // avoid division by zero
+        if (max == 0) {
+            Log.w(Constants.LOG_TAG,"NowCastCalculator.computeWeightFactor has a max of 0; setting weight factor to 0");
+            result = 0.0;
+        } else {
+            result = 1.0 - range / max;
+        }
+
+        // piecewise weight type has a minimum weight factor of 1/2
         if (this.weightType == WeightType.PIECEWISE && result < 0.5) {
             result = 0.5;
         }
+
         return result;
     }
 

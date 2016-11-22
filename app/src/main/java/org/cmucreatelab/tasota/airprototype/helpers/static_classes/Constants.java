@@ -112,6 +112,8 @@ public final class Constants {
     // strings for different units
     public static final class Units {
         public static final String MICROGRAMS_PER_CUBIC_METER = "µg/m³";
+        public static final String PARTS_PER_MILLION = "ppm";
+        public static final String PARTS_PER_BILLION = "ppb";
         public static final String AQI = "AQI";
         public static final String RANGE_MICROGRAMS_PER_CUBIC_METER = "µg/m³    /500";
         public static final String RANGE_AQI = "AQI    /500";
