@@ -1,6 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.classes.channels;
 
 import android.content.Context;
+
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_NowCast;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class OzoneChannel extends Channel {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
-        this.feed.setReadableValueType(Feed.ReadableValueType.NOWCAST);
+        this.feed.setReadableValue(new Pm25_NowCast(nowcast));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

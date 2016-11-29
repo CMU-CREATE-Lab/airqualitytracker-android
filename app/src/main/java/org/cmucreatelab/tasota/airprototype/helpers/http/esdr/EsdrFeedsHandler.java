@@ -4,6 +4,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_InstantCast;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -85,19 +86,16 @@ public class EsdrFeedsHandler {
                 if (resultValue != null && resultTime != null) {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     if (maxTime <= 0) {
-                        feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
-                        channel.setInstantCastValue(Double.parseDouble(resultValue));
+                        feed.setReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
                         feed.setLastTime(Double.parseDouble(resultTime));
                     } else {
                         // TODO there might be a better (more organized) way to verify a channel's maxTime
                         Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
                         if (maxTime <= Long.parseLong(resultTime)) {
-                            feed.setReadableValueType(Feed.ReadableValueType.INSTANTCAST);
-                            channel.setInstantCastValue(Double.parseDouble(resultValue));
+                            feed.setReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
                             feed.setLastTime(Double.parseDouble(resultTime));
                         } else {
-                            feed.setReadableValueType(Feed.ReadableValueType.NONE);
-                            channel.setInstantCastValue(0);
+                            feed.setReadableValue(null);
                             feed.setLastTime(Double.parseDouble(resultTime));
                             Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
                         }

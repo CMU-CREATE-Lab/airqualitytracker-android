@@ -6,19 +6,19 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
  * Created by mike on 11/22/16.
  */
 
-public class Pm25_NowCast implements ReadableValue {
+public class Ozone_NowCast implements ReadableValue {
 
     private final double value;
 
 
-    public Pm25_NowCast(double value) {
+    public Ozone_NowCast(double value) {
         this.value = value;
     }
 
 
     @Override
     public String getReadableUnits() {
-        return Constants.Units.MICROGRAMS_PER_CUBIC_METER;
+        return Constants.Units.PARTS_PER_MILLION;
     }
 
 

@@ -4,6 +4,7 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
@@ -89,6 +90,7 @@ public class Feed implements Readable {
 
 
     private static final Type readableType = Readable.Type.FEED;
+    private ReadableValue readableValue;
 
 
     public Type getReadableType() {
@@ -97,20 +99,18 @@ public class Feed implements Readable {
 
 
     public boolean hasReadableValue() {
-        return readableValueType != ReadableValueType.NONE;
+        return (readableValue != null);
+    }
+
+
+    public void setReadableValue(ReadableValue readableValue) {
+        this.readableValue = readableValue;
     }
 
 
     public double getReadableValue() {
         if (hasReadableValue()) {
-            switch (readableValueType) {
-                case INSTANTCAST:
-                    return getPmChannels().get(0).getInstantCastValue();
-                case NOWCAST:
-                    return getPmChannels().get(0).getNowCastValue();
-                default:
-                    Log.e(Constants.LOG_TAG, "ERROR - Could not detect ReadableValueType");
-            }
+            return readableValue.getValue();
         }
         return 0;
     }

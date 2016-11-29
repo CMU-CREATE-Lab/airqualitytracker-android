@@ -24,7 +24,7 @@ public class Pm25_InstantCast implements ReadableValue {
 
     @Override
     public double getValue() {
-        return 0;
+        return value;
     }
 
 }
