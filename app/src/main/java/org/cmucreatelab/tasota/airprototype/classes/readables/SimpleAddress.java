@@ -111,11 +111,11 @@ public class SimpleAddress extends AirNowReadable {
     }
 
 
-    public double getReadableValue() {
+    public ReadableValue getReadableValue() {
         if (hasReadableValue()) {
             return getClosestFeed().getReadableValue();
         }
-        return 0;
+        return null;
     }
 
 }

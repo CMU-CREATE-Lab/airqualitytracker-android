@@ -21,6 +21,6 @@ public interface Readable {
     public boolean hasReadableValue();
 
     // return a value (should be 0.0 by default but verified with hasReadableValue)
-    public double getReadableValue();
+    public ReadableValue getReadableValue();
 
 }

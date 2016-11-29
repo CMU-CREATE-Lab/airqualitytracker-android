@@ -30,7 +30,7 @@ public abstract class AirNowReadable implements Readable {
     public abstract Type getReadableType();
     public abstract String getName();
     public abstract boolean hasReadableValue();
-    public abstract double getReadableValue();
+    public abstract ReadableValue getReadableValue();
 
 
     public ArrayList<AirNowObservation> getMostRecentAirNowObservations() {

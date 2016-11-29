@@ -108,11 +108,11 @@ public class Feed implements Readable {
     }
 
 
-    public double getReadableValue() {
+    public ReadableValue getReadableValue() {
         if (hasReadableValue()) {
-            return readableValue.getValue();
+            return readableValue;
         }
-        return 0;
+        return null;
     }
 
 }

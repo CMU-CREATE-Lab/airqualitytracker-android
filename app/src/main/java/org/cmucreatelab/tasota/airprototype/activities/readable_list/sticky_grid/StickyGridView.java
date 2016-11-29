@@ -60,7 +60,7 @@ class StickyGridView extends RecyclerView.ViewHolder
         cellViews.textAddressAqiLabel.setVisibility(View.VISIBLE);
         cellViews.textAddressAqiLabel.setText(Constants.Units.MICROGRAMS_PER_CUBIC_METER);
 
-        label = (int)speck.getReadableValue();
+        label = speck.hasReadableValue() ? (int)speck.getReadableValue().getValue() : 0;
         cellViews.textAddressItemLocationValue.setText(String.valueOf(label));
         SpeckReading speckReading = new SpeckReading(label);
         cellViews.background.setBackgroundColor(Color.parseColor(speckReading.getColor()));
@@ -78,7 +78,7 @@ class StickyGridView extends RecyclerView.ViewHolder
             cellViews.textCurrentLocation.setVisibility(View.VISIBLE);
         }
 
-        micrograms = simpleAddress.getClosestFeed().getReadableValue();
+        micrograms = simpleAddress.hasReadableValue() ? simpleAddress.getClosestFeed().getReadableValue().getValue() : 0.0;
         aqi = AqiConverter.microgramsToAqi(micrograms);
         cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
         AQIReading aqiReading = new AQIReading(micrograms);
