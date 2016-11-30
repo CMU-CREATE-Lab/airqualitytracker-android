@@ -86,16 +86,18 @@ public class EsdrFeedsHandler {
                 if (resultValue != null && resultTime != null) {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     if (maxTime <= 0) {
-                        feed.setReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
+                        feed.clearReadableValues();
+                        feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
                         feed.setLastTime(Double.parseDouble(resultTime));
                     } else {
                         // TODO there might be a better (more organized) way to verify a channel's maxTime
                         Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
                         if (maxTime <= Long.parseLong(resultTime)) {
-                            feed.setReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
+                            feed.clearReadableValues();
+                            feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
                             feed.setLastTime(Double.parseDouble(resultTime));
                         } else {
-                            feed.setReadableValue(null);
+                            feed.clearReadableValues();
                             feed.setLastTime(Double.parseDouble(resultTime));
                             Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
                         }

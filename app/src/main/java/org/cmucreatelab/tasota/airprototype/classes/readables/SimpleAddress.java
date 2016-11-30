@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mike on 6/1/15.
@@ -111,9 +112,10 @@ public class SimpleAddress extends AirNowReadable {
     }
 
 
-    public ReadableValue getReadableValue() {
+    public List<ReadableValue> getReadableValues() {
+        // TODO this will need to be smarter in the future to consider multiple ReadableValue types
         if (hasReadableValue()) {
-            return getClosestFeed().getReadableValue();
+            return getClosestFeed().getReadableValues();
         }
         return null;
     }

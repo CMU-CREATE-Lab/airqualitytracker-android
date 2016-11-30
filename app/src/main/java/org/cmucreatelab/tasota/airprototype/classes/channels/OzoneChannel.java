@@ -21,7 +21,8 @@ public class OzoneChannel extends Channel {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
-        this.feed.setReadableValue(new Pm25_NowCast(nowcast));
+        this.feed.clearReadableValues();
+        this.feed.addReadableValue(new Pm25_NowCast(nowcast));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

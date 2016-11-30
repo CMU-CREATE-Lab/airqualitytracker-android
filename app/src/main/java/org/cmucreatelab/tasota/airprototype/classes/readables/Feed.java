@@ -9,6 +9,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mike on 6/1/15.
@@ -90,7 +91,7 @@ public class Feed implements Readable {
 
 
     private static final Type readableType = Readable.Type.FEED;
-    private ReadableValue readableValue;
+    private final ArrayList<ReadableValue> readableValues = new ArrayList<>();
 
 
     public Type getReadableType() {
@@ -99,18 +100,23 @@ public class Feed implements Readable {
 
 
     public boolean hasReadableValue() {
-        return (readableValue != null);
+        return (readableValues.size() > 0);
     }
 
 
-    public void setReadableValue(ReadableValue readableValue) {
-        this.readableValue = readableValue;
+    public void clearReadableValues() {
+        readableValues.clear();
     }
 
 
-    public ReadableValue getReadableValue() {
+    public void addReadableValue(ReadableValue readableValue) {
+        this.readableValues.add(readableValue);
+    }
+
+
+    public List<ReadableValue> getReadableValues() {
         if (hasReadableValue()) {
-            return readableValue;
+            return readableValues;
         }
         return null;
     }

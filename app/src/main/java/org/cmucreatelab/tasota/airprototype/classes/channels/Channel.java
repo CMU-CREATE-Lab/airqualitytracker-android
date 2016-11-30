@@ -48,7 +48,8 @@ public class Channel {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
-        this.feed.setReadableValue(new Pm25_NowCast(nowcast));
+        feed.clearReadableValues();
+        this.feed.addReadableValue(new Pm25_NowCast(nowcast));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

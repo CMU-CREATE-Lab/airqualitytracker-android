@@ -58,7 +58,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
     public void populate() {
         if (reading.hasReadableValue()) {
-            double readableValue = reading.hasReadableValue() ? reading.getReadableValue().getValue() : 0.0;
+            double readableValue = reading.hasReadableValue() ? reading.getReadableValues().get(0).getValue() : 0.0;
 
             if (reading.getReadableType() == Readable.Type.ADDRESS) {
                 addressView((SimpleAddress) reading);
@@ -93,7 +93,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
         int aqi;
         double micrograms;
 
-        micrograms =  address.hasReadableValue() ? address.getReadableValue().getValue() : 0.0;
+        micrograms =  address.hasReadableValue() ? address.getReadableValues().get(0).getValue() : 0.0;
         aqi = (int) AqiConverter.microgramsToAqi(micrograms);
         this.textShowAddressAqiValue.setText(String.valueOf(aqi));
         AQIReading aqiReading = new AQIReading(micrograms);
@@ -113,7 +113,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
 
     private void speckView(Speck speck) {
-        double value = speck.hasReadableValue() ? speck.getReadableValue().getValue() : 0.0;
+        double value = speck.hasReadableValue() ? speck.getReadableValues().get(0).getValue() : 0.0;
         this.textShowAddressAqiValue.setText(String.valueOf((long)value));
         SpeckReading speckReading = new SpeckReading(value);
         if (speckReading.withinRange()) {

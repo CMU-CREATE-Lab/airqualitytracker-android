@@ -2,6 +2,8 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 
+import java.util.List;
+
 /**
  * Created by mike on 8/14/15.
  */
@@ -17,10 +19,10 @@ public interface Readable {
     // returns a human-readable name associated with the Reading
     public String getName();
 
-    // return true if the Readable object has a value
+    // return true if the Readable object has any values
     public boolean hasReadableValue();
 
-    // return a value (should be 0.0 by default but verified with hasReadableValue)
-    public ReadableValue getReadableValue();
+    // return list of values
+    public List<ReadableValue> getReadableValues();
 
 }

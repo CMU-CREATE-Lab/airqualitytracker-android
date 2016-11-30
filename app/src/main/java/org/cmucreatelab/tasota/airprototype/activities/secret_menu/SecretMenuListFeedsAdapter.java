@@ -78,7 +78,7 @@ public class SecretMenuListFeedsAdapter extends ArrayAdapter<SecretMenuListFeeds
             textListFeedsDistance.setText(String.valueOf(distance)+" mi");
             // feed value
             TextView textListFeedsFeedValue = (TextView)rowView.findViewById(R.id.textListFeedsFeedValue);
-            textListFeedsFeedValue.setText(item.feed.hasReadableValue() ? String.valueOf(item.feed.getReadableValue().getValue()) : "0");
+            textListFeedsFeedValue.setText(item.feed.hasReadableValue() ? String.valueOf(item.feed.getReadableValues().get(0).getValue()) : "0");
         }
 
         return rowView;

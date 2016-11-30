@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mike on 2/10/16.
@@ -30,7 +31,7 @@ public abstract class AirNowReadable implements Readable {
     public abstract Type getReadableType();
     public abstract String getName();
     public abstract boolean hasReadableValue();
-    public abstract ReadableValue getReadableValue();
+    public abstract List<ReadableValue> getReadableValues();
 
 
     public ArrayList<AirNowObservation> getMostRecentAirNowObservations() {
