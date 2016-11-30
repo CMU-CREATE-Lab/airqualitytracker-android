@@ -15,12 +15,12 @@ import java.util.HashMap;
 public class Pm25Channel extends Channel {
 
 
-    public void onEsdrTilesResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
+    public void onEsdrTilesResponse(Context ctx, Channel channel, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
         this.feed.clearReadableValues();
-        this.feed.addReadableValue(new Pm25_NowCast(nowcast));
+        this.feed.addReadableValue(new Pm25_NowCast(nowcast, channel));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

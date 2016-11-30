@@ -5,6 +5,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_InstantCast;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -87,14 +88,14 @@ public class EsdrFeedsHandler {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     if (maxTime <= 0) {
                         feed.clearReadableValues();
-                        feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
+                        feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue),channel));
                         feed.setLastTime(Double.parseDouble(resultTime));
                     } else {
                         // TODO there might be a better (more organized) way to verify a channel's maxTime
                         Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
                         if (maxTime <= Long.parseLong(resultTime)) {
                             feed.clearReadableValues();
-                            feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue)));
+                            feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue), channel));
                             feed.setLastTime(Double.parseDouble(resultTime));
                         } else {
                             feed.clearReadableValues();
@@ -138,7 +139,7 @@ public class EsdrFeedsHandler {
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Feed closestFeed;
+                AirQualityFeed closestFeed;
 
                 EsdrJsonParser.populateFeedsFromJson(address.feeds, response, maxTime);
                 if (address.feeds.size() > 0) {

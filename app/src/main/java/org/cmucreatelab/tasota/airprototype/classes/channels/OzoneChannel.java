@@ -17,12 +17,12 @@ public class OzoneChannel extends Channel {
     protected NowCastCalculator nowCastCalculator = new NowCastCalculator(8, NowCastCalculator.WeightType.RATIO);
 
 
-    public void onEsdrTilesResponse(Context ctx, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
+    public void onEsdrTilesResponse(Context ctx, Channel channel, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
         this.feed.clearReadableValues();
-        this.feed.addReadableValue(new Pm25_NowCast(nowcast));
+        this.feed.addReadableValue(new Pm25_NowCast(nowcast, channel));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

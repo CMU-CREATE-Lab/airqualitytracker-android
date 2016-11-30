@@ -7,6 +7,7 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -25,7 +26,7 @@ public class EsdrJsonParser {
 
 
     // parse feeds within maxTime and that have at least 1 valid channel
-    public static void populateFeedsFromJson(ArrayList<Feed> feeds, JSONObject response, double maxTime) {
+    public static void populateFeedsFromJson(ArrayList<AirQualityFeed> feeds, JSONObject response, double maxTime) {
         JSONArray jsonFeeds;
         int i, size;
 
@@ -34,7 +35,7 @@ public class EsdrJsonParser {
             size = jsonFeeds.length();
             for (i = 0; i < size; i++) {
                 JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
-                Feed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, maxTime);
+                AirQualityFeed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, maxTime);
                 // only consider non-null feeds with at least 1 channel
                 if (feed != null && feed.getPmChannels().size() > 0) {
                     feeds.add(feed);
@@ -72,8 +73,8 @@ public class EsdrJsonParser {
 
 
     // Helper function to parse a feed's JSON and create objects (also does Channels)
-    public static Feed parseFeedFromJson(JSONObject row, double maxTime) {
-        Feed result = new Feed();
+    public static AirQualityFeed parseFeedFromJson(JSONObject row, double maxTime) {
+        AirQualityFeed result = new AirQualityFeed();
         long feed_id;
         String name,exposure;
         boolean isMobile;

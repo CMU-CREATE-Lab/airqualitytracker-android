@@ -78,7 +78,7 @@ public class EsdrTilesHandler {
 
                 // union both responses then call completion handler
                 result = union(firstResponse, secondResponse);
-                channel.onEsdrTilesResponse(globalHandler.appContext, result, timestamp);
+                channel.onEsdrTilesResponse(globalHandler.appContext, channel, result, timestamp);
             }
         };
         firstHandler = new Response.Listener<JSONObject>() {

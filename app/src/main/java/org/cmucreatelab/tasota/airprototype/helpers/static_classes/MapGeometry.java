@@ -31,6 +31,8 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 //     formulas in the geographical distance article."
 
 import android.util.Log;
+
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
@@ -81,11 +83,11 @@ public class MapGeometry {
 
 
     // TODO this is really the "getClosestFeedWithPm" method
-    public static Feed getClosestFeedToAddress(SimpleAddress simpleAddress, ArrayList<Feed> feeds) {
-        Feed closestFeed = null;
+    public static AirQualityFeed getClosestFeedToAddress(SimpleAddress simpleAddress, ArrayList<AirQualityFeed> feeds) {
+        AirQualityFeed closestFeed = null;
         double distance = 0.0;
 
-        for (Feed feed : feeds) {
+        for (AirQualityFeed feed : feeds) {
             if (feed.getPmChannels().size() == 0) {
                 continue;
             }

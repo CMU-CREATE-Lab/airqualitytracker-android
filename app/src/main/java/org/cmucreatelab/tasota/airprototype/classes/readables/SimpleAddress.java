@@ -24,8 +24,8 @@ public class SimpleAddress extends AirNowReadable {
     private long _id;
     private String name;
     private String zipcode;
-    private Feed closestFeed = null;
-    public final ArrayList<Feed> feeds = new ArrayList<>();
+    private AirQualityFeed closestFeed = null;
+    public final ArrayList<AirQualityFeed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
     private int positionId;
 
@@ -38,8 +38,8 @@ public class SimpleAddress extends AirNowReadable {
     public void setName(String name) { this.name = name; }
     public String getZipcode() { return zipcode; }
     public void setZipcode(String zipcode) { this.zipcode = zipcode; }
-    public Feed getClosestFeed() { return closestFeed; }
-    public void setClosestFeed(Feed closestFeed) { this.closestFeed = closestFeed; }
+    public AirQualityFeed getClosestFeed() { return closestFeed; }
+    public void setClosestFeed(AirQualityFeed closestFeed) { this.closestFeed = closestFeed; }
     public boolean isCurrentLocation() { return isCurrentLocation; }
     public int getPositionId() { return positionId; }
     public void setPositionId(int positionId) { this.positionId = positionId; }
@@ -107,7 +107,7 @@ public class SimpleAddress extends AirNowReadable {
 
 
     public boolean hasReadableValue() {
-        Feed feed = getClosestFeed();
+        AirQualityFeed feed = getClosestFeed();
         return (feed != null && feed.hasReadableValue());
     }
 
