@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.activities.secret_menu;
 import android.content.Context;
 import android.view.View;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class SecretMenuButtonClickerListener implements View.OnClickListener {
         ArrayList<SecretMenuListFeedsAdapter.ListFeedsItem> items = globalHandler.readingsHandler.debugFeedsList;
         for (SecretMenuListFeedsAdapter.ListFeedsItem item : items) {
             if (!item.isHeader) {
-                Feed feed = item.feed;
+                Pm25Feed feed = item.feed;
                 globalHandler.esdrFeedsHandler.requestChannelReading(feed, feed.getPmChannels().get(0));
             }
         }

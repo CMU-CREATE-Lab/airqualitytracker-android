@@ -3,15 +3,17 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by mike on 8/14/15.
  */
-public class Speck extends Feed {
+public class Speck extends Pm25Feed {
 
     // class attributes
     protected long deviceId;
@@ -82,8 +84,29 @@ public class Speck extends Feed {
     private static final Type readableType = Readable.Type.SPECK;
 
 
+    private ArrayList<ReadableValue> generateReadableValues() {
+        ArrayList<ReadableValue> result = new ArrayList<>();
+        if (hasReadablePm25Value()) {
+            result.add(getReadablePm25Value());
+        }
+        return result;
+    }
+
+
     public Type getReadableType() {
         return readableType;
+    }
+
+
+    @Override
+    public boolean hasReadableValue() {
+        return (generateReadableValues().size() > 0);
+    }
+
+
+    @Override
+    public List<ReadableValue> getReadableValues() {
+        return generateReadableValues();
     }
 
 }

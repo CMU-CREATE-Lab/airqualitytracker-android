@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.classes.channels;
 import android.content.Context;
 
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_NowCast;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 /**
  * Created by mike on 8/22/16.
  */
-public class OzoneChannel extends Channel {
+public class OzoneChannel extends Channel<AirQualityFeed> {
 
     protected NowCastCalculator nowCastCalculator = new NowCastCalculator(8, NowCastCalculator.WeightType.RATIO);
 
@@ -21,8 +22,7 @@ public class OzoneChannel extends Channel {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
-        this.feed.clearReadableValues();
-        this.feed.addReadableValue(new Pm25_NowCast(nowcast, channel));
+        this.feed.setPm25ReadableValue(new Pm25_NowCast(nowcast, channel));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

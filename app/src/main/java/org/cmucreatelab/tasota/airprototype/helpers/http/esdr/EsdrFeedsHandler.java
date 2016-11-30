@@ -7,6 +7,7 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_InstantCast;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
@@ -54,7 +55,7 @@ public class EsdrFeedsHandler {
 
 
     // ASSERT: cannot pass both authToken and feedApiKey (if so, authToken takes priority)
-    private void requestChannelReading(String authToken, String feedApiKey, final Feed feed, final Channel channel, final long maxTime) {
+    private void requestChannelReading(String authToken, String feedApiKey, final Pm25Feed feed, final Channel channel, final long maxTime) {
         int requestMethod;
         String requestUrl;
         Response.Listener<JSONObject> response;
@@ -87,18 +88,16 @@ public class EsdrFeedsHandler {
                 if (resultValue != null && resultTime != null) {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     if (maxTime <= 0) {
-                        feed.clearReadableValues();
-                        feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue),channel));
+                        feed.setPm25ReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue),channel));
                         feed.setLastTime(Double.parseDouble(resultTime));
                     } else {
                         // TODO there might be a better (more organized) way to verify a channel's maxTime
                         Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
                         if (maxTime <= Long.parseLong(resultTime)) {
-                            feed.clearReadableValues();
-                            feed.addReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue), channel));
+                            feed.setPm25ReadableValue(new Pm25_InstantCast(Double.parseDouble(resultValue),channel));
                             feed.setLastTime(Double.parseDouble(resultTime));
                         } else {
-                            feed.clearReadableValues();
+                            feed.setPm25ReadableValue(null);
                             feed.setLastTime(Double.parseDouble(resultTime));
                             Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
                         }
@@ -122,7 +121,7 @@ public class EsdrFeedsHandler {
 
 
     // TODO we want to specify our requests (in particular, for 1-hour OZONE or HUMIDITY)
-    public void requestChannelReading(final Feed feed, final Channel channel) {
+    public void requestChannelReading(final Pm25Feed feed, final Channel channel) {
         if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
             requestChannelReading(null, null, feed, channel, 0);
         } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {

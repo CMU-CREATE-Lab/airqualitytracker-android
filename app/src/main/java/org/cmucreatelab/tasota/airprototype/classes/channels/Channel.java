@@ -12,11 +12,11 @@ import java.util.HashMap;
 /**
  * Created by mike on 6/1/15.
  */
-public class Channel {
+public class Channel<T extends Feed> {
 
     // class attributes
     protected String name;
-    protected Feed feed;
+    protected T feed;
     protected double minTimeSecs;
     protected double maxTimeSecs;
     protected double minValue;
@@ -28,8 +28,8 @@ public class Channel {
     // getters/setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    public Feed getFeed() { return feed; }
-    public void setFeed(Feed feed) { this.feed = feed; }
+    public T getFeed() { return feed; }
+    public void setFeed(T feed) { this.feed = feed; }
     public double getMinTimeSecs() { return minTimeSecs; }
     public void setMinTimeSecs(double minTimeSecs) { this.minTimeSecs = minTimeSecs; }
     public double getMaxTimeSecs() { return maxTimeSecs; }
@@ -48,8 +48,8 @@ public class Channel {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
-        feed.clearReadableValues();
-        this.feed.addReadableValue(new Pm25_NowCast(nowcast, channel));
+        // TODO add readable value to Readable (but really, this method gets overwritten everywhere anyways)
+        //this.feed.setPm25ReadableValue(new Pm25_NowCast(nowcast, channel));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

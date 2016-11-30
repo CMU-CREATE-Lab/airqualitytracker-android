@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
 import java.util.ArrayList;
@@ -21,14 +22,14 @@ public class SecretMenuListFeedsAdapter extends ArrayAdapter<SecretMenuListFeeds
         public boolean isHeader;
         public SimpleAddress address;
         int index; // for headers only
-        public Feed feed;
+        public Pm25Feed feed;
 
         public ListFeedsItem(SimpleAddress address, int index) {
             this.isHeader = true;
             this.address = address;
             this.index = index;
         }
-        public ListFeedsItem(SimpleAddress address, Feed feed) {
+        public ListFeedsItem(SimpleAddress address, Pm25Feed feed) {
             this.isHeader = false;
             this.address = address;
             this.feed = feed;

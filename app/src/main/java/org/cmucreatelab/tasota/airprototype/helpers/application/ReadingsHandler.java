@@ -3,6 +3,7 @@ package org.cmucreatelab.tasota.airprototype.helpers.application;
 import org.cmucreatelab.tasota.airprototype.activities.options_menu.manage_trackers.ManageTrackersAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.sticky_grid.StickyGridAdapter;
 import org.cmucreatelab.tasota.airprototype.activities.secret_menu.SecretMenuListFeedsAdapter;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
@@ -71,13 +72,13 @@ public class ReadingsHandler extends ReadingsHandlerEditable {
         int index=0;
         if (gpsReadingHandler != null && globalHandler.settingsHandler.appUsesLocation()) {
             debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(gpsReadingHandler.gpsAddress, index++) );
-            for (Feed feed : gpsReadingHandler.gpsAddress.feeds) {
+            for (AirQualityFeed feed : gpsReadingHandler.gpsAddress.feeds) {
                 debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(gpsReadingHandler.gpsAddress, feed) );
             }
         }
         for (SimpleAddress address : addresses) {
             debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(address, index++) );
-            for (Feed feed : address.feeds) {
+            for (AirQualityFeed feed : address.feeds) {
                 debugFeedsList.add( new SecretMenuListFeedsAdapter.ListFeedsItem(address, feed) );
             }
         }

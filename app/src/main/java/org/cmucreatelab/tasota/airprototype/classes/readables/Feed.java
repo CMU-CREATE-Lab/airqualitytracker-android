@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by mike on 6/1/15.
  */
-public class Feed implements Readable {
+public abstract class Feed implements Readable {
 
     // class attributes
     // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
@@ -96,29 +96,6 @@ public class Feed implements Readable {
 
     public Type getReadableType() {
         return readableType;
-    }
-
-
-    public boolean hasReadableValue() {
-        return (readableValues.size() > 0);
-    }
-
-
-    public void clearReadableValues() {
-        readableValues.clear();
-    }
-
-
-    public void addReadableValue(ReadableValue readableValue) {
-        this.readableValues.add(readableValue);
-    }
-
-
-    public List<ReadableValue> getReadableValues() {
-        if (hasReadableValue()) {
-            return readableValues;
-        }
-        return null;
     }
 
 }

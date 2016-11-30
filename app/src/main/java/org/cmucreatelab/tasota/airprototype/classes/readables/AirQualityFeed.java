@@ -2,13 +2,19 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mike on 11/30/16.
  */
 
-public class AirQualityFeed extends Feed implements OzoneReadable, Pm25Readable {
+public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
 
-    private ReadableValue ozoneReadableValue, pm25ReadableValue;
+    // class attributes
+    private ReadableValue ozoneReadableValue;
+    // getters/setters
+    public void setOzoneReadableValue(ReadableValue readableValue) { this.ozoneReadableValue = readableValue; }
 
 
     // OzoneReadable implementation
@@ -26,18 +32,28 @@ public class AirQualityFeed extends Feed implements OzoneReadable, Pm25Readable 
     }
 
 
-    // Pm25Readable implementation
+    // Readable implementation
 
 
-    @Override
-    public boolean hasReadablePm25Value() {
-        return (pm25ReadableValue != null);
+    private ArrayList<ReadableValue> generateReadableValues() {
+        ArrayList<ReadableValue> result = new ArrayList<>();
+        if (hasReadablePm25Value()) {
+            result.add(getReadablePm25Value());
+        }
+        if (hasReadableOzoneValue()) {
+            result.add(ozoneReadableValue);
+        }
+        return result;
     }
 
 
-    @Override
-    public ReadableValue getReadablePm25Value() {
-        return pm25ReadableValue;
+    public boolean hasReadableValue() {
+        return (generateReadableValues().size() > 0);
+    }
+
+
+    public List<ReadableValue> getReadableValues() {
+        return generateReadableValues();
     }
 
 }
