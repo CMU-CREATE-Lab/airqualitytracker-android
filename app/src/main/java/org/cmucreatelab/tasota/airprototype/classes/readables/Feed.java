@@ -1,15 +1,12 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
-import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mike on 6/1/15.

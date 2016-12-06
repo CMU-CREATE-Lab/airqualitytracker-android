@@ -22,7 +22,7 @@ public class OzoneChannel extends Channel<AirQualityFeed> {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
-        this.feed.setPm25ReadableValue(new Pm25_NowCast(nowcast, channel));
+        this.feed.setReadablePm25Value(new Pm25_NowCast(nowcast, channel));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

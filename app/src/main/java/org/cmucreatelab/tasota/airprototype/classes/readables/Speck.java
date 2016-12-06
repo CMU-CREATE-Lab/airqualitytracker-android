@@ -2,7 +2,6 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
-import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
@@ -13,13 +12,14 @@ import java.util.List;
 /**
  * Created by mike on 8/14/15.
  */
-public class Speck extends Pm25Feed {
+public class Speck extends Pm25Feed implements HumidityReadable, TemperatureReadable {
 
     // class attributes
     protected long deviceId;
     private int positionId;
     private long _id;
     private String apiKeyReadOnly;
+    private ReadableValue readableHumidityValue, readableTemperatureValue;
     // getters/setters
     public void setChannels(Collection<Channel> channels) { this.channels.clear(); this.channels.addAll(channels); }
     public long getDeviceId() { return deviceId; }
@@ -30,6 +30,8 @@ public class Speck extends Pm25Feed {
     public void set_id(long _id) { this._id = _id; }
     public String getApiKeyReadOnly() { return apiKeyReadOnly; }
     public void setApiKeyReadOnly(String apiKeyReadOnly) { this.apiKeyReadOnly = apiKeyReadOnly; }
+    public void setReadableHumidityValue(ReadableValue readableValue) { this.readableHumidityValue = readableValue; }
+    public void setReadableTemperatureValue(ReadableValue readableValue) { this.readableTemperatureValue = readableValue; }
 
 
     // class constructor
@@ -89,6 +91,12 @@ public class Speck extends Pm25Feed {
         if (hasReadablePm25Value()) {
             result.add(getReadablePm25Value());
         }
+        if (hasReadableHumidityValue()) {
+            result.add(getReadableHumidityValue());
+        }
+        if (hasReadableTemperatureValue()) {
+            result.add(getReadableTemperatureValue());
+        }
         return result;
     }
 
@@ -107,6 +115,36 @@ public class Speck extends Pm25Feed {
     @Override
     public List<ReadableValue> getReadableValues() {
         return generateReadableValues();
+    }
+
+
+    // HumidityReadable implementation
+
+
+    @Override
+    public boolean hasReadableHumidityValue() {
+        return (readableHumidityValue != null);
+    }
+
+
+    @Override
+    public ReadableValue getReadableHumidityValue() {
+        return readableHumidityValue;
+    }
+
+
+    // TemperatureReadable implementation
+
+
+    @Override
+    public boolean hasReadableTemperatureValue() {
+        return (readableTemperatureValue != null);
+    }
+
+
+    @Override
+    public ReadableValue getReadableTemperatureValue() {
+        return readableTemperatureValue;
     }
 
 }

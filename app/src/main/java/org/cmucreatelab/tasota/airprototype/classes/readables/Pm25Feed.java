@@ -9,9 +9,9 @@ import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValu
 public abstract class Pm25Feed extends Feed implements Pm25Readable {
 
     // class attributes
-    private ReadableValue pm25ReadableValue;
+    private ReadableValue readablePm25Value;
     // getters/setters
-    public void setPm25ReadableValue(ReadableValue readableValue) { this.pm25ReadableValue = readableValue; }
+    public void setReadablePm25Value(ReadableValue readableValue) { this.readablePm25Value = readableValue; }
 
 
     // Pm25Readable implementation
@@ -19,13 +19,13 @@ public abstract class Pm25Feed extends Feed implements Pm25Readable {
 
     @Override
     public boolean hasReadablePm25Value() {
-        return (pm25ReadableValue != null);
+        return (readablePm25Value != null);
     }
 
 
     @Override
     public ReadableValue getReadablePm25Value() {
-        return pm25ReadableValue;
+        return readablePm25Value;
     }
 
 }
