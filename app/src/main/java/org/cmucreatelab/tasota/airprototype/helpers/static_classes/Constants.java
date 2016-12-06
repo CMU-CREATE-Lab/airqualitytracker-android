@@ -50,6 +50,12 @@ public final class Constants {
             "humidity"
     };
 
+
+    // humidity channel names (speck only for now)
+    public static final String[] channelNamesTemperature = {
+            "temperature"
+    };
+
     // number of seconds in a 24-hour period
     public static final long TWENTY_FOUR_HOURS = 86400;
 

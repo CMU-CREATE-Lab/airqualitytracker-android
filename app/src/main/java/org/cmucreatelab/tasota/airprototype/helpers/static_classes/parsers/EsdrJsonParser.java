@@ -7,6 +7,7 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -153,6 +154,11 @@ public class EsdrJsonParser {
             } else if (Arrays.asList(Constants.channelNamesHumidity).contains(channelName)) {
                 c = new HumidityChannel();
                 Log.i(Constants.LOG_TAG,"new HumidityChannel \""+channelName+"\"");
+            } else if (Arrays.asList(Constants.channelNamesTemperature).contains(channelName)) {
+                c = new TemperatureChannel();
+                Log.i(Constants.LOG_TAG,"new TemperatureChannel \""+channelName+"\"");
+            } else {
+                Log.w(Constants.LOG_TAG,"General Channel created from channelName=\""+channelName+"\"");
             }
             name = channelName;
             minTimeSecs = Double.parseDouble(entry.get("minTimeSecs").toString());
