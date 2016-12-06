@@ -11,7 +11,7 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;

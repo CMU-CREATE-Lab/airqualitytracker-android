@@ -1,4 +1,4 @@
-package org.cmucreatelab.tasota.airprototype.classes.readables;
+package org.cmucreatelab.tasota.airprototype.classes.readables.interfaces;
 
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 

@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;

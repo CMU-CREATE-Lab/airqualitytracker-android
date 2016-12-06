@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Pm25Readable;
 
 /**
  * Created by mike on 11/30/16.

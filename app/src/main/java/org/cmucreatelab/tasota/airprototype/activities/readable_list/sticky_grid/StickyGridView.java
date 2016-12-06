@@ -14,7 +14,7 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableLis
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;

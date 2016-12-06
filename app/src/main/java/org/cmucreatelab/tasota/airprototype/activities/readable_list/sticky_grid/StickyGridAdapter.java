@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.tonicartos.superslim.GridSLM;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableListActivity;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;

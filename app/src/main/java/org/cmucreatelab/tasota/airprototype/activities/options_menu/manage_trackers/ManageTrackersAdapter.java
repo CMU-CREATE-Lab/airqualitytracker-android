@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import java.util.ArrayList;
 import java.util.HashMap;

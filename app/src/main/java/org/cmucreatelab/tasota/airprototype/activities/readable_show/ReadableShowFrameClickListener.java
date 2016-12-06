@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.aqi_explanation.AqiExplanationActivity;
 import org.cmucreatelab.tasota.airprototype.classes.readables.*;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Readable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 

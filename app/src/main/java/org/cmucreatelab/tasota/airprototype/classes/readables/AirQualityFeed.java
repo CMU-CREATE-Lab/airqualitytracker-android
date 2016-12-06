@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.OzoneReadable;
 
 import java.util.ArrayList;
 import java.util.List;

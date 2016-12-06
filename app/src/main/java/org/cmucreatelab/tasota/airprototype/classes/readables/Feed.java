@@ -4,6 +4,7 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
 import java.util.ArrayList;
