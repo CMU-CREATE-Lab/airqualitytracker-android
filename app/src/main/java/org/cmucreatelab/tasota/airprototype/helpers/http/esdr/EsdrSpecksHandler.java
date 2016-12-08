@@ -4,6 +4,9 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -66,18 +69,20 @@ public class EsdrSpecksHandler {
             public void onResponse(JSONObject response) {
                 JSONObject channels;
                 Iterator<String> keys;
-                ArrayList<Channel> listChannels = new ArrayList<>();
 
                 try {
                     channels = response.getJSONObject("data").getJSONObject("channelBounds").getJSONObject("channels");
                     keys = channels.keys();
+                    speck.getPm25Channels().clear();
+                    speck.getHumidityChannels().clear();
+                    speck.getTemperatureChannels().clear();
+
                     while (keys.hasNext()) {
                         // Only grab channels that we care about
                         String channelName = keys.next();
                         JSONObject channel = channels.getJSONObject(channelName);
-                        listChannels.add(EsdrJsonParser.parseChannelFromJson(channelName, speck, channel));
+                        speck.addChannel(EsdrJsonParser.parseChannelFromJson(channelName, speck, channel));
                     }
-                    speck.setChannels(listChannels);
                     globalHandler.esdrFeedsHandler.requestUpdate(speck);
                 } catch (Exception e) {
                     Log.e(Constants.LOG_TAG, "failed to request channel for speck apiKeyReadOnly=" + speck.getApiKeyReadOnly());

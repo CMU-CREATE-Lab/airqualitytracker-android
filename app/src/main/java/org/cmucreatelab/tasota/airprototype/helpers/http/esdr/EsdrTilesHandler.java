@@ -5,6 +5,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.EsdrJsonParser;
@@ -104,13 +105,13 @@ public class EsdrTilesHandler {
     }
 
 
-    public void requestFeedAverages(Feed feed, long from, long to, Response.Listener<JSONObject> response) {
+    public void requestFeedAverages(Pm25Feed feed, long from, long to, Response.Listener<JSONObject> response) {
         int requestMethod = Request.Method.GET;
         String requestUrl = Constants.Esdr.API_URL + "/api/v1/feeds/"
                 + feed.getFeed_id() + "/channels/"
-                + feed.getPmChannels().get(0).getName()+"_daily_mean,"
-                + feed.getPmChannels().get(0).getName()+"_daily_median,"
-                + feed.getPmChannels().get(0).getName()+"_daily_max"
+                + feed.getPm25Channels().get(0).getName()+"_daily_mean,"
+                + feed.getPm25Channels().get(0).getName()+"_daily_median,"
+                + feed.getPm25Channels().get(0).getName()+"_daily_max"
                 + "/export?format=json"
                 + "&from="+from
                 + "&to="+to;

@@ -88,7 +88,7 @@ public class MapGeometry {
         double distance = 0.0;
 
         for (AirQualityFeed feed : feeds) {
-            if (feed.getPmChannels().size() == 0) {
+            if (feed.getPm25Channels().size() == 0) {
                 continue;
             }
             if (closestFeed == null) {

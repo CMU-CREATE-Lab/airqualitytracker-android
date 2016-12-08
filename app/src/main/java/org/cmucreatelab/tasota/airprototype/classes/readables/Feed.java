@@ -23,7 +23,7 @@ public abstract class Feed implements Readable {
     protected boolean isMobile;
     protected Location location;
     protected long productId;
-    protected ArrayList<Channel> channels;
+//    protected ArrayList<Channel> channels;
     protected double lastTime;
     // getters/setters
     public long getFeed_id() { return feed_id; }
@@ -38,7 +38,7 @@ public abstract class Feed implements Readable {
     public void setLocation(Location location) { this.location = location; }
     public long getProductId() { return productId; }
     public void setProductId(long productId) { this.productId = productId; }
-    public ArrayList<Channel> getChannels() { return channels; }
+//    public ArrayList<Channel> getChannels() { return channels; }
     public double getLastTime() { return lastTime; }
     public void setLastTime(double lastTime) { this.lastTime = lastTime; }
     public ReadableValueType getReadableValueType() { return readableValueType; }
@@ -52,37 +52,37 @@ public abstract class Feed implements Readable {
 
     // class constructor
     public Feed() {
-        this.channels = new ArrayList<>();
+//        this.channels = new ArrayList<>();
         this.name = "";
         this.exposure = "";
         this.readableValueType = ReadableValueType.NONE;
     }
 
 
-    public ArrayList<Channel> getPmChannels() {
-        ArrayList<Channel> result = new ArrayList<>();
-
-        for (Channel channel : this.channels) {
-            if (channel.getClass() == Pm25Channel.class) {
-                result.add(channel);
-            }
-        }
-
-        return result;
-    }
-
-
-    public ArrayList<Channel> getOzoneChannels() {
-        ArrayList<Channel> result = new ArrayList<>();
-
-        for (Channel channel : this.channels) {
-            if (channel.getClass() == OzoneChannel.class) {
-                result.add(channel);
-            }
-        }
-
-        return result;
-    }
+//    public ArrayList<Channel> getPmChannels() {
+//        ArrayList<Channel> result = new ArrayList<>();
+//
+//        for (Channel channel : this.channels) {
+//            if (channel.getClass() == Pm25Channel.class) {
+//                result.add(channel);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//
+//    public ArrayList<Channel> getOzoneChannels() {
+//        ArrayList<Channel> result = new ArrayList<>();
+//
+//        for (Channel channel : this.channels) {
+//            if (channel.getClass() == OzoneChannel.class) {
+//                result.add(channel);
+//            }
+//        }
+//
+//        return result;
+//    }
 
 
     // Readable implementation

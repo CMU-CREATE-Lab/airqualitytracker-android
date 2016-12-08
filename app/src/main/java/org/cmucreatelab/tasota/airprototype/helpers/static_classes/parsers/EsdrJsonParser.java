@@ -10,6 +10,7 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
@@ -38,7 +39,7 @@ public class EsdrJsonParser {
                 JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
                 AirQualityFeed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, maxTime);
                 // only consider non-null feeds with at least 1 channel
-                if (feed != null && feed.getPmChannels().size() > 0) {
+                if (feed != null && feed.getPm25Channels().size() > 0) {
                     feeds.add(feed);
                 }
             }
@@ -58,9 +59,9 @@ public class EsdrJsonParser {
             size = jsonFeeds.length();
             for (i = 0; i < size; i++) {
                 JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
-                Feed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, 0);
+                Pm25Feed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, 0);
                 // only consider non-null feeds with at least 1 channel
-                if (feed != null && feed.getPmChannels().size() > 0) {
+                if (feed != null && feed.getPm25Channels().size() > 0) {
                     deviceId = jsonFeed.getLong("deviceId");
                     Speck speck = new Speck(feed, deviceId);
                     speck.setApiKeyReadOnly(jsonFeed.get("apiKeyReadOnly").toString());
@@ -81,7 +82,6 @@ public class EsdrJsonParser {
         boolean isMobile;
         double latitude,longitude;
         long productId;
-        final ArrayList<Channel> listChannels;
         JSONObject channels;
         Iterator<String> keys;
 
@@ -111,7 +111,6 @@ public class EsdrJsonParser {
             result.setLocation(new Location(latitude, longitude));
             result.setProductId(productId);
 
-            listChannels = result.getChannels();
             try {
                 channels = row.getJSONObject("channelBounds").getJSONObject("channels");
                 keys = channels.keys();
@@ -121,7 +120,7 @@ public class EsdrJsonParser {
                     // was updated in the past 24 hours ("maxTime").
                     JSONObject channel = channels.getJSONObject(channelName);
                     if (channel.getDouble("maxTimeSecs") >= maxTime) {
-                        listChannels.add(EsdrJsonParser.parseChannelFromJson(channelName, result, channel));
+                        result.addChannel(EsdrJsonParser.parseChannelFromJson(channelName, result, channel));
                         break;
                     }
                 }

@@ -4,7 +4,11 @@ import android.util.Log;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
+import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.OzoneReadable;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Pm25Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -19,16 +23,18 @@ import java.util.List;
 /**
  * Created by mike on 6/1/15.
  */
-public class SimpleAddress extends AirNowReadable {
+public class SimpleAddress extends AirNowReadable implements Pm25Readable, OzoneReadable {
 
     // class attributes
     private long _id;
     private String name;
     private String zipcode;
     private AirQualityFeed closestFeed = null;
+    // TODO please sort this by distance
     public final ArrayList<AirQualityFeed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
     private int positionId;
+    private ReadableValue readablePm25Value,readableOzoneValue;
 
 
     private DailyFeedTracker dailyFeedTracker;
@@ -45,6 +51,8 @@ public class SimpleAddress extends AirNowReadable {
     public int getPositionId() { return positionId; }
     public void setPositionId(int positionId) { this.positionId = positionId; }
     public DailyFeedTracker getDailyFeedTracker() { return dailyFeedTracker; }
+    public void setReadablePm25Value(ReadableValue readableValue) { this.readablePm25Value = readableValue; }
+    public void setReadableOzoneValue(ReadableValue readableValue) { this.readableOzoneValue= readableValue; }
 
 
     // class constructor
@@ -96,7 +104,29 @@ public class SimpleAddress extends AirNowReadable {
     }
 
 
+    public void requestReadablePm25Reading(GlobalHandler globalHandler) {
+        // TODO make requests from list of readings until one exists, or set its value to null
+    }
+
+
+    public void requestReadableOzoneReading(GlobalHandler globalHandler) {
+        // TODO make requests from list of readings until one exists, or set its value to null
+    }
+
+
     // Readable implementation
+
+
+    private ArrayList<ReadableValue> generateReadableValues() {
+        ArrayList<ReadableValue> result = new ArrayList<>();
+        if (hasReadablePm25Value()) {
+            result.add(getReadablePm25Value());
+        }
+        if (hasReadableOzoneValue()) {
+            result.add(getReadableOzoneValue());
+        }
+        return result;
+    }
 
 
     private static final Type readableType = Readable.Type.ADDRESS;
@@ -108,17 +138,69 @@ public class SimpleAddress extends AirNowReadable {
 
 
     public boolean hasReadableValue() {
-        AirQualityFeed feed = getClosestFeed();
-        return (feed != null && feed.hasReadableValue());
+        // TODO replace me
+//        return (generateReadableValues().size() > 0);
+        return (closestFeed != null && closestFeed.hasReadableValue());
     }
 
 
     public List<ReadableValue> getReadableValues() {
-        // TODO this will need to be smarter in the future to consider multiple ReadableValue types
         if (hasReadableValue()) {
-            return getClosestFeed().getReadableValues();
+            // TODO replace me
+//            return generateReadableValues();
+            return closestFeed.getReadableValues();
         }
         return null;
+    }
+
+
+    // Pm25Readable implementation
+
+
+    @Override
+    public ArrayList<Pm25Channel> getPm25Channels() {
+        ArrayList<Pm25Channel> result = new ArrayList<>();
+        for (AirQualityFeed feed: this.feeds) {
+            result.addAll(feed.getPm25Channels());
+        }
+        return result;
+    }
+
+
+    @Override
+    public boolean hasReadablePm25Value() {
+        return (readablePm25Value != null);
+    }
+
+
+    @Override
+    public ReadableValue getReadablePm25Value() {
+        return readablePm25Value;
+    }
+
+
+    // OzoneReadable implementation
+
+
+    @Override
+    public ArrayList<OzoneChannel> getOzoneChannels() {
+        ArrayList<OzoneChannel> result = new ArrayList<>();
+        for (AirQualityFeed feed: this.feeds) {
+            result.addAll(feed.getOzoneChannels());
+        }
+        return result;
+    }
+
+
+    @Override
+    public boolean hasReadableOzoneValue() {
+        return (readableOzoneValue != null);
+    }
+
+
+    @Override
+    public ReadableValue getReadableOzoneValue() {
+        return readableOzoneValue;
     }
 
 }

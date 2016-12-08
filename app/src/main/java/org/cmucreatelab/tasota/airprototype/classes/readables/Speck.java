@@ -1,11 +1,16 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
+import android.util.Log;
+
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.HumidityReadable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.TemperatureReadable;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
 import java.util.ArrayList;
@@ -23,8 +28,10 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
     private long _id;
     private String apiKeyReadOnly;
     private ReadableValue readableHumidityValue, readableTemperatureValue;
+    private final ArrayList<HumidityChannel> humidityChannels = new ArrayList<>();
+    private final ArrayList<TemperatureChannel> temperatureChannels = new ArrayList<>();
     // getters/setters
-    public void setChannels(Collection<Channel> channels) { this.channels.clear(); this.channels.addAll(channels); }
+//    public void setChannels(Collection<Channel> channels) { this.channels.clear(); this.channels.addAll(channels); }
     public long getDeviceId() { return deviceId; }
     public void setDeviceId(long deviceId) { this.deviceId = deviceId; }
     public int getPositionId() { return positionId; }
@@ -45,7 +52,7 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
         this.isMobile = feed.isMobile;
         this.location = feed.location;
         this.productId = feed.productId;
-        this.channels = feed.channels;
+//        this.channels = feed.channels;
         this.lastTime = feed.lastTime;
         this.deviceId = deviceId;
     }
@@ -65,17 +72,30 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
     }
 
 
-    public ArrayList<Channel> getHumidityChannels() {
-        ArrayList<Channel> result = new ArrayList<>();
-
-        for (Channel channel : this.channels) {
-            if (channel.getClass() == HumidityChannel.class) {
-                result.add(channel);
-            }
+    public void addChannel(Channel channel) {
+        if (channel.getClass() == Pm25Channel.class) {
+            getPm25Channels().add((Pm25Channel)channel);
+        } else if (channel.getClass() == HumidityChannel.class) {
+            getHumidityChannels().add((HumidityChannel)channel);
+        } else if (channel.getClass() == TemperatureChannel.class) {
+            getTemperatureChannels().add((TemperatureChannel)channel);
+        } else {
+            Log.w(Constants.LOG_TAG,"could not add channel to Speck: name="+channel.getName());
         }
-
-        return result;
     }
+
+
+//    public ArrayList<Channel> getHumidityChannels() {
+//        ArrayList<Channel> result = new ArrayList<>();
+//
+//        for (Channel channel : this.channels) {
+//            if (channel.getClass() == HumidityChannel.class) {
+//                result.add(channel);
+//            }
+//        }
+//
+//        return result;
+//    }
 
 
     public double getHumidityValue() {
@@ -125,6 +145,12 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
 
 
     @Override
+    public ArrayList<HumidityChannel> getHumidityChannels() {
+        return humidityChannels;
+    }
+
+
+    @Override
     public boolean hasReadableHumidityValue() {
         return (readableHumidityValue != null);
     }
@@ -137,6 +163,12 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
 
 
     // TemperatureReadable implementation
+
+
+    @Override
+    public ArrayList<TemperatureChannel> getTemperatureChannels() {
+        return temperatureChannels;
+    }
 
 
     @Override

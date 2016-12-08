@@ -1,7 +1,13 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
+import android.util.Log;
+
+import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.OzoneReadable;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +20,30 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
 
     // class attributes
     private ReadableValue ozoneReadableValue;
+    private final ArrayList<OzoneChannel> ozoneChannels = new ArrayList<>();
     // getters/setters
     public void setOzoneReadableValue(ReadableValue readableValue) { this.ozoneReadableValue = readableValue; }
 
 
+    public void addChannel(Channel channel) {
+
+        if (channel.getClass() == Pm25Channel.class) {
+            getPm25Channels().add((Pm25Channel)channel);
+        } else if (channel.getClass() == OzoneChannel.class) {
+            getOzoneChannels().add((OzoneChannel) channel);
+        } else {
+            Log.w(Constants.LOG_TAG,"could not add channel to AirQualityFeed: name="+channel.getName());
+        }
+    }
+
+
     // OzoneReadable implementation
+
+
+    @Override
+    public ArrayList<OzoneChannel> getOzoneChannels() {
+        return ozoneChannels;
+    }
 
 
     @Override

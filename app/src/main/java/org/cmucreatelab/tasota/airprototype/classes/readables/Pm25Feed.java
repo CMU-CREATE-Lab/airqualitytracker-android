@@ -1,7 +1,10 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Pm25Readable;
+
+import java.util.ArrayList;
 
 /**
  * Created by mike on 11/30/16.
@@ -11,11 +14,18 @@ public abstract class Pm25Feed extends Feed implements Pm25Readable {
 
     // class attributes
     private ReadableValue readablePm25Value;
+    private final ArrayList<Pm25Channel> pm25Channels = new ArrayList<>();
     // getters/setters
     public void setReadablePm25Value(ReadableValue readableValue) { this.readablePm25Value = readableValue; }
 
 
     // Pm25Readable implementation
+
+
+    @Override
+    public ArrayList<Pm25Channel> getPm25Channels() {
+        return pm25Channels;
+    }
 
 
     @Override
