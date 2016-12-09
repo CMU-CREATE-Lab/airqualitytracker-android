@@ -28,7 +28,7 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
     public void setAddress(SimpleAddress simpleAddress) { this.simpleAddress = simpleAddress; }
 
     // getters/setters
-    public void setOzoneReadableValue(ReadableValue readableValue) {
+    public void setReadableOzoneValue(ReadableValue readableValue) {
         this.ozoneReadableValue = readableValue;
         if (getAddress() != null) {
             getAddress().setReadableOzoneValue(readableValue);

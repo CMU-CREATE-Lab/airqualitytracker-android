@@ -143,10 +143,6 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
         };
         globalHandler.esdrFeedsHandler.requestFeeds(getLocation(), maxTime, response);
 
-        //AirQualityFeed closestFeed = MapGeometry.getClosestFeedToAddress(this,this.feeds);
-        // request
-        // store
-
         //
         // TODO make requests from list of readings until one exists, or set its value to null
         // for each pm25 channel
@@ -157,7 +153,52 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
     }
 
 
-    public void requestReadableOzoneReading(GlobalHandler globalHandler) {
+    public void requestReadableOzoneReading(final GlobalHandler globalHandler) {
+        final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
+
+        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                EsdrJsonParser.populateFeedsFromJson(feeds, SimpleAddress.this, response, maxTime);
+                if (getOzoneChannels().size() > 0) {
+                    // TODO add value type in constants (and different nowcast formulas for ozone)
+//                    if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+//                        getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
+//                    } else {
+//                        globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
+//                    }
+                    globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
+                } else {
+                    setReadableOzoneValue(null);
+                }
+//                AirQualityFeed closestFeed;
+//
+//                EsdrJsonParser.populateFeedsFromJson(feeds, SimpleAddress.this, response, maxTime);
+//                if (feeds.size() > 0) {
+//                    closestFeed = MapGeometry.getClosestFeedToAddress(SimpleAddress.this, feeds);
+//                    if (closestFeed != null) {
+//                        //address.setClosestFeed(closestFeed);
+//
+//                        // TODO hooks in functions below; if feed is updated, we want this to be using that value
+//                        // TODO we need both nowcast and instantcast values
+//                        // Responsible for calculating the value to be displayed
+//                        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+//                            if (closestFeed.hasReadableOzoneValue())
+//                                closestFeed.getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
+//                            else
+//                                setReadableOzoneValue(null);
+//                        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+//                            // ASSERT all channels in the list of channels are usable readings
+//                            globalHandler.esdrFeedsHandler.requestChannelReading(null, null, closestFeed, closestFeed.getOzoneChannels().get(0), (long)maxTime);
+//                        }
+//                    }
+//                } else {
+//                    Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
+//                }
+            }
+        };
+        globalHandler.esdrFeedsHandler.requestFeeds(getLocation(), maxTime, response);
+
         // TODO make requests from list of readings until one exists, or set its value to null
     }
 

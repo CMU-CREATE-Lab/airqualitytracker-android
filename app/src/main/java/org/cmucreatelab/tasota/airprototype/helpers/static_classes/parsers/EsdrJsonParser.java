@@ -41,7 +41,7 @@ public class EsdrJsonParser {
                 // TODO setAddress
                 AirQualityFeed feed = EsdrJsonParser.parseAQFeedFromJson(jsonFeed, maxTime, simpleAddress);
                 // only consider non-null feeds with at least 1 channel
-                if (feed != null && feed.getPm25Channels().size() > 0) {
+                if (feed != null) {
                     feeds.add(feed);
                 }
             }

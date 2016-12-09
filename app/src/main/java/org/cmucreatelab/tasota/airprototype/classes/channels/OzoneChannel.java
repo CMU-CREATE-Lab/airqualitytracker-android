@@ -2,6 +2,7 @@ package org.cmucreatelab.tasota.airprototype.classes.channels;
 
 import android.content.Context;
 
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.Ozone_NowCast;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_NowCast;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
@@ -20,9 +21,10 @@ public class OzoneChannel extends Channel<AirQualityFeed> {
 
     public void onEsdrTilesResponse(Context ctx, Channel channel, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
         // find nowcast
+        // TODO calculate the Ozone nowcast (uses different calc)
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         this.nowCastValue = nowcast;
-        this.feed.setReadablePm25Value(new Pm25_NowCast(nowcast, channel));
+        this.feed.setReadableOzoneValue(new Ozone_NowCast(nowcast, channel));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }
 

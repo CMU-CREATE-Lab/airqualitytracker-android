@@ -9,6 +9,7 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.HumidityValue;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.Ozone_InstantCast;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_InstantCast;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.TemperatureValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
@@ -97,6 +98,8 @@ public class EsdrFeedsHandler {
                     if (maxTime <= 0) {
                         if (channel.getClass() == Pm25Channel.class) {
                             feed.setReadablePm25Value(new Pm25_InstantCast(Double.parseDouble(resultValue), channel));
+                        } else if (channel.getClass() == OzoneChannel.class) {
+                            ((AirQualityFeed)feed).setReadableOzoneValue(new Ozone_InstantCast(Double.parseDouble(resultValue), channel));
                         } else if (channel.getClass() == HumidityChannel.class) {
                             ((Speck)feed).setReadableHumidityValue(new HumidityValue(Double.parseDouble(resultValue), (HumidityChannel)channel));
                         } else if (channel.getClass() == TemperatureChannel.class) {
@@ -109,6 +112,8 @@ public class EsdrFeedsHandler {
                         if (maxTime <= Long.parseLong(resultTime)) {
                             if (channel.getClass() == Pm25Channel.class) {
                                 feed.setReadablePm25Value(new Pm25_InstantCast(Double.parseDouble(resultValue), channel));
+                            } else if (channel.getClass() == OzoneChannel.class) {
+                                ((AirQualityFeed)feed).setReadableOzoneValue(new Ozone_InstantCast(Double.parseDouble(resultValue), channel));
                             } else if (channel.getClass() == HumidityChannel.class) {
                                 ((Speck)feed).setReadableHumidityValue(new HumidityValue(Double.parseDouble(resultValue), (HumidityChannel)channel));
                             } else if (channel.getClass() == TemperatureChannel.class) {
@@ -118,6 +123,8 @@ public class EsdrFeedsHandler {
                         } else {
                             if (channel.getClass() == Pm25Channel.class) {
                                 feed.setReadablePm25Value(null);
+                            } else if (channel.getClass() == OzoneChannel.class) {
+                                ((AirQualityFeed)feed).setReadableOzoneValue(null);
                             } else if (channel.getClass() == HumidityChannel.class) {
                                 ((Speck)feed).setReadableHumidityValue(null);
                             } else if (channel.getClass() == TemperatureChannel.class) {
