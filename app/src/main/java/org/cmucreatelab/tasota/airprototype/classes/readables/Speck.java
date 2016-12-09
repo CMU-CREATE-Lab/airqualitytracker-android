@@ -10,11 +10,13 @@ import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValu
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.HumidityReadable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.TemperatureReadable;
+import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -98,8 +100,33 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
 //    }
 
 
-    public double getHumidityValue() {
-        return getHumidityChannels().get(0).getInstantCastValue();
+//    public double getHumidityValue() {
+//        return getHumidityChannels().get(0).getInstantCastValue();
+//    }
+
+    public void requestReadablePm25Reading(final GlobalHandler globalHandler) {
+        if (getPm25Channels().size() > 0) {
+            long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
+            globalHandler.esdrFeedsHandler.requestChannelReading(null, getApiKeyReadOnly(), this, getPm25Channels().get(0), timeRange);
+        } else {
+            Log.e(Constants.LOG_TAG, "No PM25 channels found from speck id=" + this.getFeed_id());
+        }
+    }
+    public void requestReadableHumidityReading(final GlobalHandler globalHandler) {
+        if (getHumidityChannels().size() > 0) {
+            long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
+            globalHandler.esdrFeedsHandler.requestChannelReading(null, getApiKeyReadOnly(), this, getHumidityChannels().get(0), timeRange);
+        } else {
+            Log.e(Constants.LOG_TAG, "No Humidity channels found from speck id=" + this.getFeed_id());
+        }
+    }
+    public void requestReadableTemperatureReading(final GlobalHandler globalHandler) {
+        if (getTemperatureChannels().size() > 0) {
+            long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
+            globalHandler.esdrFeedsHandler.requestChannelReading(null, getApiKeyReadOnly(), this, getTemperatureChannels().get(0), timeRange);
+        } else {
+            Log.e(Constants.LOG_TAG, "No Temperature channels found from speck id=" + this.getFeed_id());
+        }
     }
 
 

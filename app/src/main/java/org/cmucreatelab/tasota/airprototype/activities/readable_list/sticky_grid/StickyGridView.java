@@ -78,7 +78,7 @@ class StickyGridView extends RecyclerView.ViewHolder
             cellViews.textCurrentLocation.setVisibility(View.VISIBLE);
         }
 
-        micrograms = simpleAddress.hasReadableValue() ? simpleAddress.getClosestFeed().getReadableValues().get(0).getValue() : 0.0;
+        micrograms = simpleAddress.hasReadableValue() ? simpleAddress.getReadablePm25Value().getValue() : 0.0;
         aqi = AqiConverter.microgramsToAqi(micrograms);
         cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
         AQIReading aqiReading = new AQIReading(micrograms);

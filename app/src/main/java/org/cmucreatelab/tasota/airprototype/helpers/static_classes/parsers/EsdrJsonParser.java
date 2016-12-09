@@ -11,6 +11,7 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
@@ -28,7 +29,7 @@ public class EsdrJsonParser {
 
 
     // parse feeds within maxTime and that have at least 1 valid channel
-    public static void populateFeedsFromJson(ArrayList<AirQualityFeed> feeds, JSONObject response, double maxTime) {
+    public static void populateFeedsFromJson(ArrayList<AirQualityFeed> feeds, SimpleAddress simpleAddress, JSONObject response, double maxTime) {
         JSONArray jsonFeeds;
         int i, size;
 
@@ -37,7 +38,8 @@ public class EsdrJsonParser {
             size = jsonFeeds.length();
             for (i = 0; i < size; i++) {
                 JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
-                AirQualityFeed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, maxTime);
+                // TODO setAddress
+                AirQualityFeed feed = EsdrJsonParser.parseAQFeedFromJson(jsonFeed, maxTime, simpleAddress);
                 // only consider non-null feeds with at least 1 channel
                 if (feed != null && feed.getPm25Channels().size() > 0) {
                     feeds.add(feed);
@@ -59,11 +61,11 @@ public class EsdrJsonParser {
             size = jsonFeeds.length();
             for (i = 0; i < size; i++) {
                 JSONObject jsonFeed = (JSONObject) jsonFeeds.get(i);
-                Pm25Feed feed = EsdrJsonParser.parseFeedFromJson(jsonFeed, 0);
+                Speck speck = EsdrJsonParser.parseSpeckFromJson(jsonFeed, 0);
                 // only consider non-null feeds with at least 1 channel
-                if (feed != null && feed.getPm25Channels().size() > 0) {
+                if (speck != null && speck.getPm25Channels().size() > 0) {
                     deviceId = jsonFeed.getLong("deviceId");
-                    Speck speck = new Speck(feed, deviceId);
+                    speck.setDeviceId(deviceId);
                     speck.setApiKeyReadOnly(jsonFeed.get("apiKeyReadOnly").toString());
                     specks.add(speck);
                 }
@@ -75,8 +77,8 @@ public class EsdrJsonParser {
 
 
     // Helper function to parse a feed's JSON and create objects (also does Channels)
-    public static AirQualityFeed parseFeedFromJson(JSONObject row, double maxTime) {
-        AirQualityFeed result = new AirQualityFeed();
+    public static AirQualityFeed parseAQFeedFromJson(JSONObject row, double maxTime, SimpleAddress simpleAddress) {
+        AirQualityFeed result = new AirQualityFeed(simpleAddress);
         long feed_id;
         String name,exposure;
         boolean isMobile;
@@ -110,6 +112,61 @@ public class EsdrJsonParser {
             result.setIsMobile(isMobile);
             result.setLocation(new Location(latitude, longitude));
             result.setProductId(productId);
+
+            try {
+                channels = row.getJSONObject("channelBounds").getJSONObject("channels");
+                keys = channels.keys();
+                while (keys.hasNext()) {
+                    String channelName = keys.next();
+                    // NOTICE: we must also make sure that this specific channel
+                    // was updated in the past 24 hours ("maxTime").
+                    JSONObject channel = channels.getJSONObject(channelName);
+                    if (channel.getDouble("maxTimeSecs") >= maxTime) {
+                        result.addChannel(EsdrJsonParser.parseChannelFromJson(channelName, result, channel));
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Failed to grab Channels from Feed (likely null).");
+            }
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "Failed to parse Feed from JSON.");
+        }
+
+        return result;
+    }
+    // same as above but for specks
+    public static Speck parseSpeckFromJson(JSONObject row, double maxTime) {
+        Speck result = null;
+        long feed_id;
+        String name,exposure;
+        boolean isMobile;
+        double latitude,longitude;
+        long productId;
+        JSONObject channels;
+        Iterator<String> keys;
+
+        try {
+            feed_id = Long.parseLong(row.get("id").toString());
+            name = row.get("name").toString();
+            exposure = row.get("exposure").toString();
+            isMobile = row.get("isMobile").toString().equals("1");
+            try {
+                latitude = Double.parseDouble(row.get("latitude").toString());
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Error parsing latitude; will use 0 instead.");
+                latitude = 0;
+            }
+            try {
+                longitude = Double.parseDouble(row.get("longitude").toString());
+            } catch (Exception e) {
+                Log.w(Constants.LOG_TAG, "Error parsing longitude; will use 0 instead.");
+                longitude = 0;
+            }
+            productId = Long.parseLong(row.get("productId").toString());
+
+//            result = new Speck(apiKeyReadOnly,deviceId,exposure,feed_id,isMobile,new Location(latitude, longitude),name,positionId,productId);
+            result = new Speck("",0,exposure,feed_id,isMobile,new Location(latitude, longitude),name,0,productId);
 
             try {
                 channels = row.getJSONObject("channelBounds").getJSONObject("channels");

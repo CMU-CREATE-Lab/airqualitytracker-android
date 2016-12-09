@@ -21,8 +21,31 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
     // class attributes
     private ReadableValue ozoneReadableValue;
     private final ArrayList<OzoneChannel> ozoneChannels = new ArrayList<>();
+
+    // tracking SimpleAddress
+    private SimpleAddress simpleAddress;
+    public SimpleAddress getAddress(){ return simpleAddress; }
+    public void setAddress(SimpleAddress simpleAddress) { this.simpleAddress = simpleAddress; }
+
     // getters/setters
-    public void setOzoneReadableValue(ReadableValue readableValue) { this.ozoneReadableValue = readableValue; }
+    public void setOzoneReadableValue(ReadableValue readableValue) {
+        this.ozoneReadableValue = readableValue;
+        if (getAddress() != null) {
+            getAddress().setReadableOzoneValue(readableValue);
+        }
+    }
+    public void setReadablePm25Value(ReadableValue readableValue) {
+        super.setReadablePm25Value(readableValue);
+        if (getAddress() != null) {
+            getAddress().setReadablePm25Value(readableValue);
+        }
+    }
+
+
+    public AirQualityFeed(SimpleAddress simpleAddress) {
+        super();
+        this.setAddress(simpleAddress);
+    }
 
 
     public void addChannel(Channel channel) {

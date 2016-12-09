@@ -21,7 +21,9 @@ public class GpsReadingHandler {
 
     public void setGpsAddressLocation(android.location.Location location) {
         gpsAddress.setLocation( new Location(location.getLatitude(), location.getLongitude()) );
-        globalHandler.esdrFeedsHandler.requestUpdateFeeds(gpsAddress);
+//        globalHandler.esdrFeedsHandler.requestUpdateFeeds(gpsAddress);
+        gpsAddress.requestReadablePm25Reading(globalHandler);
+        gpsAddress.requestReadableOzoneReading(globalHandler);
     }
 
 }

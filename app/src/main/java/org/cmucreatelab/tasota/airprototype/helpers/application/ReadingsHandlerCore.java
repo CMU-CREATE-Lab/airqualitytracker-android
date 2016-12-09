@@ -69,7 +69,7 @@ public abstract class ReadingsHandlerCore {
 
     public void updateAddresses() {
         for (SimpleAddress address : this.addresses) {
-            globalHandler.esdrFeedsHandler.requestUpdateFeeds(address);
+            globalHandler.esdrFeedsHandler.requestUpdate(address);
         }
     }
 

@@ -4,12 +4,19 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.HumidityValue;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_InstantCast;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.TemperatureValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
+import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.EsdrJsonParser;
@@ -55,7 +62,7 @@ public class EsdrFeedsHandler {
 
 
     // ASSERT: cannot pass both authToken and feedApiKey (if so, authToken takes priority)
-    private void requestChannelReading(String authToken, String feedApiKey, final Pm25Feed feed, final Channel channel, final long maxTime) {
+    public void requestChannelReading(String authToken, String feedApiKey, final Pm25Feed feed, final Channel channel, final long maxTime) {
         int requestMethod;
         String requestUrl;
         Response.Listener<JSONObject> response;
@@ -88,16 +95,34 @@ public class EsdrFeedsHandler {
                 if (resultValue != null && resultTime != null) {
                     Log.i(Constants.LOG_TAG, "got value \"" + resultValue + "\" at time " + resultTime + " for Channel " + channelName);
                     if (maxTime <= 0) {
-                        feed.setReadablePm25Value(new Pm25_InstantCast(Double.parseDouble(resultValue),channel));
+                        if (channel.getClass() == Pm25Channel.class) {
+                            feed.setReadablePm25Value(new Pm25_InstantCast(Double.parseDouble(resultValue), channel));
+                        } else if (channel.getClass() == HumidityChannel.class) {
+                            ((Speck)feed).setReadableHumidityValue(new HumidityValue(Double.parseDouble(resultValue), (HumidityChannel)channel));
+                        } else if (channel.getClass() == TemperatureChannel.class) {
+                            ((Speck)feed).setReadableTemperatureValue(new TemperatureValue(Double.parseDouble(resultValue), (TemperatureChannel)channel));
+                        }
                         feed.setLastTime(Double.parseDouble(resultTime));
                     } else {
                         // TODO there might be a better (more organized) way to verify a channel's maxTime
                         Log.e(Constants.LOG_TAG,"COMPARE maxTime="+maxTime+", resultTime="+resultTime);
                         if (maxTime <= Long.parseLong(resultTime)) {
-                            feed.setReadablePm25Value(new Pm25_InstantCast(Double.parseDouble(resultValue),channel));
+                            if (channel.getClass() == Pm25Channel.class) {
+                                feed.setReadablePm25Value(new Pm25_InstantCast(Double.parseDouble(resultValue), channel));
+                            } else if (channel.getClass() == HumidityChannel.class) {
+                                ((Speck)feed).setReadableHumidityValue(new HumidityValue(Double.parseDouble(resultValue), (HumidityChannel)channel));
+                            } else if (channel.getClass() == TemperatureChannel.class) {
+                                ((Speck)feed).setReadableTemperatureValue(new TemperatureValue(Double.parseDouble(resultValue), (TemperatureChannel)channel));
+                            }
                             feed.setLastTime(Double.parseDouble(resultTime));
                         } else {
-                            feed.setReadablePm25Value(null);
+                            if (channel.getClass() == Pm25Channel.class) {
+                                feed.setReadablePm25Value(null);
+                            } else if (channel.getClass() == HumidityChannel.class) {
+                                ((Speck)feed).setReadableHumidityValue(null);
+                            } else if (channel.getClass() == TemperatureChannel.class) {
+                                ((Speck)feed).setReadableTemperatureValue(null);
+                            }
                             feed.setLastTime(Double.parseDouble(resultTime));
                             Log.i(Constants.LOG_TAG,"Ignoring channel updated later than maxTime.");
                         }
@@ -130,45 +155,61 @@ public class EsdrFeedsHandler {
     }
 
 
-    public void requestUpdateFeeds(final SimpleAddress address) {
-        address.feeds.clear();
-        // the past 24 hours
-        final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
+//    public void requestUpdateFeeds(final SimpleAddress address) {
+//        address.feeds.clear();
+//        // the past 24 hours
+//        final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
+//
+//        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                AirQualityFeed closestFeed;
+//
+//                EsdrJsonParser.populateFeedsFromJson(address.feeds, response, maxTime);
+//                if (address.feeds.size() > 0) {
+//                    closestFeed = MapGeometry.getClosestFeedToAddress(address, address.feeds);
+//                    if (closestFeed != null) {
+//                        address.setClosestFeed(closestFeed);
+//
+//                        // Responsible for calculating the value to be displayed
+//                        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+//                            closestFeed.getPm25Channels().get(0).requestNowCast(globalHandler.appContext);
+//                        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+//                            // ASSERT all channels in the list of channels are usable readings
+//                            requestChannelReading(null, null, closestFeed, closestFeed.getPm25Channels().get(0), (long)maxTime);
+//                        }
+//                    }
+//                } else {
+//                    Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
+//                }
+//            }
+//        };
+//        requestFeeds(address.getLocation(), maxTime, response);
+//    }
 
-        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                AirQualityFeed closestFeed;
 
-                EsdrJsonParser.populateFeedsFromJson(address.feeds, response, maxTime);
-                if (address.feeds.size() > 0) {
-                    closestFeed = MapGeometry.getClosestFeedToAddress(address, address.feeds);
-                    if (closestFeed != null) {
-                        address.setClosestFeed(closestFeed);
-
-                        // Responsible for calculating the value to be displayed
-                        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
-                            closestFeed.getPm25Channels().get(0).requestNowCast(globalHandler.appContext);
-                        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
-                            // ASSERT all channels in the list of channels are usable readings
-                            requestChannelReading(null, null, closestFeed, closestFeed.getPm25Channels().get(0), (long)maxTime);
-                        }
-                    }
-                } else {
-                    Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
-                }
-            }
-        };
-        requestFeeds(address.getLocation(), maxTime, response);
-    }
+//    public void requestUpdate(final Speck speck) {
+//        if (speck.getPm25Channels().size() > 0) {
+//            long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
+//            requestChannelReading(null, speck.getApiKeyReadOnly(), speck, speck.getPm25Channels().get(0), timeRange);
+//        } else {
+//            Log.e(Constants.LOG_TAG, "No channels found from speck id=" + speck.getFeed_id());
+//        }
+//    }
 
 
-    public void requestUpdate(final Speck speck) {
-        if (speck.getPm25Channels().size() > 0) {
-            long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
-            requestChannelReading(null, speck.getApiKeyReadOnly(), speck, speck.getPm25Channels().get(0), timeRange);
+    public void requestUpdate(Readable readable) {
+        if (readable.getClass() == SimpleAddress.class) {
+            SimpleAddress simpleAddress = (SimpleAddress)readable;
+            simpleAddress.requestReadablePm25Reading(globalHandler);
+            simpleAddress.requestReadableOzoneReading(globalHandler);
+        } else if (readable.getClass() == Speck.class) {
+            Speck speck = (Speck)readable;
+            speck.requestReadablePm25Reading(globalHandler);
+            speck.requestReadableHumidityReading(globalHandler);
+            speck.requestReadableTemperatureReading(globalHandler);
         } else {
-            Log.e(Constants.LOG_TAG, "No channels found from speck id=" + speck.getFeed_id());
+            Log.e(Constants.LOG_TAG, "Tried to requestUpdate on Readable "+readable.getName()+" but class not supported: "+readable.getClass());
         }
     }
 

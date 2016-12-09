@@ -103,7 +103,7 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
             textShowAddressAqiDescription.setText(aqiReading.getDescription());
             layoutShowAddress.setBackgroundResource(aqiReading.getDrawableGradient());
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_AQI);
-            this.textViewReadingName.setText(address.getClosestFeed().getName());
+            this.textViewReadingName.setText(address.getReadablePm25Value().getChannel().getFeed().getName());
             // request Tracker
             address.requestDailyFeedTracker(activity);
         } else {
