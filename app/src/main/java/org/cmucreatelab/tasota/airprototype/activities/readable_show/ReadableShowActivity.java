@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.BaseActivity;
+import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
+import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
@@ -47,10 +49,26 @@ public class ReadableShowActivity extends BaseActivity<ReadableShowUIElements> {
         }
 
         this.reading = globalHandler.readingsHandler.adapterList.get(itemIndex).readable;
+        String value;
         switch(reading.getReadableType()) {
             case ADDRESS:
+                SimpleAddress simpleAddress = (SimpleAddress)reading;
+                Log.i(Constants.LOG_TAG,"OPENING ADDRESS");
+                value = simpleAddress.hasReadablePm25Value() ? String.valueOf(simpleAddress.getReadablePm25Value().getValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"PM2.5="+value);
+                value = simpleAddress.hasReadableOzoneValue() ? String.valueOf(simpleAddress.getReadableOzoneValue().getValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"OZONE="+value);
                 break;
             case SPECK:
+                Speck speck = (Speck)reading;
+                Log.i(Constants.LOG_TAG,"OPENING SPECK");
+                value = speck.hasReadablePm25Value() ? String.valueOf(speck.getReadablePm25Value().getValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"PM2.5="+value);
+                value = speck.hasReadableHumidityValue() ? String.valueOf(speck.getReadableHumidityValue().getValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"HUMID="+value);
+                value = speck.hasReadableTemperatureValue() ? String.valueOf(speck.getReadableTemperatureValue().getValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"TEMP="+value);
+
                 break;
             default:
                 Log.e(Constants.LOG_TAG, "Tried to show non-SimpleAddress Readable (not implemented)");
