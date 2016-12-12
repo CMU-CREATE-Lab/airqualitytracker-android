@@ -114,6 +114,7 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 
     public void requestReadablePm25Reading(final GlobalHandler globalHandler) {// the past 24 hours
         final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
+//        this.setReadablePm25Value(null);
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
@@ -155,6 +156,7 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 
     public void requestReadableOzoneReading(final GlobalHandler globalHandler) {
         final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
+//        this.setReadableOzoneValue(null);
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
