@@ -169,7 +169,9 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 //                    } else {
 //                        globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
 //                    }
-                    globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
+
+                    getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
+                    //globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
                 } else {
                     setReadableOzoneValue(null);
                 }

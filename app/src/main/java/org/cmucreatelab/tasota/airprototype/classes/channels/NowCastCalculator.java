@@ -92,6 +92,8 @@ public class NowCastCalculator {
         // bucket data into averaged hourly array
         for (Integer keyTime: data.keySet()) {
             index = (currentTime - keyTime)/3600;
+            //  skip any keys that are outside the hours we care about
+            if (index > this.hours) continue;
             value = data.get(keyTime).get(0);
             count = (int)Math.floor(data.get(keyTime).get(1));
             if (tempResult[index].isSet) {
@@ -165,6 +167,11 @@ public class NowCastCalculator {
         range = max - min;
         // compute the weight factor
         weightFactor = computeWeightFactor(range, max);
+        // return 0 when we have a weight of zero (should happen for WeighType.RATIO only)
+        if (weightFactor == 0) {
+            Log.w(Constants.LOG_TAG,"weightFactor in NowCastCaluclator.calculate was 0");
+            return 0;
+        }
         // sum the products of concentrations and weight factors
         numerator = summedWeightFactor(hourlyValues, weightFactor);
         // sum of weight factors raised to the power

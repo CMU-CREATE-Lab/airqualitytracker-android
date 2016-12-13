@@ -16,6 +16,8 @@ import java.util.HashMap;
  */
 public class Pm25Channel extends Channel<Pm25Feed> {
 
+    protected NowCastCalculator nowCastCalculator = new NowCastCalculator(12, NowCastCalculator.WeightType.PIECEWISE);
+
 
     public void onEsdrTilesResponse(Context ctx, Channel channel, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
         // find nowcast
