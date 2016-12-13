@@ -47,6 +47,11 @@ public final class Constants {
             "Ozone_O3", "OZONE_PPM"
     };
 
+    // ozone channel names that use PPB instead of PPM
+    public static final String[] ppbOzoneNames = {
+            "Ozone", "OZONE", "Ozone_O3"
+    };
+
     // humidity channel names (speck only for now)
     public static final String[] channelNamesHumidity = {
             "humidity"
