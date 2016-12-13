@@ -36,7 +36,15 @@ public class Ozone_NowCast extends AqiReadableValue {
             Log.e(Constants.LOG_TAG, "tried to convert negative PPM.");
             aqi = 0.0;
         } else if (ppm < 0.054) {
-            aqi = calculateLinearAqi(50.0,0.0,0.054,0.0,ppm);
+            aqi = calculateLinearAqi(50.0, 0.0, 0.054, 0.0, ppm);
+        } else if (ppm < 0.070) {
+            aqi = calculateLinearAqi(100.0, 51.0, 0.070, 0.055, ppm);
+        } else if (ppm < 0.085) {
+            aqi = calculateLinearAqi(150.0, 101.0, 0.085, 0.071, ppm);
+        } else if (ppm < 0.105) {
+            aqi = calculateLinearAqi(200.0, 151.0, 0.105, 0.086, ppm);
+        } else if (ppm < 0.200) {
+            aqi = calculateLinearAqi(300.0, 201.0, 0.200, 0.106, ppm);
         } else {
             Log.e(Constants.LOG_TAG, "PPM out of range.");
             aqi = 0.0;
