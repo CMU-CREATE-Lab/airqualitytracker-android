@@ -1,10 +1,8 @@
 package org.cmucreatelab.tasota.airprototype.classes.readable_values;
 
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.Arrays;
 
 /**
@@ -28,6 +26,7 @@ public class Ozone_NowCast extends AqiReadableValue {
     }
 
 
+    @Override
     public double getAqiValue() {
         double aqi = 0.0;
         // EPA caluclation rounds to a whole PPB (and we have PPM)

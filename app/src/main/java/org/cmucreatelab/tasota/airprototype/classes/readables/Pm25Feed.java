@@ -2,7 +2,6 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
-import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Pm25Readable;
 
 import java.util.ArrayList;

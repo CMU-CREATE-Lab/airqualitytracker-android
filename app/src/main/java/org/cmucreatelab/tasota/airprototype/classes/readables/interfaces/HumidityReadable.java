@@ -2,7 +2,6 @@ package org.cmucreatelab.tasota.airprototype.classes.readables.interfaces;
 
 import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
-
 import java.util.ArrayList;
 
 /**
@@ -12,12 +11,12 @@ import java.util.ArrayList;
 public interface HumidityReadable {
 
     // returns a list of channels that influence the readable value
-    public ArrayList<HumidityChannel> getHumidityChannels();
+    ArrayList<HumidityChannel> getHumidityChannels();
 
     // return true if the Readable object has a Humidity value
-    public boolean hasReadableHumidityValue();
+    boolean hasReadableHumidityValue();
 
     // return Humidity value
-    public ReadableValue getReadableHumidityValue();
+    ReadableValue getReadableHumidityValue();
 
 }

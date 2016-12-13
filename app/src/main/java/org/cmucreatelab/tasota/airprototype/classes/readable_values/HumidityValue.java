@@ -18,15 +18,18 @@ public class HumidityValue implements ReadableValue {
         this.channel = channel;
     }
 
+
     @Override
     public Channel getChannel() {
         return channel;
     }
 
+
     @Override
     public String getReadableUnits() {
         return "%";
     }
+
 
     @Override
     public double getValue() {

@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables.interfaces;
 
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
-
 import java.util.List;
 
 /**
@@ -9,20 +8,20 @@ import java.util.List;
  */
 public interface Readable {
 
-    public enum Type {
+    enum Type {
         ADDRESS, FEED, SPECK
     }
 
     // returns the Type that the Readable object is
-    public Type getReadableType();
+    Type getReadableType();
 
     // returns a human-readable name associated with the Reading
-    public String getName();
+    String getName();
 
     // return true if the Readable object has any values
-    public boolean hasReadableValue();
+    boolean hasReadableValue();
 
     // return list of values
-    public List<ReadableValue> getReadableValues();
+    List<ReadableValue> getReadableValues();
 
 }

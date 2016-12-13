@@ -31,7 +31,6 @@ package org.cmucreatelab.tasota.airprototype.helpers.static_classes;
 //     formulas in the geographical distance article."
 
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;

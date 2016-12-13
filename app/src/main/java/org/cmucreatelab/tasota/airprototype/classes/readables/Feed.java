@@ -1,8 +1,5 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
-import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
-import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
-import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
@@ -15,7 +12,6 @@ import java.util.ArrayList;
 public abstract class Feed implements Readable {
 
     // class attributes
-    // NOTE: if you want more attributes, be sure that they are included in the json response (for parsing)
     private ReadableValueType readableValueType;
     protected long feed_id;
     protected String name;
@@ -23,7 +19,6 @@ public abstract class Feed implements Readable {
     protected boolean isMobile;
     protected Location location;
     protected long productId;
-//    protected ArrayList<Channel> channels;
     protected double lastTime;
     // getters/setters
     public long getFeed_id() { return feed_id; }
@@ -38,7 +33,6 @@ public abstract class Feed implements Readable {
     public void setLocation(Location location) { this.location = location; }
     public long getProductId() { return productId; }
     public void setProductId(long productId) { this.productId = productId; }
-//    public ArrayList<Channel> getChannels() { return channels; }
     public double getLastTime() { return lastTime; }
     public void setLastTime(double lastTime) { this.lastTime = lastTime; }
     public ReadableValueType getReadableValueType() { return readableValueType; }
@@ -52,37 +46,10 @@ public abstract class Feed implements Readable {
 
     // class constructor
     public Feed() {
-//        this.channels = new ArrayList<>();
         this.name = "";
         this.exposure = "";
         this.readableValueType = ReadableValueType.NONE;
     }
-
-
-//    public ArrayList<Channel> getPmChannels() {
-//        ArrayList<Channel> result = new ArrayList<>();
-//
-//        for (Channel channel : this.channels) {
-//            if (channel.getClass() == Pm25Channel.class) {
-//                result.add(channel);
-//            }
-//        }
-//
-//        return result;
-//    }
-//
-//
-//    public ArrayList<Channel> getOzoneChannels() {
-//        ArrayList<Channel> result = new ArrayList<>();
-//
-//        for (Channel channel : this.channels) {
-//            if (channel.getClass() == OzoneChannel.class) {
-//                result.add(channel);
-//            }
-//        }
-//
-//        return result;
-//    }
 
 
     // Readable implementation
@@ -92,6 +59,7 @@ public abstract class Feed implements Readable {
     private final ArrayList<ReadableValue> readableValues = new ArrayList<>();
 
 
+    @Override
     public Type getReadableType() {
         return readableType;
     }

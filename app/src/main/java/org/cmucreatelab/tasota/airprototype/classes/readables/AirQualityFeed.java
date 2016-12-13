@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
@@ -9,7 +8,6 @@ import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableV
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.OzoneReadable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +20,10 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
     // class attributes
     private AqiReadableValue ozoneReadableValue;
     private final ArrayList<OzoneChannel> ozoneChannels = new ArrayList<>();
-
-    // tracking SimpleAddress
     private SimpleAddress simpleAddress;
+    // getters/setters
     public SimpleAddress getAddress(){ return simpleAddress; }
     public void setAddress(SimpleAddress simpleAddress) { this.simpleAddress = simpleAddress; }
-
-    // getters/setters
     public void setReadableOzoneValue(AqiReadableValue readableValue) {
         this.ozoneReadableValue = readableValue;
         if (getAddress() != null) {
@@ -50,7 +45,6 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
 
 
     public void addChannel(Channel channel) {
-
         if (channel.getClass() == Pm25Channel.class) {
             getPm25Channels().add((Pm25Channel)channel);
         } else if (channel.getClass() == OzoneChannel.class) {
@@ -97,11 +91,13 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
     }
 
 
+    @Override
     public boolean hasReadableValue() {
         return (generateReadableValues().size() > 0);
     }
 
 
+    @Override
     public List<ReadableValue> getReadableValues() {
         return generateReadableValues();
     }

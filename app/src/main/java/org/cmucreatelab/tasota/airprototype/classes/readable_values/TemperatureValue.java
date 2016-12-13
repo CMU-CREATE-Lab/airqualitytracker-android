@@ -18,18 +18,22 @@ public class TemperatureValue implements ReadableValue {
         this.channel = channel;
     }
 
+
     @Override
     public Channel getChannel() {
         return channel;
     }
+
 
     @Override
     public String getReadableUnits() {
         return "C";
     }
 
+
     @Override
     public double getValue() {
         return value;
     }
+
 }

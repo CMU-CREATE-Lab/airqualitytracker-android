@@ -31,14 +31,11 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
     private long _id;
     private String name;
     private String zipcode;
-//    private AirQualityFeed closestFeed = null;
     // TODO please sort this by distance
     public final ArrayList<AirQualityFeed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
     private int positionId;
     private AqiReadableValue readablePm25Value,readableOzoneValue;
-
-
     private DailyFeedTracker dailyFeedTracker;
     // getters/setters
     public long get_id() { return _id; }
@@ -47,8 +44,6 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
     public void setName(String name) { this.name = name; }
     public String getZipcode() { return zipcode; }
     public void setZipcode(String zipcode) { this.zipcode = zipcode; }
-//    public AirQualityFeed getClosestFeed() { return closestFeed; }
-//    public void setClosestFeed(AirQualityFeed closestFeed) { this.closestFeed = closestFeed; }
     public boolean isCurrentLocation() { return isCurrentLocation; }
     public int getPositionId() { return positionId; }
     public void setPositionId(int positionId) { this.positionId = positionId; }
@@ -76,10 +71,7 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
     public void requestDailyFeedTracker(final ReadableShowActivity activity) {
         final long to = new Date().getTime() / 1000;
         final long from = to - (long)(86400 * 365);
-//        if (closestFeed == null) {
-//            Log.e(Constants.LOG_TAG, "requestDailyFeedTracker failed (closestFeed is null)");
-//            return;
-//        }
+
         if (hasReadablePm25Value()) {
             final AirQualityFeed closestFeed = (AirQualityFeed)(getReadablePm25Value().getChannel().getFeed());
 
@@ -115,7 +107,6 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 
     public void requestReadablePm25Reading(final GlobalHandler globalHandler) {// the past 24 hours
         final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
-//        this.setReadablePm25Value(null);
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
@@ -126,10 +117,7 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
                 if (feeds.size() > 0) {
                     closestFeed = MapGeometry.getClosestFeedToAddress(SimpleAddress.this, feeds);
                     if (closestFeed != null) {
-                        //address.setClosestFeed(closestFeed);
-
                         // TODO hooks in functions below; if feed is updated, we want this to be using that value
-
                         // Responsible for calculating the value to be displayed
                         if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
                             closestFeed.getPm25Channels().get(0).requestNowCast(globalHandler.appContext);
@@ -157,19 +145,12 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 
     public void requestReadableOzoneReading(final GlobalHandler globalHandler) {
         final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
-//        this.setReadableOzoneValue(null);
 
         Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 EsdrJsonParser.populateFeedsFromJson(feeds, SimpleAddress.this, response, maxTime);
                 if (getOzoneChannels().size() > 0) {
-                    // TODO add value type in constants (and different nowcast formulas for ozone)
-//                    if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
-//                        getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
-//                    } else {
-//                        globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
-//                    }
                     if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
                         getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
                     } else if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
@@ -178,30 +159,6 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
                 } else {
                     setReadableOzoneValue(null);
                 }
-//                AirQualityFeed closestFeed;
-//
-//                EsdrJsonParser.populateFeedsFromJson(feeds, SimpleAddress.this, response, maxTime);
-//                if (feeds.size() > 0) {
-//                    closestFeed = MapGeometry.getClosestFeedToAddress(SimpleAddress.this, feeds);
-//                    if (closestFeed != null) {
-//                        //address.setClosestFeed(closestFeed);
-//
-//                        // TODO hooks in functions below; if feed is updated, we want this to be using that value
-//                        // TODO we need both nowcast and instantcast values
-//                        // Responsible for calculating the value to be displayed
-//                        if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
-//                            if (closestFeed.hasReadableOzoneValue())
-//                                closestFeed.getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
-//                            else
-//                                setReadableOzoneValue(null);
-//                        } else if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
-//                            // ASSERT all channels in the list of channels are usable readings
-//                            globalHandler.esdrFeedsHandler.requestChannelReading(null, null, closestFeed, closestFeed.getOzoneChannels().get(0), (long)maxTime);
-//                        }
-//                    }
-//                } else {
-//                    Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
-//                }
             }
         };
         globalHandler.esdrFeedsHandler.requestFeeds(getLocation(), maxTime, response);
@@ -228,21 +185,22 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
     private static final Type readableType = Readable.Type.ADDRESS;
 
 
+    @Override
     public Type getReadableType() {
         return readableType;
     }
 
 
+    @Override
     public boolean hasReadableValue() {
         return (generateReadableValues().size() > 0);
-//        return (closestFeed != null && closestFeed.hasReadableValue());
     }
 
 
+    @Override
     public List<ReadableValue> getReadableValues() {
         if (hasReadableValue()) {
             return generateReadableValues();
-//            return closestFeed.getReadableValues();
         }
         return null;
     }

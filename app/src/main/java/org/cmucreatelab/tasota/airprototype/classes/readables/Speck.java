@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables;
 
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
@@ -15,7 +14,6 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import java.lang.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +31,6 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
     private final ArrayList<HumidityChannel> humidityChannels = new ArrayList<>();
     private final ArrayList<TemperatureChannel> temperatureChannels = new ArrayList<>();
     // getters/setters
-//    public void setChannels(Collection<Channel> channels) { this.channels.clear(); this.channels.addAll(channels); }
     public long getDeviceId() { return deviceId; }
     public void setDeviceId(long deviceId) { this.deviceId = deviceId; }
     public int getPositionId() { return positionId; }
@@ -54,7 +51,6 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
         this.isMobile = feed.isMobile;
         this.location = feed.location;
         this.productId = feed.productId;
-//        this.channels = feed.channels;
         this.lastTime = feed.lastTime;
         this.deviceId = deviceId;
     }
@@ -87,23 +83,6 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
     }
 
 
-//    public ArrayList<Channel> getHumidityChannels() {
-//        ArrayList<Channel> result = new ArrayList<>();
-//
-//        for (Channel channel : this.channels) {
-//            if (channel.getClass() == HumidityChannel.class) {
-//                result.add(channel);
-//            }
-//        }
-//
-//        return result;
-//    }
-
-
-//    public double getHumidityValue() {
-//        return getHumidityChannels().get(0).getInstantCastValue();
-//    }
-
     public void requestReadablePm25Reading(final GlobalHandler globalHandler) {
         if (getPm25Channels().size() > 0) {
             long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
@@ -112,6 +91,8 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
             Log.e(Constants.LOG_TAG, "No PM25 channels found from speck id=" + this.getFeed_id());
         }
     }
+
+
     public void requestReadableHumidityReading(final GlobalHandler globalHandler) {
         if (getHumidityChannels().size() > 0) {
             long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
@@ -120,6 +101,8 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
             Log.e(Constants.LOG_TAG, "No Humidity channels found from speck id=" + this.getFeed_id());
         }
     }
+
+
     public void requestReadableTemperatureReading(final GlobalHandler globalHandler) {
         if (getTemperatureChannels().size() > 0) {
             long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
@@ -151,6 +134,7 @@ public class Speck extends Pm25Feed implements HumidityReadable, TemperatureRead
     }
 
 
+    @Override
     public Type getReadableType() {
         return readableType;
     }

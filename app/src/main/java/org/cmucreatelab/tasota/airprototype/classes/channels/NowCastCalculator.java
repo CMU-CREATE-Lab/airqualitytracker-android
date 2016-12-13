@@ -120,11 +120,6 @@ public class NowCastCalculator {
             return new Double[0];
         }
 
-//        // The last value we saw in the array we are constructing
-//        double lastValue;
-//        // Initially, we want this to be the first non-null value in the array
-//        lastValue = firstNonemptyValue;
-
         // Now, construct our final resulting array (from buckets)
         for (int i=0;i<tempResult.length;i++) {
             if (i <= firstNonemptyIndex) {
@@ -134,7 +129,6 @@ public class NowCastCalculator {
                 // next, populate each hour with values from the data
                 double currentValue = tempResult[i].value/(double)(tempResult[i].count);
                 result[i] = currentValue;
-//                lastValue = currentValue;
             } else {
                 // when data missing, assume 0
                 // TODO if either the first two hours are missing then NowCast should not be reported

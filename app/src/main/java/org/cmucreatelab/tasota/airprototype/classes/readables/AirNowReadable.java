@@ -3,7 +3,6 @@ package org.cmucreatelab.tasota.airprototype.classes.readables;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.air_now.AirNowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
-import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.AirNowJsonParser;
@@ -14,7 +13,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by mike on 2/10/16.
@@ -28,11 +26,6 @@ public abstract class AirNowReadable implements Readable {
     public Location getLocation() { return location; }
     public void setLocation(Location location) { this.location = location; }
     public ArrayList<AirNowObservation> getAirNowObservations() { return airNowObservations; }
-    // abstract methods (Readable)
-    public abstract Type getReadableType();
-    public abstract String getName();
-    public abstract boolean hasReadableValue();
-    public abstract List<ReadableValue> getReadableValues();
 
 
     public ArrayList<AirNowObservation> getMostRecentAirNowObservations() {

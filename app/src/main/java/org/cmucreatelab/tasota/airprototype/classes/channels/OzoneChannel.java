@@ -2,17 +2,12 @@ package org.cmucreatelab.tasota.airprototype.classes.channels;
 
 import android.content.Context;
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Ozone_InstantCast;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Ozone_NowCast;
-import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_NowCast;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -25,13 +20,12 @@ public class OzoneChannel extends Channel<AirQualityFeed> {
 
 
     public void onEsdrTilesResponse(Context ctx, Channel channel, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
-        // find nowcast
-        // TODO calculate the Ozone nowcast (uses different calc)
+        // find ozone nowcast and instantcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
-        this.nowCastValue = nowcast;
-
         Ozone_NowCast ozoneNowCast = new Ozone_NowCast(nowcast, channel);
         Ozone_InstantCast ozoneInstantCast = new Ozone_InstantCast(nowCastCalculator.getMostRecent(result, timestamp), channel);
+
+        // compare ozone AQIs, setting the one with a higher AQI value
         Log.d(Constants.LOG_TAG,"Comparing Ozone NowCast vs. InstantCast AQIs: " + ozoneNowCast.getAqiValue() + ", " + ozoneInstantCast.getAqiValue());
         if (ozoneInstantCast.getAqiValue() > ozoneNowCast.getAqiValue()) {
             this.feed.setReadableOzoneValue(ozoneInstantCast);

@@ -49,20 +49,4 @@ public class WHOReading {
         return ranges.length;
     }
 
-
-//    public String getRangeFromIndex() {
-//        String result;
-//        if (index < 0) {
-//            Log.e(Constants.LOG_TAG, "getRangeFromIndex received index < 0.");
-//            result = "";
-//        } else if (index == 0) {
-//            result = "0-" + Pm25AqiConverter.microgramsToAqi(ranges[0]);
-//        } else if (index == ranges.length) {
-//            result = Pm25AqiConverter.microgramsToAqi(ranges[ranges.length-1]) + "+";
-//        } else {
-//            result = Pm25AqiConverter.microgramsToAqi(ranges[index-1]) + "-" + Pm25AqiConverter.microgramsToAqi(ranges[index]);
-//        }
-//        return result;
-//    }
-
 }

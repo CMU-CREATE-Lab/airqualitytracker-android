@@ -1,10 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes.channels;
 
 import android.content.Context;
-
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25_NowCast;
-import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import java.util.ArrayList;
@@ -22,7 +19,6 @@ public class Pm25Channel extends Channel<Pm25Feed> {
     public void onEsdrTilesResponse(Context ctx, Channel channel, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
         // find nowcast
         double nowcast = nowCastCalculator.calculate(result, timestamp);
-        this.nowCastValue = nowcast;
         this.feed.setReadablePm25Value(new Pm25_NowCast(nowcast, channel));
         GlobalHandler.getInstance(ctx).notifyGlobalDataSetChanged();
     }

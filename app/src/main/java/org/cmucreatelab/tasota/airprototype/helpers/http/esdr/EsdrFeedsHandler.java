@@ -159,49 +159,6 @@ public class EsdrFeedsHandler {
     }
 
 
-//    public void requestUpdateFeeds(final SimpleAddress address) {
-//        address.feeds.clear();
-//        // the past 24 hours
-//        final double maxTime = (new Date().getTime() / 1000.0) - Constants.READINGS_MAX_TIME_RANGE;
-//
-//        Response.Listener<JSONObject> response = new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                AirQualityFeed closestFeed;
-//
-//                EsdrJsonParser.populateFeedsFromJson(address.feeds, response, maxTime);
-//                if (address.feeds.size() > 0) {
-//                    closestFeed = MapGeometry.getClosestFeedToAddress(address, address.feeds);
-//                    if (closestFeed != null) {
-//                        address.setClosestFeed(closestFeed);
-//
-//                        // Responsible for calculating the value to be displayed
-//                        if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
-//                            closestFeed.getPm25Channels().get(0).requestNowCast(globalHandler.appContext);
-//                        } else if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
-//                            // ASSERT all channels in the list of channels are usable readings
-//                            requestChannelReading(null, null, closestFeed, closestFeed.getPm25Channels().get(0), (long)maxTime);
-//                        }
-//                    }
-//                } else {
-//                    Log.e(Constants.LOG_TAG, "result size is 0 in pullFeeds.");
-//                }
-//            }
-//        };
-//        requestFeeds(address.getLocation(), maxTime, response);
-//    }
-
-
-//    public void requestUpdate(final Speck speck) {
-//        if (speck.getPm25Channels().size() > 0) {
-//            long timeRange = (long) (new Date().getTime() / 1000.0 - Constants.SPECKS_MAX_TIME_RANGE);
-//            requestChannelReading(null, speck.getApiKeyReadOnly(), speck, speck.getPm25Channels().get(0), timeRange);
-//        } else {
-//            Log.e(Constants.LOG_TAG, "No channels found from speck id=" + speck.getFeed_id());
-//        }
-//    }
-
-
     public void requestUpdate(Readable readable) {
         if (readable.getClass() == SimpleAddress.class) {
             SimpleAddress simpleAddress = (SimpleAddress)readable;

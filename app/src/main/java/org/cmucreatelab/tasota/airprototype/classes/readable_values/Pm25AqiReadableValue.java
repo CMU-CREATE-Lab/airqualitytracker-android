@@ -1,7 +1,6 @@
 package org.cmucreatelab.tasota.airprototype.classes.readable_values;
 
 import android.util.Log;
-
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
@@ -11,8 +10,9 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 public abstract class Pm25AqiReadableValue extends AqiReadableValue {
 
 
+    @Override
     public double getAqiValue() {
-        double aqi = 0.0;
+        double aqi;
         // round to tenths
         double micrograms = ((int)(this.getValue()*10))/10.0;
         if (micrograms < 0) {

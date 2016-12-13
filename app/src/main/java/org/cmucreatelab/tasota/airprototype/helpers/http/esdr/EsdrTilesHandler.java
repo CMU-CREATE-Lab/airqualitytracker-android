@@ -4,7 +4,6 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;

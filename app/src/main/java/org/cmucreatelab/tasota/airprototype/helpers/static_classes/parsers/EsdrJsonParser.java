@@ -10,7 +10,6 @@ import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Feed;
-import org.cmucreatelab.tasota.airprototype.classes.readables.Pm25Feed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -165,7 +164,6 @@ public class EsdrJsonParser {
             }
             productId = Long.parseLong(row.get("productId").toString());
 
-//            result = new Speck(apiKeyReadOnly,deviceId,exposure,feed_id,isMobile,new Location(latitude, longitude),name,positionId,productId);
             result = new Speck("",0,exposure,feed_id,isMobile,new Location(latitude, longitude),name,0,productId);
 
             try {

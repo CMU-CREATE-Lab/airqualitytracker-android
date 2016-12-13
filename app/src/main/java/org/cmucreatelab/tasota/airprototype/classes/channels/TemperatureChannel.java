@@ -1,9 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes.channels;
 
 import android.content.Context;
-
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

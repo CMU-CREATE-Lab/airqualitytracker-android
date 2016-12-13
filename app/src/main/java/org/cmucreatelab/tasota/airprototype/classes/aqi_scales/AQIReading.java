@@ -3,7 +3,6 @@ package org.cmucreatelab.tasota.airprototype.classes.aqi_scales;
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
-import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Pm25AqiConverter;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 

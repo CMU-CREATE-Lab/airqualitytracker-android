@@ -3,16 +3,11 @@ package org.cmucreatelab.tasota.airprototype.helpers.http.esdr;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
-import org.cmucreatelab.tasota.airprototype.classes.channels.HumidityChannel;
-import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
-import org.cmucreatelab.tasota.airprototype.classes.channels.TemperatureChannel;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.EsdrJsonParser;
 import org.json.JSONObject;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
