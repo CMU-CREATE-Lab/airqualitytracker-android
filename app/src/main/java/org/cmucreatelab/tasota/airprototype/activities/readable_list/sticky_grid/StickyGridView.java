@@ -14,12 +14,12 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableLis
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 /**
  * Class is based on example code from SuperSLiM's github repo: https://github.com/TonicArtos/SuperSLiM
@@ -68,7 +68,7 @@ class StickyGridView extends RecyclerView.ViewHolder
 
 
     private void bindAddress(SimpleAddress simpleAddress, CellViews cellViews) {
-        double aqi,micrograms;
+        double aqi;
 
         cellViews.textAddressItemLocationName.setText(simpleAddress.getName());
         cellViews.textAddressAqiLabel.setVisibility(View.VISIBLE);
@@ -78,10 +78,10 @@ class StickyGridView extends RecyclerView.ViewHolder
             cellViews.textCurrentLocation.setVisibility(View.VISIBLE);
         }
 
-        micrograms = simpleAddress.hasReadablePm25Value() ? simpleAddress.getReadablePm25Value().getValue() : 0.0;
-        aqi = AqiConverter.microgramsToAqi(micrograms);
+        Pm25AqiReadableValue readableValue = simpleAddress.hasReadablePm25Value() ? (Pm25AqiReadableValue) simpleAddress.getReadablePm25Value() : null;
+        aqi = readableValue.getAqiValue();
         cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
-        AQIReading aqiReading = new AQIReading(micrograms);
+        AQIReading aqiReading = new AQIReading(readableValue);
         cellViews.background.setBackgroundColor(Color.parseColor(aqiReading.getColor()));
     }
 
@@ -154,7 +154,13 @@ class StickyGridView extends RecyclerView.ViewHolder
                         bindSpeck((Speck)lineItem.readable, cellViews);
                         break;
                     case ADDRESS:
-                        bindAddress((SimpleAddress)lineItem.readable, cellViews);
+                        // TODO only checking PM25 for now
+                        SimpleAddress simpleAddress = (SimpleAddress) lineItem.readable;
+                        if (simpleAddress.hasReadablePm25Value()) {
+                            bindAddress((SimpleAddress) lineItem.readable, cellViews);
+                        } else {
+                            bindDefault(lineItem.readable, cellViews);
+                        }
                         break;
                     default:
                         Log.e(Constants.LOG_TAG,"Unknown readable type");

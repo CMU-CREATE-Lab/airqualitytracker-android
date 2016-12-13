@@ -11,11 +11,11 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
 
 /**
  * Created by mike on 6/18/15.
@@ -90,14 +90,11 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
 
 
     private void addressView(final SimpleAddress address) {
-        int aqi;
-        double micrograms;
-
-        micrograms =  address.hasReadableValue() ? address.getReadableValues().get(0).getValue() : 0.0;
-        aqi = (int) AqiConverter.microgramsToAqi(micrograms);
-        this.textShowAddressAqiValue.setText(String.valueOf(aqi));
-        AQIReading aqiReading = new AQIReading(micrograms);
-        if (aqiReading.withinRange()) {
+        if (address.hasReadablePm25Value()) {
+            Pm25AqiReadableValue readableValue = (Pm25AqiReadableValue) address.getReadablePm25Value();
+            int aqi = (int) readableValue.getAqiValue();
+            this.textShowAddressAqiValue.setText(String.valueOf(aqi));
+            AQIReading aqiReading = new AQIReading(readableValue);
             textShowAddressAqiRange.setText(aqiReading.getRangeFromIndex() + " AQI");
             textShowAddressAqiTitle.setText(aqiReading.getTitle());
             textShowAddressAqiDescription.setText(aqiReading.getDescription());

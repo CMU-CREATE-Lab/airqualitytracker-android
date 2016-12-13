@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables.interfaces;
 
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 
 import java.util.ArrayList;
@@ -18,6 +19,6 @@ public interface Pm25Readable {
     public boolean hasReadablePm25Value();
 
     // return PM2.5 value
-    public ReadableValue getReadablePm25Value();
+    public AqiReadableValue getReadablePm25Value();
 
 }

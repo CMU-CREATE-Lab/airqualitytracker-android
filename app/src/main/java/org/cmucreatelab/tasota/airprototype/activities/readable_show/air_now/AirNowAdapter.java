@@ -11,7 +11,7 @@ import android.widget.TextView;
 import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.classes.AirNowObservation;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Pm25AqiConverter;
 import java.util.ArrayList;
 
 /**
@@ -73,7 +73,7 @@ public class AirNowAdapter extends ArrayAdapter<AirNowAdapter.AirNowItem> {
 
             // AQI Color
             FrameLayout frameColored = (FrameLayout)rowView.findViewById(R.id.frameColored);
-            frameColored.setBackgroundColor(Color.parseColor(new AQIReading(AqiConverter.aqiToMicrograms(aqi)).getColor()));
+            frameColored.setBackgroundColor(Color.parseColor(new AQIReading(Pm25AqiConverter.aqiToMicrograms(aqi)).getColor()));
         }
 
         return rowView;

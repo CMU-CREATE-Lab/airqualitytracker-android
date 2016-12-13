@@ -2,7 +2,9 @@ package org.cmucreatelab.tasota.airprototype.classes.aqi_scales;
 
 import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.R;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.AqiConverter;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25AqiReadableValue;
+import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Pm25AqiConverter;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
 /**
@@ -59,9 +61,15 @@ public class AQIReading extends Scalable {
     public String getTitle() { return titles[this.index]; }
 
 
+    public AQIReading(AqiReadableValue readableValue) {
+        this.reading = readableValue.getValue();
+        this.index = getIndexFromReading(readableValue.getAqiValue());
+    }
+
+
     public AQIReading(double reading) {
         this.reading = reading;
-        this.index = getIndexFromReading(AqiConverter.microgramsToAqi(this.reading));
+        this.index = getIndexFromReading(Pm25AqiConverter.microgramsToAqi(this.reading));
     }
 
 

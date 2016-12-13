@@ -10,7 +10,7 @@ import android.util.Log;
 /**
  * Created by mike on 6/23/15.
  */
-public class AqiConverter {
+public class Pm25AqiConverter {
 
 
     private static double calculateLinearAqi(double ihi, double ilo, double chi, double clo, double micrograms) {

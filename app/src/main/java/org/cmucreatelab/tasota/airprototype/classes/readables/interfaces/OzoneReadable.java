@@ -1,6 +1,7 @@
 package org.cmucreatelab.tasota.airprototype.classes.readables.interfaces;
 
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 
 import java.util.ArrayList;
@@ -18,6 +19,6 @@ public interface OzoneReadable {
     public boolean hasReadableOzoneValue();
 
     // return Ozone value
-    public ReadableValue getReadableOzoneValue();
+    public AqiReadableValue getReadableOzoneValue();
 
 }

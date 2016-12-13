@@ -5,6 +5,7 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.OzoneReadable;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
@@ -19,7 +20,7 @@ import java.util.List;
 public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
 
     // class attributes
-    private ReadableValue ozoneReadableValue;
+    private AqiReadableValue ozoneReadableValue;
     private final ArrayList<OzoneChannel> ozoneChannels = new ArrayList<>();
 
     // tracking SimpleAddress
@@ -28,13 +29,13 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
     public void setAddress(SimpleAddress simpleAddress) { this.simpleAddress = simpleAddress; }
 
     // getters/setters
-    public void setReadableOzoneValue(ReadableValue readableValue) {
+    public void setReadableOzoneValue(AqiReadableValue readableValue) {
         this.ozoneReadableValue = readableValue;
         if (getAddress() != null) {
             getAddress().setReadableOzoneValue(readableValue);
         }
     }
-    public void setReadablePm25Value(ReadableValue readableValue) {
+    public void setReadablePm25Value(AqiReadableValue readableValue) {
         super.setReadablePm25Value(readableValue);
         if (getAddress() != null) {
             getAddress().setReadablePm25Value(readableValue);
@@ -76,7 +77,7 @@ public class AirQualityFeed extends Pm25Feed implements OzoneReadable {
 
 
     @Override
-    public ReadableValue getReadableOzoneValue() {
+    public AqiReadableValue getReadableOzoneValue() {
         return ozoneReadableValue;
     }
 

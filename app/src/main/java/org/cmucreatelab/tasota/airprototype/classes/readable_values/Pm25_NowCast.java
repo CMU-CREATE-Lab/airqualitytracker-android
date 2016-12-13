@@ -7,7 +7,7 @@ import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
  * Created by mike on 11/22/16.
  */
 
-public class Pm25_NowCast implements ReadableValue {
+public class Pm25_NowCast extends Pm25AqiReadableValue {
 
     private final double value;
     private final Channel channel;

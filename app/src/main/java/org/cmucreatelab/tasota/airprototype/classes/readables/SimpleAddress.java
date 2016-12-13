@@ -6,6 +6,7 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableSho
 import org.cmucreatelab.tasota.airprototype.classes.DailyFeedTracker;
 import org.cmucreatelab.tasota.airprototype.classes.channels.OzoneChannel;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Pm25Channel;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.ReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.OzoneReadable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Pm25Readable;
@@ -35,7 +36,7 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
     public final ArrayList<AirQualityFeed> feeds = new ArrayList<>();
     private boolean isCurrentLocation;
     private int positionId;
-    private ReadableValue readablePm25Value,readableOzoneValue;
+    private AqiReadableValue readablePm25Value,readableOzoneValue;
 
 
     private DailyFeedTracker dailyFeedTracker;
@@ -52,8 +53,8 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
     public int getPositionId() { return positionId; }
     public void setPositionId(int positionId) { this.positionId = positionId; }
     public DailyFeedTracker getDailyFeedTracker() { return dailyFeedTracker; }
-    public void setReadablePm25Value(ReadableValue readableValue) { this.readablePm25Value = readableValue; }
-    public void setReadableOzoneValue(ReadableValue readableValue) { this.readableOzoneValue= readableValue; }
+    public void setReadablePm25Value(AqiReadableValue readableValue) { this.readablePm25Value = readableValue; }
+    public void setReadableOzoneValue(AqiReadableValue readableValue) { this.readableOzoneValue= readableValue; }
 
 
     // class constructor
@@ -267,7 +268,7 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 
 
     @Override
-    public ReadableValue getReadablePm25Value() {
+    public AqiReadableValue getReadablePm25Value() {
         return readablePm25Value;
     }
 
@@ -292,7 +293,7 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 
 
     @Override
-    public ReadableValue getReadableOzoneValue() {
+    public AqiReadableValue getReadableOzoneValue() {
         return readableOzoneValue;
     }
 
