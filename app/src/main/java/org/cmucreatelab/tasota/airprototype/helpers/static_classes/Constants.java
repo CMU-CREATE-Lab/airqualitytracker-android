@@ -22,7 +22,9 @@ public final class Constants {
     public static final boolean USES_BACKGROUND_SERVICES = true;
 
     // the value type that we display for a feed; this should be either INSTANTCAST or NOWCAST
-    public static final Feed.ReadableValueType DEFAULT_ADDRESS_READABLE_VALUE_TYPE = Feed.ReadableValueType.NOWCAST;
+    public static final Feed.ReadableValueType DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE = Feed.ReadableValueType.NOWCAST;
+
+    public static final Feed.ReadableValueType DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE = Feed.ReadableValueType.NOWCAST;
 
     // secrets and API keys for various web services
     public static final class AppSecrets {

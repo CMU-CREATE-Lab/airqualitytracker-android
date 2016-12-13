@@ -130,9 +130,9 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
                         // TODO hooks in functions below; if feed is updated, we want this to be using that value
 
                         // Responsible for calculating the value to be displayed
-                        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+                        if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
                             closestFeed.getPm25Channels().get(0).requestNowCast(globalHandler.appContext);
-                        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+                        } else if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
                             // ASSERT all channels in the list of channels are usable readings
                             globalHandler.esdrFeedsHandler.requestChannelReading(null, null, closestFeed, closestFeed.getPm25Channels().get(0), (long)maxTime);
                         }
@@ -164,14 +164,16 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
                 EsdrJsonParser.populateFeedsFromJson(feeds, SimpleAddress.this, response, maxTime);
                 if (getOzoneChannels().size() > 0) {
                     // TODO add value type in constants (and different nowcast formulas for ozone)
-//                    if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+//                    if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
 //                        getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
 //                    } else {
 //                        globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
 //                    }
-
-                    getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
-                    //globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long)maxTime);
+                    if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+                        getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
+                    } else if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+                        globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long) maxTime);
+                    }
                 } else {
                     setReadableOzoneValue(null);
                 }
@@ -186,12 +188,12 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
 //                        // TODO hooks in functions below; if feed is updated, we want this to be using that value
 //                        // TODO we need both nowcast and instantcast values
 //                        // Responsible for calculating the value to be displayed
-//                        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+//                        if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
 //                            if (closestFeed.hasReadableOzoneValue())
 //                                closestFeed.getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
 //                            else
 //                                setReadableOzoneValue(null);
-//                        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+//                        } else if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
 //                            // ASSERT all channels in the list of channels are usable readings
 //                            globalHandler.esdrFeedsHandler.requestChannelReading(null, null, closestFeed, closestFeed.getOzoneChannels().get(0), (long)maxTime);
 //                        }

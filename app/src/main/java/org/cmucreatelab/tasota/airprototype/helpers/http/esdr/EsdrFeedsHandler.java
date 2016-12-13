@@ -20,11 +20,8 @@ import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.helpers.application.GlobalHandler;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.parsers.EsdrJsonParser;
-import org.cmucreatelab.tasota.airprototype.helpers.static_classes.MapGeometry;
 import org.cmucreatelab.tasota.airprototype.helpers.structs.Location;
 import org.json.JSONObject;
-import java.util.Date;
 
 /**
  * Created by mike on 6/29/15.
@@ -154,9 +151,9 @@ public class EsdrFeedsHandler {
 
     // TODO we want to specify our requests (in particular, for 1-hour OZONE or HUMIDITY)
     public void requestChannelReading(final Pm25Feed feed, final Channel channel) {
-        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+        if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
             requestChannelReading(null, null, feed, channel, 0);
-        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+        } else if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
             channel.requestNowCast(globalHandler.appContext);
         }
     }
@@ -179,9 +176,9 @@ public class EsdrFeedsHandler {
 //                        address.setClosestFeed(closestFeed);
 //
 //                        // Responsible for calculating the value to be displayed
-//                        if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+//                        if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
 //                            closestFeed.getPm25Channels().get(0).requestNowCast(globalHandler.appContext);
-//                        } else if (Constants.DEFAULT_ADDRESS_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+//                        } else if (Constants.DEFAULT_ADDRESS_PM25_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
 //                            // ASSERT all channels in the list of channels are usable readings
 //                            requestChannelReading(null, null, closestFeed, closestFeed.getPm25Channels().get(0), (long)maxTime);
 //                        }
