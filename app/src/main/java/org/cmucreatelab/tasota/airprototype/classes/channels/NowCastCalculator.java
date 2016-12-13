@@ -180,4 +180,10 @@ public class NowCastCalculator {
         return numerator/denominator;
     }
 
+
+    public double getMostRecent(HashMap<Integer,ArrayList<Double>> data, int currentTime) {
+        Double[] hourlyValues = constructArrayFromHash(data,currentTime);
+        return hourlyValues[0];
+    }
+
 }

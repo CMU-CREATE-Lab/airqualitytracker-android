@@ -5,6 +5,8 @@ import android.util.Log;
 import org.cmucreatelab.tasota.airprototype.classes.channels.Channel;
 import org.cmucreatelab.tasota.airprototype.helpers.static_classes.Constants;
 
+import java.util.Arrays;
+
 /**
  * Created by mike on 11/22/16.
  */
@@ -16,7 +18,12 @@ public class Ozone_InstantCast extends AqiReadableValue {
 
 
     public Ozone_InstantCast(double value, Channel channel) {
-        this.value = value;
+        // check if we are actually using PPB instead of PPM
+        if (Arrays.asList(Constants.ppbOzoneNames).contains(channel.getName())) {
+            this.value = value/1000.0;
+        } else {
+            this.value = value;
+        }
         this.channel = channel;
     }
 

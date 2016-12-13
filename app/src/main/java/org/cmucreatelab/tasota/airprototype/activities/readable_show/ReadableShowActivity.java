@@ -54,16 +54,16 @@ public class ReadableShowActivity extends BaseActivity<ReadableShowUIElements> {
             case ADDRESS:
                 SimpleAddress simpleAddress = (SimpleAddress)reading;
                 Log.i(Constants.LOG_TAG,"OPENING ADDRESS");
-                value = simpleAddress.hasReadablePm25Value() ? String.valueOf(simpleAddress.getReadablePm25Value().getValue()) : "n/a";
-                Log.i(Constants.LOG_TAG,"PM2.5="+value);
-                value = simpleAddress.hasReadableOzoneValue() ? String.valueOf(simpleAddress.getReadableOzoneValue().getValue()) : "n/a";
-                Log.i(Constants.LOG_TAG,"OZONE="+value);
+                value = simpleAddress.hasReadablePm25Value() ? String.valueOf(simpleAddress.getReadablePm25Value().getAqiValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"PM2.5(aqi)="+value);
+                value = simpleAddress.hasReadableOzoneValue() ? String.valueOf(simpleAddress.getReadableOzoneValue().getAqiValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"OZONE(aqi)="+value);
                 break;
             case SPECK:
                 Speck speck = (Speck)reading;
                 Log.i(Constants.LOG_TAG,"OPENING SPECK");
-                value = speck.hasReadablePm25Value() ? String.valueOf(speck.getReadablePm25Value().getValue()) : "n/a";
-                Log.i(Constants.LOG_TAG,"PM2.5="+value);
+                value = speck.hasReadablePm25Value() ? String.valueOf(speck.getReadablePm25Value().getAqiValue()) : "n/a";
+                Log.i(Constants.LOG_TAG,"PM2.5(aqi)="+value);
                 value = speck.hasReadableHumidityValue() ? String.valueOf(speck.getReadableHumidityValue().getValue()) : "n/a";
                 Log.i(Constants.LOG_TAG,"HUMID="+value);
                 value = speck.hasReadableTemperatureValue() ? String.valueOf(speck.getReadableTemperatureValue().getValue()) : "n/a";
