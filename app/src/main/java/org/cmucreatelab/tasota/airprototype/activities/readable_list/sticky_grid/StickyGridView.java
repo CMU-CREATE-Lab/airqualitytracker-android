@@ -61,6 +61,19 @@ class StickyGridView extends RecyclerView.ViewHolder
         cellViews.textAddressAqiLabel.setText(Constants.Units.MICROGRAMS_PER_CUBIC_METER);
 
         label = speck.hasReadableValue() ? (int)speck.getReadableValues().get(0).getValue() : 0;
+
+        if (speck.hasReadableTemperatureValue()) {
+            TextView textView = (TextView)view.findViewById(R.id.textViewTemperature);
+            textView.setVisibility(View.VISIBLE);;
+            textView.setText(speck.getReadableTemperatureValue().getValue()+" "+speck.getReadableTemperatureValue().getReadableUnits());
+        }
+
+        if (speck.hasReadableHumidityValue()) {
+            TextView textView = (TextView)view.findViewById(R.id.textViewHumidity);
+            textView.setVisibility(View.VISIBLE);;
+            textView.setText("\uD83D\uDCA7"+speck.getReadableHumidityValue().getValue()+" "+speck.getReadableHumidityValue().getReadableUnits());
+        }
+
         cellViews.textAddressItemLocationValue.setText(String.valueOf(label));
         SpeckReading speckReading = new SpeckReading(label);
         cellViews.background.setBackgroundColor(Color.parseColor(speckReading.getColor()));
@@ -105,9 +118,8 @@ class StickyGridView extends RecyclerView.ViewHolder
             Typeface fontAqi = Typeface.createFromAsset(view.getContext().getAssets(), "fonts/Dosis-Light.ttf");
             textView.setTypeface(fontAqi);
 
-            // TODO hides weather (for now)
-            view.findViewById(R.id.frameAddressItemWeatherValue).setVisibility(View.GONE);
-            view.findViewById(R.id.frameAddressItemWeatherIcon).setVisibility(View.GONE);
+            view.findViewById(R.id.textViewTemperature).setVisibility(View.GONE);
+            view.findViewById(R.id.textViewHumidity).setVisibility(View.GONE);
         }
     }
 
