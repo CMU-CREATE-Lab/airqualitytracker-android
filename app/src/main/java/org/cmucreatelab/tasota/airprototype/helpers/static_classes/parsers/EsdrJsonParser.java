@@ -122,7 +122,6 @@ public class EsdrJsonParser {
                     JSONObject channel = channels.getJSONObject(channelName);
                     if (channel.getDouble("maxTimeSecs") >= maxTime) {
                         result.addChannel(EsdrJsonParser.parseChannelFromJson(channelName, result, channel));
-                        break;
                     }
                 }
             } catch (Exception e) {
