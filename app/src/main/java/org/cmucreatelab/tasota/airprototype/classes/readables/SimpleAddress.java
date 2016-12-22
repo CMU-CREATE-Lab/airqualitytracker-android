@@ -154,10 +154,12 @@ public class SimpleAddress extends AirNowReadable implements Pm25Readable, Ozone
                 EsdrJsonParser.populateFeedsFromJson(feeds, SimpleAddress.this, response, maxTime);
                 if (feeds.size() > 0) {
                     closestFeed = MapGeometry.getClosestFeedWithOzoneToAddress(SimpleAddress.this, feeds);
-                    if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
-                        closestFeed.getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
-                    } else if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
-                        globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long) maxTime);
+                    if (closestFeed != null) {
+                        if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.NOWCAST) {
+                            closestFeed.getOzoneChannels().get(0).requestNowCast(globalHandler.appContext);
+                        } else if (Constants.DEFAULT_ADDRESS_OZONE_READABLE_VALUE_TYPE == Feed.ReadableValueType.INSTANTCAST) {
+                            globalHandler.esdrFeedsHandler.requestChannelReading(null, null, getOzoneChannels().get(0).getFeed(), getOzoneChannels().get(0), (long) maxTime);
+                        }
                     }
                 } else {
                     setReadableOzoneValue(null);
