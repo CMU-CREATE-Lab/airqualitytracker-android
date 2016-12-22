@@ -16,7 +16,7 @@ public final class Constants {
     public static final String APP_PACKAGE_NAME = "org.cmucreatelab.tasota.airprototype";
 
     // versionName copied from build.gradle
-    public static final String APP_VERSION = "2.8";
+    public static final String APP_VERSION = "3.0";
 
     // flag to be set when background services should started on app launch
     public static final boolean USES_BACKGROUND_SERVICES = true;
