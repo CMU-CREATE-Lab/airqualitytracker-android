@@ -14,6 +14,7 @@ import org.cmucreatelab.tasota.airprototype.activities.readable_list.ReadableLis
 import org.cmucreatelab.tasota.airprototype.activities.readable_show.ReadableShowActivity;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25AqiReadableValue;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
@@ -91,7 +92,12 @@ class StickyGridView extends RecyclerView.ViewHolder
             cellViews.textCurrentLocation.setVisibility(View.VISIBLE);
         }
 
-        Pm25AqiReadableValue readableValue = simpleAddress.hasReadablePm25Value() ? (Pm25AqiReadableValue) simpleAddress.getReadablePm25Value() : null;
+        AqiReadableValue readableValue = simpleAddress.hasReadablePm25Value() ? (Pm25AqiReadableValue) simpleAddress.getReadablePm25Value() : null;
+        if (simpleAddress.hasReadableOzoneValue()) {
+            if (readableValue == null || simpleAddress.getReadableOzoneValue().getAqiValue() > readableValue.getAqiValue()) {
+                readableValue = simpleAddress.getReadableOzoneValue();
+            }
+        }
         aqi = readableValue.getAqiValue();
         cellViews.textAddressItemLocationValue.setText(String.valueOf((int) aqi));
         AQIReading aqiReading = new AQIReading(readableValue);
@@ -168,7 +174,7 @@ class StickyGridView extends RecyclerView.ViewHolder
                     case ADDRESS:
                         // TODO only checking PM25 for now
                         SimpleAddress simpleAddress = (SimpleAddress) lineItem.readable;
-                        if (simpleAddress.hasReadablePm25Value()) {
+                        if (simpleAddress.hasReadablePm25Value() || simpleAddress.hasReadableOzoneValue()) {
                             bindAddress((SimpleAddress) lineItem.readable, cellViews);
                         } else {
                             bindDefault(lineItem.readable, cellViews);
