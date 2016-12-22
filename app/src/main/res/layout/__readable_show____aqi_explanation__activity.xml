@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To calculate AQI, we pull the sensor&apos;s PM2.5 readings from the past 12 hours and apply the EPA NowCast formula. This is a weighted average that gives more recent readings higher weight than older ones. Finally, we convert to AQI from a piecewise linear function (defined by the EPA)."
+        android:text="To calculate AQI, we pull the sensor&apos;s PM2.5/Ozone readings from the past 12 hours and apply the EPA NowCast formula. This is a weighted average that gives more recent readings higher weight than older ones. Finally, we convert to AQI from a piecewise linear function (defined by the EPA)."
         android:id="@+id/textView28"
         android:textColor="#555"
         android:textSize="14dp"

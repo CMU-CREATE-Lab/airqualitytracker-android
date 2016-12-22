@@ -181,7 +181,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:background="#10ffffff"
-                android:id="@+id/frameAqiButton">
+                android:id="@+id/framePm25AqiButton">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -201,39 +201,60 @@
                             android:layout_gravity="center" />
                     </FrameLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="3">
 
-                        <TextView
+                        <RelativeLayout android:layout_height="match_parent"
                             android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:text="READING FROM:"
-                            android:id="@+id/textView32"
-                            android:layout_gravity="left|top"
-                            android:textColor="#000"
-                            android:textSize="12dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:gravity="bottom" />
+                            android:layout_weight="1">
 
-                        <TextView
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:text="PM2.5 READING:"
+                                android:id="@+id/textView32"
+                                android:layout_gravity="left|top"
+                                android:textColor="#000"
+                                android:textSize="12dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:gravity="bottom" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Reading Name at Street AirNow"
+                                android:id="@+id/textViewPm25ReadingName"
+                                android:layout_gravity="left|center_vertical"
+                                android:textColor="#000"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/textView32"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:gravity="top"
+                                android:layout_alignParentBottom="true"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Reading Name at Street AirNow"
-                            android:id="@+id/textViewReadingName"
-                            android:layout_gravity="left|center_vertical"
-                            android:textColor="#000"
-                            android:textSize="14dp"
-                            android:layout_below="@+id/textView32"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:gravity="top"
-                            android:layout_alignParentBottom="true"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="999"
+                                android:id="@+id/textViewPm25ReadingValue"
+                                android:textSize="24dp"
+                                android:gravity="right|center_vertical"
+                                android:textColor="#fff" />
+                        </RelativeLayout>
+                    </LinearLayout>
 
                     <FrameLayout
                         android:layout_width="80dp"
@@ -246,6 +267,114 @@
                             android:id="@+id/imageView7"
                             android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
                             android:layout_gravity="center" />
+                    </FrameLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="10" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="#10ffffff"
+                android:id="@+id/frameOzoneAqiButton">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/imageView6_2"
+                            android:src="@drawable/ic_near_me_black_24dp"
+                            android:layout_gravity="center" />
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:text="OZONE READING:"
+                                android:id="@+id/textView33"
+                                android:layout_gravity="left|top"
+                                android:textColor="#000"
+                                android:textSize="12dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:gravity="bottom" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Reading Name at Street AirNow"
+                                android:id="@+id/textViewOzoneReadingName"
+                                android:layout_gravity="left|center_vertical"
+                                android:textColor="#000"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/textView33"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:gravity="top"
+                                android:layout_alignParentBottom="true"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="999"
+                                android:id="@+id/textViewOzoneReadingValue"
+                                android:textSize="24dp"
+                                android:gravity="right|center_vertical"
+                                android:textColor="#fff" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView7_2"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                    android:layout_gravity="center" />
                     </FrameLayout>
 
                 </LinearLayout>

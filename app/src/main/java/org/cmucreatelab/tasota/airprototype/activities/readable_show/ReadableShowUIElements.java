@@ -11,7 +11,8 @@ import org.cmucreatelab.tasota.airprototype.R;
 import org.cmucreatelab.tasota.airprototype.activities.UIElements;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.AQIReading;
 import org.cmucreatelab.tasota.airprototype.classes.aqi_scales.SpeckReading;
-import org.cmucreatelab.tasota.airprototype.classes.readable_values.Pm25AqiReadableValue;
+import org.cmucreatelab.tasota.airprototype.classes.readable_values.AqiReadableValue;
+import org.cmucreatelab.tasota.airprototype.classes.readables.AirQualityFeed;
 import org.cmucreatelab.tasota.airprototype.classes.readables.interfaces.Readable;
 import org.cmucreatelab.tasota.airprototype.classes.readables.SimpleAddress;
 import org.cmucreatelab.tasota.airprototype.classes.readables.Speck;
@@ -29,9 +30,10 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
     private TextView textShowAddressAqiDescription;
     private TextView textShowAddressAqiLabel;
     private RelativeLayout layoutShowAddress;
-    private FrameLayout frameAqiButton;
+    private FrameLayout framePm25AqiButton,frameOzoneAqiButton;
     private FrameLayout frameDailyTrackerButton;
-    private TextView textViewReadingName;
+    private TextView textViewPm25ReadingName, textViewOzoneReadingName;
+    private TextView textViewPm25ReadingValue, textViewOzoneReadingValue;
 
 
     public ReadableShowUIElements(ReadableShowActivity activity, Readable reading) {
@@ -43,16 +45,28 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
         this.textShowAddressAqiDescription = (TextView)activity.findViewById(R.id.textShowAddressAqiDescription);
         this.textShowAddressAqiLabel = (TextView)activity.findViewById(R.id.textShowAddressAqiLabel);
         this.layoutShowAddress = (RelativeLayout)activity.findViewById(R.id.layoutShowAddress);
-        this.frameAqiButton = (FrameLayout)activity.findViewById(R.id.frameAqiButton);
+        this.framePm25AqiButton = (FrameLayout)activity.findViewById(R.id.framePm25AqiButton);
+        this.frameOzoneAqiButton= (FrameLayout)activity.findViewById(R.id.frameOzoneAqiButton);
         this.frameDailyTrackerButton = (FrameLayout)activity.findViewById(R.id.frameDailyTracker);
-        this.textViewReadingName = (TextView)activity.findViewById(R.id.textViewReadingName);
+        this.textViewPm25ReadingName = (TextView)activity.findViewById(R.id.textViewPm25ReadingName);
+        this.textViewOzoneReadingName = (TextView)activity.findViewById(R.id.textViewOzoneReadingName);
+        this.textViewPm25ReadingValue = (TextView)activity.findViewById(R.id.textViewPm25ReadingValue);
+        this.textViewOzoneReadingValue = (TextView)activity.findViewById(R.id.textViewOzoneReadingValue);
 
         // use custom fonts
         Typeface fontAqi = Typeface.createFromAsset(activity.getAssets(), "fonts/Dosis-Light.ttf");
         textShowAddressAqiValue.setTypeface(fontAqi);
+        textViewPm25ReadingValue.setTypeface(fontAqi);
+        textViewOzoneReadingValue.setTypeface(fontAqi);
 
-        frameAqiButton.setOnClickListener(activity.frameClickListener);
+        framePm25AqiButton.setOnClickListener(activity.frameClickListener);
+        frameOzoneAqiButton.setOnClickListener(activity.frameClickListener);
         frameDailyTrackerButton.setOnClickListener(activity.frameDailyTrackerListener);
+
+        // hide buttons
+        framePm25AqiButton.setVisibility(View.INVISIBLE);
+        frameOzoneAqiButton.setVisibility(View.INVISIBLE);
+        frameDailyTrackerButton.setVisibility(View.INVISIBLE);
     }
 
 
@@ -82,25 +96,47 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
         textShowAddressAqiTitle.setText(Constants.DefaultReading.DEFAULT_TITLE);
         textShowAddressAqiDescription.setText(Constants.DefaultReading.DEFAULT_DESCRIPTION);
         layoutShowAddress.setBackgroundColor(Color.parseColor(Constants.DefaultReading.DEFAULT_COLOR_BACKGROUND));
-
-        // hide buttons
-        frameAqiButton.setVisibility(View.INVISIBLE);
-        frameDailyTrackerButton.setVisibility(View.INVISIBLE);
     }
 
 
     private void addressView(final SimpleAddress address) {
-        if (address.hasReadablePm25Value()) {
-            Pm25AqiReadableValue readableValue = (Pm25AqiReadableValue) address.getReadablePm25Value();
-            int aqi = (int) readableValue.getAqiValue();
-            this.textShowAddressAqiValue.setText(String.valueOf(aqi));
+        if (address.hasReadableValue()) {
+            AqiReadableValue readableValue = null;
+
+            if (address.hasReadableOzoneValue()) {
+                frameOzoneAqiButton.setVisibility(View.VISIBLE);
+                // get ozone value/channel/feed
+                AqiReadableValue ozone = address.getReadableOzoneValue();
+                AirQualityFeed closestFeed = (AirQualityFeed) ozone.getChannel().getFeed();
+                // set text for name and value
+                textViewOzoneReadingName.setText(closestFeed.getName());
+                textViewOzoneReadingValue.setText(String.valueOf((int)ozone.getAqiValue()));
+                if (readableValue == null || ozone.getAqiValue() > readableValue.getAqiValue()) {
+                    readableValue = ozone;
+                }
+            }
+
+            if (address.hasReadablePm25Value()) {
+                frameDailyTrackerButton.setVisibility(View.VISIBLE);
+                framePm25AqiButton.setVisibility(View.VISIBLE);
+                // get ozone value/channel/feed
+                AqiReadableValue pm25 = address.getReadablePm25Value();
+                AirQualityFeed closestFeed = (AirQualityFeed) pm25.getChannel().getFeed();
+                // set text for name and value
+                textViewPm25ReadingName.setText(closestFeed.getName());
+                textViewPm25ReadingValue.setText(String.valueOf((int)pm25.getAqiValue()));
+                if (readableValue == null || pm25.getAqiValue() > readableValue.getAqiValue()) {
+                    readableValue = pm25;
+                }
+            }
+
+            this.textShowAddressAqiValue.setText(String.valueOf((int)readableValue.getAqiValue()));
             AQIReading aqiReading = new AQIReading(readableValue);
             textShowAddressAqiRange.setText(aqiReading.getRangeFromIndex() + " AQI");
             textShowAddressAqiTitle.setText(aqiReading.getTitle());
             textShowAddressAqiDescription.setText(aqiReading.getDescription());
             layoutShowAddress.setBackgroundResource(aqiReading.getDrawableGradient());
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_AQI);
-            this.textViewReadingName.setText(address.getReadablePm25Value().getChannel().getFeed().getName());
             // request Tracker
             address.requestDailyFeedTracker(activity);
         } else {
@@ -119,10 +155,6 @@ public class ReadableShowUIElements extends UIElements<ReadableShowActivity> {
             textShowAddressAqiDescription.setText(speckReading.getDescription());
             layoutShowAddress.setBackgroundColor(Color.parseColor(speckReading.getColor()));
             textShowAddressAqiLabel.setText(Constants.Units.RANGE_MICROGRAMS_PER_CUBIC_METER);
-
-            // hide buttons
-            frameAqiButton.setVisibility(View.INVISIBLE);
-            frameDailyTrackerButton.setVisibility(View.INVISIBLE);
         } else {
             this.defaultView();
         }
