@@ -81,8 +81,7 @@ public class MapGeometry {
     }
 
 
-    // TODO this is really the "getClosestFeedWithPm" method
-    public static AirQualityFeed getClosestFeedToAddress(SimpleAddress simpleAddress, ArrayList<AirQualityFeed> feeds) {
+    public static AirQualityFeed getClosestFeedWithPm25ToAddress(SimpleAddress simpleAddress, ArrayList<AirQualityFeed> feeds) {
         AirQualityFeed closestFeed = null;
         double distance = 0.0;
 
@@ -107,7 +106,41 @@ public class MapGeometry {
             }
         }
         if (closestFeed == null) {
-            Log.w(Constants.LOG_TAG, "getClosestFeedToAddress returning null.");
+            Log.w(Constants.LOG_TAG, "getClosestFeedWithPm25ToAddress returning null.");
+        }
+        else {
+            Log.v(Constants.LOG_TAG, "FEED=" + closestFeed.getFeed_id() + " has closest distance=" + distance);
+        }
+        return closestFeed;
+    }
+
+
+    public static AirQualityFeed getClosestFeedWithOzoneToAddress(SimpleAddress simpleAddress, ArrayList<AirQualityFeed> feeds) {
+        AirQualityFeed closestFeed = null;
+        double distance = 0.0;
+
+        for (AirQualityFeed feed : feeds) {
+            if (feed.getOzoneChannels().size() == 0) {
+                continue;
+            }
+            if (closestFeed == null) {
+                distance = getDistanceFromFeedToAddress(simpleAddress,feed);
+                closestFeed = feed;
+            } else {
+                double temp = getDistanceFromFeedToAddress(simpleAddress,feed);
+                if (temp < distance) {
+                    distance = temp;
+                    closestFeed = feed;
+                }
+                if (temp < 0) {
+                    Log.w(Constants.LOG_TAG, "Distance from address=" + simpleAddress.get_id() +
+                            " to feed=" + feed.getFeed_id() +
+                            " has negative distance=" + temp);
+                }
+            }
+        }
+        if (closestFeed == null) {
+            Log.w(Constants.LOG_TAG, "getClosestFeedWithPm25ToAddress returning null.");
         }
         else {
             Log.v(Constants.LOG_TAG, "FEED=" + closestFeed.getFeed_id() + " has closest distance=" + distance);

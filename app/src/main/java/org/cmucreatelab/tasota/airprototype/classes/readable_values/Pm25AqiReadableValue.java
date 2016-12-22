@@ -21,7 +21,7 @@ public abstract class Pm25AqiReadableValue extends AqiReadableValue {
         } else if (micrograms < 12.0) {
             aqi = calculateLinearAqi(50.0,0.0,12.0,0.0,micrograms);
         } else if (micrograms < 35.4) {
-            aqi = calculateLinearAqi(100.0,50.0,35.4,12.1,micrograms);
+            aqi = calculateLinearAqi(100.0,51.0,35.4,12.1,micrograms);
         } else if (micrograms < 55.4) {
             aqi = calculateLinearAqi(150.0,101.0,55.4,35.5,micrograms);
         } else if (micrograms < 150.4) {
