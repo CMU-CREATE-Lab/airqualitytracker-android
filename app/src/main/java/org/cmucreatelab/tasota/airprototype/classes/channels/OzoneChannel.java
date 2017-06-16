@@ -21,6 +21,7 @@ public class OzoneChannel extends Channel<AirQualityFeed> {
 
     public void onEsdrTilesResponse(Context ctx, Channel channel, HashMap<Integer, ArrayList<Double>> result, int timestamp) {
         // find ozone nowcast and instantcast
+        // NOTE: this may report 0 when there is actually no current reading
         double nowcast = nowCastCalculator.calculate(result, timestamp);
         Ozone_NowCast ozoneNowCast = new Ozone_NowCast(nowcast, channel);
         Ozone_InstantCast ozoneInstantCast = new Ozone_InstantCast(nowCastCalculator.getMostRecent(result, timestamp), channel);

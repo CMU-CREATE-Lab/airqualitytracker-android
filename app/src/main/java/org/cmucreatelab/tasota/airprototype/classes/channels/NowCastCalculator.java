@@ -176,8 +176,13 @@ public class NowCastCalculator {
 
 
     public double getMostRecent(HashMap<Integer,ArrayList<Double>> data, int currentTime) {
+        // ASSERT: data is nonempty
         Double[] hourlyValues = constructArrayFromHash(data,currentTime);
-        return hourlyValues[0];
+        if (hourlyValues.length > 0) {
+            return hourlyValues[0];
+        }
+        Log.w(Constants.LOG_TAG,"NowCastCalculator.getMostRecent has no recent value; returning zero.");
+        return 0;
     }
 
 }
